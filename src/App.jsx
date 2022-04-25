@@ -3,7 +3,7 @@ import { ConnectedRouter } from "connected-react-router";
 import { Route } from "react-router";
 import { history } from "../src/redux/store";
 import MainPage from "./pages/MainPage";
-import Planning from "./pages/Planning"
+import Planning from "./pages/Planning";
 
 function App() {
   return (
