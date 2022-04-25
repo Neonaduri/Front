@@ -89,7 +89,7 @@ const Mappart = () => {
           `도로명주소: ${places[i].road_address_name}`,
           `url주소: ${places[i].place_url}`,
           `매장번호: ${places[i].phone}`
-        ); //식당정보 전송
+        ); //식당정보 전송 
       };
 
       (function (marker, title) {
