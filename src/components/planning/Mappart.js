@@ -22,10 +22,11 @@ const Mappart = () => {
     setMap(map);
     // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
   }, []);
+
   // 키워드 검색을 요청하는 함수입니다
   function searchPlaces(event) {
     event.preventDefault();
-    var keyword = document.getElementById("keyword").value;
+    let keyword = document.getElementById("keyword").value;
 
     if (!keyword.replace(/^\s+|\s+$/g, "")) {
       alert("키워드를 입력해주세요!");
@@ -34,6 +35,7 @@ const Mappart = () => {
 
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     ps.keywordSearch(keyword, placesSearchCB);
+    document.getElementById("keyword").value = "";
   }
   // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
   function placesSearchCB(data, status, pagination) {
@@ -70,7 +72,7 @@ const Mappart = () => {
 
     for (var i = 0; i < places.length; i++) {
       // 마커를 생성하고 지도에 표시합니다
-      var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
+      let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
         marker = addMarker(placePosition, i),
         itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
@@ -144,12 +146,10 @@ const Mappart = () => {
   // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
   function addMarker(position, idx, title) {
     var imageSrc =
-        "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
-      imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
+        "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
+      imageSize = new kakao.maps.Size(36, 44), // 마커 이미지의 크기
       imgOptions = {
-        spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-        spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-        offset: new kakao.maps.Point(13, 37), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+        offset: new kakao.maps.Point(27, 69), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
       },
       markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
       marker = new kakao.maps.Marker({
@@ -217,16 +217,32 @@ const Mappart = () => {
       el.removeChild(el.lastChild);
     }
   }
+
+  kakao.maps.event.addListener(markers, "click", function () {
+    // 마커 위에 인포윈도우를 표시합니다
+    infowindow.open(map, markers);
+  });
   return (
     <>
       <div id="map" style={{ width: "700px", height: "600px" }}></div>
-      <form>
-        <input id="keyword"></input>
-        <button onClick={searchPlaces}>검색하기</button>
-      </form>
-      <li id="placesList"></li>
-      <li id="menu_wrap"></li>
-      <ul id="pagination"></ul>
+      <div id="menu_wrap">
+        <div className="option">
+          <div>
+            <form
+              onSubmit={(e) => {
+                searchPlaces(e);
+              }}
+            >
+              키워드: <input type="text" id="keyword" size="15"></input>
+              <button>검색하기</button>
+            </form>
+          </div>
+        </div>
+
+        <ul id="placesList"></ul>
+
+        <div id="pagination"></div>
+      </div>
     </>
   );
 };
