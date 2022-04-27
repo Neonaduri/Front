@@ -9,7 +9,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
-    "axios": "^0.26.1",
+    "axios": "^0.27.1",
     "buffer": "^6.0.3",
     "components": "^0.1.0",
     "connected-react-router": "6.8.0",
