@@ -1,7 +1,7 @@
 import React from "react";
 import GoogleMap from "../components/planning/map/GoogleMap";
 
-const Planning = () => {
+const Planning = (props) => {
   return (
     <>
       <GoogleMap />
