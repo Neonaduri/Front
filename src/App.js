@@ -10,7 +10,7 @@ function App({ memo_repo }) {
     <>
       <ConnectedRouter history={history}>
         <Route path="/" exact component={MainPage} />
-        <Route path="/planning" component={Planning} memo_repo={memo_repo} />
+        <Route path="/planning/:postId" component={Planning} />
       </ConnectedRouter>
     </>
   );

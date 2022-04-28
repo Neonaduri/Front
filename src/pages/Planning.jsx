@@ -1,7 +1,8 @@
 import React from "react";
 import Mappart from "../components/planning/Mappart";
+import Schedule from "../components/planning/Schedule";
 
-const Planning = ({ memo_repo }) => {
+const Planning = () => {
   return (
     <>
       <div
@@ -16,7 +17,8 @@ const Planning = ({ memo_repo }) => {
           // marginLeft: "1110px",
         }}
       >
-        <Mappart memo_repo={memo_repo} />
+        <Mappart />
+        <Schedule />
       </div>
     </>
   );
