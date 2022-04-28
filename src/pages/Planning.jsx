@@ -1,10 +1,10 @@
 import React from "react";
-import GoogleMap from "../components/planning/map/GoogleMap";
+import Mappart from "../components/planning/Mappart";
 
 const Planning = (props) => {
   return (
     <>
-      <GoogleMap />
+      <Mappart />
     </>
   );
 };

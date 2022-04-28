@@ -1,6 +1,5 @@
 /* global kakao */
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import GoogleMap from "google-map-react";
 import styled from "styled-components";
 const { kakao } = window;
 const Mappart = () => {
@@ -239,14 +238,21 @@ const Mappart = () => {
           }}
         />
       </div>
-      <div id="menu_wrap">
+      <MenuWrap id="menu_wrap">
         <ul id="placesList"></ul>
-      </div>
-      <div id="pagination"></div>
+        <div id="pagination"></div>
+      </MenuWrap>
     </Container>
   );
 };
-const MenuWrap = styled.div``;
+const MenuWrap = styled.div`
+  height: 100px;
+  overflow: auto;
+  position: absolute;
+  bottom: 180px;
+  z-index: 10000;
+  background-color: white;
+`;
 
 const SearchInput = styled.input`
   width: 60%;
