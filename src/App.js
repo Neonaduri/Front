@@ -10,7 +10,7 @@ function App() {
     <>
       <ConnectedRouter history={history}>
         <Route path="/" exact component={MainPage} />
-        <Route path="/planning" component={Planning} />
+        <Route path="/planning/:postId" component={Planning} />
       </ConnectedRouter>
     </>
   );
