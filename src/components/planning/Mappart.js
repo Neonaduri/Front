@@ -1,34 +1,37 @@
 /* global kakao */
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import GoogleMap from "google-map-react";
 import styled from "styled-components";
+import { getDatabase, push, ref, set } from "firebase/database";
+import { useParams } from "react-router";
+
 const { kakao } = window;
 const Mappart = () => {
   let map;
   let keywordref = useRef();
   let markers = [];
   let ps = new kakao.maps.services.Places();
-  var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+  let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+  const postId = useParams().postId;
 
   const searchStart = () => {
     return searchPlaces();
   };
   // 키워드 검색을 요청하는 함수입니다
   function searchPlaces() {
-    var keyword = document.getElementById("keyword").value;
+    let keyword = keywordref.current.value;
     if (!keyword.replace(/^\s+|\s+$/g, "")) {
       alert("키워드를 입력해주세요!");
       return false;
     }
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     ps.keywordSearch(keyword, placesSearchCB);
+    keywordref.current.value = "";
   }
   const placesSearchCB = (data, status, pagination) => {
     if (status === kakao.maps.services.Status.OK) {
       // 정상적으로 검색이 완료됐으면
       // 검색 목록과 마커를 표출합니다
       displayPlaces(data);
-      console.log(data);
       // 페이지 번호를 표출합니다
       displayPagination(pagination);
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
@@ -76,7 +79,6 @@ const Mappart = () => {
       listStr = "";
     removeAllChildNods(listEl);
     removeMarker();
-    console.log(places);
     for (let i = 0; i < places.length; i++) {
       // 마커를 생성하고 지도에 표시합니다
       let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
@@ -208,7 +210,24 @@ const Mappart = () => {
     infowindow.setContent(cover);
     infowindow.open(map, marker);
     contentBtn.onclick = function () {
-      console.log({ title, url, category: cate, address, road_address, y, x });
+      const db = getDatabase();
+      set(push(ref(db, "postid/" + postId)), {
+        postId: postId,
+        title: "남자끼리 제주도 여행",
+        date: "2022.04.22~2022.04.24",
+        tripPlan: [
+          {
+            day: 1,
+            storeTitle: title,
+            url,
+            category: cate,
+            address,
+            road_address,
+            y,
+            x,
+          },
+        ],
+      });
     };
   }
   function removeAllChildNods(el) {
@@ -239,14 +258,21 @@ const Mappart = () => {
           }}
         />
       </div>
-      <div id="menu_wrap">
+      <MenuWrap id="menu_wrap">
         <ul id="placesList"></ul>
-      </div>
-      <div id="pagination"></div>
+        <div id="pagination"></div>
+      </MenuWrap>
     </Container>
   );
 };
-const MenuWrap = styled.div``;
+const MenuWrap = styled.div`
+  height: 100px;
+  overflow: auto;
+  position: absolute;
+  bottom: 180px;
+  z-index: 10000;
+  background-color: white;
+`;
 
 const SearchInput = styled.input`
   width: 60%;

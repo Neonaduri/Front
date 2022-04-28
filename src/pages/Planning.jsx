@@ -1,11 +1,13 @@
 import React from "react";
-import GoogleMap from "../components/planning/map/GoogleMap";
+import Mappart from "../components/planning/Mappart";
+import Schedule from "../components/planning/Schedule";
 
 const Planning = (props) => {
   return (
-    <>
-      <GoogleMap />
-    </>
+    <div>
+      <Mappart />
+      <Schedule/>
+    </div>
   );
 };
 
