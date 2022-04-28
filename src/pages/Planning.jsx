@@ -1,6 +1,5 @@
 import React from "react";
-import GoogleMap from "../components/planning/map/GoogleMap";
-import RealtimeMakePlan from "../components/planning/plan/RealtimeMakePlan";
+import Mappart from "../components/planning/Mappart";
 
 const Planning = (props) => {
   return (
@@ -13,11 +12,10 @@ const Planning = (props) => {
           alignItems: "center",
           width: "420px",
           height: "100%",
-          // backgroundColor: "tomato",
-          // marginLeft: "1110px",
+
         }}
       >
-        <GoogleMap />
+        <Mappart />
       </div>
     </>
   );
