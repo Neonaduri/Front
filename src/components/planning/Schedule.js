@@ -12,24 +12,33 @@ const Schedule = () => {
   const postId = useParams().postId;
   const db = getDatabase();
   const [place, setPlace] = useState();
+  let latlngArr = [];
 
   useEffect(() => {
     const fixedPlaceRef = ref(db, `postid/${postId}`);
     onValue(fixedPlaceRef, (snapshot) => {
       let fixedPlace = snapshot.val();
-      setPlace(Object.values(fixedPlace));
+      const fixedPlaceArr = Object.values(fixedPlace);
+      setPlace(fixedPlaceArr);
     });
   }, []);
+
+  if (place) {
+    for (let i of place) {
+      latlngArr.push({ lat: i.tripPlan.y, lng: i.tripPlan.x });
+    }
+    dispatch(planAction.fixedPlaceXY(latlngArr));
+  }
   return (
     <div>
       {place?.map((p, idx) => {
         return (
           <PlaceCard key={idx}>
-            <span style={{ fontSize: "25px" }}>{p.tripPlan[0].storeTitle}</span>
-            <span>{p.tripPlan[0].category}</span>
+            <span style={{ fontSize: "25px" }}>{p.tripPlan.storeTitle}</span>
+            <span>{p.tripPlan.category}</span>
             <span>
-              <a href={p.tripPlan[0].url} target="_blank">
-                {p.tripPlan[0].storeTitle} 바로가기
+              <a href={p.tripPlan.url} target="_blank">
+                {p.tripPlan.storeTitle} 바로가기
               </a>
             </span>
           </PlaceCard>

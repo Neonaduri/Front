@@ -1,34 +1,34 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
+import { act } from "react-dom/test-utils";
 
 //action
-const UPDATEFIXEDPLACE = "updateFixedPlace";
+const FIXEDPLACEXY = "fixedPlaceXY";
 
 //init
 const init = {
   list: [],
+  fixedLatLng: [],
 };
 
 //action creators
-const updateFixedPlace = createAction(UPDATEFIXEDPLACE, (places) => ({
-  places,
-}));
+const fixedPlaceXY = createAction(FIXEDPLACEXY, (latlng) => ({ latlng }));
 
 //middlewares
 
 //reducer
 export default handleActions(
   {
-    [UPDATEFIXEDPLACE]: (state, action) =>
+    [FIXEDPLACEXY]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload.places;
+        draft.fixedLatLng = action.payload.latlng;
       }),
   },
   init
 );
 
 const planAction = {
-  updateFixedPlace,
+  fixedPlaceXY,
 };
 
 export { planAction };

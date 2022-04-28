@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { getDatabase, push, ref, set } from "firebase/database";
 import { useParams } from "react-router";
+import { useSelector } from "react-redux";
 
 const { kakao } = window;
 const Mappart = () => {
@@ -215,18 +216,16 @@ const Mappart = () => {
         postId: postId,
         title: "남자끼리 제주도 여행",
         date: "2022.04.22~2022.04.24",
-        tripPlan: [
-          {
-            day: 1,
-            storeTitle: title,
-            url,
-            category: cate,
-            address,
-            road_address,
-            y,
-            x,
-          },
-        ],
+        tripPlan: {
+          day: 1,
+          storeTitle: title,
+          url,
+          category: cate,
+          address,
+          road_address,
+          y,
+          x,
+        },
       });
     };
   }
@@ -235,6 +234,7 @@ const Mappart = () => {
       el.removeChild(el.lastChild);
     }
   }
+  ///////////////////////////////
 
   useEffect(() => {
     let container = document.getElementById("map");
@@ -271,7 +271,7 @@ const MenuWrap = styled.div`
   position: absolute;
   bottom: 180px;
   z-index: 10000;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.4);
 `;
 
 const SearchInput = styled.input`
