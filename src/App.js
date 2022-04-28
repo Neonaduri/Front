@@ -5,12 +5,12 @@ import { history } from "./redux/store";
 import MainPage from "./pages/MainPage";
 import Planning from "./pages/Planning";
 
-function App() {
+function App({ memo_repo }) {
   return (
     <>
       <ConnectedRouter history={history}>
         <Route path="/" exact component={MainPage} />
-        <Route path="/planning" component={Planning} />
+        <Route path="/planning" component={Planning} memo_repo={memo_repo} />
       </ConnectedRouter>
     </>
   );

@@ -1,13 +1,16 @@
 /* global kakao */
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import memo_repo from "../../service/memo_repo";
 const { kakao } = window;
 const Mappart = () => {
+  const [memo, setMemo] = useState("");
   let map;
   let keywordref = useRef();
   let markers = [];
   let ps = new kakao.maps.services.Places();
   var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+  let title;
 
   const searchStart = () => {
     return searchPlaces();
@@ -203,10 +206,16 @@ const Mappart = () => {
     cover.appendChild(contentBtn);
     contentUrl.appendChild(contentUrlA);
     cover.appendChild(contentUrl);
-
     infowindow.setContent(cover);
     infowindow.open(map, marker);
     contentBtn.onclick = function () {
+      let titleName = document.getElementById("titleName");
+      titleName.innerHTML = title;
+
+      let addressName = document.getElementById("addressName");
+      addressName.innerHTML = address;
+
+      let memo = document.getElementById("memo");
       console.log({ title, url, category: cate, address, road_address, y, x });
     };
   }
@@ -215,6 +224,18 @@ const Mappart = () => {
       el.removeChild(el.lastChild);
     }
   }
+
+  const onChange = (e, address, title) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+
+    setMemo({
+      ...memo,
+      [name]: value,
+    });
+    memo_repo.saveCard(title, address);
+  };
+  console.log(memo);
 
   useEffect(() => {
     let container = document.getElementById("map");
@@ -237,15 +258,46 @@ const Mappart = () => {
             }
           }}
         />
+        <div id="menu_wrap">
+          <ul
+            id="placesList"
+            style={{
+              overflow: "auto",
+              height: "100px",
+              position: "absolute",
+              zIndex: "10000",
+              marginTop: "350px",
+            }}
+          >
+            <div id="pagination"></div>
+          </ul>
+        </div>
       </div>
-      <div id="menu_wrap">
-        <ul id="placesList"></ul>
+      <div>
+        <Contents>
+          <h3 id="titleName"></h3>
+          <p id="addressName"></p>
+        </Contents>
+        <input
+          onChange={onChange}
+          name="memo"
+          id="memo"
+          type="text"
+          placeholder="메모 입력하기 :)"
+          style={{ padding: "30px" }}
+        />
       </div>
-      <div id="pagination"></div>
     </Container>
   );
 };
 const MenuWrap = styled.div``;
+
+const Contents = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+`;
 
 const SearchInput = styled.input`
   width: 60%;

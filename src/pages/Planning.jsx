@@ -1,7 +1,7 @@
 import React from "react";
 import Mappart from "../components/planning/Mappart";
 
-const Planning = (props) => {
+const Planning = ({ memo_repo }) => {
   return (
     <>
       <div
@@ -12,10 +12,11 @@ const Planning = (props) => {
           alignItems: "center",
           width: "420px",
           height: "100%",
-
+          // backgroundColor: "tomato",
+          // marginLeft: "1110px",
         }}
       >
-        <Mappart />
+        <Mappart memo_repo={memo_repo} />
       </div>
     </>
   );
