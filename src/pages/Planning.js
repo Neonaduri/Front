@@ -12,6 +12,13 @@ const Planning = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
   const postId = params.postId;
+  const dateCnt = useSelector((state) => state.plan.list.dateCnt);
+  const [dayNow, setDayNow] = useState(1);
+
+  let dateCntArr = [];
+  for (let i = 1; i <= dateCnt; i++) {
+    dateCntArr.push(i);
+  }
 
   useEffect(() => {
     dispatch(planAction.getRoomDB(postId));
@@ -19,27 +26,40 @@ const Planning = (props) => {
 
   return (
     <div>
-      <MappartR />
-      <Schedule />
+      <DayBtnDiv>
+        {dateCntArr.map((date, idx) => {
+          return (
+            <button
+              key={idx}
+              onClick={() => {
+                setDayNow(date);
+              }}
+            >
+              {date}일차
+            </button>
+          );
+        })}
+      </DayBtnDiv>
+      <MappartR dayNow={dayNow} />
+      <Schedule dayNow={dayNow} />
     </div>
   );
 };
 
 const DayBtnDiv = styled.div`
   z-index: 2;
-  position: absolute;
-  width: 90%;
-  left: 50%;
-  transform: translate(-50%, 0);
   display: flex;
-  justify-content: space-between;
-  margin-top: 40px;
+  width: 100%;
+  justify-content: space-around;
+  position: absolute;
+  top: 30px;
   button {
+    display: block;
+    width: 50px;
+    background-color: white;
     border: none;
-    width: 45px;
-    height: 28px;
-    background-color: green;
-    border-radius: 20px;
+    border-radius: 10px;
+    padding: 3px 5px;
   }
 `;
 export default Planning;

@@ -5,21 +5,25 @@ import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
-const Schedule = () => {
+const Schedule = ({ dayNow }) => {
   const postId = useParams().postId;
   const db = getDatabase();
   const [place, setPlace] = useState();
+  console.log(dayNow);
 
   useEffect(() => {
-    const fixedPlaceRef = ref(db, `1/allPlan/day1`);
+    const fixedPlaceRef = ref(db, `${postId}/allPlan/day${dayNow}`);
     onValue(fixedPlaceRef, (snapshot) => {
       let fixedPlace = snapshot.val();
+      console.log(fixedPlace);
       if (fixedPlace) {
         const fixedPlaceArr = Object.values(fixedPlace);
         setPlace(fixedPlaceArr);
+      } else if (fixedPlace === null) {
+        setPlace(null);
       }
     });
-  }, []);
+  }, [dayNow]);
 
   return (
     <div>

@@ -2,9 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { Map, MapMarker, MapInfoWindow } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import { getDatabase, push, ref, set, onValue } from "firebase/database";
+import { useParams } from "react-router";
 const { kakao } = window;
 
-const MappartR = () => {
+const MappartR = ({ dayNow }) => {
+  const params = useParams();
+  const postId = params.postId;
   const [info, setInfo] = useState();
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();
@@ -19,8 +22,9 @@ const MappartR = () => {
     const lat = marker.infomation.y;
     const lng = marker.infomation.x;
     const db = getDatabase();
-    set(push(ref(db, "1/allPlan/day1")), {
-      day: 1,
+
+    set(push(ref(db, `${postId}/allPlan/day${dayNow}`)), {
+      day: dayNow,
       storeTitle: title,
       url,
       category: cate,
