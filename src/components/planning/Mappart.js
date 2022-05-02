@@ -1,8 +1,9 @@
 /* global kakao */
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { getDatabase, push, ref, set } from "firebase/database";
-import { useParams } from "react-router";
+import { getDatabase, push, ref, set, onValue } from "firebase/database";
+import { useHistory, useParams } from "react-router";
+import { useSelector } from "react-redux";
 
 const { kakao } = window;
 const Mappart = () => {
@@ -11,6 +12,8 @@ const Mappart = () => {
   let markers = [];
   let ps = new kakao.maps.services.Places();
   let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+  let linePath = [];
+  let polyLine;
   const postId = useParams().postId;
 
   const searchStart = () => {
@@ -23,6 +26,7 @@ const Mappart = () => {
       alert("키워드를 입력해주세요!");
       return false;
     }
+    console.log(keyword);
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     ps.keywordSearch(keyword, placesSearchCB);
     keywordref.current.value = "";
@@ -75,8 +79,7 @@ const Mappart = () => {
     let listEl = document.getElementById("placesList"),
       menuEl = document.getElementById("menu_wrap"),
       fragment = document.createDocumentFragment(),
-      bounds = new kakao.maps.LatLngBounds(),
-      listStr = "";
+      bounds = new kakao.maps.LatLngBounds();
     removeAllChildNods(listEl);
     removeMarker();
     for (let i = 0; i < places.length; i++) {
@@ -211,22 +214,24 @@ const Mappart = () => {
     infowindow.open(map, marker);
     contentBtn.onclick = function () {
       const db = getDatabase();
-      set(push(ref(db, "postid/" + postId)), {
-        postId: postId,
-        title: "남자끼리 제주도 여행",
-        date: "2022.04.22~2022.04.24",
-        tripPlan: [
-          {
-            day: 1,
-            storeTitle: title,
-            url,
-            category: cate,
-            address,
-            road_address,
-            y,
-            x,
-          },
-        ],
+      set(push(ref(db, "1/allPlan/day1")), {
+        day: 1,
+        storeTitle: title,
+        url,
+        category: cate,
+        address,
+        road_address,
+        y,
+        x,
+      });
+      linePath.push(new kakao.maps.LatLng(y, x));
+      polyLine = new kakao.maps.Polyline({
+        map: map,
+        path: linePath,
+        strokeWeight: 4,
+        strokeColor: "#db4040",
+        strokeOpacity: 1,
+        strokeStyle: "solid",
       });
     };
   }
@@ -235,18 +240,42 @@ const Mappart = () => {
       el.removeChild(el.lastChild);
     }
   }
+  ///////////////////////////////
 
+  useEffect(() => {
+    const db = getDatabase();
+    const fixedLatLngRef = ref(db, `${postId}/allPlan/day1`);
+    onValue(fixedLatLngRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const fixedLatLngArr = Object.values(data);
+        fixedLatLngArr.map((fixed) => {
+          linePath.push(new kakao.maps.LatLng(fixed.y, fixed.x));
+        });
+      }
+    });
+    setTimeout(() => {
+      polyLine = new kakao.maps.Polyline({
+        map: map,
+        path: linePath,
+        strokeWeight: 4,
+        strokeColor: "#db4040",
+        strokeOpacity: 1,
+        strokeStyle: "solid",
+      });
+    }, 800);
+  }, [linePath.length]);
   useEffect(() => {
     let container = document.getElementById("map");
     var options = {
       center: new kakao.maps.LatLng(37.5, 127),
-      level: 10,
+      level: 7,
     };
     map = new kakao.maps.Map(container, options);
   }, []);
   return (
     <Container>
-      <div style={{ width: "100%", height: "500px" }} id="map">
+      <div style={{ width: "100%", height: "450px" }} id="map">
         <SearchInput
           placeholder="검색어를 입력해주세요"
           ref={keywordref}
@@ -265,13 +294,14 @@ const Mappart = () => {
     </Container>
   );
 };
+
 const MenuWrap = styled.div`
   height: 100px;
   overflow: auto;
   position: absolute;
   bottom: 180px;
   z-index: 10000;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.4);
 `;
 
 const SearchInput = styled.input`
