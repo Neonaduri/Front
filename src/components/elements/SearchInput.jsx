@@ -12,12 +12,11 @@ const SearchInput = () => {
 export default SearchInput;
 
 const Input = styled.input`
-  width: 700px;
+  width: 300px;
   height: 80px;
-  margin-left: 600px;
   background: #ffffff;
   border: 3px solid #a2a2a2;
   border-radius: 72px;
   font-size: 30px;
-  padding: 30px;
+  padding: 20px;
 `;

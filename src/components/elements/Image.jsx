@@ -31,19 +31,19 @@ Image.defaultProps = {
 };
 
 const AspectOutter = styled.div`
-  width: 100%;
+  width: 50%;
   height: 200px;
   min-width: 250px;
 `;
 
 const AspectInner = styled.div`
-  position: relative;
+  /* position: relative; */
   padding-top: 75%;
   height: 200px;
   overflow: hidden;
   background-image: url("${(props) => props.src}");
   background-size: cover;
-  margin: 30px;
+  margin: 20px;
   border-radius: 20px 20px 0px 0px;
   cursor: pointer;
 `;
@@ -55,7 +55,7 @@ const ImageCircle = styled.div`
   border-radius: var(--size);
   background-image: url("${(props) => props.src}");
   background-size: cover;
-  margin: 30px;
+  margin: 10px;
   cursor: pointer;
 `;
 

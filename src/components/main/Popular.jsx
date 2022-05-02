@@ -6,9 +6,9 @@ import Image from "../elements/Image";
 const Popular = () => {
   return (
     <>
-      <Title>인기있는 여행</Title>
+      <Title>인기여행</Title>
       <Container>
-        <Grid width="1920px" flex>
+        <Grid width="420px" flex>
           <br></br>
           <Wrap>
             <Image
@@ -46,7 +46,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 50px;
-  width: 100%;
+  width: 420px;
 `;
 
 const Wrap = styled.div`
@@ -57,8 +57,5 @@ const Wrap = styled.div`
 
 const Title = styled.h2`
   margin-top: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   color: #585858;
 `;

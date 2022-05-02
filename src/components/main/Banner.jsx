@@ -8,13 +8,10 @@ const Banner = (props) => {
   return (
     <>
       <Container>
-        <Grid width="1920px" is_flex>
-          <Grid bg="#eaeaea" height="350px" is_flex>
-            <Title>너나들이 핫한 부산 여행지!!</Title>
-            <Button />
-            <SearchInput />
-          </Grid>
-        </Grid>
+        <Section>
+          <Title>너나들이 핫한 부산 여행지!!</Title>
+          <Button />
+        </Section>
       </Container>
     </>
   );
@@ -22,16 +19,16 @@ const Banner = (props) => {
 
 export default Banner;
 
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-`;
+const Container = styled.div``;
 
 const Title = styled.h1`
+  padding-top: 150px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding-top: 150px;
+  align-content: center;
+`;
+
+const Section = styled.section`
+  background-color: aliceblue;
+  width: 100%;
 `;

@@ -5,45 +5,9 @@ import Grid from "../elements/Grid";
 const Location = () => {
   return (
     <>
-      <Title>지역별</Title>
+      <Title>지역별 여행 계획표</Title>
 
-      <Container>
-        <Grid width="1920px" flex>
-          <Wrap>
-            <Section>
-              <Button>
-                <Area>서울</Area>
-              </Button>
-              <Button>
-                <Area>부산</Area>
-              </Button>
-              <Button>
-                <Area>여수</Area>
-              </Button>
-              <Button>
-                <Area>강릉</Area>
-              </Button>
-              <Button>
-                <Area>전주</Area>
-              </Button>
-            </Section>
-            <Section>
-              <ButtonDown>
-                <Area>경주</Area>
-              </ButtonDown>
-              <ButtonDown>
-                <Area>제주</Area>
-              </ButtonDown>
-              <ButtonDown>
-                <Area>경주</Area>
-              </ButtonDown>
-              <ButtonDown>
-                <Area>전체</Area>
-              </ButtonDown>
-            </Section>
-          </Wrap>
-        </Grid>
-      </Container>
+      <Container></Container>
     </>
   );
 };

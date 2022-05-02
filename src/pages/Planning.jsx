@@ -13,8 +13,6 @@ const Planning = () => {
           alignItems: "center",
           width: "420px",
           height: "100%",
-          // backgroundColor: "tomato",
-          // marginLeft: "1110px",
         }}
       >
         <Mappart />

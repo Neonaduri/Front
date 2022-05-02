@@ -1,18 +1,22 @@
 /* global kakao */
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { getDatabase, push, ref, set } from "firebase/database";
 import { useParams } from "react-router";
+import Schedule from "./Schedule";
+import { useSelector } from "react-redux";
+import Grid from "../elements/Grid";
 
 const { kakao } = window;
 const Mappart = () => {
-  const [memo, setMemo] = useState("");
   let map;
   let keywordref = useRef();
   let markers = [];
   let ps = new kakao.maps.services.Places();
   let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
   const postId = useParams().postId;
+  // const memo = useSelector((state) => state.plan.memo);
+  // console.log(memo);
 
   const searchStart = () => {
     return searchPlaces();
@@ -210,32 +214,24 @@ const Mappart = () => {
     infowindow.setContent(cover);
     infowindow.open(map, marker);
     contentBtn.onclick = function () {
-      // let titleName = document.getElementById("titleName");
-      // titleName.innerHTML = title;
-
-      // let addressName = document.getElementById("addressName");
-      // addressName.innerHTML = address;
-
-      // let memo = document.getElementById("memo");
       console.log({ title, url, category: cate, address, road_address, y, x });
 
       const db = getDatabase();
-      set(push(ref(db, "postid/" + postId)), {
+      set(push(ref(db, "postId/" + postId)), {
         postId: postId,
         title: "남자끼리 제주도 여행",
         date: "2022.04.22~2022.04.24",
-        tripPlan: [
-          {
-            day: 1,
-            storeTitle: title,
-            url,
-            category: cate,
-            address,
-            road_address,
-            y,
-            x,
-          },
-        ],
+        tripPlan: {
+          day: 1,
+          storeTitle: title,
+          url,
+          category: cate,
+          address,
+          road_address,
+          y,
+          x,
+          memo: "",
+        },
       });
     };
   }
@@ -244,17 +240,6 @@ const Mappart = () => {
       el.removeChild(el.lastChild);
     }
   }
-
-  const onChange = (e, address, title) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-
-    setMemo({
-      ...memo,
-      [name]: value,
-    });
-  };
-  console.log(memo);
 
   useEffect(() => {
     let container = document.getElementById("map");
@@ -265,8 +250,15 @@ const Mappart = () => {
     map = new kakao.maps.Map(container, options);
   }, []);
   return (
-    <Container>
-      <div style={{ width: "100%", height: "500px" }} id="map">
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "350px",
+      }}
+    >
+      <Map id="map">
         <SearchInput
           placeholder="검색어를 입력해주세요"
           ref={keywordref}
@@ -288,68 +280,37 @@ const Mappart = () => {
               marginTop: "350px",
             }}
           >
-            <div id="pagination"></div>
+            {/* <div id="pagination"></div> */}
           </ul>
         </div>
-      </div>
+      </Map>
 
-      {/* <div>
-        <Contents>
-          <h3 id="titleName"></h3>
-          <p id="addressName"></p>
-        </Contents>
-        <input
-          onChange={onChange}
-          name="memo"
-          id="memo"
-          type="text"
-          placeholder="메모 입력하기 :)"
-          style={{ padding: "30px" }}
-        />
-      </div> */}
-
-      <MenuWrap id="menu_wrap">
+      {/* <MenuWrap id="menu_wrap">
         <ul id="placesList"></ul>
         <div id="pagination"></div>
-      </MenuWrap>
-    </Container>
+      </MenuWrap> */}
+    </div>
   );
 };
-const MenuWrap = styled.div`
-  height: 100px;
-  overflow: auto;
-  position: absolute;
-  bottom: 180px;
-  z-index: 10000;
-  background-color: white;
-`;
 
-const Contents = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px;
+const Map = styled.div`
+  width: 80%;
+  height: 300px;
 `;
 
 const SearchInput = styled.input`
-  width: 60%;
+  width: 100%;
   z-index: 10000;
   position: absolute;
   border-radius: 15px;
   border: none;
-  top: 10px;
-  left: 50%;
+
   font-size: 18px;
   padding: 3px 5px;
   transform: translate(-50%, 0);
   :focus {
     outline: none;
   }
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
 `;
 
 export default Mappart;
