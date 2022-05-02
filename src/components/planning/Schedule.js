@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import RTdatabase from "../../firebase";
 import { getDatabase, ref, onValue, remove, update } from "firebase/database";
 import { useParams } from "react-router";
 import styled from "styled-components";
-import { set } from "date-fns";
-import { throttle } from "lodash";
+import _ from "lodash";
 const Schedule = ({ dayNow }) => {
   const postId = useParams().postId;
   const db = getDatabase();
@@ -41,7 +40,7 @@ const Schedule = ({ dayNow }) => {
     const memoIdx = e.target.id;
     const key = placeKey[memoIdx];
     const placeRef = ref(db, `${postId}/allPlan/day${dayNow}/${key}`);
-    update(placeRef, { memo: memoInput });
+    update(placeRef, { placeMemo: memoInput });
   };
 
   return (
@@ -50,23 +49,21 @@ const Schedule = ({ dayNow }) => {
         return (
           <PlaceCard key={idx}>
             <div>
-              <span style={{ fontSize: "25px" }}>{p.storeTitle}</span>
-              <button onClick={(e) => deletePlaceClick(e)} id={idx}>
+              <span style={{ fontSize: "25px" }}>{p.placeName}</span>
+              <button onClick={deletePlaceClick} id={idx}>
                 삭제
               </button>
             </div>
             <span>{p.category}</span>
             <span>
-              <a href={p.url} target="_blank">
-                {p.storeTitle} 바로가기
+              <a href={p.placeinfoUrl} target="_blank">
+                {p.placeName} 바로가기
               </a>
             </span>
             <input
               id={idx}
-              defaultValue={p.memo}
-              onChange={(e) => {
-                changeMemoInput(e);
-              }}
+              defaultValue={p.placeMemo}
+              onChange={(e) => changeMemoInput(e)}
             ></input>
           </PlaceCard>
         );

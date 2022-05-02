@@ -7,6 +7,7 @@ export const RESP = {
     title: "남자끼리 제주도 여행",
     location: "제주도",
     theme: "힐링",
+    islike: false,
     status: 200,
   },
   IDCHECKPOST: {

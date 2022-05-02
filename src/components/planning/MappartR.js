@@ -6,27 +6,65 @@ import { useParams } from "react-router";
 const { kakao } = window;
 
 const MappartR = ({ dayNow }) => {
+  const staticMapContainerRef = useRef();
   const params = useParams();
   const postId = params.postId;
   const [info, setInfo] = useState();
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();
   const [searchPlace, setSearchPlace] = useState("");
-  let polylineArr = [];
+  const [polyLineArr, setPolyLineArr] = useState([]);
+  const [firstdayLatLng, setFirstdayLatLng] = useState();
 
-  const db = getDatabase();
-  const fixedLatLngRef = ref(db, `${postId}/allPlan/day${dayNow}`);
-  onValue(fixedLatLngRef, (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-      const fixedLatLngArr = Object.values(data);
-      fixedLatLngArr.map((fix) => {
-        polylineArr.push({ lat: fix.lat, lng: fix.lng });
-      });
-    }
-  });
+  const submitStaticMap = () => {
+    let arr = [];
+    firstdayLatLng.map((day) => {
+      arr.push({ position: new kakao.maps.LatLng(day.lat, day.lng) });
+    });
+    const staticMapContainer = staticMapContainerRef.current;
+    const staticMapOption = {
+      center: new kakao.maps.LatLng(
+        firstdayLatLng[0].lat,
+        firstdayLatLng[0].lng
+      ),
+      level: 5,
+      marker: arr,
+    };
+    const staticMap = new kakao.maps.StaticMap(
+      staticMapContainer,
+      staticMapOption
+    );
+    const formdata = new FormData();
+    formdata.append("mapImg", staticMap);
+  };
 
-  console.log(polylineArr);
+  useEffect(() => {
+    const db = getDatabase();
+    const fixedLatLngRef = ref(db, `${postId}/allPlan/day${dayNow}`);
+    onValue(fixedLatLngRef, (snapshot) => {
+      const data = snapshot.val();
+      let arr = [];
+      if (data) {
+        const fixedLatLngArr = Object.values(data);
+        fixedLatLngArr.map((fix) => {
+          arr.push({ lat: fix.lat, lng: fix.lng });
+        });
+      }
+      setPolyLineArr(arr);
+    });
+    const firstdayLatLngRef = ref(db, `${postId}/allPlan/day1`);
+    onValue(firstdayLatLngRef, (snapshot) => {
+      const firstData = snapshot.val();
+      let dayarr = [];
+      if (firstData) {
+        const firstDataLatLngArr = Object.values(firstData);
+        firstDataLatLngArr.map((day) => {
+          dayarr.push({ lat: day.lat, lng: day.lng });
+        });
+      }
+      setFirstdayLatLng(dayarr);
+    });
+  }, [dayNow]);
 
   const clickFixPlace = (marker) => {
     const title = marker.infomation.place_name;
@@ -36,18 +74,17 @@ const MappartR = ({ dayNow }) => {
     const road_address = marker.infomation.road_address_name;
     const lat = marker.infomation.y;
     const lng = marker.infomation.x;
-    polylineArr.push({ lat: lat, lng: lng });
+    // polylineArr.push({ lat: lat, lng: lng });
     const db = getDatabase();
     set(push(ref(db, `${postId}/allPlan/day${dayNow}`)), {
-      day: dayNow,
-      storeTitle: title,
-      url,
+      placeName: title,
+      placeinfoUrl: url,
       category: cate,
       address,
-      road_address,
+      roadAddress: road_address,
       lat,
       lng,
-      memo: "",
+      placeMemo: "",
     });
     setInfo(null);
   };
@@ -130,10 +167,10 @@ const MappartR = ({ dayNow }) => {
           </MapMarker>
         ))}
         <Polyline
-          path={[polylineArr]}
-          strokeWeight={5} // 선의 두께 입니다
+          path={[polyLineArr]}
+          strokeWeight={4} // 선의 두께 입니다
           strokeColor={"red"} // 선의 색깔입니다
-          strokeOpacity={0.7} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+          strokeOpacity={0.8} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
           strokeStyle={"solid"} // 선의 스타일입니다
         />
       </Map>
@@ -156,6 +193,9 @@ const MappartR = ({ dayNow }) => {
     </div>
   );
 };
+const FixPlaceMarker = styled.div`
+  z-index: 9999;
+`;
 
 const PlaceList = styled.div`
   display: flex;

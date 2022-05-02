@@ -2,6 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axiosInstance from "../../shared/request";
 import { RESP } from "../../shared/response";
+import { getDatabase, push, ref, set, onValue } from "firebase/database";
 
 //action
 const CREATEROOM = "createRoom";
@@ -28,8 +29,21 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
     //   theme,
     // });
     const response = RESP.MAKEPLANPOST;
-    dispatch(createRoom(response));
-    history.push(`/planning/${response.postId}`);
+    if (response.status === 200) {
+      const db = getDatabase();
+      set(ref(db, `${response.postId}`), {
+        postId: response.postId,
+        startDate,
+        endDate,
+        dateCnt,
+        title,
+        location,
+        theme,
+        islike: false,
+      });
+      dispatch(createRoom(response));
+      history.push(`/planning/${response.postId}`);
+    }
   };
 };
 
