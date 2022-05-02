@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
-import Mappart from "../components/planning/Mappart";
 import Schedule from "../components/planning/Schedule";
 import { planAction } from "../redux/module/plan";
 import MappartR from "../components/planning/MappartR";
