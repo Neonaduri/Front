@@ -24,17 +24,18 @@ const isLogin = createAction(ISLOGIN, (user) => ({ user }));
 const emailCheckDB = (username) => {
   return async function (dispatch, getState, { history }) {
     try {
-      // const response = await axiosInstance.post("/api/idcheck", {
-      //   username,
-      // });
-      const response = RESP.IDCHECKPOST;
+      const response = await axiosInstance.post("/api/idcheck", {
+        userName: username,
+      });
+      // const response = RESP.IDCHECKPOST;
+
       if (response.status === 200) {
         dispatch(emailCheck(true));
-      } else {
-        dispatch(emailCheck(false));
       }
     } catch (err) {
-      console.log(err.response);
+      if (err.response.data.status === "BAD_REQUEST") {
+        dispatch(emailCheck(false));
+      }
     }
   };
 };
@@ -75,17 +76,33 @@ const logInDB = (username, password) => {
 const isLoginDB = () => {
   return async function (dispatch, getState, { history }) {
     try {
-      // const response = await axiosInstance.get("/api/islogin", {
-      //   headers: {
-      //     Authorization: localStorage.getItem("token"),
-      //   },
-      // });
-      const response = RESP.ISLOGINGET;
+      const response = await axiosInstance.get("/api/islogin", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      // const response = RESP.ISLOGINGET;
+
       if (response.status === 200) {
-        dispatch(isLogin(response));
+        dispatch(isLogin(response.data));
       }
     } catch (err) {
       console.log(err.response);
+    }
+  };
+};
+const kakaoLoginDB = (code) => {
+  return async function (dispatch, getState, { history }) {
+    const response = await axiosInstance.get(
+      `/user/kakao/callback?code=${code}`
+    );
+    if (response.status === 200) {
+      const token = response.headers.authorization;
+      localStorage.setItem("token", token);
+    }
+    if (localStorage.getItem("token")) {
+      dispatch(isLoginDB());
+      history.replace("/");
     }
   };
 };
@@ -111,6 +128,8 @@ const userAction = {
   signUpDB,
   logInDB,
   isLoginDB,
+  kakaoLoginDB,
+  isLogin,
 };
 
 export { userAction };

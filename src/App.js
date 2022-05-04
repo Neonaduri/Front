@@ -11,6 +11,7 @@ import Emailcheck from "./pages/Emailcheck";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { userAction } from "./redux/module/user";
+import KakaoRedirect from "./pages/KakaoRedirect";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function App() {
         <Route path="/login" exact component={Login} />
         <Route path="/emailcheck" exact component={Emailcheck} />
         <Route path="/signup" exact component={Signup} />
+        <Route path="/user/kakao/callback" component={KakaoRedirect} />
       </ConnectedRouter>
     </>
   );

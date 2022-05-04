@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import GoogleBtn from "../components/login/GoogleBtn";
+import KakaoBtn from "../components/login/KakaoBtn";
 import { userAction } from "../redux/module/user";
 
 const Login = ({ history }) => {
@@ -48,8 +50,8 @@ const Login = ({ history }) => {
       </div>
       <div>
         <div>
-          <button>Google 로그인 하기</button>
-          <button>Kakao 로그인 하기</button>
+          <GoogleBtn></GoogleBtn>
+          <KakaoBtn></KakaoBtn>
         </div>
         <span>
           아직 회원이 아니세요?{" "}

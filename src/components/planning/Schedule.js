@@ -1,6 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import RTdatabase from "../../firebase";
-import { getDatabase, ref, onValue, remove, update } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  remove,
+  update,
+  query,
+  orderByChild,
+} from "firebase/database";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import _ from "lodash";
@@ -11,17 +19,19 @@ const Schedule = ({ dayNow }) => {
   const [placeKey, setPlaceKey] = useState();
 
   useEffect(() => {
-    const fixedPlaceRef = ref(db, `${postId}/allPlan/day${dayNow}`);
+    const fixedPlaceRef = query(
+      ref(db, `${postId}/allPlan/day${dayNow}`),
+      orderByChild("planTime")
+    );
     onValue(fixedPlaceRef, (snapshot) => {
-      let fixedPlace = snapshot.val();
-      if (fixedPlace) {
-        const fixedPlaceArr = Object.values(fixedPlace);
-        const fixedPlaceKeyArr = Object.keys(fixedPlace);
-        setPlace(fixedPlaceArr);
-        setPlaceKey(fixedPlaceKeyArr);
-      } else if (fixedPlace === null) {
-        setPlace(null);
-      }
+      let fixedPlace = [];
+      let fixedPlaceKey = [];
+      snapshot.forEach((child) => {
+        fixedPlace.push(child.val());
+        fixedPlaceKey.push(child.key);
+      });
+      setPlace(fixedPlace);
+      setPlaceKey(fixedPlaceKey);
     });
   }, [dayNow]);
 
@@ -46,9 +56,22 @@ const Schedule = ({ dayNow }) => {
   return (
     <div>
       {place?.map((p, idx) => {
+        const planTimeStr = String(p.planTime);
+        let hour;
+        let minute;
+        if (planTimeStr.length === 3) {
+          minute = planTimeStr.slice(-2);
+          hour = planTimeStr.substring(0, 1);
+        } else {
+          minute = planTimeStr.slice(-2);
+          hour = planTimeStr.substring(0, 2);
+        }
         return (
           <PlaceCard key={idx}>
             <div>
+              <span>
+                {hour}시 {minute}분
+              </span>
               <span style={{ fontSize: "25px" }}>{p.placeName}</span>
               <button onClick={deletePlaceClick} id={idx}>
                 삭제

@@ -1,12 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Map, MapMarker, MapInfoWindow, Polyline } from "react-kakao-maps-sdk";
 import styled from "styled-components";
-import { getDatabase, push, ref, set, onValue } from "firebase/database";
+import {
+  getDatabase,
+  push,
+  ref,
+  set,
+  onValue,
+  query,
+  orderByChild,
+} from "firebase/database";
 import { useParams } from "react-router";
+import Modal from "../common/Modal";
+import ModalfixTime from "../common/ModalfixTime";
 const { kakao } = window;
 
 const MappartR = ({ dayNow }) => {
-  const staticMapContainerRef = useRef();
+  const timeRef = useRef();
+  const minuteRef = useRef();
   const params = useParams();
   const postId = params.postId;
   const [info, setInfo] = useState();
@@ -14,59 +25,35 @@ const MappartR = ({ dayNow }) => {
   const [map, setMap] = useState();
   const [searchPlace, setSearchPlace] = useState("");
   const [polyLineArr, setPolyLineArr] = useState([]);
-  const [firstdayLatLng, setFirstdayLatLng] = useState();
-
-  const submitStaticMap = () => {
-    let arr = [];
-    firstdayLatLng.map((day) => {
-      arr.push({ position: new kakao.maps.LatLng(day.lat, day.lng) });
-    });
-    const staticMapContainer = staticMapContainerRef.current;
-    const staticMapOption = {
-      center: new kakao.maps.LatLng(
-        firstdayLatLng[0].lat,
-        firstdayLatLng[0].lng
-      ),
-      level: 5,
-      marker: arr,
-    };
-    const staticMap = new kakao.maps.StaticMap(
-      staticMapContainer,
-      staticMapOption
-    );
-    const formdata = new FormData();
-    formdata.append("mapImg", staticMap);
-  };
+  const [modalOpen, setModalOpen] = useState(false);
+  const [marker, setMarker] = useState();
 
   useEffect(() => {
     const db = getDatabase();
-    const fixedLatLngRef = ref(db, `${postId}/allPlan/day${dayNow}`);
+    const fixedLatLngRef = query(
+      ref(db, `${postId}/allPlan/day${dayNow}`),
+      orderByChild("planTime")
+    );
     onValue(fixedLatLngRef, (snapshot) => {
-      const data = snapshot.val();
       let arr = [];
-      if (data) {
-        const fixedLatLngArr = Object.values(data);
-        fixedLatLngArr.map((fix) => {
-          arr.push({ lat: fix.lat, lng: fix.lng });
-        });
-      }
+      snapshot.forEach((child) => {
+        let val = child.val();
+        arr.push({ lat: val.lat, lng: val.lng });
+      });
       setPolyLineArr(arr);
-    });
-    const firstdayLatLngRef = ref(db, `${postId}/allPlan/day1`);
-    onValue(firstdayLatLngRef, (snapshot) => {
-      const firstData = snapshot.val();
-      let dayarr = [];
-      if (firstData) {
-        const firstDataLatLngArr = Object.values(firstData);
-        firstDataLatLngArr.map((day) => {
-          dayarr.push({ lat: day.lat, lng: day.lng });
-        });
-      }
-      setFirstdayLatLng(dayarr);
     });
   }, [dayNow]);
 
-  const clickFixPlace = (marker) => {
+  const inputPlanTime = (marker) => {
+    setMarker(marker);
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const clickFixPlace = () => {
+    const planTime = timeRef.current.value + minuteRef.current.value;
     const title = marker.infomation.place_name;
     const url = marker.infomation.place_url;
     const cate = marker.infomation.category_name;
@@ -74,7 +61,7 @@ const MappartR = ({ dayNow }) => {
     const road_address = marker.infomation.road_address_name;
     const lat = marker.infomation.y;
     const lng = marker.infomation.x;
-    // polylineArr.push({ lat: lat, lng: lng });
+
     const db = getDatabase();
     set(push(ref(db, `${postId}/allPlan/day${dayNow}`)), {
       placeName: title,
@@ -85,8 +72,10 @@ const MappartR = ({ dayNow }) => {
       lat,
       lng,
       placeMemo: "",
+      planTime: parseInt(planTime),
     });
     setInfo(null);
+    setModalOpen(false);
   };
 
   useEffect(() => {
@@ -113,7 +102,6 @@ const MappartR = ({ dayNow }) => {
       }
     });
   }, [map, searchPlace]);
-
   return (
     <div>
       <PlaceInput
@@ -156,7 +144,8 @@ const MappartR = ({ dayNow }) => {
                 <div>
                   <button
                     onClick={() => {
-                      clickFixPlace(marker);
+                      // clickFixPlace(marker);
+                      inputPlanTime(marker);
                     }}
                   >
                     확정하기
@@ -190,11 +179,84 @@ const MappartR = ({ dayNow }) => {
           );
         })}
       </PlaceList>
+      <ModalfixTime
+        open={modalOpen}
+        close={closeModal}
+        header={
+          <TimeModal>
+            <div>
+              <select ref={timeRef}>
+                <option value="0">오전 0시</option>
+                <option value="1">오전 1시</option>
+                <option value="2">오전 2시</option>
+                <option value="3">오전 3시</option>
+                <option value="4">오전 4시</option>
+                <option value="5">오전 5시</option>
+                <option value="6">오전 6시</option>
+                <option value="7">오전 7시</option>
+                <option value="8">오전 8시</option>
+                <option value="9">오전 9시</option>
+                <option value="10">오전 10시</option>
+                <option value="11">오전 11시</option>
+                <option value="12">오후 12시</option>
+                <option value="13">오후 1시</option>
+                <option value="14">오후 2시</option>
+                <option value="15">오후 3시</option>
+                <option value="16">오후 4시</option>
+                <option value="17">오후 5시</option>
+                <option value="18">오후 6시</option>
+                <option value="19">오후 7시</option>
+                <option value="20">오후 8시</option>
+                <option value="21">오후 9시</option>
+                <option value="22">오후 10시</option>
+                <option value="23">오후 11시</option>
+              </select>
+              <select ref={minuteRef}>
+                <option value="00">00분</option>
+                <option value="10">10분</option>
+                <option value="20">20분</option>
+                <option value="30">30분</option>
+                <option value="40">40분</option>
+                <option value="50">50분</option>
+              </select>
+            </div>
+            <div>
+              <button onClick={clickFixPlace}>플랜 확정</button>
+            </div>
+          </TimeModal>
+        }
+      ></ModalfixTime>
     </div>
   );
 };
-const FixPlaceMarker = styled.div`
-  z-index: 9999;
+
+const TimeModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  div {
+    &:first-child {
+      width: 80%;
+      display: flex;
+      justify-content: space-around;
+      select {
+        width: 40%;
+        font-size: 20px;
+      }
+    }
+    &:last-child {
+      width: 80%;
+      display: flex;
+      justify-content: space-around;
+      button {
+        margin-top: 20px;
+        width: 60%;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 20px;
+      }
+    }
+  }
 `;
 
 const PlaceList = styled.div`

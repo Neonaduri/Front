@@ -19,27 +19,31 @@ const SubmitBtn = () => {
     });
   }, []);
   const submitPlanPublic = () => {
-    console.log(fixedPlan);
-    const allPlanKeys = Object.keys(fixedPlan.allPlan);
-    const allPlanValues = Object.values(fixedPlan.allPlan);
-    let allPlan;
-    for (let i = 0; i < allPlanValues.length; i++) {
-      const key = parseInt([i]) + 1;
-      const value = Object.values(allPlanValues[i]);
-      allPlan = { ...allPlan, [key]: value };
+    if (fixedPlan.allPlan === undefined) {
+      alert("저장된 플랜이 없습니다.");
+      return;
+    } else if (fixedPlan.allPlan !== undefined) {
+      const allPlanKeys = Object.keys(fixedPlan.allPlan);
+      const allPlanValues = Object.values(fixedPlan.allPlan);
+      let allPlan;
+      for (let i = 0; i < allPlanValues.length; i++) {
+        const key = parseInt([i]) + 1;
+        const value = Object.values(allPlanValues[i]);
+        allPlan = { ...allPlan, [key]: value };
+      }
+      const data = {
+        postId: fixedPlan.postId,
+        startDate: fixedPlan.startDate,
+        endDate: fixedPlan.endDate,
+        dateCnt: fixedPlan.dateCnt,
+        title: fixedPlan.title,
+        location: fixedPlan.location,
+        theme: fixedPlan.theme,
+        islike: false,
+        allPlan: allPlan,
+      };
+      console.log(data);
     }
-    const data = {
-      postId: fixedPlan.postId,
-      startDate: fixedPlan.startDate,
-      endDate: fixedPlan.endDate,
-      dateCnt: fixedPlan.dateCnt,
-      title: fixedPlan.title,
-      location: fixedPlan.location,
-      theme: fixedPlan.theme,
-      islike: false,
-      allPlan: allPlan,
-    };
-    console.log(data);
   };
   const submitPlanPrivate = () => {};
 
