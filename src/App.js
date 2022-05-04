@@ -14,6 +14,8 @@ import { userAction } from "./redux/module/user";
 
 import styled from "styled-components";
 import MobileFrame from "./components/common/MobileFrame";
+import Seach from "./pages/Seach";
+import Footer from "./components/common/Footer";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -37,6 +39,8 @@ function App(props) {
             <Route path="/login" exact component={Login} />
             <Route path="/emailcheck" exact component={Emailcheck} />
             <Route path="/signup" exact component={Signup} />
+            <Route path="/search" exact component={Seach} />
+            <Footer />
           </MobileFrame>
         </ConnectedRouter>
       </Wrap>

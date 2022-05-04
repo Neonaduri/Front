@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import Footer from "../components/common/Footer";
 import Banner from "../components/main/Banner";
 import Location from "../components/main/Location";
 import MakePlan from "../components/main/MakePlan";
@@ -18,6 +19,7 @@ const MainPage = ({ history }) => {
         <MakePlan />
         <Popular />
         <Location />
+        <Footer />
       </Section>
     </>
   );
