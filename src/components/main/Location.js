@@ -5,7 +5,7 @@ import Union from "../../static/images/Union.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import ButtonArea from "../main/ButtonArea.jsx";
+import ButtonArea from "../main/ButtonArea.js";
 
 const Location = () => {
   const settings = {
