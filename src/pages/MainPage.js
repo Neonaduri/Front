@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import Grid from "../components/elements/Grid";
 import Banner from "../components/main/Banner";
 import Location from "../components/main/Location";
 import MakePlan from "../components/main/MakePlan";
 import Popular from "../components/main/Popular";
 
-const MainPage = () => {
+const MainPage = ({ history }) => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    history.push("/login");
+  }
   return (
     <>
-      <Section bg="tomato" width="420px" position="absolute">
+      <Section>
         <Banner />
         <MakePlan />
         <Popular />
@@ -22,9 +26,6 @@ const MainPage = () => {
 export default MainPage;
 
 const Section = styled.section`
-  background-color: blue;
   justify-content: center;
   align-content: center;
-  margin-left: 250px;
-  width: 420px;
 `;

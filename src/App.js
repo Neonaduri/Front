@@ -4,21 +4,52 @@ import { Route } from "react-router";
 import { history } from "./redux/store";
 import MainPage from "./pages/MainPage";
 import Planning from "./pages/Planning";
-import MyCalendar from "./components/planning/MyClaendar";
-import Grid from "./components/elements/Grid";
+import Calendar from "./pages/Calendar";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Emailcheck from "./pages/Emailcheck";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { userAction } from "./redux/module/user";
 
-function App() {
+import styled from "styled-components";
+import MobileFrame from "./components/common/MobileFrame";
+
+function App(props) {
+  const dispatch = useDispatch();
+  const is_session = localStorage.getItem("token") ? true : false;
+  const token = sessionStorage.getItem("token");
+
+  useEffect(() => {
+    if (is_session) {
+      dispatch(userAction.isLoginDB());
+    }
+  }, []);
+
   return (
     <>
-      <Grid flex>
+      <Wrap>
         <ConnectedRouter history={history}>
-          <Route path="/" exact component={MainPage} />
-          <Route path="/calendar" exact component={MyCalendar} />
-          <Route path="/planning/:postId" component={Planning} />
+          <MobileFrame className="MobileFramePage">
+            <Route path="/" exact component={MainPage} />
+            <Route path="/planning/:postId" exact component={Planning} />
+            <Route path="/planning" exact component={Calendar} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/emailcheck" exact component={Emailcheck} />
+            <Route path="/signup" exact component={Signup} />
+          </MobileFrame>
         </ConnectedRouter>
-      </Grid>
+      </Wrap>
     </>
   );
 }
 
 export default App;
+
+const Wrap = styled.div`
+  width: 100vw;
+  height: 100vh;
+  .MobileFramePage {
+    z-index: 999;
+  }
+`;

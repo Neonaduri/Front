@@ -1,9 +1,11 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
+import axiosInstance from "../../shared/request";
+import { RESP } from "../../shared/response";
 
 //action
-const UPDATEFIXEDPLACE = "updateFixedPlace";
-// const UPDATEMEMO = "memo";
+const CREATEROOM = "createRoom";
+const GETROOM = "getRoom";
 
 //init
 const init = {
@@ -11,36 +13,41 @@ const init = {
 };
 
 //action creators
-const updateFixedPlace = createAction(UPDATEFIXEDPLACE, (places) => ({
-  places,
-}));
-
-// export const updateMemo = createAction(UPDATEMEMO, (memo) => ({
-//   memo,
-// }));
+const createRoom = createAction(CREATEROOM, (room) => ({ room }));
+const getRoom = createAction(GETROOM, (room) => ({ room }));
 
 //middlewares
+const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
+  return async function (dispatch, getState, { history }) {
+    const response = RESP.MAKEPLANPOST;
+    dispatch(createRoom(response));
+    history.push(`/planning/${response.postId}`);
+  };
+};
+
+const getRoomDB = (postId) => {
+  return async function (dispatch, getState, { history }) {
+    const response = RESP.MAKEPLANGET;
+    if (response.status === 200) {
+      dispatch(createRoom(response));
+    }
+  };
+};
 
 //reducer
 export default handleActions(
   {
-    [UPDATEFIXEDPLACE]: (state, action) =>
+    [CREATEROOM]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload.places;
+        draft.list = action.payload.room;
       }),
-
-    // [UPDATEMEMO]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     draft.memo = action.payload.memo;
-    //     console.log(state);
-    //   }),
   },
   init
 );
 
 const planAction = {
-  updateFixedPlace,
-  // updateMemo,
+  createRoomDB,
+  getRoomDB,
 };
 
 export { planAction };

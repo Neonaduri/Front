@@ -1,41 +1,75 @@
 import React, { Children, useEffect, useRef, useState } from "react";
 import RTdatabase from "../../firebase";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, remove, update } from "firebase/database";
 import { useParams } from "react-router";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
-
-const Schedule = () => {
-  const dispatch = useDispatch();
-  const db = getDatabase();
+import { set } from "date-fns";
+import { throttle } from "lodash";
+const Schedule = ({ dayNow }) => {
   const postId = useParams().postId;
+  const db = getDatabase();
   const inputRef = useRef();
   const [place, setPlace] = useState();
+  const [placeKey, setPlaceKey] = useState();
 
   useEffect(() => {
-    const fixedPlaceRef = ref(db, `postId/${postId}`);
+    const fixedPlaceRef = ref(db, `${postId}/allPlan/day${dayNow}`);
     onValue(fixedPlaceRef, (snapshot) => {
       let fixedPlace = snapshot.val();
-      setPlace(Object.values(fixedPlace));
-
-      console.log(fixedPlace);
+      if (fixedPlace) {
+        const fixedPlaceArr = Object.values(fixedPlace);
+        const fixedPlaceKeyArr = Object.keys(fixedPlace);
+        setPlace(fixedPlaceArr);
+        setPlaceKey(fixedPlaceKeyArr);
+      } else if (fixedPlace === null) {
+        setPlace(null);
+      }
     });
-  }, []);
+  }, [dayNow]);
 
-  if (!place) return null;
+  const deletePlaceClick = (e) => {
+    const index = e.target.id;
+    const targetKey = placeKey[index];
+    const fixedPlaceRef = ref(
+      db,
+      `${postId}/allPlan/day${dayNow}/${targetKey}`
+    );
+    remove(fixedPlaceRef);
+  };
+
+  const changeMemoInput = (e) => {
+    const memoInput = e.target.value;
+    const memoIdx = e.target.id;
+    const key = placeKey[memoIdx];
+    const placeRef = ref(db, `${postId}/allPlan/day${dayNow}/${key}`);
+    update(placeRef, { memo: memoInput });
+  };
+
   return (
     <div>
       {place?.map((p, idx) => {
         console.log(p.tripPlan);
         return (
           <PlaceCard key={idx}>
-            <span style={{ fontSize: "25px" }}>{p.tripPlan.storeTitle}</span>
-            <span>{p.tripPlan.category}</span>
+            <div>
+              <span style={{ fontSize: "25px" }}>{p.storeTitle}</span>
+              <button onClick={(e) => deletePlaceClick(e)} id={idx}>
+                삭제
+              </button>
+            </div>
+            <span>{p.category}</span>
             <span>
-              <a href={p.tripPlan.url} target="_blank">
-                {p.tripPlan.storeTitle} 바로가기
+              <a href={p.url} target="_blank">
+                {p.storeTitle} 바로가기
               </a>
             </span>
+            <input
+              id={idx}
+              defaultValue={p.memo}
+              onChange={(e) => {
+                changeMemoInput(e);
+              }}
+            ></input>
           </PlaceCard>
         );
       })}
