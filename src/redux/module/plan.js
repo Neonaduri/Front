@@ -2,10 +2,13 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axiosInstance from "../../shared/request";
 import { RESP } from "../../shared/response";
+import { getDatabase, push, ref, set, onValue } from "firebase/database";
 
 //action
 const CREATEROOM = "createRoom";
 const GETROOM = "getRoom";
+const COMPLETEPLAN = "completePlan";
+const GETMYPLAN = "getMyPlan";
 
 //init
 const init = {
@@ -15,6 +18,7 @@ const init = {
 //action creators
 const createRoom = createAction(CREATEROOM, (room) => ({ room }));
 const getRoom = createAction(GETROOM, (room) => ({ room }));
+const getMyPlan = createAction(GETMYPLAN, (myplan) => ({ myplan }));
 
 //middlewares
 const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
@@ -28,8 +32,21 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
     //   theme,
     // });
     const response = RESP.MAKEPLANPOST;
-    dispatch(createRoom(response));
-    history.push(`/planning/${response.postId}`);
+    if (response.status === 200) {
+      const db = getDatabase();
+      set(ref(db, `${response.postId}`), {
+        postId: response.postId,
+        startDate,
+        endDate,
+        dateCnt,
+        title,
+        location,
+        theme,
+        islike: false,
+      });
+      dispatch(createRoom(response));
+      history.push(`/planning/${response.postId}`);
+    }
   };
 };
 
@@ -42,6 +59,25 @@ const getRoomDB = (postId) => {
     }
   };
 };
+const completePlanDB = (data) => {
+  return async function (dispatch, getState, { history }) {
+    // const response = await axiosInstance.put("/api/saveplan", data);
+    const response = RESP.SAVEPLANPUT;
+    if (response.status === 200) {
+      history.replace("/uploadcomplete");
+    }
+  };
+};
+
+const getMyPlanDB = () => {
+  return async function (dispatch, getState, { history }) {
+    // const response = await axiosInstance.get("/api/user/getplan");
+    const response = RESP.GETPLANGET;
+    if (response.status === 200) {
+      dispatch(getMyPlan(response));
+    }
+  };
+};
 
 //reducer
 export default handleActions(
@@ -50,6 +86,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.room;
       }),
+    [GETMYPLAN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = action.payload.myplan;
+      }),
   },
   init
 );
@@ -57,6 +97,8 @@ export default handleActions(
 const planAction = {
   createRoomDB,
   getRoomDB,
+  completePlanDB,
+  getMyPlanDB,
 };
 
 export { planAction };

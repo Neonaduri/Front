@@ -6,6 +6,7 @@ import { useParams } from "react-router";
 import Schedule from "../components/planning/Schedule";
 import { planAction } from "../redux/module/plan";
 import MappartR from "../components/planning/MappartR";
+import SubmitBtn from "../components/planning/SubmitBtn";
 
 const Planning = (props) => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const Planning = (props) => {
       </DayBtnDiv>
       <MappartR dayNow={dayNow} />
       <Schedule dayNow={dayNow} />
+      <SubmitBtn />
     </div>
   );
 };

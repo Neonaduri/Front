@@ -7,13 +7,15 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { useDispatch } from "react-redux";
 import { planAction } from "../redux/module/plan";
+import { useHistory } from "react-router";
+
 const Calendar = () => {
+  const history = useHistory();
   const moment = require("moment");
   const dispatch = useDispatch();
   const titleRef = useRef();
   const areaRef = useRef();
   const themeRef = useRef();
-
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -21,6 +23,7 @@ const Calendar = () => {
       key: "selection",
     },
   ]);
+
   const startDateRef = state[0].startDate;
   const startDate = moment(startDateRef).format("YYYY-MM-DD");
   const endDateRef = state[0].endDate;
@@ -43,6 +46,12 @@ const Calendar = () => {
       )
     );
   };
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    history.push("/login");
+  }
   return (
     <div>
       <div>
