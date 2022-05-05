@@ -23,14 +23,6 @@ const getMyPlan = createAction(GETMYPLAN, (myplan) => ({ myplan }));
 //middlewares
 const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
   return async function (dispatch, getState, { history }) {
-    // const response = await axiosInstance.post("/api/makeplan", {
-    //   startDate,
-    //   endDate,
-    //   dateCnt,
-    //   title,
-    //   location,
-    //   theme,
-    // });
     const response = RESP.MAKEPLANPOST;
     if (response.status === 200) {
       const db = getDatabase();
@@ -52,7 +44,6 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
 
 const getRoomDB = (postId) => {
   return async function (dispatch, getState, { history }) {
-    // const response = await axiosInstance.get(`/api/makeplan/${postId}`);
     const response = RESP.MAKEPLANGET;
     if (response.status === 200) {
       dispatch(createRoom(response));

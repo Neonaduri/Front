@@ -41,6 +41,7 @@ const Planning = (props) => {
         })}
       </DayBtnDiv>
       <MappartR dayNow={dayNow} />
+
       <Schedule dayNow={dayNow} />
       <SubmitBtn />
     </div>

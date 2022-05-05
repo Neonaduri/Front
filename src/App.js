@@ -18,7 +18,12 @@ import Myplan from "./pages/Myplan";
 import Mypage from "./pages/Mypage";
 import Editprofile from "./pages/Editprofile";
 
-function App() {
+import styled from "styled-components";
+import MobileFrame from "./components/common/MobileFrame";
+import Seach from "./pages/Seach";
+import Footer from "./components/common/Footer";
+
+function App(props) {
   const dispatch = useDispatch();
   const is_session = localStorage.getItem("token") ? true : false;
   const token = sessionStorage.getItem("token");
@@ -28,24 +33,41 @@ function App() {
       dispatch(userAction.isLoginDB());
     }
   }, []);
+
   return (
     <>
-      <ConnectedRouter history={history}>
-        <Route path="/" exact component={MainPage} />
-        <Route path="/planning/:postId" exact component={Planning} />
-        <Route path="/planning" exact component={Calendar} />
-        <Route path="/login" exact component={Login} />
-        <Route path="/emailcheck" exact component={Emailcheck} />
-        <Route path="/signup" exact component={Signup} />
-        <Route path="/user/kakao/callback" component={KakaoRedirect} />
-        <Route path="/user/google/callback" component={GoogleRedirect} />
-        <Route path="/uploadcomplete" component={UploadComplete} />
-        <Route path="/myplan" component={Myplan} />
-        <Route path="/mypage" component={Mypage} />
-        <Route path="/editprofile" component={Editprofile} />
-      </ConnectedRouter>
+
+      <Wrap>
+        <ConnectedRouter history={history}>
+          <MobileFrame className="MobileFramePage">
+            <Route path="/" exact component={MainPage} />
+            <Route path="/planning/:postId" exact component={Planning} />
+            <Route path="/planning" exact component={Calendar} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/emailcheck" exact component={Emailcheck} />
+            <Route path="/signup" exact component={Signup} />
+            <Route path="/search" exact component={Seach} />
+            <Route path="/user/kakao/callback" component={KakaoRedirect} />
+            <Route path="/user/google/callback" component={GoogleRedirect} />
+            <Route path="/uploadcomplete" component={UploadComplete} />
+            <Route path="/myplan" component={Myplan} />
+            <Route path="/mypage" component={Mypage} />
+            <Route path="/editprofile" component={Editprofile} />
+            <Footer />
+          </MobileFrame>
+        </ConnectedRouter>
+      </Wrap>
+
     </>
   );
 }
 
 export default App;
+
+const Wrap = styled.div`
+  width: 100vw;
+  height: 100vh;
+  .MobileFramePage {
+    z-index: 999;
+  }
+`;

@@ -4,19 +4,17 @@ import styled from "styled-components";
 const Grid = ({
   flex = false,
   gridBox = false,
-  width = "100%",
   margin = false,
   padding = false,
   bg = false,
   children = null,
   center = false,
   position = "static",
-  justify = false,
+  justify = center,
   column = "row",
 }) => {
   const styles = {
     flex: flex,
-    width: width,
     margin: margin,
     padding: padding,
     bg: bg,

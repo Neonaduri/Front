@@ -14,7 +14,6 @@ import { useParams } from "react-router";
 import Modal from "../common/Modal";
 import ModalfixTime from "../common/ModalfixTime";
 const { kakao } = window;
-
 const MappartR = ({ dayNow }) => {
   const timeRef = useRef();
   const minuteRef = useRef();

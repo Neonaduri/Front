@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Children, useEffect, useRef, useState } from "react";
 import RTdatabase from "../../firebase";
 import {
   getDatabase,
@@ -17,6 +17,7 @@ import _ from "lodash";
 const Schedule = ({ dayNow }) => {
   const postId = useParams().postId;
   const db = getDatabase();
+  const inputRef = useRef();
   const [place, setPlace] = useState();
   const [placeKey, setPlaceKey] = useState();
 
@@ -95,6 +96,7 @@ const Schedule = ({ dayNow }) => {
   return (
     <div>
       {place?.map((p, idx) => {
+
         const planTimeStr = String(p.planTime);
         let hour;
         let minute;
@@ -105,6 +107,7 @@ const Schedule = ({ dayNow }) => {
           minute = planTimeStr.slice(-2);
           hour = planTimeStr.substring(0, 2);
         }
+
         return (
           <PlaceCard key={idx}>
             <div>
