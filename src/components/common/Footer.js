@@ -30,9 +30,8 @@ const Footer = (props) => {
             계획
           </div>
           <div>마이페이지</div>
+          <Bar></Bar>
         </Box>
-
-        <Bar></Bar>
       </Total>
     </>
   );
@@ -47,7 +46,7 @@ const Total = styled.div`
   right: 0;
   height: 60px;
   width: 100%;
-  background-color: #ddd;
+  background-color: #62ce8b;
 `;
 
 const Bar = styled.div`
@@ -55,7 +54,7 @@ const Bar = styled.div`
   width: 130px;
   height: 5px;
   left: 123px;
-  top: 798px;
+  top: 598px;
   background: #000000;
   border-radius: 50px;
 `;
