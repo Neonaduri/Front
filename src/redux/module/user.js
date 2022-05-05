@@ -2,47 +2,59 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axiosInstance from "../../shared/request";
 import { RESP } from "../../shared/response";
+import jwtDecode from "jwt-decode";
 
 //action
 const EMAILCHECK = "emailCheck";
 const SIGNUP = "signup";
 const ISLOGIN = "isLogin";
+const GETLIKEDPOST = "getLikedPost";
+const GETMYREVIEW = "getMyReview";
 
 //init
 const init = {
   list: [],
   emailCheck: null,
   isLogin: false,
+  iLikedPost: null,
+  myReview: null,
 };
 
 //action creators
 const emailCheck = createAction(EMAILCHECK, (result) => ({ result }));
 const signUp = createAction(SIGNUP, (result) => ({ result }));
 const isLogin = createAction(ISLOGIN, (user) => ({ user }));
+const getLikedPost = createAction(GETLIKEDPOST, (posts) => ({ posts }));
+const getMyReview = createAction(GETMYREVIEW, (reviews) => ({ reviews }));
 
 //middlewares
 const emailCheckDB = (username) => {
   return async function (dispatch, getState, { history }) {
-    // const response = await axiosInstance.post("/api/idcheck", {
-    //   username,
-    // });
-    const response = RESP.IDCHECKPOST;
-    if (response.status === 200) {
-      dispatch(emailCheck(true));
-    } else {
-      dispatch(emailCheck(false));
+    try {
+      const response = await axiosInstance.post("/api/idcheck", {
+        userName: username,
+      });
+      // const response = RESP.IDCHECKPOST;
+
+      if (response.status === 200) {
+        dispatch(emailCheck(true));
+      }
+    } catch (err) {
+      if (err.response.data.status === "BAD_REQUEST") {
+        dispatch(emailCheck(false));
+      }
     }
   };
 };
 const signUpDB = (username, nickName, password, passwordCheck) => {
   return async function (dispatch, getState, { history }) {
-    // const response = await axiosInstance.post("/user/signup", {
-    //   username,
-    //   nickName,
-    //   password,
-    //   passwordCheck,
-    // });
-    const response = RESP.SIGNUPPOST;
+    const response = await axiosInstance.post("/user/signup", {
+      userName: username,
+      nickName,
+      password,
+      passwordCheck,
+    });
+    // const response = RESP.SIGNUPPOST;
     if (response.status === 200) {
       window.alert("회원가입 완료! 로그인 해주세요:)");
       history.replace("/login");
@@ -53,14 +65,16 @@ const signUpDB = (username, nickName, password, passwordCheck) => {
 };
 const logInDB = (username, password) => {
   return async function (dispatch, getState, { history }) {
-    // const response = await axiosInstance.post("/user/login", {
-    //   username,
-    //   password,
-    // });
-    const response = RESP.LOGINPOST;
+    const response = await axiosInstance.post("/user/login", {
+      userName: username,
+      password,
+    });
+    // const response = RESP.LOGINPOST;
     if (response.status === 200) {
-      const token = response.token;
-      localStorage.setItem(token, token);
+      const token = response.headers.authorization;
+      localStorage.setItem("token", token);
+    }
+    if (localStorage.getItem("token")) {
       dispatch(isLoginDB());
       history.replace("/");
     }
@@ -68,11 +82,81 @@ const logInDB = (username, password) => {
 };
 const isLoginDB = () => {
   return async function (dispatch, getState, { history }) {
-    // const response = await axiosInstance.get("/api/islogin");
-    const response = RESP.ISLOGINGET;
-    if (response.status === 200) {
-      dispatch(isLogin(response));
+    try {
+      // const response = await axiosInstance.get("/api/islogin", {
+      //   headers: {
+      //     Authorization: localStorage.getItem("token"),
+      //   },
+      // });
+      const response = RESP.ISLOGINGET;
+      if (response.status === 200) {
+        // dispatch(isLogin(response.data));
+        // 목데이터 교체할때 이거도 교체할 것!!
+        dispatch(isLogin(response));
+      }
+    } catch (err) {
+      // console.log(err.response);
     }
+  };
+};
+const kakaoLoginDB = (code) => {
+  return async function (dispatch, getState, { history }) {
+    const response = await axiosInstance.get(
+      `/user/kakao/callback?code=${code}`
+    );
+    if (response.status === 200) {
+      const token = response.headers.authorization;
+      localStorage.setItem("token", token);
+    }
+    if (localStorage.getItem("token")) {
+      dispatch(isLoginDB());
+      history.replace("/");
+    }
+  };
+};
+const googleLoginDB = (code) => {
+  return async function (dispatch, getState, { history }) {
+    const response = await axiosInstance.get(
+      `user/google/callback?code=${code}`
+    );
+    if (response.status === 200) {
+      const token = response.headers.authorization;
+      localStorage.setItem("token", token);
+    }
+    if (localStorage.getItem("token")) {
+      dispatch(isLoginDB());
+      history.replace("/");
+    }
+  };
+};
+
+const getMyLikePostDB = () => {
+  return async function (dispatch, getState, { history }) {
+    // const response = await axiosInstance.get("/api/user/mypage/like");
+    const response = RESP.MYPAGELIKEGET;
+    if (response.status === 200) {
+      dispatch(getLikedPost(response));
+    }
+  };
+};
+const getMyReviewDB = () => {
+  return async function (dispatch, getState, { history }) {
+    // const response = await axiosInstance.get("/api/user/mypage/review");
+    const response = RESP.MYREVIEWGET;
+    if (response) {
+      dispatch(getMyReview(response));
+    }
+  };
+};
+
+const editProfileDB = (formdata, config) => {
+  return async function (dispatch, getState, { history }) {
+    const response = await axiosInstance.put(
+      "/api/user/mypage",
+      formdata,
+      config
+    );
+    console.log(response);
   };
 };
 
@@ -88,6 +172,14 @@ export default handleActions(
         draft.list = action.payload.user;
         draft.isLogin = true;
       }),
+    [GETLIKEDPOST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.iLikedPost = action.payload.posts;
+      }),
+    [GETMYREVIEW]: (state, action) =>
+      produce(state, (draft) => {
+        draft.myReview = action.payload.reviews;
+      }),
   },
   init
 );
@@ -97,6 +189,13 @@ const userAction = {
   signUpDB,
   logInDB,
   isLoginDB,
+  kakaoLoginDB,
+  isLogin,
+  googleLoginDB,
+  emailCheck,
+  getMyLikePostDB,
+  getMyReviewDB,
+  editProfileDB,
 };
 
 export { userAction };
