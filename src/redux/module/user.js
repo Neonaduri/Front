@@ -149,6 +149,17 @@ const getMyReviewDB = () => {
   };
 };
 
+const editProfileDB = (formdata, config) => {
+  return async function (dispatch, getState, { history }) {
+    const response = await axiosInstance.put(
+      "/api/user/mypage",
+      formdata,
+      config
+    );
+    console.log(response);
+  };
+};
+
 //reducer
 export default handleActions(
   {
@@ -184,6 +195,7 @@ const userAction = {
   emailCheck,
   getMyLikePostDB,
   getMyReviewDB,
+  editProfileDB,
 };
 
 export { userAction };
