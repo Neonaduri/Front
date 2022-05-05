@@ -12,6 +12,11 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { userAction } from "./redux/module/user";
 import KakaoRedirect from "./pages/KakaoRedirect";
+import GoogleRedirect from "./pages/GoogleRedirect";
+import UploadComplete from "./pages/UploadComplete";
+import Myplan from "./pages/Myplan";
+import Mypage from "./pages/Mypage";
+import Editprofile from "./pages/Editprofile";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +38,11 @@ function App() {
         <Route path="/emailcheck" exact component={Emailcheck} />
         <Route path="/signup" exact component={Signup} />
         <Route path="/user/kakao/callback" component={KakaoRedirect} />
+        <Route path="/user/google/callback" component={GoogleRedirect} />
+        <Route path="/uploadcomplete" component={UploadComplete} />
+        <Route path="/myplan" component={Myplan} />
+        <Route path="/mypage" component={Mypage} />
+        <Route path="/editprofile" component={Editprofile} />
       </ConnectedRouter>
     </>
   );

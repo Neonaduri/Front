@@ -4,6 +4,8 @@ import { userAction } from "../redux/module/user";
 import Modal from "../components/common/Modal";
 import { useSelector } from "react-redux";
 import Signup from "./Signup";
+import { FaAngleLeft } from "react-icons/fa";
+import styled from "styled-components";
 
 const Emailcheck = ({ history }) => {
   const dispatch = useDispatch();
@@ -40,33 +42,100 @@ const Emailcheck = ({ history }) => {
   };
   return (
     <div>
-      <div>
-        <span></span>
+      <div
+        style={{
+          position: "absolute",
+          fontSize: "30px",
+          top: "10px",
+          left: "5px",
+        }}
+      >
+        <FaAngleLeft
+          onClick={() => {
+            dispatch(userAction.emailCheck(null));
+            history.push("/login");
+          }}
+        />
+      </div>
+      <Headerdiv>
         <span>회원가입</span>
-      </div>
-      <div>
-        <label htmlFor="email">사용하실 이메일을 입력해주세요.</label>
-        <input
-          id="email"
-          placeholder="아이디(이메일)"
-          ref={emailRef}
-          onChange={(e) => emailFormCheck(e)}
-        ></input>
+      </Headerdiv>
+      <Inputdiv>
+        <div>
+          <label htmlFor="email">이메일을 입력해주세요.</label>
+          <input
+            id="email"
+            placeholder="아이디(이메일)"
+            ref={emailRef}
+            onChange={(e) => emailFormCheck(e)}
+          ></input>
+        </div>
         {emailCheck === false ? <span>중복된 이메일이 존재합니다.</span> : null}
-      </div>
-      <div>
+      </Inputdiv>
+      <CheckBtndiv>
         {regExpMatch ? (
           <button onClick={checkEmailClick}>중복확인</button>
         ) : null}
-      </div>
+      </CheckBtndiv>
       <Modal
         open={modalOpen}
         close={closeModal}
         header="사용 가능한 아이디입니다."
       ></Modal>
-      {emailCheck ? <Signup email={emailRef.current.value}></Signup> : null}
+      {emailCheck ? <Signup email={emailRef.current?.value}></Signup> : null}
     </div>
   );
 };
+const CheckBtndiv = styled.div`
+  display: flex;
+  width: 80%;
+  margin: auto;
+  button {
+    width: 100%;
+    height: 40px;
+    font-size: 20px;
+    background-color: #62ce8b;
+    border: none;
+    border-radius: 7px;
+    margin-top: 10px;
+    color: white;
+    cursor: pointer;
+  }
+`;
+
+const Inputdiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  div {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    font-size: 20px;
+    input {
+      font-size: 20px;
+      height: 40px;
+      margin-bottom: 20px;
+      border: none;
+      border-bottom: 3px solid #eeeeee;
+      margin-top: 15px;
+      transition: 0.3s;
+      &:focus {
+        outline: none;
+        border-bottom: 3px solid #62ce8b;
+      }
+    }
+  }
+  span {
+    color: red;
+  }
+`;
+
+const Headerdiv = styled.div`
+  text-align: center;
+  padding: 15px 0px;
+`;
 
 export default Emailcheck;

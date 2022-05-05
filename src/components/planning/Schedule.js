@@ -8,10 +8,12 @@ import {
   update,
   query,
   orderByChild,
+  runTransaction,
 } from "firebase/database";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import _ from "lodash";
+
 const Schedule = ({ dayNow }) => {
   const postId = useParams().postId;
   const db = getDatabase();
@@ -44,13 +46,50 @@ const Schedule = ({ dayNow }) => {
     );
     remove(fixedPlaceRef);
   };
+  const minusTime = (e) => {
+    const index = e.target.id;
+    const targetKey = placeKey[index];
+    const placeRef = ref(
+      db,
+      `${postId}/allPlan/day${dayNow}/${targetKey}/planTime`
+    );
+    runTransaction(placeRef, (currentTime) => {
+      let resultTime;
+      if (currentTime < 100) {
+        return;
+      } else {
+        resultTime = currentTime - 100;
+      }
+      return resultTime;
+    });
+  };
+  const plusTime = (e) => {
+    const index = e.target.id;
+    const targetKey = placeKey[index];
+    const placeRef = ref(
+      db,
+      `${postId}/allPlan/day${dayNow}/${targetKey}/planTime`
+    );
+    runTransaction(placeRef, (currentTime) => {
+      let resultTime;
+      if (currentTime > 2300) {
+        return;
+      } else {
+        resultTime = currentTime + 100;
+      }
+      return resultTime;
+    });
+  };
 
   const changeMemoInput = (e) => {
     const memoInput = e.target.value;
     const memoIdx = e.target.id;
     const key = placeKey[memoIdx];
-    const placeRef = ref(db, `${postId}/allPlan/day${dayNow}/${key}`);
-    update(placeRef, { placeMemo: memoInput });
+    const placeRef = ref(db, `${postId}/allPlan/day${dayNow}/${key}/placeMemo`);
+    // update(placeRef, { placeMemo: memoInput });
+    runTransaction(placeRef, (currentMemo) => {
+      return memoInput;
+    });
   };
 
   return (
@@ -70,7 +109,13 @@ const Schedule = ({ dayNow }) => {
           <PlaceCard key={idx}>
             <div>
               <span>
+                <button onClick={minusTime} id={idx}>
+                  ➖
+                </button>
                 {hour}시 {minute}분
+                <button id={idx} onClick={plusTime}>
+                  ➕
+                </button>
               </span>
               <span style={{ fontSize: "25px" }}>{p.placeName}</span>
               <button onClick={deletePlaceClick} id={idx}>
@@ -85,7 +130,7 @@ const Schedule = ({ dayNow }) => {
             </span>
             <input
               id={idx}
-              defaultValue={p.placeMemo}
+              value={p.placeMemo}
               onChange={(e) => changeMemoInput(e)}
             ></input>
           </PlaceCard>
