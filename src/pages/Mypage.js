@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import Menuline from "../components/elements/Menuline";
+
 import Titleline from "../components/elements/Titleline";
-import { FaHeart } from "react-icons/fa";
+// import { FaHeart } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { userAction } from "../redux/module/user";
 import { useHistory } from "react-router";
@@ -29,7 +29,7 @@ const Mypage = () => {
         <span>{userInfo.nickName}</span>
         <span>{userInfo?.username}</span>
         <div>
-          <FaHeart style={{ color: "red", marginRight: "5px" }} />
+          {/* <FaHeart style={{ color: "red", marginRight: "5px" }} /> */}
           <span>{userInfo.totalLike}</span>
         </div>
         <button
@@ -88,8 +88,6 @@ const Mypage = () => {
           })}
         </div>
       )}
-
-      <Menuline />
     </div>
   );
 };

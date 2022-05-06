@@ -167,7 +167,7 @@ const Like = styled.div`
   align-items: center;
 `;
 
-const Cnt = styled.p`
+const Cnt = styled.div`
   margin-left: 5px;
   color: #8d8d8d;
   font-weight: 500;
@@ -220,12 +220,12 @@ const Line = styled.div`
   background: #eeeeee;
 `;
 
-const Title = styled.p`
+const Title = styled.div`
   color: #585858;
   font-weight: 500;
 `;
 
-const Div = styled.p`
+const Div = styled.div`
   color: #363636;
   /* position: relative; */
   margin-top: 50px;

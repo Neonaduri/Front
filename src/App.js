@@ -22,6 +22,7 @@ import styled from "styled-components";
 import MobileFrame from "./components/common/MobileFrame";
 import Seach from "./pages/Seach";
 import Footer from "./components/common/Footer";
+import Sound from "./components/chat/Sound";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -36,7 +37,6 @@ function App(props) {
 
   return (
     <>
-
       <Wrap>
         <ConnectedRouter history={history}>
           <MobileFrame className="MobileFramePage">
@@ -53,11 +53,11 @@ function App(props) {
             <Route path="/myplan" component={Myplan} />
             <Route path="/mypage" component={Mypage} />
             <Route path="/editprofile" component={Editprofile} />
+            <Route path="/sound" component={Sound} />
             <Footer />
           </MobileFrame>
         </ConnectedRouter>
       </Wrap>
-
     </>
   );
 }

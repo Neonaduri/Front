@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import Menuline from "../components/elements/Menuline";
 import Titleline from "../components/elements/Titleline";
 import { planAction } from "../redux/module/plan";
 
-import { FaPlus } from "react-icons/fa";
+// import { FaPlus } from "react-icons/fa";
 
 const Myplan = () => {
   const history = useHistory();
@@ -25,7 +24,7 @@ const Myplan = () => {
           history.push("/planning");
         }}
       >
-        <FaPlus style={{ fontSize: "35px", color: "white" }} />
+        {/* <FaPlus style={{ fontSize: "35px", color: "white" }} /> */}
       </Plusdiv>
       <Middlediv>
         {myAllPlan?.map((plan, idx) => {
@@ -45,7 +44,6 @@ const Myplan = () => {
           );
         })}
       </Middlediv>
-      <Menuline />
     </div>
   );
 };
