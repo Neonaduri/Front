@@ -24,12 +24,18 @@ const Footer = (props) => {
           </div>
           <div
             onClick={() => {
-              history.push("/planning");
+              history.push("/myplan");
             }}
           >
             계획
           </div>
-          <div>마이페이지</div>
+          <div
+            onClick={() => {
+              history.push("/mypage");
+            }}
+          >
+            마이페이지
+          </div>
         </Box>
 
         <Bar></Bar>

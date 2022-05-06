@@ -3,6 +3,7 @@ import { produce } from "immer";
 import axiosInstance from "../../shared/request";
 import { RESP } from "../../shared/response";
 import jwtDecode from "jwt-decode";
+import apis from "../../shared/request";
 
 //action
 const EMAILCHECK = "emailCheck";
@@ -31,7 +32,7 @@ const getMyReview = createAction(GETMYREVIEW, (reviews) => ({ reviews }));
 const emailCheckDB = (username) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const response = await axiosInstance.post("/api/idcheck", {
+      const response = await apis.axiosInstance.post("/api/idcheck", {
         userName: username,
       });
       // const response = RESP.IDCHECKPOST;
@@ -48,7 +49,7 @@ const emailCheckDB = (username) => {
 };
 const signUpDB = (username, nickName, password, passwordCheck) => {
   return async function (dispatch, getState, { history }) {
-    const response = await axiosInstance.post("/user/signup", {
+    const response = await apis.axiosInstance.post("/user/signup", {
       userName: username,
       nickName,
       password,
@@ -65,7 +66,7 @@ const signUpDB = (username, nickName, password, passwordCheck) => {
 };
 const logInDB = (username, password) => {
   return async function (dispatch, getState, { history }) {
-    const response = await axiosInstance.post("/user/login", {
+    const response = await apis.axiosInstance.post("/user/login", {
       userName: username,
       password,
     });
@@ -83,7 +84,7 @@ const logInDB = (username, password) => {
 const isLoginDB = () => {
   return async function (dispatch, getState, { history }) {
     try {
-      // const response = await axiosInstance.get("/api/islogin", {
+      // const response = await apis.axiosInstance.get("/api/islogin", {
       //   headers: {
       //     Authorization: localStorage.getItem("token"),
       //   },
@@ -101,7 +102,7 @@ const isLoginDB = () => {
 };
 const kakaoLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
-    const response = await axiosInstance.get(
+    const response = await apis.axiosInstance.get(
       `/user/kakao/callback?code=${code}`
     );
     if (response.status === 200) {
@@ -116,7 +117,7 @@ const kakaoLoginDB = (code) => {
 };
 const googleLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
-    const response = await axiosInstance.get(
+    const response = await apis.axiosInstance.get(
       `user/google/callback?code=${code}`
     );
     if (response.status === 200) {
@@ -132,7 +133,7 @@ const googleLoginDB = (code) => {
 
 const getMyLikePostDB = () => {
   return async function (dispatch, getState, { history }) {
-    // const response = await axiosInstance.get("/api/user/mypage/like");
+    // const response = await apis.axiosInstance.get("/api/user/mypage/like");
     const response = RESP.MYPAGELIKEGET;
     if (response.status === 200) {
       dispatch(getLikedPost(response));
@@ -141,7 +142,7 @@ const getMyLikePostDB = () => {
 };
 const getMyReviewDB = () => {
   return async function (dispatch, getState, { history }) {
-    // const response = await axiosInstance.get("/api/user/mypage/review");
+    // const response = await apis.axiosInstance.get("/api/user/mypage/review");
     const response = RESP.MYREVIEWGET;
     if (response) {
       dispatch(getMyReview(response));
@@ -151,7 +152,7 @@ const getMyReviewDB = () => {
 
 const editProfileDB = (formdata, config) => {
   return async function (dispatch, getState, { history }) {
-    const response = await axiosInstance.put(
+    const response = await apis.axiosInstance.put(
       "/api/user/mypage",
       formdata,
       config

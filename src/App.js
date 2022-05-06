@@ -22,6 +22,7 @@ import styled from "styled-components";
 import MobileFrame from "./components/common/MobileFrame";
 import Seach from "./pages/Seach";
 import Footer from "./components/common/Footer";
+import BeforePlan from "./pages/BeforePlan";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -36,12 +37,12 @@ function App(props) {
 
   return (
     <>
-
       <Wrap>
         <ConnectedRouter history={history}>
           <MobileFrame className="MobileFramePage">
             <Route path="/" exact component={MainPage} />
             <Route path="/planning/:postId" exact component={Planning} />
+            <Route path="/planning/:postId/join" exact component={BeforePlan} />
             <Route path="/planning" exact component={Calendar} />
             <Route path="/login" exact component={Login} />
             <Route path="/emailcheck" exact component={Emailcheck} />
@@ -57,7 +58,6 @@ function App(props) {
           </MobileFrame>
         </ConnectedRouter>
       </Wrap>
-
     </>
   );
 }

@@ -2,17 +2,16 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import Menuline from "../components/elements/Menuline";
 import Titleline from "../components/elements/Titleline";
 import { planAction } from "../redux/module/plan";
 
 import { FaPlus } from "react-icons/fa";
+import Footer from "../components/common/Footer";
 
 const Myplan = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const myAllPlan = useSelector((state) => state.plan.list.postList);
-  console.log(myAllPlan);
 
   useEffect(() => {
     dispatch(planAction.getMyPlanDB());
@@ -45,7 +44,6 @@ const Myplan = () => {
           );
         })}
       </Middlediv>
-      <Menuline />
     </div>
   );
 };

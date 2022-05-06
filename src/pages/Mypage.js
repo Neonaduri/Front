@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import Menuline from "../components/elements/Menuline";
 import Titleline from "../components/elements/Titleline";
 import { FaHeart } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { userAction } from "../redux/module/user";
 import { useHistory } from "react-router";
+import Footer from "../components/common/Footer";
 
 const Mypage = () => {
   const history = useHistory();
@@ -88,8 +88,6 @@ const Mypage = () => {
           })}
         </div>
       )}
-
-      <Menuline />
     </div>
   );
 };
