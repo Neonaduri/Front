@@ -36,6 +36,7 @@ const Footer = (props) => {
           >
             마이페이지
           </div>
+
           <Bar></Bar>
         </Box>
       </Total>

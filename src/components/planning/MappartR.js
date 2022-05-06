@@ -101,6 +101,10 @@ const MappartR = ({ dayNow }) => {
       }
     });
   }, [map, searchPlace]);
+  const copyLink = () => {
+    const url = window.location.href + "/join";
+    navigator.clipboard.writeText(url);
+  };
   return (
     <div>
       <PlaceInput
@@ -225,6 +229,7 @@ const MappartR = ({ dayNow }) => {
           </TimeModal>
         }
       ></ModalfixTime>
+      <button onClick={copyLink}>초대URL 복사하기</button>
     </div>
   );
 };

@@ -52,7 +52,7 @@ const getRoomDB = (postId) => {
 };
 const completePlanDB = (data) => {
   return async function (dispatch, getState, { history }) {
-    // const response = await axiosInstance.put("/api/saveplan", data);
+    // const response = await apis.axiosInstance.put("/api/saveplan", data);
     const response = RESP.SAVEPLANPUT;
     if (response.status === 200) {
       history.replace("/uploadcomplete");
@@ -62,7 +62,7 @@ const completePlanDB = (data) => {
 
 const getMyPlanDB = () => {
   return async function (dispatch, getState, { history }) {
-    // const response = await axiosInstance.get("/api/user/getplan");
+    // const response = await apis.axiosInstance.get("/api/user/getplan");
     const response = RESP.GETPLANGET;
     if (response.status === 200) {
       dispatch(getMyPlan(response));

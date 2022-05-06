@@ -5,13 +5,13 @@ import styled from "styled-components";
 import Titleline from "../components/elements/Titleline";
 import { planAction } from "../redux/module/plan";
 
-// import { FaPlus } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
+import Footer from "../components/common/Footer";
 
 const Myplan = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const myAllPlan = useSelector((state) => state.plan.list.postList);
-  console.log(myAllPlan);
 
   useEffect(() => {
     dispatch(planAction.getMyPlanDB());
