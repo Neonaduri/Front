@@ -8,11 +8,22 @@ const BeforePlan = () => {
   const nickNameRef = useRef();
   const params = useParams();
   const postId = params.postId;
-  let nickName;
-  const clickJoinBtn = () => {
-    nickName = nickNameRef.current.value;
+  const JWTtoken = localStorage.getItem("token");
+
+  const clickJoinPlanBtn = () => {
+    const nickName = nickNameRef.current.value;
+    const role = "SUBSCRIBER";
+    sessionStorage.setItem("OVnickName", nickName);
+    sessionStorage.setItem("OVrole", role);
     history.replace(`/planning/${postId}`);
   };
+
+  if (
+    sessionStorage.getItem("OVrole") ||
+    localStorage.getItem("OVAccessToken")
+  ) {
+    history.replace(`/planning/${postId}`);
+  }
   return (
     <Container>
       <div>
@@ -25,9 +36,8 @@ const BeforePlan = () => {
         ></input>
       </div>
       <div>
-        <button onClick={clickJoinBtn}>플랜채팅방 입장하기</button>
+        <button onClick={() => clickJoinPlanBtn()}>플랜채팅방 입장하기</button>
       </div>
-      <Openvidu nickName={nickName} />
     </Container>
   );
 };

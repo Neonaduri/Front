@@ -44,6 +44,7 @@ const Myplan = () => {
           );
         })}
       </Middlediv>
+      <Footer />
     </div>
   );
 };

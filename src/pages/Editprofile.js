@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
+import Footer from "../components/common/Footer";
 import { userAction } from "../redux/module/user";
 
 const Editprofile = () => {
@@ -100,6 +101,7 @@ const Editprofile = () => {
       >
         뒤로가기
       </button>
+      <Footer />
     </Container>
   );
 };

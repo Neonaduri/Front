@@ -5,7 +5,7 @@ import { addDays } from "date-fns";
 import { ko } from "date-fns/esm/locale";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { planAction } from "../redux/module/plan";
 import { useHistory } from "react-router";
 
@@ -16,6 +16,7 @@ const Calendar = () => {
   const titleRef = useRef();
   const areaRef = useRef();
   const themeRef = useRef();
+  const userInfo = useSelector((state) => state.user.list);
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -35,6 +36,9 @@ const Calendar = () => {
     const title = titleRef.current.value;
     const location = areaRef.current.value;
     const theme = themeRef.current.value;
+    sessionStorage.setItem("OVnickName", userInfo.nickName);
+    sessionStorage.setItem("OVrole", "MODERATOR");
+    sessionStorage.setItem("profileImgUrl", userInfo.profileImg);
     dispatch(
       planAction.createRoomDB(
         title,

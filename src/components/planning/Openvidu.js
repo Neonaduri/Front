@@ -1,15 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { OpenVidu } from "openvidu-browser";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "../../shared/request";
 import apis from "../../shared/request";
+import { useHistory, useParams } from "react-router";
 
 const Openvidu = ({ nickName }) => {
+  const history = useHistory();
+  const params = useParams();
+  const postId = params.postId;
   const dispatch = useDispatch();
   const OV = new OpenVidu();
   const session = OV.initSession();
-  console.log(nickName);
+  const OVnickName = sessionStorage.getItem("OVnickName");
+  const OVrole = sessionStorage.getItem("OVrole");
+  const [publisher, setPublisher] = useState(undefined);
+  const [publisherProfileImage, setPublisherProfileImage] = useState(undefined);
+
+  const onbeforeunload = () => {
+    alert("dddd");
+  };
+
+  window.onbeforeunload = function (e) {
+    alert("dddd");
+  };
 
   useEffect(() => {
     joinSession();
@@ -30,11 +45,11 @@ const Openvidu = ({ nickName }) => {
   };
 
   const getToken = async () => {
-    const data = {
-      roomId: 1,
-      nickName: "예령",
-      role: "MODERATOR",
-      participantCount: 4,
+    let data = {
+      roomId: postId,
+      nickName: OVnickName,
+      role: OVrole,
+      participantCount: 9999,
     };
     return await apis.axiosOVInstance
       .post("/auth/api/openvidu/getToken", data)
@@ -48,9 +63,10 @@ const Openvidu = ({ nickName }) => {
     if (session) {
       session
         .connect(token, {
-          profileImageUrl: localStorage.getItem("profileImageUrl"),
+          profileImageUrl: sessionStorage.getItem("profileImgUrl"),
         })
         .then(() => {
+          console.log("connection 완료");
           connectVoice().then((r) => r);
         });
     }
@@ -61,7 +77,20 @@ const Openvidu = ({ nickName }) => {
       const audioDevices = devices.filter((device) => {
         return device.kind === "audioinput";
       });
-      console.log(audioDevices);
+      const initPublisher = OV.initPublisher(undefined, {
+        audioSource: true,
+        videoSource: false,
+        publishAudio: true,
+        publishVideo: false,
+        resolution: "640x480",
+        frameRate: 30,
+        insertMode: "APPEND",
+        mirror: false,
+      });
+      console.log(initPublisher);
+      await session.publish(initPublisher);
+      setPublisher(initPublisher);
+      setPublisherProfileImage(sessionStorage.getItem("profileImgUrl"));
     }
   };
 
@@ -81,7 +110,9 @@ const Openvidu = ({ nickName }) => {
       });
     }
   };
-
+  if (!sessionStorage.getItem("OVrole")) {
+    history.replace(`/planning/${postId}/join`);
+  }
   return (
     <div>
       <Circle></Circle>
