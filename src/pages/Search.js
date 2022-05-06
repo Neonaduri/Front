@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/common/Footer";
-import search from "../static/images/search.png";
+import search from "../static/images/icon/search.png";
 import { keywordSuggestList } from "../components/elements/ArrValue";
 import { useDispatch } from "react-redux";
 

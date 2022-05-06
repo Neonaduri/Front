@@ -4,7 +4,7 @@ import { userAction } from "../redux/module/user";
 import Modal from "../components/common/Modal";
 import { useSelector } from "react-redux";
 import Signup from "./Signup";
-import { FaAngleLeft } from "react-icons/fa";
+// import { FaAngleLeft } from "react-icons/fa";
 import styled from "styled-components";
 
 const Emailcheck = ({ history }) => {
@@ -50,12 +50,12 @@ const Emailcheck = ({ history }) => {
           left: "5px",
         }}
       >
-        <FaAngleLeft
+        {/* <FaAngleLeft
           onClick={() => {
             dispatch(userAction.emailCheck(null));
             history.push("/login");
           }}
-        />
+        /> */}
       </div>
       <Headerdiv>
         <span>회원가입</span>

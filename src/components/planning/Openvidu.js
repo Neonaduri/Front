@@ -12,6 +12,7 @@ const Openvidu = ({ nickName }) => {
   const postId = params.postId;
   const dispatch = useDispatch();
   const OV = new OpenVidu();
+
   const session = OV.initSession();
   const OVnickName = sessionStorage.getItem("OVnickName");
   const OVrole = sessionStorage.getItem("OVrole");
@@ -34,6 +35,7 @@ const Openvidu = ({ nickName }) => {
     await connectToSession();
     await subscribeToStreamCreated();
   };
+
   const connectToSession = () => {
     getToken()
       .then((token) => {
@@ -51,14 +53,18 @@ const Openvidu = ({ nickName }) => {
       role: OVrole,
       participantCount: 9999,
     };
-    return await apis.axiosOVInstance
-      .post("/auth/api/openvidu/getToken", data)
-      .then((res) => {
-        console.log(res);
-        localStorage.setItem("OVAccessToken", res.data.token);
-        return res.data.token;
-      });
+    //서버한테 보내주는 데이터
+
+    console.log(data);
+    // return await apis.axiosOVInstance
+    //   .post("/auth/api/openvidu/getToken", data)
+    //   .then((res) => {
+    //     console.log(res);
+    //     localStorage.setItem("OVAccessToken", res.data.token);
+    //     return res.data.token;
+    //   });
   };
+
   const connect = (token) => {
     if (session) {
       session
@@ -100,6 +106,7 @@ const Openvidu = ({ nickName }) => {
         console.log("streamCreated 이벤트 실행!!!!!!!!");
         let subscriber = session.subscribe(event.stream, undefined);
         const data = subscriber.stream.connection.data.split("%")[0];
+        console.log(data);
         const imageUrl = JSON.parse(data).profileImageUrl;
         // dispatch(
         //   setRoomSubscribers({
