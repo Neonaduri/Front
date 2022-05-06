@@ -1,85 +1,191 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import Titleline from "../components/elements/Titleline";
 import { planAction } from "../redux/module/plan";
-
-import { FaPlus } from "react-icons/fa";
 import Footer from "../components/common/Footer";
+import hamburger from "../static/images/icon/hamburger.png";
+import love from "../static/images/icon/love.png";
+import talkbox from "../static/images/icon/Union.png";
+import ModalfixTime from "../components/common/ModalfixTime";
 
 const Myplan = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const myAllPlan = useSelector((state) => state.plan.list.postList);
+  const myAllPlan = useSelector((state) => state.plan.myPlanList);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [clickedId, setClickedId] = useState();
+  const moreBtnClick = (e) => {
+    setModalOpen(true);
+    setClickedId(e.target.id);
+  };
+
+  const deleteBtnClick = (e) => {
+    dispatch(planAction.deleteMyPlanDB(clickedId));
+    setModalOpen(false);
+  };
 
   useEffect(() => {
     dispatch(planAction.getMyPlanDB());
   }, []);
+  const closeModal = () => {
+    setModalOpen(false);
+  };
   return (
     <div>
-      <Titleline title={"내가 계획한 여행"} />
+      <Titleline title={"계획"} />
       <Plusdiv
         onClick={() => {
           history.push("/planning");
         }}
       >
-        {/* <FaPlus style={{ fontSize: "35px", color: "white" }} /> */}
+        <button>계획하러 가기!</button>
       </Plusdiv>
       <Middlediv>
+        <h2>나의 계획표</h2>
         {myAllPlan?.map((plan, idx) => {
           return (
             <PostCard key={idx}>
-              <div>
-                <img src={plan.postImg}></img>
-              </div>
-              <div>
-                <span>{plan.title}</span>
-                <span>
-                  {plan.startDate}~{plan.endDate}
-                </span>
-                <span>{plan.location}</span>
-              </div>
+              <UpperCarddiv>
+                <div>
+                  <span>{plan.startDate}</span>
+                  <span> ~ </span>
+                  <span>{plan.endDate}</span>
+                </div>
+                <button onClick={(e) => moreBtnClick(e)}>
+                  <img src={hamburger} id={plan.postId} />
+                </button>
+              </UpperCarddiv>
+              <BottomCarddiv>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <span>{plan.postTitle}</span>
+                  <Socialdiv>
+                    <img src={love}></img>
+                    <span>{plan.likeCnt}</span>
+                    <img src={talkbox}></img>
+                    <span>{plan.reviewCnt}</span>
+                  </Socialdiv>
+                </div>
+                <div>
+                  <button>리뷰쓰기</button>
+                </div>
+              </BottomCarddiv>
+              <ModalfixTime
+                open={modalOpen}
+                close={closeModal}
+                header={
+                  <EditModal>
+                    <div>수정하기</div>
+                    <div id={plan.postId} onClick={deleteBtnClick}>
+                      삭제하기
+                    </div>
+                  </EditModal>
+                }
+              ></ModalfixTime>
             </PostCard>
           );
         })}
       </Middlediv>
+
       <Footer />
     </div>
   );
 };
-const Plusdiv = styled.div`
-  width: 90%;
-  height: 100px;
-  background-color: #8d8d8d;
+const EditModal = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  border-radius: 20px;
-  margin: 20px auto;
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-size: 18px;
+  }
 `;
 
-const PostCard = styled.div`
-  margin-bottom: 5px;
+const Socialdiv = styled.div`
+  width: 110px;
+  height: 15px;
   display: flex;
-  img {
-    width: 210px;
-    height: 120px;
-    border-radius: 10px;
-    filter: brightness(40%);
+  justify-content: space-around;
+  align-items: center;
+  margin-left: 5px;
+  span {
+    margin-right: 10px;
   }
+`;
+
+const BottomCarddiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  align-items: center;
+  padding: 0px 10px;
   div {
-    &:last-child {
-      position: absolute;
-      height: 120px;
+    &:first-child {
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-      span {
-        color: white;
+    }
+    &:last-child {
+      button {
+        padding: 5px 15px;
+        background-color: inherit;
+        border: 1px solid #62ce8b;
+        border-radius: 8px;
+        font-size: 16px;
       }
     }
   }
+`;
+const UpperCarddiv = styled.div`
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  height: 40px;
+  button {
+    background-color: inherit;
+    border: none;
+    margin-right: 5px;
+  }
+`;
+
+const Plusdiv = styled.div`
+  width: 100%;
+  height: 130px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 5px solid #cacaca;
+  margin: 10px auto;
+  button {
+    width: 70%;
+    height: 50px;
+    background-color: #62ce8b;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 15px;
+  }
+`;
+
+const PostCard = styled.div`
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  margin: 5px 2px;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.1);
 `;
 
 const Middlediv = styled.div`

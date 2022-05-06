@@ -1,5 +1,5 @@
 import React from "react";
-import "../../assets/modal.css";
+import "../../assets/modalTime.css";
 
 const ModalfixTime = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴

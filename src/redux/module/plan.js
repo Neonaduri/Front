@@ -3,6 +3,7 @@ import { produce } from "immer";
 import axiosInstance from "../../shared/request";
 import { RESP } from "../../shared/response";
 import { getDatabase, push, ref, set, onValue } from "firebase/database";
+import apis from "../../shared/request";
 
 //action
 const CREATEROOM = "createRoom";
@@ -13,6 +14,7 @@ const GETMYPLAN = "getMyPlan";
 //init
 const init = {
   list: [],
+  myPlanList: [],
 };
 
 //action creators
@@ -64,8 +66,21 @@ const getMyPlanDB = () => {
   return async function (dispatch, getState, { history }) {
     // const response = await apis.axiosInstance.get("/api/user/getplan");
     const response = RESP.GETPLANGET;
-    if (response.status === 200) {
+    console.log(response);
+    if (response) {
       dispatch(getMyPlan(response));
+    }
+  };
+};
+const deleteMyPlanDB = (postId) => {
+  return async function (dispatch, getState, { history }) {
+    console.log(postId);
+    // const response = await apis.axiosInstance.delete(
+    //   `/api/user/delplan/${postId}`
+    // );
+    const response = RESP.DELPLANDELETE;
+    if (response.status === 200) {
+      history.push("/myplan");
     }
   };
 };
@@ -79,7 +94,7 @@ export default handleActions(
       }),
     [GETMYPLAN]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload.myplan;
+        draft.myPlanList = action.payload.myplan;
       }),
   },
   init
@@ -90,6 +105,7 @@ const planAction = {
   getRoomDB,
   completePlanDB,
   getMyPlanDB,
+  deleteMyPlanDB,
 };
 
 export { planAction };

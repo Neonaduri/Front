@@ -19,14 +19,6 @@ const Openvidu = ({ nickName }) => {
   const [publisher, setPublisher] = useState(undefined);
   const [publisherProfileImage, setPublisherProfileImage] = useState(undefined);
 
-  const onbeforeunload = () => {
-    alert("dddd");
-  };
-
-  window.onbeforeunload = function (e) {
-    alert("dddd");
-  };
-
   useEffect(() => {
     joinSession();
   }, []);

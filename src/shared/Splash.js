@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Logo from "../static/images/Logo.png";
+import Logo from "../static/images/logo/Logo.png";
 
 const Splash = () => {
   return (
