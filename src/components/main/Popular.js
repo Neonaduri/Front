@@ -225,7 +225,7 @@ const Title = styled.p`
   font-weight: 500;
 `;
 
-const Div = styled.p`
+const Div = styled.div`
   color: #363636;
   /* position: relative; */
   margin-top: 50px;

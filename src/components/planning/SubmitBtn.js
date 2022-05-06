@@ -10,6 +10,7 @@ const SubmitBtn = () => {
   const postId = useParams().postId;
   const db = getDatabase();
   const [fixedPlan, setFixedPlan] = useState();
+
   useEffect(() => {
     const fixedPlanRef = ref(db, `${postId}`);
     onValue(fixedPlanRef, (snapshot) => {

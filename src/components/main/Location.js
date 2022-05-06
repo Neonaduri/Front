@@ -183,7 +183,7 @@ const Form = styled.div`
   position: absolute;
 `;
 
-const Name = styled.p`
+const Name = styled.div`
   display: flex;
   justify-content: space-between;
   color: black;
@@ -210,7 +210,7 @@ const Like = styled.div`
   align-items: center;
 `;
 
-const Cnt = styled.p`
+const Cnt = styled.div`
   margin-left: 5px;
   color: #8d8d8d;
   font-weight: 500;
@@ -225,7 +225,7 @@ const SectionBox = styled.div`
   margin-top: 5px;
 `;
 
-const Title = styled.p`
+const Title = styled.div`
   color: #585858;
   font-weight: 700;
   margin-top: 300px;
@@ -238,7 +238,7 @@ const Div = styled.div`
   margin-right: 10px;
 `;
 
-const Plus = styled.p`
+const Plus = styled.div`
   font-size: small;
   padding-right: 40px;
   color: #363636;

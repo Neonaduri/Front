@@ -91,7 +91,7 @@ const Wrap = styled.div`
   align-items: center;
 `;
 
-const Title = styled.p`
+const Title = styled.div`
   color: #585858;
   padding-top: 40px;
   padding-left: 25px;
