@@ -24,7 +24,7 @@ const Myplan = () => {
           history.push("/planning");
         }}
       >
-        <FaPlus style={{ fontSize: "35px", color: "white" }} />
+        {/* <FaPlus style={{ fontSize: "35px", color: "white" }} /> */}
       </Plusdiv>
       <Middlediv>
         {myAllPlan?.map((plan, idx) => {

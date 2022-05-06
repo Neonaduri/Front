@@ -1,10 +1,10 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000", // 요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록
+  baseURL: "http://52.79.229.58:8080", // 요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록
 });
 
-export const axiosOVInstance = axios.create({
+const axiosOVInstance = axios.create({
   baseURL: "https://yeryung.shop",
 });
 // 가지고 있는 토큰 넣어주기!

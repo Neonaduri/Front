@@ -8,11 +8,22 @@ const BeforePlan = () => {
   const nickNameRef = useRef();
   const params = useParams();
   const postId = params.postId;
-  let nickName;
+  const [nickName, setNickName] = useState();
+
   const clickJoinBtn = () => {
-    nickName = nickNameRef.current.value;
+    sessionStorage.setItem("nickName", nickName);
+    sessionStorage.setItem("roomId", postId);
+    sessionStorage.setItem("role", "SUBSCRIBER");
+
+    //비회원 데이터정보
     history.replace(`/planning/${postId}`);
   };
+
+  const onChange = (e) => {
+    setNickName(e.target.value);
+    console.log(nickName);
+  };
+
   return (
     <Container>
       <div>
@@ -22,12 +33,12 @@ const BeforePlan = () => {
           type="text"
           placeholder="채팅방의 닉네임을 입력해주세요."
           ref={nickNameRef}
+          onChange={onChange}
         ></input>
       </div>
       <div>
         <button onClick={clickJoinBtn}>플랜채팅방 입장하기</button>
       </div>
-      <Openvidu nickName={nickName} />
     </Container>
   );
 };

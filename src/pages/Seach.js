@@ -1,11 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import search from "../static/images/search.png";
+import search from "../static/images/icon/search.png";
 
 const Seach = (props) => {
   return (
     <>
-      <Input placeholder="원하시는 여행지역을 입력해주세요 :)" />
+      <Inputbox>
+        <Input placeholder="어떤 여행 계획표를 찾으시나요?" />
+      </Inputbox>
+
       <I src={search}></I>
     </>
   );
@@ -13,30 +16,41 @@ const Seach = (props) => {
 
 export default Seach;
 
-const Input = styled.input`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0 40px;
-  position: relative;
-  width: 319px;
-  height: 36px;
-  left: calc(50% - 319px / 2);
-  top: 0;
-  background: #ebebeb;
-  border-radius: 10px;
-  flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
-  margin: 10px 0px;
-  border: none;
-  font-size: 15px;
-`;
-
 const I = styled.img`
   position: absolute;
   color: gray;
   left: 40px;
-  top: 18px;
+  top: 38px;
+`;
+
+const Input = styled.input`
+  padding: 0 35px;
+  font-size: 20px;
+
+  /* &::placeholder {
+    outline: none;
+    color: #cacaca;
+  } */
+`;
+
+const Inputbox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+  margin-top: 20px;
+
+  input {
+    font-size: 17px;
+    height: 40px;
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 2px solid #eeeeee;
+    margin-top: 10px;
+    transition: 0.3s;
+    &:focus {
+      outline: none;
+      border-bottom: 2px solid #62ce8b;
+    }
+  }
 `;

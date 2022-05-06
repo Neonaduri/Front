@@ -54,6 +54,7 @@ function App(props) {
             <Route path="/myplan" component={Myplan} />
             <Route path="/mypage" component={Mypage} />
             <Route path="/editprofile" component={Editprofile} />
+
             <Footer />
           </MobileFrame>
         </ConnectedRouter>
