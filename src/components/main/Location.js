@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import love from "../../static/images/love.png";
-import Union from "../../static/images/Union.png";
+import love from "../../static/images/icon/love.png";
+import Union from "../../static/images/icon/Union.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

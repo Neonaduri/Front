@@ -3,8 +3,8 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import love from "../../static/images/love.png";
-import Union from "../../static/images/Union.png";
+import love from "../../static/images/icon/love.png";
+import Union from "../../static/images/icon/Union.png";
 
 const Popular = (props) => {
   const settings = {

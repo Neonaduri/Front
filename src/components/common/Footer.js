@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import home from "../../static/images/icon/home.png";
+import mypage from "../../static/images/icon/mypage.png";
+import searchIcon from "../../static/images/icon/searchIcon.png";
+import plan from "../../static/images/icon/plan.png";
 
 const Footer = (props) => {
   const history = useHistory();
@@ -13,28 +17,28 @@ const Footer = (props) => {
               history.push("/");
             }}
           >
-            홈
+            <Logo src={home}></Logo>
           </div>
           <div
             onClick={() => {
               history.push("/search");
             }}
           >
-            검색
+            <Logo src={searchIcon}></Logo>
           </div>
           <div
             onClick={() => {
               history.push("/myplan");
             }}
           >
-            계획
+            <Logo src={plan}></Logo>
           </div>
           <div
             onClick={() => {
               history.push("/mypage");
             }}
           >
-            마이페이지
+            <Logo src={mypage}></Logo>
           </div>
 
           <Bar></Bar>
@@ -53,7 +57,7 @@ const Total = styled.div`
   right: 0;
   height: 60px;
   width: 100%;
-  background-color: #62ce8b;
+  background-color: white;
 `;
 
 const Bar = styled.div`
@@ -70,9 +74,13 @@ const Box = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  padding: 20px;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 18px;
-  color: #565656;
+  padding: 0 30px;
+`;
+
+const Logo = styled.img`
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  width: 50px;
 `;

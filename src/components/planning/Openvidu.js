@@ -5,11 +5,17 @@ import { useDispatch } from "react-redux";
 import axiosInstance from "../../shared/request";
 import apis from "../../shared/request";
 
-const Openvidu = ({ nickName }) => {
+const Openvidu = () => {
   const dispatch = useDispatch();
   const OV = new OpenVidu();
+
   const session = OV.initSession();
-  console.log(nickName);
+
+  const nickName = sessionStorage.getItem("nickName");
+  const roomId = sessionStorage.getItem("roomId");
+  const role = sessionStorage.getItem("role");
+
+  console.log(nickName, roomId, role);
 
   useEffect(() => {
     joinSession();
@@ -19,6 +25,7 @@ const Openvidu = ({ nickName }) => {
     await connectToSession();
     await subscribeToStreamCreated();
   };
+
   const connectToSession = () => {
     getToken()
       .then((token) => {
@@ -29,21 +36,25 @@ const Openvidu = ({ nickName }) => {
       });
   };
 
-  const getToken = async () => {
+  const getToken = async (roomId, nickName, role) => {
     const data = {
-      roomId: 1,
-      nickName: "예령",
-      role: "MODERATOR",
+      roomId: roomId,
+      nickName: nickName,
+      role: role,
       participantCount: 4,
     };
-    return await apis.axiosOVInstance
-      .post("/auth/api/openvidu/getToken", data)
-      .then((res) => {
-        console.log(res);
-        localStorage.setItem("OVAccessToken", res.data.token);
-        return res.data.token;
-      });
+    //서버한테 보내주는 데이터
+
+    console.log(data);
+    // return await apis.axiosOVInstance
+    //   .post("/auth/api/openvidu/getToken", data)
+    //   .then((res) => {
+    //     console.log(res);
+    //     localStorage.setItem("OVAccessToken", res.data.token);
+    //     return res.data.token;
+    //   });
   };
+
   const connect = (token) => {
     if (session) {
       session
@@ -51,7 +62,7 @@ const Openvidu = ({ nickName }) => {
           profileImageUrl: localStorage.getItem("profileImageUrl"),
         })
         .then(() => {
-          connectVoice().then((r) => r);
+          connectVoice().then((res) => res);
         });
     }
   };
@@ -71,6 +82,7 @@ const Openvidu = ({ nickName }) => {
         console.log("streamCreated 이벤트 실행!!!!!!!!");
         let subscriber = session.subscribe(event.stream, undefined);
         const data = subscriber.stream.connection.data.split("%")[0];
+        console.log(data);
         const imageUrl = JSON.parse(data).profileImageUrl;
         // dispatch(
         //   setRoomSubscribers({
