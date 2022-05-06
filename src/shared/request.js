@@ -14,6 +14,10 @@ if (localStorage.getItem("token")) {
   axiosInstance.defaults.headers.common["Authorization"] =
     localStorage.getItem("token");
 }
+if (localStorage.getItem("OVAccessToken")) {
+  axiosOVInstance.defaults.headers.common["Authorization"] =
+    localStorage.getItem("OVAccessToken");
+}
 
 const apis = {
   axiosInstance,

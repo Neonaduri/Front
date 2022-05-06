@@ -84,16 +84,16 @@ const logInDB = (username, password) => {
 const isLoginDB = () => {
   return async function (dispatch, getState, { history }) {
     try {
-      // const response = await apis.axiosInstance.get("/api/islogin", {
-      //   headers: {
-      //     Authorization: localStorage.getItem("token"),
-      //   },
-      // });
-      const response = RESP.ISLOGINGET;
+      const response = await apis.axiosInstance.get("/api/islogin", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      // const response = RESP.ISLOGINGET;
       if (response.status === 200) {
-        // dispatch(isLogin(response.data));
+        dispatch(isLogin(response.data));
         // 목데이터 교체할때 이거도 교체할 것!!
-        dispatch(isLogin(response));
+        // dispatch(isLogin(response));
       }
     } catch (err) {
       // console.log(err.response);
@@ -105,6 +105,7 @@ const kakaoLoginDB = (code) => {
     const response = await apis.axiosInstance.get(
       `/user/kakao/callback?code=${code}`
     );
+    console.log(response);
     if (response.status === 200) {
       const token = response.headers.authorization;
       localStorage.setItem("token", token);
@@ -120,6 +121,7 @@ const googleLoginDB = (code) => {
     const response = await apis.axiosInstance.get(
       `user/google/callback?code=${code}`
     );
+    console.log(response);
     if (response.status === 200) {
       const token = response.headers.authorization;
       localStorage.setItem("token", token);

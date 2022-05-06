@@ -1,6 +1,6 @@
 export const RESP = {
   MAKEPLANPOST: {
-    postId: 1,
+    postId: 14,
     startDate: "2022-04-22",
     endDate: "2022-04-25",
     dateCnt: 2,
@@ -29,7 +29,7 @@ export const RESP = {
     totalLike: 0,
   },
   MAKEPLANGET: {
-    postId: 1,
+    postId: 2,
     startDate: "2022-04-22",
     endDate: "2022-04-25",
     dateCnt: 2,

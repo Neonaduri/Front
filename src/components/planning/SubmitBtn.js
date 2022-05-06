@@ -79,7 +79,9 @@ const SubmitBtn = () => {
       // dispatch(planAction.completePlanDB(data));
     }
   };
-
+  if (sessionStorage.getItem("OVrole") === "SUBSCRIBER") {
+    return null;
+  }
   return (
     <Container>
       <button onClick={submitPlanPrivate}>나만보기</button>

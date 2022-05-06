@@ -1,7 +1,9 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { userAction } from "../redux/module/user";
+import closeeye from "../static/images/eye.png";
+import openeye from "../static/images/openeye.png";
 
 const Signup = (props) => {
   const dispatch = useDispatch();
@@ -9,6 +11,8 @@ const Signup = (props) => {
   const nicknameRef = useRef();
   const passRef = useRef();
   const passCheckRef = useRef();
+  const [visuable, setVisuable] = useState(false);
+  const [visuable2, setVisuable2] = useState(false);
 
   const signupBtnClick = () => {
     const nickName = nicknameRef.current.value;
@@ -35,16 +39,48 @@ const Signup = (props) => {
         <input placeholder="닉네임" id="nick" ref={nicknameRef}></input>
         <label htmlFor="password">비밀번호를 입력해주세요.</label>
         <input
+          type={visuable ? "text" : "password"}
           placeholder="4자리 이상 12자리 미만"
           id="password"
           ref={passRef}
         ></input>
+        {visuable ? (
+          <PassEyeImg
+            src={openeye}
+            onClick={() => {
+              setVisuable(false);
+            }}
+          />
+        ) : (
+          <PassEyeImg
+            src={closeeye}
+            onClick={() => {
+              setVisuable(true);
+            }}
+          />
+        )}
         <label htmlFor="passCheck">비밀번호를 다시 입력해주세요.</label>
         <input
+          type={visuable2 ? "text" : "password"}
           placeholder="비밀번호 재입력"
           id="passCheck"
           ref={passCheckRef}
         ></input>
+        {visuable2 ? (
+          <PassEyeImg2
+            src={openeye}
+            onClick={() => {
+              setVisuable2(false);
+            }}
+          />
+        ) : (
+          <PassEyeImg2
+            src={closeeye}
+            onClick={() => {
+              setVisuable2(true);
+            }}
+          />
+        )}
       </Inputbox>
       <Buttondiv>
         <button onClick={signupBtnClick}>회원가입</button>
@@ -52,17 +88,32 @@ const Signup = (props) => {
     </div>
   );
 };
+const PassEyeImg2 = styled.img`
+  width: 20px;
+  position: absolute;
+  right: 10px;
+  bottom: 28px;
+`;
+
+const PassEyeImg = styled.img`
+  width: 20px;
+  position: absolute;
+  right: 10px;
+  bottom: 122px;
+`;
+
 const Inputbox = styled.div`
   display: flex;
   flex-direction: column;
   width: 80%;
   margin: auto;
   margin-top: 20px;
+  position: relative;
   label {
     font-size: 20px;
   }
   input {
-    font-size: 20px;
+    font-size: 16px;
     height: 40px;
     margin-bottom: 20px;
     border: none;

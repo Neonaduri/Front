@@ -20,9 +20,9 @@ import Editprofile from "./pages/Editprofile";
 
 import styled from "styled-components";
 import MobileFrame from "./components/common/MobileFrame";
-import Seach from "./pages/Seach";
-import Footer from "./components/common/Footer";
+import Search from "./pages/Search";
 import BeforePlan from "./pages/BeforePlan";
+import Splash from "./shared/Splash";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -47,15 +47,13 @@ function App(props) {
             <Route path="/login" exact component={Login} />
             <Route path="/emailcheck" exact component={Emailcheck} />
             <Route path="/signup" exact component={Signup} />
-            <Route path="/search" exact component={Seach} />
+            <Route path="/search" exact component={Search} />
             <Route path="/user/kakao/callback" component={KakaoRedirect} />
             <Route path="/user/google/callback" component={GoogleRedirect} />
             <Route path="/uploadcomplete" component={UploadComplete} />
             <Route path="/myplan" component={Myplan} />
             <Route path="/mypage" component={Mypage} />
             <Route path="/editprofile" component={Editprofile} />
-
-            <Footer />
           </MobileFrame>
         </ConnectedRouter>
       </Wrap>

@@ -8,22 +8,22 @@ const BeforePlan = () => {
   const nickNameRef = useRef();
   const params = useParams();
   const postId = params.postId;
-  const [nickName, setNickName] = useState();
+  const JWTtoken = localStorage.getItem("token");
 
-  const clickJoinBtn = () => {
-    sessionStorage.setItem("nickName", nickName);
-    sessionStorage.setItem("roomId", postId);
-    sessionStorage.setItem("role", "SUBSCRIBER");
-
-    //비회원 데이터정보
+  const clickJoinPlanBtn = () => {
+    const nickName = nickNameRef.current.value;
+    const role = "SUBSCRIBER";
+    sessionStorage.setItem("OVnickName", nickName);
+    sessionStorage.setItem("OVrole", role);
     history.replace(`/planning/${postId}`);
   };
 
-  const onChange = (e) => {
-    setNickName(e.target.value);
-    console.log(nickName);
-  };
-
+  if (
+    sessionStorage.getItem("OVrole") ||
+    localStorage.getItem("OVAccessToken")
+  ) {
+    history.replace(`/planning/${postId}`);
+  }
   return (
     <Container>
       <div>
@@ -33,11 +33,10 @@ const BeforePlan = () => {
           type="text"
           placeholder="채팅방의 닉네임을 입력해주세요."
           ref={nickNameRef}
-          onChange={onChange}
         ></input>
       </div>
       <div>
-        <button onClick={clickJoinBtn}>플랜채팅방 입장하기</button>
+        <button onClick={() => clickJoinPlanBtn()}>플랜채팅방 입장하기</button>
       </div>
     </Container>
   );

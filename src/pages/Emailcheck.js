@@ -46,7 +46,7 @@ const Emailcheck = ({ history }) => {
         style={{
           position: "absolute",
           fontSize: "30px",
-          top: "10px",
+          top: "25px",
           left: "5px",
         }}
       >
@@ -74,13 +74,24 @@ const Emailcheck = ({ history }) => {
       </Inputdiv>
       <CheckBtndiv>
         {regExpMatch ? (
-          <button onClick={checkEmailClick}>중복확인</button>
+          <>
+            {emailCheck ? (
+              <button
+                onClick={checkEmailClick}
+                style={{ backgroundColor: "#cacaca" }}
+              >
+                중복체크 완료
+              </button>
+            ) : (
+              <button onClick={checkEmailClick}>중복확인</button>
+            )}
+          </>
         ) : null}
       </CheckBtndiv>
       <Modal
         open={modalOpen}
         close={closeModal}
-        header="사용 가능한 아이디입니다."
+        header="사용 가능한 이메일입니다."
       ></Modal>
       {emailCheck ? <Signup email={emailRef.current?.value}></Signup> : null}
     </div>
@@ -115,7 +126,7 @@ const Inputdiv = styled.div`
     width: 80%;
     font-size: 20px;
     input {
-      font-size: 20px;
+      font-size: 16px;
       height: 40px;
       margin-bottom: 20px;
       border: none;
@@ -136,6 +147,7 @@ const Inputdiv = styled.div`
 const Headerdiv = styled.div`
   text-align: center;
   padding: 15px 0px;
+  margin-top: 15px;
 `;
 
 export default Emailcheck;

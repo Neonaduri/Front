@@ -88,6 +88,7 @@ const Mypage = () => {
           })}
         </div>
       )}
+      <Footer />
     </div>
   );
 };
