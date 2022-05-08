@@ -22,7 +22,6 @@ import styled from "styled-components";
 import MobileFrame from "./components/common/MobileFrame";
 import Search from "./pages/Search";
 import BeforePlan from "./pages/BeforePlan";
-import Splash from "./shared/Splash";
 
 function App(props) {
   const dispatch = useDispatch();

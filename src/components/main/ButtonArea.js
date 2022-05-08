@@ -5,6 +5,12 @@ import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
 
 const ButtonArea = (props) => {
+  const onClick = (e) => {
+    console.log("클릭!");
+    const { value } = e.target;
+    console.log(value);
+  };
+
   const settings = {
     slidesToShow: 5,
     slidesToScroll: 3,
@@ -23,7 +29,9 @@ const ButtonArea = (props) => {
     <>
       <StyledSlide {...settings}>
         <div>
-          <BtnArea>서울</BtnArea>
+          <BtnArea onClick={onClick} value="서울">
+            서울
+          </BtnArea>
         </div>
         <div>
           <BtnArea>부산</BtnArea>
@@ -56,7 +64,6 @@ export default ButtonArea;
 const StyledSlide = styled(Slider)`
   position: relative;
   margin-top: 30px;
-  margin-left: 10px;
   width: 100%;
 
   .slick-list {
@@ -88,14 +95,13 @@ const StyledSlide = styled(Slider)`
 
 const BtnArea = styled.button`
   cursor: pointer;
-  position: static;
   margin-top: 10px;
   padding: 4px 10px;
   border: none;
   width: 53px;
   height: 25px;
-  left: 63px;
   color: white;
   background: #62ce8b;
   border-radius: 20px;
+  z-index: 9999;
 `;

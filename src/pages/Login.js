@@ -4,7 +4,7 @@ import styled from "styled-components";
 import GoogleBtn from "../components/login/GoogleBtn";
 import KakaoBtn from "../components/login/KakaoBtn";
 import { userAction } from "../redux/module/user";
-import Logo from "../static/images/Logo.png";
+import Logo from "../static/images/logo/Logo.png";
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();

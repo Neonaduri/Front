@@ -91,6 +91,7 @@ const isLoginDB = () => {
       });
       // const response = RESP.ISLOGINGET;
       if (response.status === 200) {
+        console.log(response);
         dispatch(isLogin(response.data));
         // 목데이터 교체할때 이거도 교체할 것!!
         // dispatch(isLogin(response));
@@ -118,6 +119,7 @@ const kakaoLoginDB = (code) => {
 };
 const googleLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
+    console.log(code);
     const response = await apis.axiosInstance.get(
       `user/google/callback?code=${code}`
     );

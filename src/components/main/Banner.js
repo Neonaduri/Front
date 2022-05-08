@@ -1,13 +1,35 @@
 import React from "react";
 import styled from "styled-components";
 import post1 from "../../static/images/bannerPost/post1.png";
+import post2 from "../../static/images/bannerPost/post2.png";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-const Banner = (props) => {
+const Banner = () => {
+  const settings = {
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: "0px",
+    arrows: true,
+    dots: true,
+    fade: false,
+    infinite: true,
+    pauseOnFocus: true,
+    pauseOnHover: true,
+    autoplay: true,
+    speed: 1000,
+  };
+
   return (
     <>
       <Container>
         <Section>
-          <Img src={post1}></Img>
+          <StyledSlide {...settings}>
+            <Img src={post1}></Img>
+            <Img src={post2}></Img>
+          </StyledSlide>
         </Section>
       </Container>
     </>
@@ -16,7 +38,9 @@ const Banner = (props) => {
 
 export default Banner;
 
-const Container = styled.div``;
+const Container = styled.div`
+  z-index: 1;
+`;
 
 const Section = styled.section`
   width: 100%;
@@ -26,4 +50,32 @@ const Section = styled.section`
 const Img = styled.img`
   background-size: cover;
   width: 100%;
+`;
+
+const StyledSlide = styled(Slider)`
+  /* position: relative; */
+  margin-top: 30px;
+  width: 100%;
+
+  .slick-list {
+    position: absolute;
+    width: 100%;
+    height: 380px;
+    margin: 0 auto;
+    top: -30px;
+  }
+
+  .slick-track {
+    display: flex;
+    height: 100%;
+  }
+
+  .slick-dots {
+    display: none !important;
+  }
+
+  .slick-arrow {
+    transform: translate(30px, 150px);
+    cursor: pointer;
+  }
 `;
