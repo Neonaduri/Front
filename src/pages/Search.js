@@ -12,8 +12,11 @@ import { useHistory } from "react-router";
 const Search = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
-
   let keyword;
+
+  const suggestBtnClick = (e) => {
+    console.log(e.target.id);
+  };
 
   const searchEnter = (e) => {
     if (e.key === "Enter") {
@@ -27,6 +30,7 @@ const Search = (props) => {
       <div>
         <Input
           placeholder="어떤 여행 계획표를 찾으시나요?"
+          // onChange={onSearch}
           onKeyPress={(e) => searchEnter(e)}
         />
         <Img
