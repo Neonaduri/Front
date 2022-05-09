@@ -36,7 +36,6 @@ const emailCheckDB = (username) => {
         userName: username,
       });
       // const response = RESP.IDCHECKPOST;
-
       if (response.status === 200) {
         dispatch(emailCheck(true));
       }
@@ -66,18 +65,24 @@ const signUpDB = (username, nickName, password, passwordCheck) => {
 };
 const logInDB = (username, password) => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.post("/user/login", {
-      userName: username,
-      password,
-    });
-    // const response = RESP.LOGINPOST;
-    if (response.status === 200) {
-      const token = response.headers.authorization;
-      localStorage.setItem("token", token);
-    }
-    if (localStorage.getItem("token")) {
-      dispatch(isLoginDB());
-      history.replace("/");
+    try {
+      const response = await apis.axiosInstance.post("/user/login", {
+        userName: username,
+        password,
+      });
+      // const response = RESP.LOGINPOST;
+      console.log(response);
+      if (response.status === 200) {
+        const token = response.headers.authorization;
+        localStorage.setItem("token", token);
+      }
+      if (localStorage.getItem("token")) {
+        dispatch(isLoginDB());
+        history.replace("/");
+      }
+    } catch (err) {
+      console.log(err);
+      window.alert(err.response.data.exception);
     }
   };
 };
@@ -89,9 +94,36 @@ const isLoginDB = () => {
           Authorization: localStorage.getItem("token"),
         },
       });
+
       // const response = RESP.ISLOGINGET;
       if (response.status === 200) {
-        dispatch(isLogin(response.data));
+        const targetUserName = response.data.userName;
+        const targetProfileImg = response.data.profileImgUrl;
+        let data;
+        if (targetUserName.indexOf('"') !== -1) {
+          const fixedUserName = targetUserName.substring(
+            1,
+            targetUserName.length - 1
+          );
+          const fixedProfileImg = targetProfileImg.substring(
+            1,
+            targetProfileImg.length - 1
+          );
+          data = {
+            nickName: response.data.nickName,
+            profileImg: fixedProfileImg,
+            totalLike: response.data.totalLike,
+            userName: fixedUserName,
+          };
+        } else {
+          data = {
+            nickName: response.data.nickName,
+            profileImg: response.data.profileImgUrl,
+            totalLike: response.data.totalLike,
+            userName: response.data.userName,
+          };
+        }
+        dispatch(isLogin(data));
         // 목데이터 교체할때 이거도 교체할 것!!
         // dispatch(isLogin(response));
       }
@@ -159,7 +191,10 @@ const editProfileDB = (formdata, config) => {
       formdata,
       config
     );
-    console.log(response);
+    if (response.status === 200) {
+      alert("프로필이 수정되었습니다.");
+      history.replace("/mypage");
+    }
   };
 };
 

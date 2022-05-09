@@ -32,15 +32,18 @@ const Myplan = () => {
   const closeModal = () => {
     setModalOpen(false);
   };
+
   return (
     <div>
       <Titleline title={"계획"} />
-      <Plusdiv
-        onClick={() => {
-          history.push("/planning");
-        }}
-      >
-        <button>계획하러 가기!</button>
+      <Plusdiv>
+        <button
+          onClick={() => {
+            history.push("/planning");
+          }}
+        >
+          계획하러 가기!
+        </button>
       </Plusdiv>
       <Middlediv>
         <h2>나의 계획표</h2>
@@ -59,6 +62,9 @@ const Myplan = () => {
               </UpperCarddiv>
               <BottomCarddiv>
                 <div
+                  onClick={() => {
+                    history.push(`/detail/${plan.postId}`);
+                  }}
                   style={{
                     display: "flex",
                     flexDirection: "column",
