@@ -79,8 +79,6 @@ export const getBestPostDB = () => {
       if (response.status === 200) {
         console.log(response);
         dispatch(getBestPost(response.data));
-        // 목데이터 교체할때 이거도 교체할 것!!
-        // dispatch(isLogin(response));
       }
     } catch (err) {
       console.log("에러!!", err);
@@ -95,7 +93,7 @@ export const getLocationPostDB = (location, pageno) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.get(
-        `/api/planning/location/"서울"/1`
+        `/api/planning/location/${location}/1`
       );
       if (response.status === 200) {
         console.log(response);
@@ -111,7 +109,7 @@ export const getLocationPostDB = (location, pageno) => {
 const getKeywordPostDB = (location) => {
   return async function (dispatch, getState, { history }) {
     try {
-      await axios.get(`urlHere/api/planning/location/${location}`);
+      await axios.get(`urlHere/api/planning/location/${location}/1`);
     } catch (err) {
       console.log("에러발생", err);
     }

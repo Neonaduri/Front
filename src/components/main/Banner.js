@@ -38,13 +38,11 @@ const Banner = () => {
 
 export default Banner;
 
-const Container = styled.div`
-  z-index: 1;
-`;
+const Container = styled.div``;
 
 const Section = styled.section`
   width: 100%;
-  height: 365px;
+  height: 335px;
 `;
 
 const Img = styled.img`
@@ -53,16 +51,12 @@ const Img = styled.img`
 `;
 
 const StyledSlide = styled(Slider)`
-  /* position: relative; */
-  margin-top: 30px;
   width: 100%;
 
   .slick-list {
-    position: absolute;
     width: 100%;
     height: 380px;
     margin: 0 auto;
-    top: -30px;
   }
 
   .slick-track {

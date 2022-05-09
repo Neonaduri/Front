@@ -12,13 +12,11 @@ import etc from "../../static/images/icon/etc.png";
 
 const MakePlan = () => {
   const history = useHistory();
-  const [select, setSelect] = useState("");
 
   const onClick = (e) => {
-    const { value } = e.target;
-    setSelect(value);
+    const theme = e.target.value;
 
-    console.log(select);
+    console.log(theme);
   };
 
   return (
@@ -128,14 +126,12 @@ const Img = styled.div`
 `;
 
 const Div = styled.div`
-  /* position: relative; */
+  position: relative;
   background-color: #ffffff;
-  height: 267px;
   border-radius: 30px 30px 0px 0px;
   box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.05);
-  /* bottom: 50px; */
-  margin-top: -100px;
-  z-index: 9999;
+  padding: 40px 0;
+  margin-bottom: 10px;
 `;
 
 const Wrap = styled.div`
@@ -146,7 +142,6 @@ const Wrap = styled.div`
 
 const Title = styled.div`
   color: #585858;
-  padding-top: 40px;
   padding-left: 25px;
   font-weight: 500;
 `;

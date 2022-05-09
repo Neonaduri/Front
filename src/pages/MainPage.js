@@ -47,40 +47,34 @@ const MainPage = ({ history }) => {
       <Section>
         <Banner />
         <MakePlan />
-        <Line />
         {/* 인기여행 */}
-        <Container>
-          <Name>
-            <Title>인기 여행</Title>
-          </Name>
-          <StyledSlide {...settings}>
-            {bestList.map((item, i) => {
-              return (
-                <div key={i}>
-                  <Popular {...item} />
-                </div>
-              );
-            })}
-          </StyledSlide>
-        </Container>
-        {/* 인기 여행 */}
-        {/* 지역별 여행 */}
-        <LoDiv>
-          <LoName>
-            <LoTitle>지역별 여행 계획표</LoTitle>
-            <Plus>더보기</Plus>
-          </LoName>
-          <ButtonArea />
-          <StyledSlide {...settings}>
-            {bestList.map((item, i) => {
-              return (
-                <div key={i}>
-                  <Location {...item} />
-                </div>
-              );
-            })}
-          </StyledSlide>
-        </LoDiv>
+        <Wrapper>
+          <Container>
+            <Name>
+              <Title>인기 여행</Title>
+            </Name>
+            <StyledSlide {...settings}>
+              {bestList.map((item, i) => {
+                return <Popular key={i} {...item} />;
+              })}
+            </StyledSlide>
+          </Container>
+          {/* 인기 여행 */}
+
+          {/* 지역별 여행 */}
+          <Container>
+            <LoName>
+              <LoTitle>지역별 여행 계획표</LoTitle>
+              <Plus>더보기</Plus>
+            </LoName>
+            <ButtonArea />
+            <StyledSlide {...settings}>
+              {bestList.map((item, i) => {
+                return <Location key={i} {...item} />;
+              })}
+            </StyledSlide>
+          </Container>
+        </Wrapper>
         {/* 지역별 여행 */}
         <Footer />
       </Section>
@@ -90,22 +84,31 @@ const MainPage = ({ history }) => {
 
 export default MainPage;
 
+const Wrapper = styled.div`
+  position: relative;
+  padding: 30px 0 90px 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fff;
+`;
+
 const StyledSlide = styled(Slider)`
   position: relative;
-  margin-top: 30px;
+  margin-top: 15px;
   width: 100%;
 
   .slick-list {
-    position: absolute;
     width: 335px;
-    height: 300px;
-    margin: 0 auto;
-    top: -30px;
   }
 
   .slick-track {
     display: flex;
     height: 100%;
+
+    div + div {
+      margin-left: 8px;
+    }
   }
 
   .slick-dots {
@@ -121,17 +124,12 @@ const StyledSlide = styled(Slider)`
 const Section = styled.section`
   justify-content: center;
   align-content: center;
+  background-color: #eeeeee;
 `;
 
 const Name = styled.div`
   display: flex;
   justify-content: space-between;
-`;
-
-const Line = styled.div`
-  width: 400px;
-  height: 10px;
-  background: #eeeeee;
 `;
 
 const Title = styled.div`
@@ -140,15 +138,14 @@ const Title = styled.div`
 `;
 
 const Container = styled.div`
-  color: #363636;
-  margin-top: 50px;
-  margin-left: 32px;
+  & + & {
+    margin-top: 30px;
+  }
 `;
 
 const LoTitle = styled.div`
   color: #585858;
   font-weight: 700;
-  margin-top: 300px;
 `;
 
 const LoName = styled.div`
@@ -157,17 +154,8 @@ const LoName = styled.div`
   color: black;
 `;
 
-const LoDiv = styled.div`
-  color: #363636;
-  margin-top: 30px;
-  padding-bottom: 20px;
-  margin-left: 25px;
-`;
-
 const Plus = styled.div`
   font-size: small;
-  padding-right: 40px;
   color: #363636;
   cursor: pointer;
-  margin-top: 300px;
 `;

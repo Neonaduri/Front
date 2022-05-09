@@ -5,27 +5,23 @@ import Union from "../../static/images/icon/Union.png";
 
 const Location = ({ postTitle, likeCnt, reviewCnt, postImgUrl }) => {
   return (
-    <>
-      <div style={{ display: "flex", position: "relative" }}>
-        <Wrap>
-          <ImagePop src={postImgUrl} />
-          <div>
-            <Content>{postTitle}</Content>
-            <SectionBox>
-              <Like>
-                <img src={love} />
-                <Cnt>{likeCnt}</Cnt>
-              </Like>
+    <Wrap>
+      <ImagePop src={postImgUrl} />
+      <div>
+        <Content>{postTitle}</Content>
+        <SectionBox>
+          <Like>
+            <img src={love} />
+            <Cnt>{likeCnt}</Cnt>
+          </Like>
 
-              <Like>
-                <img src={Union} />
-                <Cnt>{reviewCnt}</Cnt>
-              </Like>
-            </SectionBox>
-          </div>
-        </Wrap>
+          <Like>
+            <img src={Union} />
+            <Cnt>{reviewCnt}</Cnt>
+          </Like>
+        </SectionBox>
       </div>
-    </>
+    </Wrap>
   );
 };
 
@@ -33,21 +29,21 @@ export default Location;
 
 const ImagePop = styled.img`
   border-radius: 10px;
-  width: 162px;
+  width: 100%;
   height: 103px;
   object-fit: cover;
 `;
 
 const Wrap = styled.div`
-  margin-left: 4px;
-  margin-top: 20px;
+  display: "flex";
+  position: "relative";
 `;
 
 const Content = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
-  margin-top: 15px;
+  margin-top: 5px;
   margin-left: 5px;
   font-style: normal;
   font-weight: 500;
@@ -58,7 +54,7 @@ const Content = styled.div`
 `;
 
 const Like = styled.div`
-  margin-left: 10px;
+  /* margin-left: 10px; */
   display: flex;
   justify-content: left;
   align-items: center;
