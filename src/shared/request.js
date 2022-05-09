@@ -1,7 +1,12 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://52.79.229.58:8080", // 요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록
+  // baseURL: "3.36.53.246:8080",
+  baseURL: "http://localhost:4000/",
+  // json-server 가짜서버주소
+  // baseURL: "http://128.134.6.102:8080",
+
+  // 요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록
 });
 
 const axiosOVInstance = axios.create({
@@ -13,10 +18,6 @@ const axiosOVInstance = axios.create({
 if (localStorage.getItem("token")) {
   axiosInstance.defaults.headers.common["Authorization"] =
     localStorage.getItem("token");
-}
-if (localStorage.getItem("OVAccessToken")) {
-  axiosOVInstance.defaults.headers.common["Authorization"] =
-    localStorage.getItem("OVAccessToken");
 }
 
 const apis = {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Grid from "../elements/Grid";
 import styled from "styled-components";
 import { useHistory } from "react-router";
@@ -13,6 +13,12 @@ import etc from "../../static/images/icon/etc.png";
 const MakePlan = () => {
   const history = useHistory();
 
+  const onClick = (e) => {
+    const theme = e.target.value;
+
+    console.log(theme);
+  };
+
   return (
     <>
       <Div>
@@ -22,12 +28,14 @@ const MakePlan = () => {
             <Wrap>
               <Img>
                 <Icon src={healing} />
-                <Tit>힐링</Tit>
+                <Tit onClick={onClick}>힐링</Tit>
               </Img>
 
               <Img>
                 <Icon src={pet} />
-                <Tit4>애견동반</Tit4>
+                <Tit4 onClick={onClick} value="힐링">
+                  애견동반
+                </Tit4>
               </Img>
 
               <Img>
@@ -114,14 +122,16 @@ const Tit4 = styled.span`
 const Img = styled.div`
   width: 80px;
   position: relative;
+  margin: 2px;
 `;
 
 const Div = styled.div`
   position: relative;
   background-color: #ffffff;
-  height: 267px;
   border-radius: 30px 30px 0px 0px;
-  bottom: 40px;
+  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.05);
+  padding: 40px 0;
+  margin-bottom: 10px;
 `;
 
 const Wrap = styled.div`
@@ -132,7 +142,6 @@ const Wrap = styled.div`
 
 const Title = styled.div`
   color: #585858;
-  padding-top: 40px;
   padding-left: 25px;
   font-weight: 500;
 `;

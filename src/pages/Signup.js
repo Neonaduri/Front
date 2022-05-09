@@ -2,8 +2,8 @@ import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { userAction } from "../redux/module/user";
-import closeeye from "../static/images/eye.png";
-import openeye from "../static/images/openeye.png";
+import closeeye from "../static/images/icon/eye.png";
+import openeye from "../static/images/icon/openeye.png";
 
 const Signup = (props) => {
   const dispatch = useDispatch();

@@ -1,63 +1,84 @@
 import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import home from "../../static/images/icon/home.png";
-import mypage from "../../static/images/icon/mypage.png";
+import myPage from "../../static/images/icon/mypage.png";
 import searchIcon from "../../static/images/icon/searchIcon.png";
 import plan from "../../static/images/icon/plan.png";
+import beforeHome from "../../static/images/icon/beforeHome.png";
+import activeSearch from "../../static/images/icon/activeSearch.png";
+import activePlan from "../../static/images/icon/activePlan.png";
+import activeMypage from "../../static/images/icon/activeMypage.png";
 
 const Footer = (props) => {
   const history = useHistory();
+  const location = useLocation();
+
+  const getSrc = (path, defaultSrc, activeSrc) => {
+    if (path === location.pathname) {
+      return activeSrc;
+    }
+    return defaultSrc;
+  };
+
+  const navData = [
+    {
+      path: "/",
+      defaultSrc: beforeHome,
+      activeSrc: home,
+    },
+    {
+      path: "/search",
+      defaultSrc: searchIcon,
+      activeSrc: activeSearch,
+    },
+    {
+      path: "/myplan",
+      defaultSrc: plan,
+      activeSrc: activePlan,
+    },
+    {
+      path: "/mypage",
+      defaultSrc: myPage,
+      activeSrc: activeMypage,
+    },
+  ];
+
   return (
     <>
-      <Total>
-        <Box>
-          <div
-            onClick={() => {
-              history.push("/");
-            }}
-          >
-            <Logo src={home}></Logo>
-          </div>
-          <div
-            onClick={() => {
-              history.push("/search");
-            }}
-          >
-            <Logo src={searchIcon}></Logo>
-          </div>
-          <div
-            onClick={() => {
-              history.push("/myplan");
-            }}
-          >
-            <Logo src={plan}></Logo>
-          </div>
-          <div
-            onClick={() => {
-              history.push("/mypage");
-            }}
-          >
-            <Logo src={mypage}></Logo>
-          </div>
-
+      <NavWrapper>
+        <Container>
+          {navData.map(({ path, defaultSrc, activeSrc }) => (
+            <NavItem
+              onClick={() => {
+                history.push(path);
+              }}
+            >
+              <Logo src={getSrc(path, defaultSrc, activeSrc)} />
+            </NavItem>
+          ))}
           <Bar></Bar>
-        </Box>
-      </Total>
+        </Container>
+      </NavWrapper>
     </>
   );
 };
 
 export default Footer;
 
-const Total = styled.div`
+const NavWrapper = styled.footer`
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
   width: 100%;
   background-color: white;
+`;
+
+const NavItem = styled.button`
+  background-color: #fff;
+  border: none;
+  outline: none;
 `;
 
 const Bar = styled.div`
@@ -70,17 +91,16 @@ const Bar = styled.div`
   border-radius: 50px;
 `;
 
-const Box = styled.div`
+const Container = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  padding: 0 30px;
+  padding: 15px 30px;
 `;
 
 const Logo = styled.img`
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
   width: 50px;
 `;

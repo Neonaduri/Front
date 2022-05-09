@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import axios from "axios";
+import apis from "../../shared/request";
 
 // action
 const GET_BEST_POST = "GET_BEST_POST";
@@ -8,63 +9,109 @@ const GET_LOCATION_POST = "GET_LOCATION_POST";
 
 // initialState
 const initialState = {
-  list: [
+  bestList: [
     {
       postId: 1,
-      postImg: "",
-      postTitle: "게시글 제목",
+      postImgUrl:
+        "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
+      postTitle: "남친이랑 1박2일 제주여행",
       location: "부산",
-      isLike: true,
+      islike: true,
       likeCnt: 5,
-      commentCnt: 3,
+      reviewCnt: 3,
+      theme: "액티비티",
+    },
+
+    {
+      postId: 1,
+      postImgUrl:
+        "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
+      postTitle: "남친이랑 1박2일 제주여행",
+      location: "부산",
+      islike: true,
+      likeCnt: 5,
+      reviewCnt: 3,
+      theme: "액티비티",
+    },
+  ],
+  locationList: [
+    {
+      postId: 1,
+      postImgUrl:
+        "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
+      postTitle: "남친이랑 1박2일 제주여행",
+      location: "부산",
+      islike: true,
+      likeCnt: 5,
+      reviewCnt: 3,
+      theme: "액티비티",
+    },
+    {
+      postId: 1,
+      postImgUrl:
+        "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
+      postTitle: "남친이랑 1박2일 제주여행",
+      location: "부산",
+      islike: true,
+      likeCnt: 5,
+      reviewCnt: 3,
+      theme: "액티비티",
     },
   ],
 };
 
 // actionCreators
-const getBestPost = createAction(
-  GET_BEST_POST,
-  (postTitle, likeCnt, commentCnt, postImg) => ({
-    postTitle,
-    likeCnt,
-    commentCnt,
-    postImg,
-  })
-);
+const getBestPost = createAction(GET_BEST_POST, (bestList) => ({
+  bestList,
+}));
 
-const getLocationPost = createAction(
-  GET_LOCATION_POST,
-  (postTitle, likeCnt, commentCnt, postImg) => ({
-    postTitle,
-    likeCnt,
-    commentCnt,
-    postImg,
-  })
-);
+const getLocationPost = createAction(GET_LOCATION_POST, (locationList) => ({
+  locationList,
+}));
 
 // middleWares
 
-//인기 여행플랜
-const getBestPostDB = () => {
+//인기 여행플랜[메인]
+export const getBestPostDB = () => {
   return async function (dispatch, getState, { history }) {
-    dispatch(getBestPost());
     try {
-      await axios.get(`urlHere/api/planning/best`, {});
+      const response = await apis.axiosInstance.get(`/api/planning/best`);
+      if (response.status === 200) {
+        console.log(response);
+        dispatch(getBestPost(response.data));
+      }
     } catch (err) {
-      console.log("에러발생", err);
-      window.alert("해당 상품은 없는 상품입니다.");
+      console.log("에러!!", err);
     }
   };
 };
 
-//지역별 여행플랜
-const getLocationPostDB = (location) => {
+//지역별 여행플랜[메인]
+//서울 기본값, 버튼 누를때마다 location 넘겨주기
+
+export const getLocationPostDB = (location, pageno) => {
   return async function (dispatch, getState, { history }) {
     try {
-      await axios.get(`urlHere/api/planning/location/${location}`);
+      const response = await apis.axiosInstance.get(
+        `/api/planning/location/${location}/1`
+      );
+      if (response.status === 200) {
+        console.log(response);
+        dispatch(getLocationPost(response.data));
+      }
     } catch (err) {
       console.log("에러발생", err);
-      window.alert("해당 상품은 없는 상품입니다.");
+    }
+  };
+};
+
+//검색 키워드 데이터요청[검색]
+const getKeywordPostDB = (location) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      await axios.get(`urlHere/api/planning/location/${location}/1`);
+    } catch (err) {
+      console.log("에러발생", err);
     }
   };
 };
@@ -74,17 +121,11 @@ export default handleActions(
   {
     [GET_BEST_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.postImg = action.payload.postImg;
-        draft.postTitle = action.payload.postTitle;
-        draft.likeCnt = action.payload.likeCnt;
-        draft.commentCnt = action.payload.commentCnt;
+        draft.bestList.push(action.payload.bestList);
       }),
     [GET_LOCATION_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.postImg = action.payload.postImg;
-        draft.postTitle = action.payload.postTitle;
-        draft.likeCnt = action.payload.likeCnt;
-        draft.commentCnt = action.payload.commentCnt;
+        draft.locationList.push(action.payload.locationList);
       }),
   },
   initialState

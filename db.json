@@ -1,0 +1,76 @@
+{
+  "bestList": [
+    {
+      "postId": 1,
+      "postImgUrl": "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
+      "postTitle": "친구랑 떠나는 여행~!",
+      "location": "부산",
+      "islike": true,
+      "likeCnt": 5233,
+      "reviewCnt": 31,
+      "theme": "액티비티"
+    },
+    {
+      "postId": 2,
+      "postImgUrl": "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
+      "postTitle": "나홀로 서울",
+      "location": "서울",
+      "islike": true,
+      "likeCnt": 5,
+      "reviewCnt": 3,
+      "theme": "액티비티"
+    },
+    {
+      "postId": 3,
+      "postImgUrl": "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
+      "postTitle": "방콕에서의 하루!",
+      "location": "태국",
+      "islike": true,
+      "likeCnt": 512,
+      "reviewCnt": 33,
+      "theme": "액티비티"
+    },
+    {
+      "postId": 4,
+      "postImgUrl": "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
+      "postTitle": "남친이랑 1박2일 제주여행",
+      "location": "제주도",
+      "islike": true,
+      "likeCnt": 5,
+      "reviewCnt": 3,
+      "theme": "액티비티"
+    }
+  ],
+  "locationList": [
+    {
+      "postId": 1,
+      "postImgUrl": "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
+      "postTitle": "남친이랑 1박2일 제주여행",
+      "location": "부산",
+      "islike": true,
+      "likeCnt": 5,
+      "reviewCnt": 3,
+      "theme": "액티비티"
+    },
+    {
+      "postId": 2,
+      "postImgUrl": "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
+      "postTitle": "남친이랑 1박2일 제주여행",
+      "location": "부산",
+      "islike": true,
+      "likeCnt": 5,
+      "reviewCnt": 3,
+      "theme": "액티비티"
+    },
+    {
+      "postId": 3,
+      "postImgUrl": "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
+      "postTitle": "남친이랑 1박2일 제주여행",
+      "location": "제주도",
+      "islike": true,
+      "likeCnt": 5,
+      "reviewCnt": 3,
+      "theme": "액티비티"
+    }
+  ]
+}
