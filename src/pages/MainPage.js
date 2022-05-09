@@ -33,9 +33,9 @@ const MainPage = ({ history }) => {
     speed: 2000,
   };
 
-  if (!token) {
-    history.push("/login");
-  }
+  // if (!token) {
+  //   history.push("/login");
+  // }
 
   useEffect(() => {
     dispatch(getBestPostDB());
@@ -54,8 +54,9 @@ const MainPage = ({ history }) => {
               <Title>인기 여행</Title>
             </Name>
             <StyledSlide {...settings}>
-              {bestList.map((item, i) => {
-                return <Popular key={i} {...item} />;
+              {bestList.map((item, id) => {
+                console.log(bestList);
+                return <Popular key={id} {...item} />;
               })}
             </StyledSlide>
           </Container>

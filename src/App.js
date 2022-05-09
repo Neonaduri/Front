@@ -22,6 +22,7 @@ import styled from "styled-components";
 import MobileFrame from "./components/common/MobileFrame";
 import Search from "./pages/Search";
 import BeforePlan from "./pages/BeforePlan";
+import Detail from "./pages/Detail";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ function App(props) {
         <ConnectedRouter history={history}>
           <MobileFrame className="MobileFramePage">
             <Route path="/" exact component={MainPage} />
+            <Route path="/detail/:id" exact component={Detail} />
             <Route path="/planning/:postId" exact component={Planning} />
             <Route path="/planning/:postId/join" exact component={BeforePlan} />
             <Route path="/planning" exact component={Calendar} />

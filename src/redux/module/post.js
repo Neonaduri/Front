@@ -23,7 +23,7 @@ const initialState = {
     },
 
     {
-      postId: 1,
+      postId: 2,
       postImgUrl:
         "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
       postTitle: "남친이랑 1박2일 제주여행",
@@ -47,7 +47,7 @@ const initialState = {
       theme: "액티비티",
     },
     {
-      postId: 1,
+      postId: 2,
       postImgUrl:
         "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
       postTitle: "남친이랑 1박2일 제주여행",
@@ -106,10 +106,11 @@ export const getLocationPostDB = (location, pageno) => {
 };
 
 //검색 키워드 데이터요청[검색]
-const getKeywordPostDB = (location) => {
+export const getKeywordPostDB = (location) => {
   return async function (dispatch, getState, { history }) {
     try {
-      await axios.get(`urlHere/api/planning/location/${location}/1`);
+      // await axios.get(`urlHere/api/planning/location/${location}/1`);
+      await axios.get(`http://localhost:4000/locationList?q=${location}`);
     } catch (err) {
       console.log("에러발생", err);
     }

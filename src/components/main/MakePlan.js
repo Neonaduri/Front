@@ -26,9 +26,9 @@ const MakePlan = () => {
         <Container>
           <Grid flex>
             <Wrap>
-              <Img>
+              <Img onClick={onClick} value="힐링">
                 <Icon src={healing} />
-                <Tit onClick={onClick}>힐링</Tit>
+                <Tit>힐링</Tit>
               </Img>
 
               <Img>

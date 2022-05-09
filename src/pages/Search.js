@@ -8,10 +8,14 @@ import NotFound from "../shared/NotFound";
 import SearchList from "../components/search/SearchList";
 import back from "../static/images/icon/back.png";
 import { useHistory } from "react-router";
+import { getKeywordPostDB } from "../redux/module/post";
+import { useSearchParams } from "react-router";
+import axios from "axios";
 
 const Search = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
+
   let keyword;
 
   const suggestBtnClick = (e) => {
@@ -21,6 +25,8 @@ const Search = (props) => {
   const searchEnter = (e) => {
     if (e.key === "Enter") {
       keyword = e.target.value;
+
+      dispatch(getKeywordPostDB(keyword));
       console.log(keyword);
     }
   };
