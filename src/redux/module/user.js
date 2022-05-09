@@ -150,6 +150,7 @@ const kakaoLoginDB = (code) => {
 };
 const googleLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
+    console.log(code);
     const response = await apis.axiosInstance.get(
       `user/google/callback?code=${code}`
     );

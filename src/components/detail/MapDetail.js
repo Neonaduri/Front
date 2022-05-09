@@ -106,7 +106,7 @@ const InfoWindow = styled.div`
 `;
 
 const MapContainer = styled.div`
-  width: 90%;
+  width: 95%;
   margin: auto;
 `;
 

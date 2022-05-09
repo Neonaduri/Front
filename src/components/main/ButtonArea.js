@@ -3,11 +3,22 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
 
 const ButtonArea = (props) => {
+  const dispatch = useDispatch();
+
+  const onClick = (e) => {
+    // const { value } = e.target;
+    const location = e.target.value;
+
+    // dispatch(getLocationPostDB(location)) api연결
+    console.log(location);
+  };
+
   const settings = {
     slidesToShow: 5,
-    slidesToScroll: 3,
+    slidesToScroll: 5,
     centerMode: true,
     centerPadding: "0px",
     arrows: true,
@@ -20,34 +31,39 @@ const ButtonArea = (props) => {
   };
 
   return (
-    <>
-      <StyledSlide {...settings}>
-        <div>
-          <BtnArea>서울</BtnArea>
-        </div>
-        <div>
-          <BtnArea>부산</BtnArea>
-        </div>
-        <div>
-          <BtnArea>경주</BtnArea>
-        </div>
-        <div>
-          <BtnArea>전주</BtnArea>
-        </div>
-        <div>
-          <BtnArea>안동</BtnArea>
-        </div>
-        <div>
-          <BtnArea>여수</BtnArea>
-        </div>
-        <div>
-          <BtnArea>강릉</BtnArea>
-        </div>
-        <div>
-          <BtnArea>제주</BtnArea>
-        </div>
-      </StyledSlide>
-    </>
+    <StyledSlide {...settings}>
+      <BtnArea onClick={onClick} value="서울">
+        서울
+      </BtnArea>
+
+      <BtnArea onClick={onClick} value="부산">
+        부산
+      </BtnArea>
+
+      <BtnArea onClick={onClick} value="경주">
+        경주
+      </BtnArea>
+
+      <BtnArea onClick={onClick} value="전주">
+        전주
+      </BtnArea>
+
+      <BtnArea onClick={onClick} value="안동">
+        안동
+      </BtnArea>
+
+      <BtnArea onClick={onClick} value="여수">
+        여수
+      </BtnArea>
+
+      <BtnArea onClick={onClick} value="강릉">
+        강릉
+      </BtnArea>
+
+      <BtnArea onClick={onClick} value="제주">
+        제주
+      </BtnArea>
+    </StyledSlide>
   );
 };
 
@@ -55,16 +71,16 @@ export default ButtonArea;
 
 const StyledSlide = styled(Slider)`
   position: relative;
-  margin-top: 30px;
-  margin-left: 10px;
   width: 100%;
+  display: flex;
+  justify-content: center;
 
   .slick-list {
-    position: absolute;
-    width: 300px;
-    height: 370px;
-    margin: 10px 25px;
-    top: -30px;
+    width: 335px;
+
+    div + div {
+      margin-left: 5px;
+    }
   }
 
   .slick-slider {
@@ -88,13 +104,9 @@ const StyledSlide = styled(Slider)`
 
 const BtnArea = styled.button`
   cursor: pointer;
-  position: static;
   margin-top: 10px;
   padding: 4px 10px;
   border: none;
-  width: 53px;
-  height: 25px;
-  left: 63px;
   color: white;
   background: #62ce8b;
   border-radius: 20px;
