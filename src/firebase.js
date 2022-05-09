@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAuuAZzXebMaLh52q9ilBg4psaVL_j0Qq0",
-  authDomain: "neonadeuli-64a1f.firebaseapp.com",
-  databaseURL: "https://neonadeuli-64a1f-default-rtdb.firebaseio.com",
-  projectId: "neonadeuli-64a1f",
-  storageBucket: "neonadeuli-64a1f.appspot.com",
-  messagingSenderId: "407013470573",
-  appId: "1:407013470573:web:409a32551eeb6cb52c2a64",
+  apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASEURL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGINGSENDERID,
+  appId: process.env.REACT_APP_FIREBASE_APPID,
 };
 
 const app = initializeApp(firebaseConfig);

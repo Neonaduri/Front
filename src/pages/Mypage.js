@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Titleline from "../components/elements/Titleline";
-// import { FaHeart } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { userAction } from "../redux/module/user";
 import { useHistory } from "react-router";
 import Footer from "../components/common/Footer";
+import heart from "../static/images/icon/love.png";
 
 const Mypage = () => {
   const history = useHistory();
@@ -15,7 +15,6 @@ const Mypage = () => {
   const iLikedPost = useSelector((state) => state.user.iLikedPost?.postList);
   const myReview = useSelector((state) => state.user.myReview);
   const [cardList, setCardList] = useState(true);
-
   useEffect(() => {
     dispatch(userAction.getMyLikePostDB());
     dispatch(userAction.getMyReviewDB());
@@ -27,9 +26,9 @@ const Mypage = () => {
       <Myinfodiv>
         <img src={userInfo.profileImg} />
         <span>{userInfo.nickName}</span>
-        <span>{userInfo?.username}</span>
+        <small>{userInfo.userName}</small>
         <div>
-          {/* <FaHeart style={{ color: "red", marginRight: "5px" }} /> */}
+          <img src={heart} />
           <span>{userInfo.totalLike}</span>
         </div>
         <button
@@ -148,6 +147,13 @@ const Myinfodiv = styled.div`
   }
   div {
     display: flex;
+    align-items: center;
+    width: 30px;
+    justify-content: space-between;
+    img {
+      width: 15px;
+      height: 15px;
+    }
   }
 `;
 

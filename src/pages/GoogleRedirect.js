@@ -7,7 +7,6 @@ const GoogleRedirect = (props) => {
   const dispatch = useDispatch();
   let code = new URL(window.location.href).searchParams.get("code");
   console.log(code);
-
   React.useEffect(() => {
     const googleLogin = async () => {
       await dispatch(userAction.googleLoginDB(code));

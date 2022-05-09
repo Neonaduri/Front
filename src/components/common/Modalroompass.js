@@ -1,7 +1,7 @@
 import React from "react";
-import "../../assets/modalTime.css";
+import "../../assets/modal.css";
 
-const ModalfixTime = (props) => {
+const Modalroompass = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
   const { open, close, header } = props;
 
@@ -11,15 +11,9 @@ const ModalfixTime = (props) => {
       {open ? (
         <section>
           <main>{header}</main>
-          <footer>
-            <button className="close" onClick={close}>
-              닫기
-            </button>
-          </footer>
         </section>
       ) : null}
     </div>
   );
 };
-
-export default ModalfixTime;
+export default Modalroompass;

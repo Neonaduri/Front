@@ -1,29 +1,26 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import Schedule from "../components/planning/Schedule";
+import MapDetail from "../components/detail/MapDetail";
 import { planAction } from "../redux/module/plan";
-import MappartR from "../components/planning/MappartR";
-import SubmitBtn from "../components/planning/SubmitBtn";
+import styled from "styled-components";
+import ScheduleDetail from "../components/detail/ScheduleDetail";
 
-const Planning = (props) => {
+const Detail = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const postId = params.postId;
-  const dateCnt = useSelector((state) => state.plan.list.dateCnt);
+  const dayCnt = useSelector((state) => state.plan.detailPlan.dateCnt);
   const [dayNow, setDayNow] = useState(1);
 
   let dateCntArr = [];
-  for (let i = 1; i <= dateCnt; i++) {
+  for (let i = 1; i <= dayCnt; i++) {
     dateCntArr.push(i);
   }
 
   useEffect(() => {
-    dispatch(planAction.getRoomDB(postId));
+    dispatch(planAction.getDetailPlanDB(postId));
   }, []);
-
   return (
     <div>
       <DayBtnDiv>
@@ -40,9 +37,9 @@ const Planning = (props) => {
           );
         })}
       </DayBtnDiv>
-      <MappartR dayNow={dayNow} />
-      <Schedule dayNow={dayNow} />
-      <SubmitBtn />
+
+      <MapDetail dayNow={dayNow} />
+      <ScheduleDetail dayNow={dayNow} />
     </div>
   );
 };
@@ -53,14 +50,15 @@ const DayBtnDiv = styled.div`
   width: 100%;
   justify-content: space-around;
   position: absolute;
-  top: 30px;
+  top: 340px;
   button {
     display: block;
     width: 50px;
-    background-color: white;
+    background-color: #62ce8b;
     border: none;
     border-radius: 10px;
     padding: 3px 5px;
   }
 `;
-export default Planning;
+
+export default Detail;
