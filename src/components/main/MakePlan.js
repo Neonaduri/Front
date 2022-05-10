@@ -9,14 +9,18 @@ import food from "../../static/images/icon/food.png";
 import hotel from "../../static/images/icon/hotel.png";
 import activity from "../../static/images/icon/activity.png";
 import etc from "../../static/images/icon/etc.png";
+import { useDispatch } from "react-redux";
+import { getThemePostDB } from "../../redux/module/post";
 
 const MakePlan = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  const onClick = (e) => {
-    const theme = e.target.value;
+  let theme = "힐링";
 
-    console.log(theme);
+  const onClick = () => {
+    // const theme = e.target.value;
+    dispatch(getThemePostDB(theme));
   };
 
   return (
@@ -26,7 +30,7 @@ const MakePlan = () => {
         <Container>
           <Grid flex>
             <Wrap>
-              <Img onClick={onClick} value="힐링">
+              <Img onClick={onClick}>
                 <Icon src={healing} />
                 <Tit>힐링</Tit>
               </Img>

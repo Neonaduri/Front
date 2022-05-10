@@ -16,7 +16,7 @@ const Titlepart = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
 export default Titleline;

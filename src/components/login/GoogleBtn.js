@@ -4,9 +4,8 @@ import Googlebtn from "../../static/images/logo/btn_google_signin_dark_pressed_w
 import styled from "styled-components";
 
 const GoogleBtn = ({ onSocial }) => {
-  const clientId =
-    "68742741278-1598oqkkoch3q3g0oaudc2lahovbsc64.apps.googleusercontent.com";
-  const callBack = "http://localhost:3000/user/google/callback";
+  const clientId = process.env.REACT_APP_GOOGLE_CLIENTID;
+  const callBack = process.env.REACT_APP_GOOGLE_CALLBACK;
   return (
     <div>
       <Img

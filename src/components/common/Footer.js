@@ -48,8 +48,9 @@ const Footer = (props) => {
     <>
       <NavWrapper>
         <Container>
-          {navData.map(({ path, defaultSrc, activeSrc }) => (
+          {navData.map(({ path, defaultSrc, activeSrc }, idx) => (
             <NavItem
+              key={idx}
               onClick={() => {
                 history.push(path);
               }}

@@ -53,6 +53,9 @@ const Content = styled.div`
   line-height: 17px;
   color: #363636;
   font-family: "Apple SD Gothic Neo";
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 const Like = styled.div`

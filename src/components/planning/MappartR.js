@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Map, MapMarker, MapInfoWindow, Polyline } from "react-kakao-maps-sdk";
+import { Map, MapMarker, Polyline } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import {
   getDatabase,
@@ -11,9 +11,10 @@ import {
   orderByChild,
 } from "firebase/database";
 import { useParams } from "react-router";
-import Modal from "../common/Modal";
 import ModalfixTime from "../common/ModalfixTime";
+
 const { kakao } = window;
+
 const MappartR = ({ dayNow }) => {
   const timeRef = useRef();
   const minuteRef = useRef();
@@ -60,11 +61,12 @@ const MappartR = ({ dayNow }) => {
     const road_address = marker.infomation.road_address_name;
     const lat = marker.infomation.y;
     const lng = marker.infomation.x;
+    console.log(lat, lng);
 
     const db = getDatabase();
     set(push(ref(db, `${postId}/allPlan/day${dayNow}`)), {
       placeName: title,
-      placeinfoUrl: url,
+      placeInfoUrl: url,
       category: cate,
       address,
       roadAddress: road_address,
@@ -101,10 +103,7 @@ const MappartR = ({ dayNow }) => {
       }
     });
   }, [map, searchPlace]);
-  const copyLink = () => {
-    const url = window.location.href + "/join";
-    navigator.clipboard.writeText(url);
-  };
+
   return (
     <div>
       <PlaceInput
@@ -229,7 +228,6 @@ const MappartR = ({ dayNow }) => {
           </TimeModal>
         }
       ></ModalfixTime>
-      <button onClick={copyLink}>초대URL 복사하기</button>
     </div>
   );
 };
