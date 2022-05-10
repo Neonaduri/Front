@@ -61,7 +61,6 @@ const MappartR = ({ dayNow }) => {
     const road_address = marker.infomation.road_address_name;
     const lat = marker.infomation.y;
     const lng = marker.infomation.x;
-    console.log(lat, lng);
 
     const db = getDatabase();
     set(push(ref(db, `${postId}/allPlan/day${dayNow}`)), {

@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import Googlebtn from "../../static/images/logo/btn_google_signin_dark_pressed_web@2x.png";
+import Googlebtn from "../../static/images/logo/google_login.png";
 import styled from "styled-components";
 
 const GoogleBtn = ({ onSocial }) => {

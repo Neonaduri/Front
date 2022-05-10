@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://ohyeryung.shop",
+  baseURL: process.env.REACT_APP_AXIOS_INSTANCE_BASEURL,
 });
 
 // 가지고 있는 토큰 넣어주기!
@@ -11,7 +11,6 @@ if (localStorage.getItem("token")) {
   axiosInstance.defaults.headers.common["Authorization"] =
     localStorage.getItem("token");
 }
-axiosInstance.defaults.withCredentials = true;
 
 const apis = {
   axiosInstance,

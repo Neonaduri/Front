@@ -77,7 +77,7 @@ const logInDB = (username, password) => {
       }
       if (localStorage.getItem("token")) {
         dispatch(isLoginDB());
-        history.replace("/");
+        window.location.replace("/");
       }
     } catch (err) {
       console.log(err);
@@ -95,7 +95,6 @@ const isLoginDB = () => {
       });
 
       // const response = RESP.ISLOGINGET;
-      console.log(response);
       if (response.status === 200) {
         const targetUserName = response.data.userName;
         const targetProfileImg = response.data.profileImgUrl;
@@ -168,8 +167,9 @@ const googleLoginDB = (code) => {
 
 const getMyLikePostDB = () => {
   return async function (dispatch, getState, { history }) {
-    // const response = await apis.axiosInstance.get("/api/user/mypage/like");
-    const response = RESP.MYPAGELIKEGET;
+    const response = await apis.axiosInstance.get("/api/user/mypage/like/1");
+    // const response = RESP.MYPAGELIKEGET;
+    console.log(response);
     if (response.status === 200) {
       dispatch(getLikedPost(response));
     }
@@ -177,10 +177,11 @@ const getMyLikePostDB = () => {
 };
 const getMyReviewDB = () => {
   return async function (dispatch, getState, { history }) {
-    // const response = await apis.axiosInstance.get("/api/user/mypage/review");
-    const response = RESP.MYREVIEWGET;
-    if (response) {
-      dispatch(getMyReview(response));
+    const response = await apis.axiosInstance.get("/api/user/mypage/review");
+    // const response = RESP.MYREVIEWGET;
+    console.log(response);
+    if (response.status === 200) {
+      dispatch(getMyReview(response.data));
     }
   };
 };
@@ -192,9 +193,10 @@ const editProfileDB = (formdata, config) => {
       formdata,
       config
     );
+    console.log(response);
     if (response.status === 200) {
       alert("프로필이 수정되었습니다.");
-      history.replace("/mypage");
+      window.location.replace("/");
     }
   };
 };

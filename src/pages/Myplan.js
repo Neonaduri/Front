@@ -9,11 +9,15 @@ import hamburger from "../static/images/icon/hamburger.png";
 import love from "../static/images/icon/love.png";
 import talkbox from "../static/images/icon/Union.png";
 import ModalfixTime from "../components/common/ModalfixTime";
+import InfinityScroll from "../shared/InfinityScroll";
 
 const Myplan = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const myAllPlan = useSelector((state) => state.plan.myPlanList);
+  const paging = useSelector((state) => state.plan.paging);
+  const lastPage = useSelector((state) => state.plan.paging.lastPage);
+  const isLoading = useSelector((state) => state.plan.isLoading);
   const [modalOpen, setModalOpen] = useState(false);
   const [clickedId, setClickedId] = useState();
   const moreBtnClick = (e) => {
@@ -27,11 +31,19 @@ const Myplan = () => {
   };
 
   useEffect(() => {
-    dispatch(planAction.getMyPlanDB());
+    dispatch(planAction.getMyPlanPage1DB());
   }, []);
+
   const closeModal = () => {
     setModalOpen(false);
   };
+  if (!myAllPlan) {
+    return (
+      <div>
+        <span>내가 작성한 계획이 없습니다</span>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -45,61 +57,69 @@ const Myplan = () => {
           계획하러 가기!
         </button>
       </Plusdiv>
-      <Middlediv>
+      <Middlediv id="container">
         <h2>나의 계획표</h2>
-        {myAllPlan?.map((plan, idx) => {
-          return (
-            <PostCard key={idx}>
-              <UpperCarddiv>
-                <div>
-                  <span>{plan.startDate}</span>
-                  <span> ~ </span>
-                  <span>{plan.endDate}</span>
-                </div>
-                <button onClick={(e) => moreBtnClick(e)}>
-                  <img src={hamburger} id={plan.postId} />
-                </button>
-              </UpperCarddiv>
-              <BottomCarddiv>
-                <div
-                  onClick={() => {
-                    history.push(`/detail/${plan.postId}`);
-                  }}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <span>{plan.postTitle}</span>
-                  <Socialdiv>
-                    <img src={love}></img>
-                    <span>{plan.likeCnt}</span>
-                    <img src={talkbox}></img>
-                    <span>{plan.reviewCnt}</span>
-                  </Socialdiv>
-                </div>
-                <div>
-                  <button>리뷰쓰기</button>
-                </div>
-              </BottomCarddiv>
-              <ModalfixTime
-                open={modalOpen}
-                close={closeModal}
-                header={
-                  <EditModal>
-                    <div>수정하기</div>
-                    <div id={plan.postId} onClick={deleteBtnClick}>
-                      삭제하기
-                    </div>
-                  </EditModal>
-                }
-              ></ModalfixTime>
-            </PostCard>
-          );
-        })}
+        <InfinityScroll
+          callNext={() => {
+            console.log("gi");
+            dispatch(planAction.getMyPlanNextPageDB(paging.start));
+          }}
+          is_next={lastPage ? false : true}
+          loading={isLoading}
+        >
+          {myAllPlan?.map((plan, idx) => {
+            return (
+              <PostCard key={idx}>
+                <UpperCarddiv>
+                  <div>
+                    <span>{plan.startDate}</span>
+                    <span> ~ </span>
+                    <span>{plan.endDate}</span>
+                  </div>
+                  <button onClick={(e) => moreBtnClick(e)}>
+                    <img src={hamburger} id={plan.postId} />
+                  </button>
+                </UpperCarddiv>
+                <BottomCarddiv>
+                  <div
+                    onClick={() => {
+                      history.push(`/detail/${plan.postId}`);
+                    }}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span>{plan.postTitle}</span>
+                    <Socialdiv>
+                      <img src={love}></img>
+                      <span>{plan.likeCnt}</span>
+                      <img src={talkbox}></img>
+                      <span>{plan.reviewCnt}</span>
+                    </Socialdiv>
+                  </div>
+                  <div>
+                    <button>리뷰쓰기</button>
+                  </div>
+                </BottomCarddiv>
+                <ModalfixTime
+                  open={modalOpen}
+                  close={closeModal}
+                  header={
+                    <EditModal>
+                      <div>수정하기</div>
+                      <div id={plan.postId} onClick={deleteBtnClick}>
+                        삭제하기
+                      </div>
+                    </EditModal>
+                  }
+                ></ModalfixTime>
+              </PostCard>
+            );
+          })}
+        </InfinityScroll>
       </Middlediv>
-
       <Footer />
     </div>
   );
@@ -170,7 +190,7 @@ const UpperCarddiv = styled.div`
 
 const Plusdiv = styled.div`
   width: 100%;
-  height: 130px;
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -198,6 +218,8 @@ const Middlediv = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 10px;
+  overflow: scroll;
+  height: 440px;
 `;
 
 export default Myplan;

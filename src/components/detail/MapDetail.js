@@ -18,22 +18,51 @@ const MapDetail = ({ dayNow }) => {
     return null;
   }
 
-  const dayPlanPlaces = planByDay[dayNow - 1].places;
-
-  for (let i = 0; i < dayPlanPlaces.length; i++) {
-    let latlng = { lat: dayPlanPlaces[i].lat, lng: dayPlanPlaces[i].lng };
-    latlngArr.push(latlng);
+  const dayPlanPlaces = planByDay[dayNow - 1]?.places;
+  console.log(dayPlanPlaces);
+  if (dayPlanPlaces !== undefined) {
+    for (let i = 0; i < dayPlanPlaces.length; i++) {
+      let latlng = { lat: dayPlanPlaces[i].lat, lng: dayPlanPlaces[i].lng };
+      latlngArr.push(latlng);
+    }
+    for (let i = 0; i < dayPlanPlaces.length; i++) {
+      let val = {
+        title: dayPlanPlaces[i].placeName,
+        latlng: { lat: dayPlanPlaces[i].lat, lng: dayPlanPlaces[i].lng },
+      };
+      markerArr.push(val);
+    }
+  } else {
+    return (
+      <>
+        <FaAngleLeft
+          onClick={() => {
+            history.goBack();
+          }}
+          style={{
+            position: "absolute",
+            top: "25px",
+            left: "15px",
+            fontSize: "20px",
+          }}
+        />
+        <Titleline title={detailPlan.postTitle} />
+        <MapContainer>
+          <Map
+            onClick={() => setIsOpen(false)}
+            center={{ lat: 37.4674137335801, lng: 126.434614441118 }}
+            style={{
+              width: "100%",
+              height: "280px",
+              borderRadius: "10px",
+              border: "1px solid black",
+            }}
+            level={10}
+          ></Map>
+        </MapContainer>
+      </>
+    );
   }
-  for (let i = 0; i < dayPlanPlaces.length; i++) {
-    let val = {
-      title: dayPlanPlaces[i].placeName,
-      latlng: { lat: dayPlanPlaces[i].lat, lng: dayPlanPlaces[i].lng },
-    };
-    markerArr.push(val);
-  }
-
-  console.log(latlngArr);
-  console.log(markerArr);
 
   return (
     <div>

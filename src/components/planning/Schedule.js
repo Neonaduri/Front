@@ -126,13 +126,9 @@ const Schedule = ({ dayNow }) => {
 
   useEffect(() => {
     let unlisten = history.listen((location) => {
-      if (history.action === "PUSH") {
-        dispatch(planAction.exitBrowserOnPlanDB(postId));
-      }
       if (history.action === "POP") {
         dispatch(planAction.exitBrowserOnPlanDB(postId));
       }
-
       return () => {
         unlisten();
       };

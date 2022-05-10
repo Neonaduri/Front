@@ -15,6 +15,7 @@ const Mypage = () => {
   const iLikedPost = useSelector((state) => state.user.iLikedPost?.postList);
   const myReview = useSelector((state) => state.user.myReview);
   const [cardList, setCardList] = useState(true);
+
   useEffect(() => {
     dispatch(userAction.getMyLikePostDB());
     dispatch(userAction.getMyReviewDB());

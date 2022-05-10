@@ -9,22 +9,34 @@ const CREATEROOM = "createRoom";
 const GETROOM = "getRoom";
 const COMPLETEPLAN = "completePlan";
 const GETMYPLAN = "getMyPlan";
+const GETMYPLANNEXT = "getMyPlanNextPage";
 const GETDETAILPLAN = "getDetailPlan";
+const LOADING = "loading";
 
 //init
 const init = {
   list: [],
   myPlanList: [],
   detailPlan: [],
+  paging: { start: null, lastPage: false },
+  isLoading: false,
 };
 
 //action creators
 const createRoom = createAction(CREATEROOM, (room) => ({ room }));
 const getRoom = createAction(GETROOM, (room) => ({ room }));
-const getMyPlan = createAction(GETMYPLAN, (myplan) => ({ myplan }));
+const getMyPlanPage1 = createAction(GETMYPLAN, (myplan, paging) => ({
+  myplan,
+  paging,
+}));
+const getMyPlanNextPage = createAction(GETMYPLANNEXT, (myplan, paging) => ({
+  myplan,
+  paging,
+}));
 const getDetailPlan = createAction(GETDETAILPLAN, (detailPlan) => ({
   detailPlan,
 }));
+const loading = createAction(LOADING, (isLoading) => ({ isLoading }));
 
 //middlewares
 const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
@@ -101,6 +113,7 @@ const completePlanDB = (data) => {
       },
     });
     // const response = RESP.SAVEPLANPUT;
+    console.log(response);
     if (response.status === 200) {
       alert("성공");
       history.replace("/uploadcomplete");
@@ -108,16 +121,35 @@ const completePlanDB = (data) => {
   };
 };
 
-const getMyPlanDB = () => {
+const getMyPlanPage1DB = () => {
   return async function (dispatch, getState, { history }) {
-    // const response = await apis.axiosInstance.get("/api/user/getplan");
-    const response = RESP.GETPLANGET;
-    console.log(response);
-    if (response) {
-      dispatch(getMyPlan(response));
+    dispatch(loading(true));
+    const response = await apis.axiosInstance.get("/api/user/getplan/1");
+    // const response = RESP.GETPLANGET;
+    let paging = {
+      start: 2,
+      lastPage: response.data.islastPage,
+    };
+    if (response.status === 200) {
+      dispatch(getMyPlanPage1(response.data.myplanList, paging));
     }
   };
 };
+
+const getMyPlanNextPageDB = (page) => {
+  return async function (dispatch, getState, { history }) {
+    dispatch(loading(true));
+    const response = await apis.axiosInstance.get(`/api/user/getplan/${page}`);
+    let paging = {
+      start: page + 1,
+      lastPage: response.data.islastPage,
+    };
+    if (response.status === 200) {
+      dispatch(getMyPlanNextPage(response.data.myplanList, paging));
+    }
+  };
+};
+
 const deleteMyPlanDB = (postId) => {
   return async function (dispatch, getState, { history }) {
     console.log(postId);
@@ -140,10 +172,11 @@ const exitBrowserOnPlanDB = (postId) => {
 
 const getDetailPlanDB = (postId) => {
   return async function (dispatch, getState, { history }) {
-    // const response = await apis.axiosInstance.get(`/api/detail/${postId}`);
-    const response = RESP.DETAILPOSTIDGET;
+    const response = await apis.axiosInstance.get(`/api/detail/${postId}`);
+    // const response = RESP.DETAILPOSTIDGET;
+    console.log(response);
     if (response) {
-      dispatch(getDetailPlan(response));
+      dispatch(getDetailPlan(response.data));
     }
   };
 };
@@ -158,10 +191,22 @@ export default handleActions(
     [GETMYPLAN]: (state, action) =>
       produce(state, (draft) => {
         draft.myPlanList = action.payload.myplan;
+        draft.paging = action.payload.paging;
+        draft.isLoading = false;
+      }),
+    [GETMYPLANNEXT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.myPlanList.push(...action.payload.myplan);
+        draft.paging = action.payload.paging;
+        draft.isLoading = false;
       }),
     [GETDETAILPLAN]: (state, action) =>
       produce(state, (draft) => {
         draft.detailPlan = action.payload.detailPlan;
+      }),
+    [LOADING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.isLoading = action.payload.isLoading;
       }),
   },
   init
@@ -171,7 +216,8 @@ const planAction = {
   createRoomDB,
   getRoomDB,
   completePlanDB,
-  getMyPlanDB,
+  getMyPlanPage1DB,
+  getMyPlanNextPageDB,
   deleteMyPlanDB,
   exitBrowserOnPlanDB,
   getDetailPlanDB,

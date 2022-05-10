@@ -9,10 +9,9 @@ import ScheduleDetail from "../components/detail/ScheduleDetail";
 const Detail = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  const postId = params.postId;
+  const postId = params.id;
   const dayCnt = useSelector((state) => state.plan.detailPlan.dateCnt);
   const [dayNow, setDayNow] = useState(1);
-
   let dateCntArr = [];
   for (let i = 1; i <= dayCnt; i++) {
     dateCntArr.push(i);

@@ -8,7 +8,14 @@ const ScheduleDetail = ({ dayNow }) => {
   if (!planByDay) {
     return null;
   }
-  const dayPlanPlaces = planByDay[dayNow - 1].places;
+  const dayPlanPlaces = planByDay[dayNow - 1]?.places;
+  if (dayPlanPlaces === undefined) {
+    return (
+      <Container>
+        <span>확정된 일정이 없습니다.</span>
+      </Container>
+    );
+  }
 
   return (
     <Container>
