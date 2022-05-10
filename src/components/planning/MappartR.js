@@ -173,7 +173,7 @@ const MappartR = ({ dayNow }) => {
               <span>{place.infomation.category_name}</span>
               <span>{place.infomation.road_address_name}</span>
               <span>
-                <a href={place.infomation.place_url}>
+                <a target="_blank" href={place.infomation.place_url}>
                   {place.infomation.place_name} 바로가기
                 </a>
               </span>

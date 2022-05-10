@@ -1,8 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import axiosInstance from "../../shared/request";
 import { RESP } from "../../shared/response";
-import jwtDecode from "jwt-decode";
 import apis from "../../shared/request";
 
 //action
@@ -74,6 +72,7 @@ const logInDB = (username, password) => {
       console.log(response);
       if (response.status === 200) {
         const token = response.headers.authorization;
+        // const token = response.token;
         localStorage.setItem("token", token);
       }
       if (localStorage.getItem("token")) {
@@ -96,6 +95,7 @@ const isLoginDB = () => {
       });
 
       // const response = RESP.ISLOGINGET;
+      console.log(response);
       if (response.status === 200) {
         const targetUserName = response.data.userName;
         const targetProfileImg = response.data.profileImgUrl;

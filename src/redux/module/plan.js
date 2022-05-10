@@ -1,8 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import axiosInstance from "../../shared/request";
 import { RESP } from "../../shared/response";
-import { getDatabase, push, ref, set, onValue } from "firebase/database";
+import { getDatabase, push, ref, set } from "firebase/database";
 import apis from "../../shared/request";
 
 //action
@@ -30,7 +29,6 @@ const getDetailPlan = createAction(GETDETAILPLAN, (detailPlan) => ({
 //middlewares
 const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
   return async function (dispatch, getState, { history }) {
-    console.log(title, location, theme, startDate, endDate, dateCnt);
     const response = await apis.axiosInstance.post(
       "/api/makeplan",
       {
@@ -47,8 +45,8 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
         },
       }
     );
-    console.log(response);
     // const response = RESP.MAKEPLANPOST;
+    console.log(response);
     if (response.status === 200) {
       const db = getDatabase();
       set(ref(db, `${response.data.postId}`), {
@@ -61,8 +59,20 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
         theme: response.data.theme,
         islike: false,
       });
+      // set(ref(db, `${response.postId}`), {
+      //   postId: response.postId,
+      //   startDate: response.startDate,
+      //   endDate: response.endDate,
+      //   dateCnt: response.dateCnt,
+      //   title: response.postTitle,
+      //   location: response.location,
+      //   theme: response.theme,
+      //   islike: false,
+      // });
       dispatch(createRoom(response.data));
+      // dispatch(createRoom(response));
       history.push(`/planning/${response.data.postId}`);
+      // history.push(`/planning/${response.postId}`);
     }
   };
 };
@@ -78,6 +88,7 @@ const getRoomDB = (postId) => {
     console.log(response);
     if (response.status === 200) {
       dispatch(createRoom(response.data));
+      // dispatch(createRoom(response));
     }
   };
 };
@@ -110,10 +121,10 @@ const getMyPlanDB = () => {
 const deleteMyPlanDB = (postId) => {
   return async function (dispatch, getState, { history }) {
     console.log(postId);
-    // const response = await apis.axiosInstance.delete(
-    //   `/api/user/delplan/${postId}`
-    // );
-    const response = RESP.DELPLANDELETE;
+    const response = await apis.axiosInstance.delete(
+      `/api/user/delplan/${postId}`
+    );
+    // const response = RESP.DELPLANDELETE;
     if (response.status === 200) {
       history.push("/myplan");
     }
