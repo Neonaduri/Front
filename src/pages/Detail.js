@@ -5,6 +5,8 @@ import MapDetail from "../components/detail/MapDetail";
 import { planAction } from "../redux/module/plan";
 import styled from "styled-components";
 import ScheduleDetail from "../components/detail/ScheduleDetail";
+import ReviewList from "../components/review/ReviewList";
+import Footer from "../components/common/Footer";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -22,25 +24,32 @@ const Detail = () => {
     dispatch(planAction.getDetailPlanDB(postId));
   }, []);
   return (
-    <div>
-      <DayBtnDiv>
-        {dateCntArr.map((date, idx) => {
-          return (
-            <button
-              key={idx}
-              onClick={() => {
-                setDayNow(date);
-              }}
-            >
-              {date}일차
-            </button>
-          );
-        })}
-      </DayBtnDiv>
+    <>
+      <div>
+        <DayBtnDiv>
+          {dateCntArr.map((date, idx) => {
+            return (
+              <button
+                key={idx}
+                onClick={() => {
+                  setDayNow(date);
+                }}
+              >
+                {date}일차
+              </button>
+            );
+          })}
+        </DayBtnDiv>
 
-      <MapDetail dayNow={dayNow} />
-      <ScheduleDetail dayNow={dayNow} />
-    </div>
+        <MapDetail dayNow={dayNow} />
+        <ScheduleDetail dayNow={dayNow} />
+      </div>
+
+      <div>
+        <ReviewList />
+      </div>
+      <Footer />
+    </>
   );
 };
 
@@ -49,7 +58,7 @@ const DayBtnDiv = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-around;
-  position: absolute;
+  /* position: absolute; */
   top: 340px;
   button {
     display: block;

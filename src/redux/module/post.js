@@ -7,14 +7,16 @@ import apis from "../../shared/request";
 const GET_BEST_POST = "GET_BEST_POST";
 const GET_LOCATION_POST = "GET_LOCATION_POST";
 const GET_SEARCH_POST = "GET_SEARCH_POST";
+const LAST_PAGE = "LAST_PAGE";
+const TOTAL = "TOTAL";
 
 // initialState
 const initialState = {
   bestList: [],
   locationList: [],
   searchList: [],
-  paging: { start: null, next: null, islastPage: false },
-  is_loading: false,
+  islastPage: false,
+  totalPage: 1,
 };
 
 // actionCreators
@@ -26,8 +28,16 @@ const getLocationPost = createAction(GET_LOCATION_POST, (locationList) => ({
   locationList,
 }));
 
-export const getSearchPost = createAction(GET_SEARCH_POST, (searchList) => ({
+const getSearchPost = createAction(GET_SEARCH_POST, (searchList) => ({
   searchList,
+}));
+
+const islastPage = createAction(LAST_PAGE, (islastPage) => ({
+  islastPage,
+}));
+
+const totalPage = createAction(TOTAL, (totalPage) => ({
+  totalPage,
 }));
 
 // middleWares
@@ -80,17 +90,11 @@ export const getKeywordPostDB = (keyword, pageno) => {
         `/api/search/${keyword}/${pageno}`
       );
 
-      let paging = {
-        start: 2,
-        next: 3,
-        lastPage: response.data.last,
-      };
-
       if (response.status === 200) {
-        const page = response.data.islastPage;
-        console.log(page);
-        dispatch(getSearchPost(response.data, paging));
-        // if (page) return null;
+        console.log(response);
+        dispatch(getSearchPost(response.data));
+        dispatch(islastPage(response.data.islastPage));
+        dispatch(totalPage(response.data.totalPage));
       }
     } catch (err) {
       console.log("에러발생", err);
@@ -107,7 +111,6 @@ export const getThemePostDB = (keyword) => {
       );
 
       if (response.status === 200) {
-        console.log(response);
         dispatch(getLocationPost(response.data));
       }
     } catch (err) {
@@ -129,7 +132,15 @@ export default handleActions(
       }),
     [GET_SEARCH_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.searchList.push(...action.payload.searchList.resultList);
+        draft.searchList = action.payload.searchList.resultList;
+      }),
+    [LAST_PAGE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.islastPage = action.payload.islastPage;
+      }),
+    [TOTAL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.totalPage = action.payload.totalPage;
       }),
   },
   initialState
@@ -138,6 +149,7 @@ export default handleActions(
 const actionCreators = {
   getBestPostDB,
   getLocationPostDB,
+  islastPage,
 };
 
 export { actionCreators };

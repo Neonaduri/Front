@@ -6,24 +6,12 @@ import love from "../../static/images/icon/love.png";
 import Union from "../../static/images/icon/Union.png";
 
 const SearchItem = forwardRef(
-  (
-    {
-      location,
-      theme,
-      postId,
-      likeCnt,
-      reviewCnt,
-      postTitle,
-      postImgUrl,
-      // ref: ForwardedRef,
-    },
-    ref
-  ) => {
+  ({ location, theme, postId, likeCnt, reviewCnt, postTitle, postImgUrl }) => {
     const nickname = useSelector((state) => state.user.list.nickName);
     const history = useHistory();
 
     return (
-      <div onClick={() => history.push(`/detail/${postId}`)} ref={ref}>
+      <div onClick={() => history.push(`/detail/${postId}`)}>
         {/* 하나의 리스트 */}
         <div>
           <Wrap>

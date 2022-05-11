@@ -2,20 +2,13 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import SearchItem from "./SearchItem";
-import useIntersectionObserver from "../hooks/useIntersectionObserver";
+// import useIntersectionObserver from "../hooks/useIntersectionObserver";
 
-const SearchList = ({ keyword, getNextPage }) => {
+const SearchList = ({ keyword, pageno, setTarget }) => {
   const searchList = useSelector((state) => state.post.searchList);
-  const [observerElementRef] = useIntersectionObserver(getNextPage);
+  const totalPage = useSelector((state) => state?.post?.totalPage);
 
-  // console.log(searchList);
-
-  const isObserverElement = useCallback(
-    (idx) => {
-      return searchList.length > 1 && searchList.length - 2 === idx;
-    },
-    [searchList, keyword]
-  );
+  console.log(totalPage);
 
   return (
     <>
@@ -23,15 +16,10 @@ const SearchList = ({ keyword, getNextPage }) => {
         <Title>{keyword} 관련 키워드</Title>
         {searchList &&
           searchList.map((item, idx) => {
-            return (
-              <SearchItem
-                key={idx}
-                {...item}
-                ref={isObserverElement(idx) ? observerElementRef : null}
-              />
-            );
+            return <SearchItem key={idx} {...item} />;
           })}
       </div>
+      {/* {totalPage > pageno ? <div ref={setTarget}> </div> : null} */}
     </>
   );
 };

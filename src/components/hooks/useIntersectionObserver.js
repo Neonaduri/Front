@@ -7,7 +7,6 @@ const useIntersectionObserver = (action, threshold = 1) => {
     ([entry]) => {
       if (entry.isIntersecting) {
         action();
-        console.log(action);
       }
     },
     [action]
@@ -15,7 +14,7 @@ const useIntersectionObserver = (action, threshold = 1) => {
 
   const observerElementRef = useCallback(
     (node) => {
-      console.log(node);
+      // console.log(node);
       if (target.current) {
         target.current.disconnect();
       }

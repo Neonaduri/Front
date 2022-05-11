@@ -8,57 +8,67 @@ import SearchList from "../components/search/SearchList";
 import back from "../static/images/icon/back.png";
 import { useHistory } from "react-router";
 import { getKeywordPostDB, getSearchPost } from "../redux/module/post";
+import { actionCreators } from "../redux/module/post";
+import SearchItem from "../components/search/SearchItem";
 
 const Search = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [keyword, setKeyword] = useState();
   const [pageno, setPageno] = useState(1);
+  const [target, setTarget] = useState(null);
   const [loading, setLoading] = useState(false);
-  const pageEnd = useRef();
+  const pageEnd = useSelector((state) => state.post.islastPage);
+  const totalPage = useSelector((state) => state);
+
+  console.log(totalPage);
 
   const searchList = useSelector((state) => state.post.searchList);
 
-  console.log(searchList);
-  console.log(keyword, pageno);
+  const callback = async ([entry], observer) => {
+    if (entry.isIntersecting && !loading) {
+      observer.unobserve(entry.target);
+      setLoading(true);
+      await new Promise((resolve) => {
+        setTimeout(resolve, 2000);
+      });
 
-  const getNextPage = useCallback(() => {
-    setPageno((prev) => prev + 1);
-    setLoading(true);
-  }, [keyword, pageno]);
+      if (totalPage > pageno) {
+        setPageno(pageno + 1);
+      }
+
+      setLoading(false);
+      observer.observe(entry.target);
+    }
+  };
+
+  useEffect(() => {
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(callback, { threshold: 1 });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target]);
 
   useEffect(() => {
     dispatch(getKeywordPostDB(keyword, pageno));
-    setLoading(false);
+    console.log(pageno);
   }, [keyword, pageno]);
 
-  useEffect(() => {
-    if (loading) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting) {
-            getNextPage();
-          }
-        },
-
-        { threshold: 1 }
-      );
-
-      observer.observe(pageEnd.current);
-    }
-  }, [loading]);
-
-  const suggestBtnClick = (e) => {
-    console.log(e.target.id);
-  };
+  // const suggestBtnClick = (e) => {
+  //   console.log(e.target.id);
+  // };
 
   const searchEnter = (e) => {
     if (e.key === "Enter") {
       setKeyword(e.target.value);
+      setPageno(1);
+      dispatch(actionCreators.islastPage(false));
     }
   };
 
-  console.log(keyword);
+  console.log(keyword, pageno);
   return (
     <Container>
       <div>
@@ -90,8 +100,14 @@ const Search = () => {
       </Suggest> */}
 
       {/* 검색리스트 페이지 */}
-      <SearchList keyword={keyword} getNextPage={getNextPage} />
-
+      <div>
+        <Title>{keyword} 관련 키워드</Title>
+        {searchList &&
+          searchList.map((item, idx) => {
+            return <SearchItem key={idx} {...item} />;
+          })}
+      </div>
+      {totalPage + 1 > pageno ? <div ref={setTarget}> </div> : null}
       <Footer />
     </Container>
   );
@@ -155,4 +171,19 @@ const Img = styled.img`
 
 const Container = styled.div`
   position: relative;
+  padding-bottom: 90px;
+`;
+
+const Title = styled.div`
+  position: relative;
+  width: 119px;
+  height: 22px;
+  left: 16px;
+  font-family: "Apple SD Gothic Neo";
+  font-style: normal;
+  font-weight: 600;
+  top: 20px;
+  font-size: 18px;
+  line-height: 22px;
+  color: #363636;
 `;
