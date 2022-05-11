@@ -31,6 +31,10 @@ const Login = ({ history }) => {
     }
     dispatch(userAction.logInDB(username, password));
   };
+
+  if (localStorage.getItem("token")) {
+    history.push("/");
+  }
   return (
     <div>
       <Logodiv>

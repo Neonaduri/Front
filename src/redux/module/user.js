@@ -38,7 +38,8 @@ const emailCheckDB = (username) => {
         dispatch(emailCheck(true));
       }
     } catch (err) {
-      if (err.response.data.status === "BAD_REQUEST") {
+      console.log(err.response);
+      if (err.response.data === 400) {
         dispatch(emailCheck(false));
       }
     }
@@ -46,18 +47,22 @@ const emailCheckDB = (username) => {
 };
 const signUpDB = (username, nickName, password, passwordCheck) => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.post("/user/signup", {
-      userName: username,
-      nickName,
-      password,
-      passwordCheck,
-    });
-    // const response = RESP.SIGNUPPOST;
-    if (response.status === 200) {
-      window.alert("회원가입 완료! 로그인 해주세요:)");
-      history.replace("/login");
-    } else {
-      console.log(response);
+    try {
+      const response = await apis.axiosInstance.post("/user/signup", {
+        userName: username,
+        nickName,
+        password,
+        passwordCheck,
+      });
+      // const response = RESP.SIGNUPPOST;
+      if (response.status === 200) {
+        window.alert("회원가입 완료! 로그인 해주세요:)");
+        history.replace("/login");
+      } else {
+        console.log(response);
+      }
+    } catch (err) {
+      console.log(err.response);
     }
   };
 };

@@ -11,6 +11,7 @@ const COMPLETEPLAN = "completePlan";
 const GETMYPLAN = "getMyPlan";
 const GETMYPLANNEXT = "getMyPlanNextPage";
 const GETDETAILPLAN = "getDetailPlan";
+const DELETEMYPLAN = "deleteMyPlan";
 const LOADING = "loading";
 
 //init
@@ -37,6 +38,7 @@ const getDetailPlan = createAction(GETDETAILPLAN, (detailPlan) => ({
   detailPlan,
 }));
 const loading = createAction(LOADING, (isLoading) => ({ isLoading }));
+const deleteMyPlan = createAction(DELETEMYPLAN, (postId) => ({ postId }));
 
 //middlewares
 const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
@@ -106,7 +108,6 @@ const getRoomDB = (postId) => {
 };
 const completePlanDB = (data) => {
   return async function (dispatch, getState, { history }) {
-    console.log(data);
     const response = await apis.axiosInstance.put("/api/saveplan", data, {
       headers: {
         Authorization: localStorage.getItem("token"),
@@ -115,7 +116,6 @@ const completePlanDB = (data) => {
     // const response = RESP.SAVEPLANPUT;
     console.log(response);
     if (response.status === 200) {
-      alert("성공");
       history.replace("/uploadcomplete");
     }
   };
@@ -158,7 +158,7 @@ const deleteMyPlanDB = (postId) => {
     );
     // const response = RESP.DELPLANDELETE;
     if (response.status === 200) {
-      history.push("/myplan");
+      dispatch(deleteMyPlan(postId));
     }
   };
 };
@@ -207,6 +207,13 @@ export default handleActions(
     [LOADING]: (state, action) =>
       produce(state, (draft) => {
         draft.isLoading = action.payload.isLoading;
+      }),
+    [DELETEMYPLAN]: (state, action) =>
+      produce(state, (draft) => {
+        const newMyPlanList = draft.myPlanList.filter((post) => {
+          return post.postId !== parseInt(action.payload.postId);
+        });
+        draft.myPlanList = newMyPlanList;
       }),
   },
   init

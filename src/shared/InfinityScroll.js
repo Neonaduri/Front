@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import _ from "lodash";
 import Spinner from "./Spinner";
 
 const InfinityScroll = (props) => {
   const { children, callNext, is_next, loading } = props;
+
+  // 이렇게 돔요소를 가져오는 경우 랜더링보다 자바스크립트가 빨라서 새로고쳤을때 null이 됨
   let container = document.getElementById("container");
+  // 수정할 것
 
   const _handleScroll = _.throttle(() => {
     if (loading) {
