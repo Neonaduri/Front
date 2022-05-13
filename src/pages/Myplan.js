@@ -22,6 +22,8 @@ const Myplan = () => {
   const isLoading = useSelector((state) => state.plan.isLoading);
   const [modalOpen, setModalOpen] = useState(false);
   const [clickedId, setClickedId] = useState();
+  const middledivRef = useRef();
+
   const moreBtnClick = (e) => {
     setModalOpen(true);
     setClickedId(e.target.id);
@@ -78,13 +80,14 @@ const Myplan = () => {
       <div style={{ backgroundColor: "#f5f5f5", padding: " 10px 15px" }}>
         <span style={{ fontSize: "16px" }}>나의 계획표</span>
       </div>
-      <Middlediv id="container">
+      <Middlediv ref={middledivRef} id="container">
         <InfinityScroll
           callNext={() => {
             dispatch(planAction.getMyPlanNextPageDB(paging.start));
           }}
           is_next={lastPage ? false : true}
           loading={isLoading}
+          ref={middledivRef}
         >
           {myAllPlan?.map((plan, idx) => {
             return (

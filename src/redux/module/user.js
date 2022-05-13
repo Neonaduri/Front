@@ -193,15 +193,19 @@ const getMyReviewDB = () => {
 
 const editProfileDB = (formdata, config) => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.put(
-      "/api/user/mypage",
-      formdata,
-      config
-    );
-    console.log(response);
-    if (response.status === 201) {
-      alert("프로필이 수정되었습니다.");
-      window.location.replace("/");
+    try {
+      const response = await apis.axiosInstance.put(
+        "/api/user/mypage",
+        formdata,
+        config
+      );
+      console.log(response);
+      if (response.status === 201) {
+        alert("프로필이 수정되었습니다.");
+        window.location.replace("/");
+      }
+    } catch (err) {
+      console.log(err.response);
     }
   };
 };

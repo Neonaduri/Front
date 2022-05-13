@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import Schedule from "../components/planning/Schedule";
 import { planAction } from "../redux/module/plan";
 import MappartR from "../components/planning/MappartR";
@@ -11,8 +11,11 @@ import Openvidu from "../components/planning/Openvidu";
 import moment from "moment";
 import Footer from "../components/common/Footer";
 import Sheet from "react-modal-sheet";
+import { OpenVidu } from "openvidu-browser";
+import apis from "../shared/request";
 
 const Planning = (props) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const params = useParams();
   const nickNameRef = useRef();
@@ -21,6 +24,7 @@ const Planning = (props) => {
   const planInfo = useSelector((state) => state.plan.list);
   const [dayNow, setDayNow] = useState(1);
   const days = ["일", "월", "화", "수", "목", "금", "토"];
+  const userInfo = useSelector((state) => state.user.list);
 
   // const clickJoinPlanBtn = () => {
   //   const roomNick = nickNameRef.current.value;
@@ -43,9 +47,11 @@ const Planning = (props) => {
   const endDay = days[endDaynum];
 
   const [isOpen, setOpen] = React.useState(false);
+  const [publisher, setPublisher] = useState();
 
   const open = () => setOpen(true);
   const close = () => setOpen(false);
+  //////////////////////////////////////////////////////////////////////
 
   // if (!sessionStorage.getItem("roomNick")) {
   //   return (
@@ -60,9 +66,7 @@ const Planning = (props) => {
   //         ></input>
   //       </Inputdiv>
   //       <div>
-  //         <button onClick={() => clickJoinPlanBtn()}>
-  //           플랜채팅방 입장하기
-  //         </button>
+  //         <button onClick={joinSession}>플랜채팅방 입장하기</button>
   //       </div>
   //     </Container>
   //   );
@@ -91,29 +95,48 @@ const Planning = (props) => {
       <MappartR dayNow={dayNow} startDay={startDay} endDay={endDay} />
 
       {/* <Openvidu /> */}
-      <Sheet
+      <CustomSheet
         rootId="root"
         isOpen={isOpen}
         onClose={close}
-        snapPoints={[550, 500, 100, 0]}
+        snapPoints={[650, 500, 100, 0]}
+        disableDrag={true}
       >
         <Sheet.Container>
           <Sheet.Header onClick={close} />
-
           <Sheet.Content>
             <Schedule dayNow={dayNow} />
             <SubmitBtn />
           </Sheet.Content>
         </Sheet.Container>
-
         <Sheet.Backdrop />
-      </Sheet>
+      </CustomSheet>
       <TriggerBtn onClick={open}>
         <div></div>
       </TriggerBtn>
     </Container>
   );
 };
+const CustomSheet = styled(Sheet)`
+  .react-modal-sheet-backdrop {
+    /* custom styles */
+  }
+  .react-modal-sheet-container {
+    /* custom styles */
+  }
+  .react-modal-sheet-header {
+    /* custom styles */
+  }
+  .react-modal-sheet-drag-indicator {
+    /* custom styles */
+  }
+  .react-modal-sheet-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+`;
+
 const Container = styled.div`
   position: relative;
   height: 100%;
