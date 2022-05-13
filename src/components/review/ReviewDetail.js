@@ -43,21 +43,31 @@ const ReviewDetail = () => {
   };
 
   const ReviewBtnClick = () => {
-    const formdata = new FormData();
-    formdata.append("reviewImgFile", files[0]);
-    formdata.append("reviewContents", reviewValue.reviewContents);
-    const config = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    };
-    // for (let key of formdata.keys()) {
-    //   console.log(key);
-    // }
-    // for (let value of formdata.values()) {
-    //   console.log(value);
-    // } => 폼데이터 형식확인
-    dispatch(addCommentDB(postId, formdata, config));
+    if (files === undefined) {
+      const formdata = new FormData();
+      formdata.append(
+        "reviewImgFile",
+        new File([], "", { type: "text/plane" })
+      );
+      formdata.append("reviewContents", reviewValue.reviewContents);
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      dispatch(addCommentDB(postId, formdata, config));
+    } else {
+      const formdata = new FormData();
+      formdata.append("reviewImgFile", files[0]);
+      formdata.append("reviewContents", reviewValue.reviewContents);
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+
+      dispatch(addCommentDB(postId, formdata, config));
+    }
   };
 
   return (

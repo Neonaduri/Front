@@ -17,6 +17,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { planAction } from "../../redux/module/plan";
 import sharebtn from "../../static/images/icon/sharebtn.png";
 import Slide from "../../shared/SlickSlider";
+import Modalroompass from "../common/Modalroompass";
+import cancel from "../../static/images/icon/cancel.png";
 
 const { kakao } = window;
 
@@ -35,7 +37,12 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
   const [searchPlace, setSearchPlace] = useState("");
   const [polyLineArr, setPolyLineArr] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [linkModalOpen, setLinkModalOpen] = useState(false);
   const [marker, setMarker] = useState();
+  const [latlng, setLatlng] = useState({
+    lat: 37.5,
+    lng: 127,
+  });
 
   useEffect(() => {
     const db = getDatabase();
@@ -112,6 +119,23 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
     });
   }, [map, searchPlace]);
 
+  const findLatLng = (latlng) => {
+    console.log(latlng);
+    setLatlng(latlng);
+  };
+
+  const copyLinkBtnClick = () => {
+    setLinkModalOpen(true);
+  };
+  const closeLinkModal = () => {
+    setLinkModalOpen(false);
+  };
+  const copyLink = () => {
+    const url = window.location.href + "/join";
+    navigator.clipboard.writeText(url);
+    setModalOpen(false);
+  };
+
   return (
     <Container>
       <FaAngleLeft
@@ -139,29 +163,29 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
           if (e.code === "Enter") {
             setSearchPlace(e.target.value);
             e.target.value = "";
+            setLatlng(undefined);
           }
         }}
         ref={keywordRef}
       ></PlaceInput>
-      <PlaceBtn
-        onClick={() => {
-          setSearchPlace(keywordRef.current.value);
-          keywordRef.current.value = "";
-        }}
-      >
+      <PlaceBtn onClick={copyLinkBtnClick}>
         <img src={sharebtn} />
       </PlaceBtn>
 
       <Map
-        center={{
-          lat: 37.5,
-          lng: 127,
-        }}
+        center={
+          latlng === undefined
+            ? {
+                lat: 37.5,
+                lng: 127,
+              }
+            : latlng
+        }
         style={{
           width: "100%",
           height: "86.5vh",
         }}
-        level={7}
+        level={latlng === undefined ? 7 : 3}
         onCreate={setMap}
       >
         {markers.map((marker) => (
@@ -198,34 +222,13 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
         <Polyline
           path={[polyLineArr]}
           strokeWeight={4} // 선의 두께 입니다
-          strokeColor={"red"} // 선의 색깔입니다
-          strokeOpacity={0.8} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+          strokeColor={"#E93C3C"} // 선의 색깔입니다
+          strokeOpacity={1} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
           strokeStyle={"solid"} // 선의 스타일입니다
         />
       </Map>
-      {/* <PlaceList>
-        {markers.map((place, idx) => {
-          return (
-            <PlaceListCard key={idx}>
-              <div>
-                <h4>{place.infomation.place_name}</h4>
-                <small>{place.infomation.category_name}</small>
-                <span>{place.infomation.road_address_name}</span>
-              </div>
-              <div>
-                <button>
-                  <a target="_blank" href={place.infomation.place_url}>
-                    자세히 보기
-                  </a>
-                </button>
-                <button>확정하기</button>
-              </div>
-            </PlaceListCard>
-          );
-        })}
-      </PlaceList> */}
       <PlaceList>
-        <Slide sliders={markers} />
+        <Slide sliders={markers} dayNow={dayNow} callback={findLatLng} />
       </PlaceList>
       <ModalfixTime
         open={modalOpen}
@@ -274,6 +277,35 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
           </TimeModal>
         }
       ></ModalfixTime>
+      <Modalroompass
+        open={linkModalOpen}
+        close={closeModal}
+        header={
+          <ModalContent>
+            <Canceldiv>
+              <img
+                src={cancel}
+                onClick={() => {
+                  setLinkModalOpen(false);
+                }}
+              />
+            </Canceldiv>
+            <InviteTextdiv>
+              <h4>친구 초대하기</h4>
+              <span>초대는 최대 5인까지 가능합니다.</span>
+            </InviteTextdiv>
+            <div
+              style={{ display: "flex", alignItems: "center", width: "85%" }}
+            >
+              <input
+                defaultValue={window.location.href + "/join"}
+                disabled={true}
+              ></input>
+              <ModalBtn onClick={copyLink}>복사</ModalBtn>
+            </div>
+          </ModalContent>
+        }
+      ></Modalroompass>
     </Container>
   );
 };
@@ -415,6 +447,53 @@ const PlaceBtn = styled.div`
   img {
     margin-left: 2px;
     margin-bottom: 2px;
+  }
+`;
+const InviteTextdiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  margin-top: -10px;
+  h4 {
+    font-size: 20px;
+  }
+  span {
+    font-size: 15px;
+    color: #8d8d8d;
+    margin-top: 5px;
+  }
+`;
+
+const Canceldiv = styled.div`
+  position: absolute;
+  top: -5px;
+  left: 5px;
+`;
+
+const ModalBtn = styled.button`
+  background-color: #41b67e;
+  border-radius: 5px;
+  color: white;
+  height: 40px;
+  width: 20%;
+  border: none;
+`;
+const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 120px;
+  input {
+    width: 90%;
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #cacaca;
+    background-color: inherit;
+    height: 40px;
+    color: #8d8d8d;
   }
 `;
 

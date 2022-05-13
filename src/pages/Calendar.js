@@ -45,8 +45,14 @@ const Calendar = () => {
   const [isOpenLoca, setOpenLoca] = React.useState(false);
   const [isOpenTheme, setOpenTheme] = React.useState(false);
   const open = () => setOpen(true);
-  const openLoca = () => setOpenLoca(true);
-  const openTheme = () => setOpenTheme(true);
+  const openLoca = () => {
+    setOpenLoca(true);
+    setOpenTheme(false);
+  };
+  const openTheme = () => {
+    setOpenTheme(true);
+    setOpenLoca(false);
+  };
   const close = () => setOpen(false);
   const closeLoca = () => setOpenLoca(false);
   const closeTheme = () => setOpenTheme(false);
