@@ -14,6 +14,7 @@ import Sheet from "react-modal-sheet";
 import styled from "styled-components";
 import Titleline from "../components/elements/Titleline";
 import backicon from "../static/images/icon/back.png";
+import downbtn from "../static/images/icon/downbtn.png";
 
 const Calendar = () => {
   const history = useHistory();
@@ -31,6 +32,8 @@ const Calendar = () => {
     },
   ]);
   const days = ["일", "월", "화", "수", "목", "금", "토"];
+  const [locationInBtn, setLocationInBtn] = useState("서울");
+  const [themeInBtn, setThemeInBtn] = useState("액티비티");
 
   const startDateRef = state[0].startDate;
   const startDate = moment(startDateRef).format("YYYY-MM-DD");
@@ -39,14 +42,28 @@ const Calendar = () => {
   const dateCnt =
     (endDateRef.getTime() - startDateRef.getTime()) / (1000 * 3600 * 24) + 1;
   const [isOpen, setOpen] = React.useState(false);
+  const [isOpenLoca, setOpenLoca] = React.useState(false);
+  const [isOpenTheme, setOpenTheme] = React.useState(false);
   const open = () => setOpen(true);
+  const openLoca = () => setOpenLoca(true);
+  const openTheme = () => setOpenTheme(true);
   const close = () => setOpen(false);
+  const closeLoca = () => setOpenLoca(false);
+  const closeTheme = () => setOpenTheme(false);
 
   const createBtnClick = () => {
     const title = titleRef.current.value;
-    const location = areaRef.current.value;
-    const theme = themeRef.current.value;
-
+    const location = locationInBtn;
+    const theme = themeInBtn;
+    if (dateCnt > 7) {
+      alert("날짜는 최대 7일입니다! 🤗");
+      return;
+    }
+    if (title.length < 2) {
+      alert("여행명을 상세히 입력해주세요! 🤗");
+      return;
+    }
+    // sessionStorage.setItem("roomNick", userInfo.nickName);
     dispatch(
       planAction.createRoomDB(
         title,
@@ -57,6 +74,17 @@ const Calendar = () => {
         dateCnt
       )
     );
+  };
+
+  const clickLocationSelect = (e) => {
+    const fixedLocation = e.target.innerText;
+    setLocationInBtn(fixedLocation);
+    closeLoca();
+  };
+  const clickThemeSelect = (e) => {
+    const fixedTheme = e.target.innerText;
+    setThemeInBtn(fixedTheme);
+    closeTheme();
   };
 
   const daynum = moment(startDateRef).day();
@@ -91,19 +119,65 @@ const Calendar = () => {
         >
           <Locationdiv>
             <label htmlFor="area">지역</label>
-            <select id="area" ref={areaRef}>
-              {area.map((v, i) => {
-                return <option key={i}>{v}</option>;
-              })}
-            </select>
+            <div onClick={openLoca}>
+              <span>{locationInBtn}</span>
+              <img src={downbtn} />
+            </div>
+            <CustomSheet
+              rootId="root"
+              isOpen={isOpenLoca}
+              onClose={closeLoca}
+              initialSnap={1}
+              snapPoints={[600, 500, 100, 0]}
+            >
+              <Sheet.Container>
+                <Sheet.Header onClick={() => setOpenLoca(false)} />
+                <Sheet.Content>
+                  {area.map((v, i) => {
+                    return (
+                      <Locationselect
+                        key={i}
+                        onClick={(e) => clickLocationSelect(e)}
+                      >
+                        {v}
+                      </Locationselect>
+                    );
+                  })}
+                </Sheet.Content>
+              </Sheet.Container>
+              <Sheet.Backdrop />
+            </CustomSheet>
           </Locationdiv>
           <Themediv>
             <label htmlFor="theme">테마</label>
-            <select id="theme" ref={themeRef}>
-              {theme.map((v, i) => {
-                return <option key={i}>{v}</option>;
-              })}
-            </select>
+            <div onClick={openTheme}>
+              <span>{themeInBtn}</span>
+              <img src={downbtn} />
+            </div>
+            <CustomSheet
+              rootId="root"
+              isOpen={isOpenTheme}
+              onClose={closeTheme}
+              initialSnap={1}
+              snapPoints={[600, 400, 100, 0]}
+            >
+              <Sheet.Container>
+                <Sheet.Header onClick={() => setOpenTheme(false)} />
+                <Sheet.Content>
+                  {theme.map((v, i) => {
+                    return (
+                      <Locationselect
+                        key={i}
+                        onClick={(e) => clickThemeSelect(e)}
+                      >
+                        {v}
+                      </Locationselect>
+                    );
+                  })}
+                </Sheet.Content>
+              </Sheet.Container>
+              <Sheet.Backdrop />
+            </CustomSheet>
           </Themediv>
         </div>
 
@@ -133,7 +207,7 @@ const Calendar = () => {
                   ranges={state}
                   months={2}
                   direction="vertical"
-                  rangeColors={["#62ce8b"]}
+                  rangeColors={["#41B67E"]}
                   showDateDisplay={false}
                   color={"#333333"}
                 />
@@ -151,10 +225,25 @@ const Calendar = () => {
   );
 };
 
+const Locationselect = styled.div`
+  font-size: 20px;
+  border: 1px solid #cacaca;
+  width: 250px;
+  text-align: center;
+  padding: 5px 0px;
+  margin: 5px 0px;
+  border-radius: 14px;
+  transition: 0.2s;
+  &:active {
+    background-color: #41b67e;
+    color: white;
+  }
+`;
+
 const Buttondiv = styled.div`
   button {
     width: 100%;
-    background-color: #62ce8b;
+    background-color: #41b67e;
     border: none;
     border-radius: 5px;
     padding: 10px 0px;
@@ -167,6 +256,7 @@ const Buttondiv = styled.div`
 const Datediv = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: -30px;
   div {
     border: 1px solid #cacaca;
     border-radius: 5px;
@@ -188,6 +278,17 @@ const Themediv = styled.div`
     border-radius: 7px;
     padding: 5px 3px;
   }
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 4px;
+    border: 1px solid #cacaca;
+    border-radius: 8px;
+    img {
+      width: 12px;
+    }
+  }
 `;
 
 const Locationdiv = styled.div`
@@ -200,6 +301,17 @@ const Locationdiv = styled.div`
     border: 1px solid #cacaca;
     border-radius: 5px;
     padding: 5px 3px;
+  }
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 4px;
+    border: 1px solid #cacaca;
+    border-radius: 8px;
+    img {
+      width: 12px;
+    }
   }
 `;
 
@@ -215,7 +327,7 @@ const PostTitlediv = styled.div`
     font-size: 16px;
     &:focus {
       outline: none;
-      border-bottom: 1px solid #62ce8b;
+      border-bottom: 1px solid #41b67e;
     }
   }
 `;
@@ -241,7 +353,7 @@ const Titlediv = styled.div`
 `;
 
 const FixdateBtn = styled.button`
-  background-color: #62ce8b;
+  background-color: #41b67e;
   width: 90%;
   height: 30px;
   margin-top: -10px;

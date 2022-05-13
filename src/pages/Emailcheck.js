@@ -73,7 +73,7 @@ const Emailcheck = ({ history }) => {
         </div>
         {emailCheck === false ? <span>중복된 이메일이 존재합니다.</span> : null}
         {emailCheck === true ? (
-          <span style={{ color: "#62ce8b", fontSize: "14px" }}>
+          <span style={{ color: "#41B67E", fontSize: "14px" }}>
             사용 가능한 이메일입니다.
           </span>
         ) : null}
@@ -85,7 +85,7 @@ const Emailcheck = ({ history }) => {
               <button
                 onClick={checkEmailClick}
                 style={{
-                  backgroundColor: "#62ce8b",
+                  backgroundColor: "#41B67E",
                   color: "white",
                 }}
               >
@@ -118,10 +118,10 @@ const CheckBtndiv = styled.div`
     height: 30px;
     font-size: 16px;
     background-color: white;
-    border: 2px solid #62ce8b;
+    border: 2px solid #41b67e;
     border-radius: 7px;
     margin-top: 10px;
-    color: #62ce8b;
+    color: #41b67e;
     cursor: pointer;
     position: absolute;
     right: 20px;
@@ -151,7 +151,7 @@ const Inputdiv = styled.div`
       transition: 0.3s;
       &:focus {
         outline: none;
-        border-bottom: 3px solid #62ce8b;
+        border-bottom: 3px solid #41b67e;
       }
     }
   }

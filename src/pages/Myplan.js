@@ -38,7 +38,7 @@ const Myplan = () => {
   const closeModal = () => {
     setModalOpen(false);
   };
-
+  console.log(myAllPlan);
   if (myAllPlan.length === 0) {
     return (
       <>
@@ -156,7 +156,7 @@ const NopostContainer = styled.div`
       margin-bottom: 20px;
     }
     button {
-      background-color: #62ce8b;
+      background-color: #41b67e;
       border: none;
       padding: 15px 30px;
       margin-top: 20px;
@@ -218,7 +218,7 @@ const BottomCarddiv = styled.div`
         background-color: inherit;
         border: none;
         font-size: 16px;
-        color: #62ce8b;
+        color: #41b67e;
       }
     }
   }
@@ -270,7 +270,7 @@ const Plusdiv = styled.div`
   button {
     width: 70%;
     height: 50px;
-    background-color: #62ce8b;
+    background-color: #41b67e;
     border: none;
     border-radius: 8px;
     color: white;

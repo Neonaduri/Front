@@ -25,6 +25,15 @@ const SubmitBtn = () => {
         return;
       }
     });
+    return () =>
+      onValue(fixedPlanRef, (snapshot) => {
+        let fixedPlan = snapshot.val();
+        if (fixedPlan !== null) {
+          setFixedPlan(fixedPlan);
+        } else {
+          return;
+        }
+      });
   }, []);
 
   const submitPlanPublic = () => {
@@ -97,9 +106,9 @@ const SubmitBtn = () => {
     setModalOpen(true);
   };
 
-  // if (!isLogin) {
-  //   return null;
-  // }
+  if (!isLogin) {
+    return null;
+  }
 
   return (
     <Container>
@@ -131,7 +140,7 @@ const SubmitBtn = () => {
 };
 
 const ModalBtn = styled.button`
-  background-color: #62ce8b;
+  background-color: #41b67e;
   border-radius: 10px;
   color: white;
   display: block;

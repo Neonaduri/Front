@@ -49,11 +49,10 @@ const DayBtnDiv = styled.div`
   width: 100%;
   justify-content: space-around;
   position: absolute;
-  top: 340px;
   button {
     display: block;
     width: 50px;
-    background-color: #62ce8b;
+    background-color: #41b67e;
     border: none;
     border-radius: 10px;
     padding: 3px 5px;

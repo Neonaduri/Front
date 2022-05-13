@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Map, MapMarker, Polyline } from "react-kakao-maps-sdk";
+import {
+  Map,
+  MapMarker,
+  Polyline,
+  MapTypeId,
+  CustomOverlayMap,
+} from "react-kakao-maps-sdk";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Titleline from "../../components/elements/Titleline";
@@ -7,16 +13,21 @@ import { FaAngleLeft } from "react-icons/fa";
 import { useHistory } from "react-router";
 
 const MapDetail = ({ dayNow }) => {
+  const { kakao } = window;
   const detailPlan = useSelector((state) => state.plan.detailPlan);
   const planByDay = useSelector((state) => state.plan?.detailPlan.days);
   const history = useHistory();
   const [isOpen, setIsOpen] = useState();
+  const [showTraffic, setShowTraffic] = useState(false);
   let latlngArr = [];
   let markerArr = [];
-
   if (!planByDay) {
     return null;
   }
+
+  const clickTraffic = () => {
+    setShowTraffic(!showTraffic);
+  };
 
   const dayPlanPlaces = planByDay[dayNow - 1]?.places;
   console.log(dayPlanPlaces);
@@ -37,7 +48,7 @@ const MapDetail = ({ dayNow }) => {
       <>
         <FaAngleLeft
           onClick={() => {
-            history.goBack();
+            history.push("/myplan");
           }}
           style={{
             position: "absolute",
@@ -79,6 +90,8 @@ const MapDetail = ({ dayNow }) => {
       />
       <Titleline title={detailPlan.postTitle} />
       <MapContainer>
+        <button onClick={clickTraffic}>교통정보 보기</button>
+
         <Map
           onClick={() => setIsOpen(false)}
           center={latlngArr[0]}
@@ -94,7 +107,16 @@ const MapDetail = ({ dayNow }) => {
             <MapMarker
               key={idx}
               position={positions.latlng}
-              //   image={{src:"", size:{width: , height: }}}
+              // image={{
+              //   src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png",
+              //   size: { width: 45, height: 50 },
+              //   options: {
+              //     offset: {
+              //       x: 27,
+              //       y: 69,
+              //     },
+              //   },
+              // }}
               clickable={true}
               onClick={() => setIsOpen(true)}
             >
@@ -113,6 +135,9 @@ const MapDetail = ({ dayNow }) => {
             strokeOpacity={0.8} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
             strokeStyle={"solid"} // 선의 스타일입니다
           />
+          {showTraffic ? (
+            <MapTypeId type={kakao.maps.MapTypeId.TRAFFIC} />
+          ) : null}
         </Map>
       </MapContainer>
     </div>
@@ -126,7 +151,7 @@ const InfoWindow = styled.div`
     border: 1px solid black;
     padding: 0px 7px;
     border-radius: 50%;
-    background-color: #62ce8b;
+    background-color: #41b67e;
     color: white;
     position: absolute;
     left: 63px;

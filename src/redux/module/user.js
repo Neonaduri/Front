@@ -34,7 +34,7 @@ const emailCheckDB = (username) => {
         userName: username,
       });
       // const response = RESP.IDCHECKPOST;
-      if (response.status === 200) {
+      if (response.status === 201) {
         dispatch(emailCheck(true));
       }
     } catch (err) {
@@ -55,7 +55,7 @@ const signUpDB = (username, nickName, password, passwordCheck) => {
         passwordCheck,
       });
       // const response = RESP.SIGNUPPOST;
-      if (response.status === 200) {
+      if (response.status === 201) {
         window.alert("회원가입 완료! 로그인 해주세요:)");
         history.replace("/login");
       } else {
@@ -75,7 +75,7 @@ const logInDB = (username, password) => {
       });
       // const response = RESP.LOGINPOST;
       console.log(response);
-      if (response.status === 200) {
+      if (response.status === 201) {
         const token = response.headers.authorization;
         // const token = response.token;
         localStorage.setItem("token", token);
@@ -199,7 +199,7 @@ const editProfileDB = (formdata, config) => {
       config
     );
     console.log(response);
-    if (response.status === 200) {
+    if (response.status === 201) {
       alert("프로필이 수정되었습니다.");
       window.location.replace("/");
     }

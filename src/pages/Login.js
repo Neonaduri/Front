@@ -158,14 +158,14 @@ const Inputdiv = styled.div`
     transition: 0.3s;
     &:focus {
       outline: none;
-      border-bottom: 3px solid #62ce8b;
+      border-bottom: 3px solid #41b67e;
     }
   }
   button {
     width: 80%;
     height: 34px;
     font-size: 20px;
-    background-color: #62ce8b;
+    background-color: #41b67e;
     border: none;
     border-radius: 7px;
     margin-top: 10px;

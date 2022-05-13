@@ -102,7 +102,7 @@ const Input = styled.input`
   font-size: 16px;
   &:focus {
     outline: none;
-    border-bottom: 1px solid #62ce8b;
+    border-bottom: 1px solid #41b67e;
   }
 `;
 

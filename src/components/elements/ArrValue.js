@@ -21,15 +21,12 @@ const theme = [
 const keywordSuggestList = [
   "강릉",
   "제주도",
-  "놀이공원",
+  "워터파크",
   "힐링",
   "가족여행",
-  "당일치기",
-  "기념일 여행",
-  "배낭여행",
+  "맛집",
   "트래킹",
   "혼자",
-  "3박4일",
 ];
 
 export { area, theme, keywordSuggestList };

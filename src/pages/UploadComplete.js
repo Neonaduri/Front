@@ -44,7 +44,7 @@ const NopostContainer = styled.div`
       margin-bottom: 20px;
     }
     button {
-      background-color: #62ce8b;
+      background-color: #41b67e;
       border: none;
       padding: 15px 30px;
       margin-top: 20px;

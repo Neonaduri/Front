@@ -79,7 +79,7 @@ const Signup = (props) => {
         ) : null}
         {passChange === true ? (
           <span
-            style={{ marginTop: "-18px", color: "#62ce8b", fontSize: "14px" }}
+            style={{ marginTop: "-18px", color: "#41B67E", fontSize: "14px" }}
           >
             사용할 수 있는 비밀번호입니다.
           </span>
@@ -110,7 +110,7 @@ const Signup = (props) => {
         ></input>
         {permit === true ? (
           <span
-            style={{ marginTop: "-18px", color: "#62ce8b", fontSize: "14px" }}
+            style={{ marginTop: "-18px", color: "#41B67E", fontSize: "14px" }}
           >
             비밀번호가 확인되었습니다.
           </span>
@@ -174,7 +174,7 @@ const Inputbox = styled.div`
     transition: 0.3s;
     &:focus {
       outline: none;
-      border-bottom: 3px solid #62ce8b;
+      border-bottom: 3px solid #41b67e;
     }
   }
   label {
@@ -191,7 +191,7 @@ const Buttondiv = styled.div`
     width: 100%;
     height: 40px;
     font-size: 20px;
-    background-color: #62ce8b;
+    background-color: #41b67e;
     border: none;
     border-radius: 7px;
     margin-top: 10px;

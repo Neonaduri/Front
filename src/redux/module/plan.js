@@ -99,7 +99,6 @@ const getRoomDB = (postId) => {
       },
     });
     // const response = RESP.MAKEPLANGET;
-    console.log(response);
     if (response.status === 200) {
       dispatch(createRoom(response.data));
       // dispatch(createRoom(response));
@@ -115,7 +114,7 @@ const completePlanDB = (data) => {
     });
     // const response = RESP.SAVEPLANPUT;
     console.log(response);
-    if (response.status === 200) {
+    if (response.status === 201) {
       history.replace("/uploadcomplete");
     }
   };
