@@ -10,16 +10,25 @@ import {
   query,
   orderByChild,
 } from "firebase/database";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import ModalfixTime from "../common/ModalfixTime";
+import { FaAngleLeft } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { planAction } from "../../redux/module/plan";
+import sharebtn from "../../static/images/icon/sharebtn.png";
+import Slide from "../../shared/SlickSlider";
 
 const { kakao } = window;
 
-const MappartR = ({ dayNow }) => {
+const MappartR = ({ dayNow, startDay, endDay }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const timeRef = useRef();
   const minuteRef = useRef();
+  const keywordRef = useRef();
   const params = useParams();
   const postId = params.postId;
+  const thisPlan = useSelector((state) => state.plan.list);
   const [info, setInfo] = useState();
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();
@@ -61,7 +70,6 @@ const MappartR = ({ dayNow }) => {
     const road_address = marker.infomation.road_address_name;
     const lat = marker.infomation.y;
     const lng = marker.infomation.x;
-    console.log(lat, lng);
 
     const db = getDatabase();
     set(push(ref(db, `${postId}/allPlan/day${dayNow}`)), {
@@ -105,15 +113,45 @@ const MappartR = ({ dayNow }) => {
   }, [map, searchPlace]);
 
   return (
-    <div>
+    <Container>
+      <FaAngleLeft
+        onClick={() => {
+          dispatch(planAction.exitBrowserOnPlanDB(postId));
+          history.push("/myplan");
+        }}
+        style={{
+          position: "absolute",
+          top: "27px",
+          left: "15px",
+          fontSize: "20px",
+          zIndex: "99",
+        }}
+      />
+      <HeadLineDiv>
+        <span>{thisPlan.postTitle}</span>
+        <small>
+          {thisPlan.startDate}({startDay}) ~ {thisPlan.endDate}({endDay})
+        </small>
+      </HeadLineDiv>
       <PlaceInput
-        placeholder="장소검색"
+        placeholder="검색어를 입력해주세요."
         onKeyDown={(e) => {
           if (e.code === "Enter") {
             setSearchPlace(e.target.value);
+            e.target.value = "";
           }
         }}
+        ref={keywordRef}
       ></PlaceInput>
+      <PlaceBtn
+        onClick={() => {
+          setSearchPlace(keywordRef.current.value);
+          keywordRef.current.value = "";
+        }}
+      >
+        <img src={sharebtn} />
+      </PlaceBtn>
+
       <Map
         center={{
           lat: 37.5,
@@ -121,7 +159,7 @@ const MappartR = ({ dayNow }) => {
         }}
         style={{
           width: "100%",
-          height: "450px",
+          height: "86.5vh",
         }}
         level={7}
         onCreate={setMap}
@@ -165,21 +203,29 @@ const MappartR = ({ dayNow }) => {
           strokeStyle={"solid"} // 선의 스타일입니다
         />
       </Map>
-      <PlaceList>
+      {/* <PlaceList>
         {markers.map((place, idx) => {
           return (
             <PlaceListCard key={idx}>
-              <span>{place.infomation.place_name}</span>
-              <span>{place.infomation.category_name}</span>
-              <span>{place.infomation.road_address_name}</span>
-              <span>
-                <a href={place.infomation.place_url}>
-                  {place.infomation.place_name} 바로가기
-                </a>
-              </span>
+              <div>
+                <h4>{place.infomation.place_name}</h4>
+                <small>{place.infomation.category_name}</small>
+                <span>{place.infomation.road_address_name}</span>
+              </div>
+              <div>
+                <button>
+                  <a target="_blank" href={place.infomation.place_url}>
+                    자세히 보기
+                  </a>
+                </button>
+                <button>확정하기</button>
+              </div>
             </PlaceListCard>
           );
         })}
+      </PlaceList> */}
+      <PlaceList>
+        <Slide sliders={markers} />
       </PlaceList>
       <ModalfixTime
         open={modalOpen}
@@ -228,9 +274,24 @@ const MappartR = ({ dayNow }) => {
           </TimeModal>
         }
       ></ModalfixTime>
-    </div>
+    </Container>
   );
 };
+
+const HeadLineDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 13.5vh;
+  span {
+    font-size: 20px;
+    margin-top: -7px;
+  }
+  small {
+    color: #8d8d8d;
+  }
+`;
 
 const TimeModal = styled.div`
   display: flex;
@@ -266,35 +327,95 @@ const PlaceList = styled.div`
   flex-direction: row;
   overflow-x: auto;
   white-space: nowrap;
-  bottom: 210px;
-  background-color: rgba(255, 255, 255, 0.7);
-  z-index: 3;
+  background-color: inherit;
+  z-index: 5;
   scroll-behavior: auto;
+  position: absolute;
+  bottom: 45px;
+`;
+
+const Container = styled.div`
+  position: relative;
 `;
 
 const PlaceListCard = styled.div`
   z-index: 2;
+  background-color: white;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
+  border: none;
   margin: 0px 5px;
   border-radius: 5px;
+
+  div {
+    &:first-child {
+      padding: 2px 10px;
+      display: flex;
+      flex-direction: column;
+      small {
+        color: #8d8d8d;
+      }
+      span {
+        font-size: 14px;
+      }
+    }
+    &:nth-child(2) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      button {
+        width: 50%;
+        border: none;
+        padding: 5px 2px;
+        &:first-child {
+          background-color: white;
+          color: #56be91;
+          border-bottom-left-radius: 5px;
+          a {
+            text-decoration: none;
+            color: #56be91;
+          }
+        }
+        &:last-child {
+          background-color: #56be91;
+          color: white;
+          border-bottom-right-radius: 5px;
+        }
+      }
+    }
+  }
 `;
 
 const PlaceInput = styled.input`
   position: absolute;
   z-index: 2;
   left: 50%;
-  transform: translate(-50%, 0);
-  width: 60%;
+  transform: translate(-60%, 0);
+  width: 78%;
   margin-top: 5px;
   outline: none;
   border: none;
-  border-radius: 10px;
+  border-radius: 3px;
   font-size: 16px;
   padding: 3px 5px;
+  height: 35px;
+`;
+const PlaceBtn = styled.div`
+  background-color: white;
+  width: 37px;
+  height: 37px;
+  border-radius: 50%;
+  position: absolute;
+  top: 14.3vh;
+  right: 30px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    margin-left: 2px;
+    margin-bottom: 2px;
+  }
 `;
 
 export default MappartR;

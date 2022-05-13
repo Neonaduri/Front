@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import Test from "../../static/images/test.png";
 import {
   deleteCommentDB,
   getCommentDB,
@@ -12,6 +11,8 @@ import {
 const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const profilUrl = useSelector((state) => state.user.list.profileImg);
+
   const [editing, setEditing] = useState(false);
 
   //삭제버튼
@@ -24,7 +25,7 @@ const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
     setEditing(false);
   };
 
-  //
+  //수정버튼
   const getEditBtn = () => {
     dispatch(getOneCommentDB(reviewId));
     setEditing(true);
@@ -36,7 +37,12 @@ const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
       <Card>
         <UpperContents>
           <Profile>
-            <ProfileImg src="https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/guest/image/huOSCsK5PxRuyoA0e_v7g_4PryM.jpg"></ProfileImg>
+            <ProfileImg
+              src={profilUrl}
+              onClick={() => {
+                history.push("/mypage");
+              }}
+            ></ProfileImg>
             <p>{nickName}</p>
           </Profile>
 

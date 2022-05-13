@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
@@ -11,10 +12,10 @@ import Camera from "../../static/images/icon/camera.png";
 const ReviewDetail = () => {
   const params = useParams();
   const postId = params.productId;
-  const [files, setFiles] = useState();
+  const [files, setFiles] = useState(null);
   const reviewList = useSelector((state) => state.review.reviewList);
   const reviewRef = useRef();
-  // const reset = reviewRef.current.value;
+  const [preview, setPreview] = useState(null);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -22,6 +23,19 @@ const ReviewDetail = () => {
     reviewContents: "",
     reviewImgFile: "",
   });
+
+  //이미지 미리보기
+  const onImgChange = (e) => {
+    const file = e.target.files;
+    setFiles(file);
+
+    const reader = new FileReader();
+    const imgFile = file[0];
+    reader.readAsDataURL(imgFile);
+    reader.onloadend = () => {
+      setPreview(reader.result);
+    };
+  };
 
   //리뷰조회
   useEffect(() => {
@@ -43,23 +57,47 @@ const ReviewDetail = () => {
   };
 
   const ReviewBtnClick = () => {
-    const formdata = new FormData();
-    formdata.append("reviewImgFile", files[0]);
-    formdata.append("reviewContents", reviewValue.reviewContents);
-    const config = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    };
+    //이미지, 텍스트 모두있는경우
+    if (reviewValue.reviewImgFile !== null && files !== null) {
+      const formdata = new FormData();
+      formdata.append("reviewImgFile", files[0]);
+      formdata.append("reviewContents", reviewValue.reviewContents);
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+
+      dispatch(addCommentDB(postId, formdata, config));
+      setReviewValue({
+        reviewContents: "",
+        reviewImgFile: "",
+      });
+
+      //이미지 없는경우
+    } else if (files === null) {
+      const formdata = new FormData();
+      formdata.append("reviewImgFile", new File([], { type: "text/plane" }));
+      //비어있는 파일이 안감 ....
+
+      formdata.append("reviewContents", reviewValue.reviewContents);
+
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      dispatch(addCommentDB(postId, formdata, config));
+    }
     // for (let key of formdata.keys()) {
     //   console.log(key);
     // }
     // for (let value of formdata.values()) {
     //   console.log(value);
-    // } => 폼데이터 형식확인
-    dispatch(addCommentDB(postId, formdata, config));
+    // }
   };
 
+  // console.log(files);
   return (
     <>
       <ReviewBox>
@@ -70,7 +108,7 @@ const ReviewDetail = () => {
           }}
         ></Img>
         <h2>
-          리뷰<span>(120)</span>
+          리뷰<span>({reviewList.length})</span>
         </h2>
       </ReviewBox>
 
@@ -82,20 +120,29 @@ const ReviewDetail = () => {
       </Container>
 
       <ContainerInput>
-        <ReviewBox>
-          <Input
+        <ReviewInputBox>
+          <TextareaAutosize
+            autoFocus
             name="reviewContents"
             type="text"
             placeholder="리뷰를 작성해주세요"
             onChange={onChangeFormValue}
             ref={reviewRef}
-          ></Input>
-          <Label for="chooseFile">
+            style={{
+              width: "273px",
+              padding: "10px",
+              resize: "none",
+              overflow: "hidden",
+              outline: "none",
+            }}
+          />
+
+          <Label htmlFor="chooseFile">
             <Icon src={Camera}></Icon>
           </Label>
           <Button onClick={ReviewBtnClick}>등록</Button>
-        </ReviewBox>
-        <form method="post" enctype="multipart/form-data"></form>
+        </ReviewInputBox>
+        <form method="post" encType="multipart/form-data"></form>
         <File
           type="file"
           id="chooseFile"
@@ -109,13 +156,14 @@ const ReviewDetail = () => {
 
 export default ReviewDetail;
 
-const Input = styled.input`
-  width: 273px;
-  height: 39px;
+const ReviewInputBox = styled.div`
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 18px;
+  margin-top: 20px;
   padding: 10px;
-  border: 1px solid #cacaca;
-  border-radius: 5px;
-  margin-left: 5px;
+  resize: none;
 `;
 
 const File = styled.input`
@@ -134,6 +182,7 @@ const ContainerInput = styled.div`
   border-top: 1px solid #cacaca;
   border-radius: 0px;
   position: fixed;
+  /* position: relative; */
   bottom: 0;
 `;
 

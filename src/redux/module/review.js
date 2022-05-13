@@ -39,8 +39,10 @@ export const addCommentDB = (postId, formdata, config) => {
       );
 
       if (response.status === 201) {
+        window.location.reload();
         console.log(response.data);
         dispatch(addComment(response.data));
+        window.alert("후기가 등록되었습니다!");
       }
     } catch (err) {
       console.log("에러발생", err);
