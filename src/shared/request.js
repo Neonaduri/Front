@@ -1,11 +1,17 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_AXIOS_INSTANCE_BASEURL,
+  baseURL: "http://52.79.229.58:8080",
 });
 
 const axiosOVInstance = axios.create({
-  baseURL: process.env.REACT_APP_AXIOS_OVINSTANCE_BASEURL,
+  baseURL: "https://ohyeryung.shop",
+  headers: {
+    "content-type": "application/json",
+    accept: "application/json",
+    Authorization: localStorage.getItem("token"),
+  },
+  withCredentials: true,
 });
 // 가지고 있는 토큰 넣어주기!
 // 로그인 전이면 토큰이 없으니 못 넣어요.

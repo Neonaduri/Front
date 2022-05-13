@@ -10,6 +10,8 @@ const Popular = ({ postTitle, likeCnt, reviewCnt, postImgUrl, postId }) => {
   const locationList = useSelector((state) => state.post.locationList);
   const history = useHistory();
 
+  console.log(postId);
+
   return (
     <Wrap onClick={() => history.push(`/detail/${postId}`)}>
       <ImagePop src={postImgUrl} />
@@ -43,7 +45,6 @@ const Wrap = styled.div`
   position: relative;
   margin-bottom: 3px;
   margin-right: 3px;
-  /* gap: 3; */
 `;
 
 const Like = styled.div`

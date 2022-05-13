@@ -9,6 +9,7 @@ const GET_LOCATION_POST = "GET_LOCATION_POST";
 const GET_SEARCH_POST = "GET_SEARCH_POST";
 const LAST_PAGE = "LAST_PAGE";
 const TOTAL = "TOTAL";
+const KEYWORD = "KEYWORD";
 
 // initialState
 const initialState = {
@@ -17,6 +18,7 @@ const initialState = {
   searchList: [],
   islastPage: false,
   totalPage: 1,
+  keyword: "",
 };
 
 // actionCreators
@@ -28,7 +30,7 @@ const getLocationPost = createAction(GET_LOCATION_POST, (locationList) => ({
   locationList,
 }));
 
-const getSearchPost = createAction(GET_SEARCH_POST, (searchList) => ({
+export const getSearchPost = createAction(GET_SEARCH_POST, (searchList) => ({
   searchList,
 }));
 
@@ -38,6 +40,10 @@ const islastPage = createAction(LAST_PAGE, (islastPage) => ({
 
 const totalPage = createAction(TOTAL, (totalPage) => ({
   totalPage,
+}));
+
+export const keywordDB = createAction(KEYWORD, (keyword) => ({
+  keyword,
 }));
 
 // middleWares
@@ -111,7 +117,9 @@ export const getThemePostDB = (keyword) => {
       );
 
       if (response.status === 200) {
-        dispatch(getLocationPost(response.data));
+        console.log(response);
+        dispatch(getSearchPost(response.data));
+        history.push("/search");
       }
     } catch (err) {
       console.log("에러발생", err);
@@ -141,6 +149,10 @@ export default handleActions(
     [TOTAL]: (state, action) =>
       produce(state, (draft) => {
         draft.totalPage = action.payload.totalPage;
+      }),
+    [KEYWORD]: (state, action) =>
+      produce(state, (draft) => {
+        draft.keyword = action.payload.keyword;
       }),
   },
   initialState

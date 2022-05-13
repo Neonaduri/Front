@@ -24,8 +24,6 @@ const MainPage = ({ history }) => {
   console.log("베스트플랜은?", bestList);
   console.log("지역별플랜은?", locationList);
 
-  const test = "강릉";
-
   const settings = {
     slidesToShow: 2,
     slidesToScroll: 2,
@@ -47,7 +45,7 @@ const MainPage = ({ history }) => {
 
   useEffect(() => {
     dispatch(getBestPostDB());
-    dispatch(getLocationPostDB(test)); //디폴트 지역설정
+    dispatch(getLocationPostDB("서울")); //디폴트 지역설정
   }, []);
 
   return (
@@ -126,11 +124,6 @@ const StyledSlide = styled(Slider)`
   .slick-dots {
     display: none !important;
   }
-
-  /* .slick-arrow {
-    transform: translate(30px, 150px);
-    cursor: pointer;
-  }    화살표    */
 `;
 
 const Section = styled.section`

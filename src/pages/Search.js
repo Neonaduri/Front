@@ -7,68 +7,34 @@ import { useDispatch, useSelector } from "react-redux";
 import SearchList from "../components/search/SearchList";
 import back from "../static/images/icon/back.png";
 import { useHistory } from "react-router";
-import { getKeywordPostDB, getSearchPost } from "../redux/module/post";
+import {
+  getKeywordPostDB,
+  getSearchPost,
+  keywordDB,
+} from "../redux/module/post";
 import { actionCreators } from "../redux/module/post";
 import SearchItem from "../components/search/SearchItem";
+import NotFound from "../shared/NotFound";
 
 const Search = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [keyword, setKeyword] = useState();
   const [pageno, setPageno] = useState(1);
-  const [target, setTarget] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const pageEnd = useSelector((state) => state.post.islastPage);
-  const totalPage = useSelector((state) => state);
-
-  console.log(totalPage);
-
   const searchList = useSelector((state) => state.post.searchList);
+  const keyWord = useSelector((state) => state.post.keyword);
 
-  const callback = async ([entry], observer) => {
-    if (entry.isIntersecting && !loading) {
-      observer.unobserve(entry.target);
-      setLoading(true);
-      await new Promise((resolve) => {
-        setTimeout(resolve, 2000);
-      });
-
-      if (totalPage > pageno) {
-        setPageno(pageno + 1);
-      }
-
-      setLoading(false);
-      observer.observe(entry.target);
-    }
+  const suggestBtnClick = (e) => {
+    console.log(e.target.id);
   };
-
-  useEffect(() => {
-    let observer;
-    if (target) {
-      observer = new IntersectionObserver(callback, { threshold: 1 });
-      observer.observe(target);
-    }
-    return () => observer && observer.disconnect();
-  }, [target]);
-
-  useEffect(() => {
-    dispatch(getKeywordPostDB(keyword, pageno));
-    console.log(pageno);
-  }, [keyword, pageno]);
-
-  // const suggestBtnClick = (e) => {
-  //   console.log(e.target.id);
-  // };
 
   const searchEnter = (e) => {
     if (e.key === "Enter") {
-      setKeyword(e.target.value);
       setPageno(1);
-      dispatch(actionCreators.islastPage(false));
+      dispatch(getKeywordPostDB(e.target.value, pageno));
+      dispatch(keywordDB(e.target.value));
     }
   };
 
-  console.log(keyword, pageno);
   return (
     <Container>
       <div>
@@ -79,14 +45,13 @@ const Search = () => {
         <Img
           src={back}
           onClick={() => {
-            history.back();
+            history.push("/");
           }}
         ></Img>
         <I src={search}></I>
       </div>
-
       {/* 추천키워드 */}
-      {/* <Suggest>
+      <Suggest>
         <h4>추천 키워드</h4>
         <div>
           {keywordSuggestList.map((keyword, idx) => {
@@ -97,17 +62,17 @@ const Search = () => {
             );
           })}
         </div>
-      </Suggest> */}
-
+      </Suggest>
       {/* 검색리스트 페이지 */}
       <div>
-        <Title>{keyword} 관련 키워드</Title>
+        <Title>{keyWord} </Title>
         {searchList &&
           searchList.map((item, idx) => {
             return <SearchItem key={idx} {...item} />;
           })}
       </div>
-      {totalPage + 1 > pageno ? <div ref={setTarget}> </div> : null}
+
+      {/* <NotFound />  : searchList없을때 보여주기 */}
       <Footer />
     </Container>
   );
