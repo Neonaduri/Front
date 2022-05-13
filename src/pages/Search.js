@@ -64,6 +64,7 @@ const Search = () => {
         </div>
       </Suggest>
       {/* 검색리스트 페이지 */}
+
       <div>
         <Title>{keyWord} </Title>
         {searchList &&

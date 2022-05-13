@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
@@ -13,6 +13,8 @@ const ReviewDetail = () => {
   const postId = params.productId;
   const [files, setFiles] = useState();
   const reviewList = useSelector((state) => state.review.reviewList);
+  const reviewRef = useRef();
+  // const reset = reviewRef.current.value;
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -20,8 +22,6 @@ const ReviewDetail = () => {
     reviewContents: "",
     reviewImgFile: "",
   });
-
-  console.log(postId);
 
   //리뷰조회
   useEffect(() => {
@@ -81,17 +81,28 @@ const ReviewDetail = () => {
           })}
       </Container>
 
-      <ReviewBox>
-        <Input
-          name="reviewContents"
-          type="text"
-          placeholder="리뷰를 작성해주세요"
-          onChange={onChangeFormValue}
-        ></Input>
-        <Icon src={Camera}></Icon>
-      </ReviewBox>
-      <input type="file" accept="image/*" onChange={onImgFile}></input>
-      <Button onClick={ReviewBtnClick}>등록</Button>
+      <ContainerInput>
+        <ReviewBox>
+          <Input
+            name="reviewContents"
+            type="text"
+            placeholder="리뷰를 작성해주세요"
+            onChange={onChangeFormValue}
+            ref={reviewRef}
+          ></Input>
+          <Label for="chooseFile">
+            <Icon src={Camera}></Icon>
+          </Label>
+          <Button onClick={ReviewBtnClick}>등록</Button>
+        </ReviewBox>
+        <form method="post" enctype="multipart/form-data"></form>
+        <File
+          type="file"
+          id="chooseFile"
+          accept="image/*"
+          onChange={onImgFile}
+        ></File>
+      </ContainerInput>
     </>
   );
 };
@@ -101,8 +112,29 @@ export default ReviewDetail;
 const Input = styled.input`
   width: 273px;
   height: 39px;
+  padding: 10px;
   border: 1px solid #cacaca;
   border-radius: 5px;
+  margin-left: 5px;
+`;
+
+const File = styled.input`
+  visibility: hidden;
+`;
+
+const Label = styled.label`
+  cursor: pointer;
+  font-size: 1em;
+`;
+
+const ContainerInput = styled.div`
+  width: 100%;
+  height: 83px;
+  background: #ffffff;
+  border-top: 1px solid #cacaca;
+  border-radius: 0px;
+  position: fixed;
+  bottom: 0;
 `;
 
 const Button = styled.button`
@@ -132,15 +164,10 @@ const Container = styled.div`
 const ReviewBox = styled.div`
   display: flex;
   justify-content: left;
-
   align-items: center;
-
-  margin-top: 40px;
-  margin-left: 30px;
-
-  width: 100%;
   height: 18px;
-
+  margin-top: 20px;
+  padding: 10px;
   display: flex;
   h2 {
     font-weight: 700;

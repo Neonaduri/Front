@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
+import Test from "../../static/images/test.png";
 import {
   deleteCommentDB,
   getCommentDB,
@@ -46,29 +47,23 @@ const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
             </div>
           ) : (
             <Btns>
-              <Button onClick={deleteBtn}>삭제하기</Button>
-              <Button onClick={getEditBtn}>수정하기</Button>
+              <Button onClick={deleteBtn}>삭제</Button>
+              <Button onClick={getEditBtn}>수정</Button>
             </Btns>
           )}
         </UpperContents>
 
-        <ImagePop src={reviewImgUrl}></ImagePop>
+        <Image>
+          <ImagePop src={reviewImgUrl}></ImagePop>
+        </Image>
 
         <Content>
           <div>
             {editing ? (
               <Textarea defaultValue={reviewContents}></Textarea>
             ) : (
-              // <p>
-              //   Lorem ipsum dolor sit amet, consecteturadipiscing elit. Commodo
-              //   ut volutpat risus non.Ipsum arcu venenatis pharetra nisi
-              //   dignissim laoreet auctor massa, diam. In elit montes, felis
-              //   sagittis, ipsum volutpat elementum.
-              // </p>
               <p>{reviewContents}</p>
             )}
-
-            {/* 조건주기 */}
           </div>
         </Content>
       </Card>
@@ -104,6 +99,7 @@ const UpperContents = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 16px;
 `;
 
 const Button = styled.button`
@@ -122,8 +118,15 @@ const Button = styled.button`
 const ImagePop = styled.img`
   border-radius: 15px;
   width: 100%;
+  height: 241px;
   object-fit: cover;
   padding: 10px;
+`;
+
+const Image = styled.div`
+  object-fit: cover;
+  width: 100%;
+  height: 241px;
 `;
 
 const Textarea = styled.textarea`
