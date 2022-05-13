@@ -4,15 +4,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import { getLocationPostDB } from "../../redux/module/post";
 
 const ButtonArea = (props) => {
   const dispatch = useDispatch();
 
   const onClick = (e) => {
-    // const { value } = e.target;
     const location = e.target.value;
 
-    // dispatch(getLocationPostDB(location)) api연결
+    dispatch(getLocationPostDB(location));
     console.log(location);
   };
 

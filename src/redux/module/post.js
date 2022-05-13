@@ -6,58 +6,19 @@ import apis from "../../shared/request";
 // action
 const GET_BEST_POST = "GET_BEST_POST";
 const GET_LOCATION_POST = "GET_LOCATION_POST";
+const GET_SEARCH_POST = "GET_SEARCH_POST";
+const LAST_PAGE = "LAST_PAGE";
+const TOTAL = "TOTAL";
+const KEYWORD = "KEYWORD";
 
 // initialState
 const initialState = {
-  bestList: [
-    {
-      postId: 1,
-      postImgUrl:
-        "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
-      postTitle: "남친이랑 1박2일 제주여행",
-      location: "부산",
-      islike: true,
-      likeCnt: 5,
-      reviewCnt: 3,
-      theme: "액티비티",
-    },
-
-    {
-      postId: 1,
-      postImgUrl:
-        "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
-      postTitle: "남친이랑 1박2일 제주여행",
-      location: "부산",
-      islike: true,
-      likeCnt: 5,
-      reviewCnt: 3,
-      theme: "액티비티",
-    },
-  ],
-  locationList: [
-    {
-      postId: 1,
-      postImgUrl:
-        "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
-      postTitle: "남친이랑 1박2일 제주여행",
-      location: "부산",
-      islike: true,
-      likeCnt: 5,
-      reviewCnt: 3,
-      theme: "액티비티",
-    },
-    {
-      postId: 1,
-      postImgUrl:
-        "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMjlfMTY5/MDAxNTgyOTYzOTUyMzQ0.PbK6CMMKTOPLho9Ibr__DyC5sZq_deM697zsyejJsVMg.2xwHAE4G8ojR_mODq-DmMDmc0k0fDBMjR-E-M-i8VUMg.JPEG.haedud128/IMG_2905.JPG?type=w800",
-      postTitle: "남친이랑 1박2일 제주여행",
-      location: "부산",
-      islike: true,
-      likeCnt: 5,
-      reviewCnt: 3,
-      theme: "액티비티",
-    },
-  ],
+  bestList: [],
+  locationList: [],
+  searchList: [],
+  islastPage: false,
+  totalPage: 1,
+  keyword: "",
 };
 
 // actionCreators
@@ -69,13 +30,35 @@ const getLocationPost = createAction(GET_LOCATION_POST, (locationList) => ({
   locationList,
 }));
 
+export const getSearchPost = createAction(GET_SEARCH_POST, (searchList) => ({
+  searchList,
+}));
+
+const islastPage = createAction(LAST_PAGE, (islastPage) => ({
+  islastPage,
+}));
+
+const totalPage = createAction(TOTAL, (totalPage) => ({
+  totalPage,
+}));
+
+export const keywordDB = createAction(KEYWORD, (keyword) => ({
+  keyword,
+}));
+
 // middleWares
 
 //인기 여행플랜[메인]
 export const getBestPostDB = () => {
   return async function (dispatch, getState, { history }) {
+    const token = localStorage.getItem("token");
+
     try {
-      const response = await apis.axiosInstance.get(`/api/planning/best`);
+      const response = await apis.axiosInstance.get(`/api/planning/best`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
       if (response.status === 200) {
         console.log(response);
         dispatch(getBestPost(response.data));
@@ -106,10 +89,38 @@ export const getLocationPostDB = (location, pageno) => {
 };
 
 //검색 키워드 데이터요청[검색]
-const getKeywordPostDB = (location) => {
+export const getKeywordPostDB = (keyword, pageno) => {
   return async function (dispatch, getState, { history }) {
     try {
-      await axios.get(`urlHere/api/planning/location/${location}/1`);
+      const response = await apis.axiosInstance.get(
+        `/api/search/${keyword}/${pageno}`
+      );
+
+      if (response.status === 200) {
+        console.log(response);
+        dispatch(getSearchPost(response.data));
+        dispatch(islastPage(response.data.islastPage));
+        dispatch(totalPage(response.data.totalPage));
+      }
+    } catch (err) {
+      console.log("에러발생", err);
+    }
+  };
+};
+
+//테마별 조회 [메인]
+export const getThemePostDB = (keyword) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const response = await apis.axiosInstance.get(
+        `/api/planning/theme/${keyword}/1`
+      );
+
+      if (response.status === 200) {
+        console.log(response);
+        dispatch(getSearchPost(response.data));
+        history.push("/search");
+      }
     } catch (err) {
       console.log("에러발생", err);
     }
@@ -121,11 +132,27 @@ export default handleActions(
   {
     [GET_BEST_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.bestList.push(action.payload.bestList);
+        draft.bestList = action.payload.bestList;
       }),
     [GET_LOCATION_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.locationList.push(action.payload.locationList);
+        draft.locationList = action.payload.locationList;
+      }),
+    [GET_SEARCH_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.searchList = action.payload.searchList.resultList;
+      }),
+    [LAST_PAGE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.islastPage = action.payload.islastPage;
+      }),
+    [TOTAL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.totalPage = action.payload.totalPage;
+      }),
+    [KEYWORD]: (state, action) =>
+      produce(state, (draft) => {
+        draft.keyword = action.payload.keyword;
       }),
   },
   initialState
@@ -134,6 +161,7 @@ export default handleActions(
 const actionCreators = {
   getBestPostDB,
   getLocationPostDB,
+  islastPage,
 };
 
 export { actionCreators };

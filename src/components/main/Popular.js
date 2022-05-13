@@ -4,12 +4,16 @@ import styled from "styled-components";
 import love from "../../static/images/icon/love.png";
 import Union from "../../static/images/icon/Union.png";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
-const Popular = ({ postTitle, likeCnt, reviewCnt, postImgUrl }) => {
-  const bestList = useSelector((state) => state.post.bestList);
+const Popular = ({ postTitle, likeCnt, reviewCnt, postImgUrl, postId }) => {
+  const locationList = useSelector((state) => state.post.locationList);
+  const history = useHistory();
+
+  console.log(postId);
 
   return (
-    <Wrap>
+    <Wrap onClick={() => history.push(`/detail/${postId}`)}>
       <ImagePop src={postImgUrl} />
       <Box>
         <Content>{postTitle}</Content>
@@ -41,7 +45,6 @@ const Wrap = styled.div`
   position: relative;
   margin-bottom: 3px;
   margin-right: 3px;
-  /* gap: 3; */
 `;
 
 const Like = styled.div`
@@ -71,6 +74,9 @@ const Content = styled.div`
   line-height: 17px;
   color: #363636;
   font-family: "Apple SD Gothic Neo";
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 const Box = styled.div`

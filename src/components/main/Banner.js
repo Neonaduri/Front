@@ -27,8 +27,26 @@ const Banner = () => {
       <Container>
         <Section>
           <StyledSlide {...settings}>
-            <Img src={post1}></Img>
-            <Img src={post2}></Img>
+            <div>
+              <Img src={post1} />
+              <Button>
+                <A
+                  href="https://www.ktourmap.com/spotDetails.jsp?contentId=2818498"
+                  target="_blank"
+                >
+                  행사보러가기
+                </A>
+              </Button>
+            </div>
+
+            <div>
+              <Img src={post2}></Img>
+              <Button>
+                <A href="https://hansanmosi.kr/home" target="_blank">
+                  행사보러가기
+                </A>
+              </Button>
+            </div>
           </StyledSlide>
         </Section>
       </Container>
@@ -45,9 +63,29 @@ const Section = styled.section`
   height: 335px;
 `;
 
+const A = styled.a`
+  text-decoration: none;
+  color: white;
+`;
+
 const Img = styled.img`
   background-size: cover;
   width: 100%;
+`;
+
+const Button = styled.button`
+  position: relative;
+  bottom: 180px;
+  left: 20px;
+  width: 112px;
+  height: 32px;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  background: #000000;
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
 `;
 
 const StyledSlide = styled(Slider)`

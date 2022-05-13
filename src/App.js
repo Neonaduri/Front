@@ -24,6 +24,7 @@ import Search from "./pages/Search";
 import BeforePlan from "./pages/BeforePlan";
 import Splash from "./shared/Splash";
 import Detail from "./pages/Detail";
+import ReviewDetail from "./components/review/ReviewDetail";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -55,7 +56,12 @@ function App(props) {
             <Route path="/myplan" component={Myplan} />
             <Route path="/mypage" component={Mypage} />
             <Route path="/editprofile" component={Editprofile} />
-            <Route path="/detail/:id" component={Detail} />
+            <Route path="/detail/:id" exact component={Detail} />
+            <Route
+              path="/detail/:productId/write"
+              exact
+              component={ReviewDetail}
+            />
           </MobileFrame>
         </ConnectedRouter>
       </Wrap>
