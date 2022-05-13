@@ -68,12 +68,7 @@ const DayBtnDiv = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-around;
-<<<<<<< HEAD
   position: absolute;
-=======
-  /* position: absolute; */
-  top: 340px;
->>>>>>> 47c8623524b5c56159b657fed00cc6fea68075e7
   button {
     display: block;
     width: 50px;

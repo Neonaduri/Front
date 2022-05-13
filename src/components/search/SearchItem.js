@@ -5,52 +5,58 @@ import styled from "styled-components";
 import love from "../../static/images/icon/love.png";
 import Union from "../../static/images/icon/Union.png";
 
-const SearchItem = forwardRef(
-  ({ location, theme, postId, likeCnt, reviewCnt, postTitle, postImgUrl }) => {
-    const nickname = useSelector((state) => state.user.list.nickName);
-    const history = useHistory();
+const SearchItem = ({
+  location,
+  theme,
+  postId,
+  likeCnt,
+  reviewCnt,
+  postTitle,
+  postImgUrl,
+}) => {
+  const nickname = useSelector((state) => state.user.list.nickName);
+  const history = useHistory();
 
-    return (
-      <div onClick={() => history.push(`/detail/${postId}`)}>
-        {/* 하나의 리스트 */}
-        <div>
-          <Wrap>
-            <ImagePop src={postImgUrl} />
-          </Wrap>
+  return (
+    <div onClick={() => history.push(`/detail/${postId}`)}>
+      {/* 하나의 리스트 */}
+      <div>
+        <Wrap>
+          <ImagePop src={postImgUrl} />
+        </Wrap>
 
-          {/* 카테고리 */}
-          <Box>
-            <Content>{location}</Content>
-            <Content>{theme}</Content>
-          </Box>
+        {/* 카테고리 */}
+        <Box>
+          <Content>{location}</Content>
+          <Content>{theme}</Content>
+        </Box>
 
-          <Box>
-            <Contain>
-              <Con>{postTitle}</Con>
-              <Term>22.05.03 ~ 22.05.30</Term>
-            </Contain>
-          </Box>
+        <Box>
+          <Contain>
+            <Con>{postTitle}</Con>
+            <Term>22.05.03 ~ 22.05.30</Term>
+          </Contain>
+        </Box>
 
-          {/* 좋아요, 댓글개수 */}
-          <SectionBox>
-            <Nickname>{nickname}</Nickname>
+        {/* 좋아요, 댓글개수 */}
+        <SectionBox>
+          <Nickname>{nickname}</Nickname>
+          <Like>
             <Like>
-              <Like>
-                <img src={love} />
-                <Cnt>{likeCnt}</Cnt>
-              </Like>
-              <Like>
-                <img src={Union} />
-                <Cnt>{reviewCnt}</Cnt>
-              </Like>
+              <img src={love} />
+              <Cnt>{likeCnt}</Cnt>
             </Like>
-          </SectionBox>
-          <Bar></Bar>
-        </div>
+            <Like>
+              <img src={Union} />
+              <Cnt>{reviewCnt}</Cnt>
+            </Like>
+          </Like>
+        </SectionBox>
+        <Bar></Bar>
       </div>
-    );
-  }
-);
+    </div>
+  );
+};
 
 export default SearchItem;
 

@@ -1,19 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import styled from "styled-components";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { useDispatch, useSelector } from "react-redux";
 import { planAction } from "../../redux/module/plan";
-import Modalroompass from "../common/Modalroompass";
 
 const SubmitBtn = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
   const postId = useParams().postId;
   const db = getDatabase();
   const isLogin = useSelector((state) => state.user.isLogin);
+  const loginUser = useSelector((state) => state.user.list);
+  const nowPlan = useSelector((state) => state.plan.list);
   const [fixedPlan, setFixedPlan] = useState();
-  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const fixedPlanRef = ref(db, `${postId}`);
@@ -88,22 +87,9 @@ const SubmitBtn = () => {
         ispublic: false,
         days: allPlan,
       };
-
+      // console.log(data);
       dispatch(planAction.completePlanDB(data));
     }
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
-  const copyLink = () => {
-    const url = window.location.href + "/join";
-    navigator.clipboard.writeText(url);
-    setModalOpen(false);
-  };
-  const copyLinkBtnClick = () => {
-    setModalOpen(true);
   };
 
   if (!isLogin) {
@@ -112,64 +98,37 @@ const SubmitBtn = () => {
 
   return (
     <Container>
-      <button onClick={copyLinkBtnClick}>초대URL 복사하기</button>
       <button onClick={submitPlanPrivate}>나만보기</button>
       <button onClick={submitPlanPublic}>자랑하기</button>
-      <Modalroompass
-        open={modalOpen}
-        close={closeModal}
-        header={
-          <ModalContent>
-            <input
-              defaultValue={window.location.href + "/join"}
-              disabled={true}
-            ></input>
-            <ModalBtn onClick={copyLink}>URL 복사하기</ModalBtn>
-            <ModalBtn
-              onClick={() => {
-                setModalOpen(false);
-              }}
-            >
-              닫기
-            </ModalBtn>
-          </ModalContent>
-        }
-      ></Modalroompass>
     </Container>
   );
 };
 
-const ModalBtn = styled.button`
-  background-color: #41b67e;
-  border-radius: 10px;
-  color: white;
-  display: block;
-  height: 40px;
-  margin-bottom: 10px;
-`;
-const ModalContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  input {
-    width: 90%;
-    margin-bottom: 20px;
-    font-size: 15px;
-    padding: 5px;
-    border-radius: 15px;
-    border: 1px solid black;
-    background-color: inherit;
-  }
-`;
-
 const Container = styled.div`
   display: flex;
   justify-content: space-around;
+  border-top: 1px solid #cacaca;
+  padding-bottom: 15px;
+  padding-top: 5px;
   button {
-    width: 30%;
+    width: 40%;
     padding: 5px 0px;
+    &:first-child {
+      border: 1px solid #cacaca;
+      border-radius: 5px;
+      background-color: white;
+      color: #8d8d8d;
+      padding: 10px 0px;
+      font-size: 16px;
+    }
+    &:last-child {
+      border: 1px solid #cacaca;
+      border-radius: 5px;
+      background-color: #56be91;
+      color: white;
+      padding: 10px 0px;
+      font-size: 16px;
+    }
   }
 `;
 

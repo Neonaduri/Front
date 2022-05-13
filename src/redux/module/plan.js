@@ -61,7 +61,7 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
     );
     // const response = RESP.MAKEPLANPOST;
     console.log(response);
-    if (response.status === 200) {
+    if (response.status === 201) {
       const db = getDatabase();
       set(ref(db, `${response.data.postId}`), {
         postId: response.data.postId,
@@ -107,15 +107,20 @@ const getRoomDB = (postId) => {
 };
 const completePlanDB = (data) => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.put("/api/saveplan", data, {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    });
-    // const response = RESP.SAVEPLANPUT;
-    console.log(response);
-    if (response.status === 201) {
-      history.replace("/uploadcomplete");
+    try {
+      console.log(data);
+      const response = await apis.axiosInstance.put("/api/saveplan", data, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      // const response = RESP.SAVEPLANPUT;
+      console.log(response);
+      if (response.status === 201) {
+        history.replace("/uploadcomplete");
+      }
+    } catch (err) {
+      console.log(err.response);
     }
   };
 };

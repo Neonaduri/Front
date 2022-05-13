@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 const ScheduleDetail = ({ dayNow }) => {
   const planByDay = useSelector((state) => state.plan?.detailPlan.days);
+  const userByDay = useSelector((state) => state.plan?.detailPlan.user);
+  const loginUser = useSelector((state) => state.user.list);
 
   if (!planByDay) {
     return null;
@@ -20,13 +22,18 @@ const ScheduleDetail = ({ dayNow }) => {
   return (
     <Container>
       {dayPlanPlaces.map((place, idx) => {
+        console.log(place);
         return (
           <PlaceCard key={idx}>
             <div>
               <span>{place.placeName}</span>
               <span>{place.roadAddress}</span>
-              <a href={place.placeInfoUrl}>{place.placeName}바로가기</a>
-              <div>{place.placeMemo}</div>
+              <a href={place.placeInfoUrl} target="_blank">
+                {place.placeName}바로가기
+              </a>
+              {userByDay.userName === loginUser.userName ? (
+                <div>{place.placeMemo}</div>
+              ) : null}
             </div>
             <div></div>
           </PlaceCard>

@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  Map,
-  MapMarker,
-  Polyline,
-  MapTypeId,
-  CustomOverlayMap,
-} from "react-kakao-maps-sdk";
+import { Map, MapMarker, Polyline, MapTypeId } from "react-kakao-maps-sdk";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Titleline from "../../components/elements/Titleline";

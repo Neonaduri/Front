@@ -21,6 +21,7 @@ const Editprofile = () => {
     const reader = new FileReader();
     const imgFile = file[0];
     reader.readAsDataURL(imgFile);
+
     reader.onloadend = () => {
       setPreview(reader.result);
     };
