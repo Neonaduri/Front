@@ -38,9 +38,9 @@ const MainPage = ({ history }) => {
     speed: 1000,
   };
 
-  if (!token) {
-    history.push("/login");
-  }
+  // if (!token) {
+  //   history.push("/login");
+  // }
 
   useEffect(() => {
     dispatch(getBestPostDB());

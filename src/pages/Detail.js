@@ -15,7 +15,14 @@ const Detail = () => {
   const params = useParams();
   const postId = params.id;
   const dayCnt = useSelector((state) => state.plan.detailPlan.dateCnt);
+  const reviewList = useSelector((state) => state.review.reviewList);
+  const totalCnt = useSelector((state) => state.review.totalElements);
+
+  console.log(totalCnt);
+
+  console.log(reviewList);
   const [dayNow, setDayNow] = useState(1);
+  const arr = reviewList.slice(0, 3);
   let dateCntArr = [];
   for (let i = 1; i <= dayCnt; i++) {
     dateCntArr.push(i);
@@ -45,10 +52,13 @@ const Detail = () => {
         <MapDetail dayNow={dayNow} />
         <ScheduleDetail dayNow={dayNow} />
       </div>
+
+      <Line></Line>
+
       {/* 리뷰페이지입니다 */}
       <ReviewBox>
         <h2>
-          리뷰<span>(120)</span>
+          리뷰<span>({totalCnt})</span>
         </h2>
         <img
           src={addMore}
@@ -57,8 +67,13 @@ const Detail = () => {
           }}
         ></img>
       </ReviewBox>
-      <ReviewList />
-      <Footer />
+
+      <ReviewPage>
+        {arr &&
+          arr.map((item, id) => {
+            return <ReviewList key={id} {...item} totalCnt={totalCnt} />;
+          })}
+      </ReviewPage>
     </>
   );
 };
@@ -68,7 +83,7 @@ const DayBtnDiv = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-around;
-  position: absolute;
+  top: 340px;
   button {
     display: block;
     width: 50px;
@@ -79,11 +94,23 @@ const DayBtnDiv = styled.div`
   }
 `;
 
+const Line = styled.div`
+  width: 100%;
+  height: 10px;
+  background: #f5f5f5;
+  margin: 20px 0;
+`;
+
+const ReviewPage = styled.div`
+  justify-content: center;
+  align-items: center;
+`;
+
 const ReviewBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 14px;
+  padding: 0 26px;
   margin-top: 20px;
   width: 100%;
   height: 18px;

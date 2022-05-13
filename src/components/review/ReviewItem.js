@@ -1,17 +1,28 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import {
   deleteCommentDB,
   getCommentDB,
   getOneCommentDB,
 } from "../../redux/module/review";
+import ModalImg from "./ModalImg";
 
 const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const params = useParams();
+  const postId = params.productId;
+  const profilUrl = useSelector((state) => state.user.list.profileImg);
+
   const [editing, setEditing] = useState(false);
+  const [imgModal, setImgModal] = useState(false);
+
+  const onClick = () => {
+    setImgModal(true);
+    console.log(imgModal);
+  };
 
   //삭제버튼
   const deleteBtn = () => {
@@ -23,19 +34,26 @@ const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
     setEditing(false);
   };
 
-  //
+  //수정버튼
   const getEditBtn = () => {
     dispatch(getOneCommentDB(reviewId));
     setEditing(true);
 
     // dispatch(editCommentDB(reviewId));
   };
+
+  console.log(reviewImgUrl);
   return (
     <>
       <Card>
         <UpperContents>
           <Profile>
-            <ProfileImg src="https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/guest/image/huOSCsK5PxRuyoA0e_v7g_4PryM.jpg"></ProfileImg>
+            <ProfileImg
+              src={profilUrl}
+              onClick={() => {
+                history.push("/mypage");
+              }}
+            ></ProfileImg>
             <p>{nickName}</p>
           </Profile>
 
@@ -46,32 +64,35 @@ const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
             </div>
           ) : (
             <Btns>
-              <Button onClick={deleteBtn}>삭제하기</Button>
-              <Button onClick={getEditBtn}>수정하기</Button>
+              <Button onClick={deleteBtn}>삭제</Button>
+              <Button onClick={getEditBtn}>수정</Button>
             </Btns>
           )}
         </UpperContents>
-
-        <ImagePop src={reviewImgUrl}></ImagePop>
+        {reviewImgUrl === null ? null : (
+          <Image onClick={onClick}>
+            <ImagePop src={reviewImgUrl}></ImagePop>
+          </Image>
+        )}
 
         <Content>
           <div>
             {editing ? (
               <Textarea defaultValue={reviewContents}></Textarea>
             ) : (
-              // <p>
-              //   Lorem ipsum dolor sit amet, consecteturadipiscing elit. Commodo
-              //   ut volutpat risus non.Ipsum arcu venenatis pharetra nisi
-              //   dignissim laoreet auctor massa, diam. In elit montes, felis
-              //   sagittis, ipsum volutpat elementum.
-              // </p>
               <p>{reviewContents}</p>
             )}
-
-            {/* 조건주기 */}
           </div>
         </Content>
       </Card>
+
+      {imgModal && (
+        <ModalImg
+          reviewImgUrl={reviewImgUrl}
+          postId={postId}
+          setImgModal={setImgModal}
+        />
+      )}
     </>
   );
 };
@@ -104,6 +125,7 @@ const UpperContents = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 16px;
 `;
 
 const Button = styled.button`
@@ -122,8 +144,15 @@ const Button = styled.button`
 const ImagePop = styled.img`
   border-radius: 15px;
   width: 100%;
+  height: 241px;
   object-fit: cover;
   padding: 10px;
+`;
+
+const Image = styled.div`
+  object-fit: cover;
+  width: 100%;
+  height: 241px;
 `;
 
 const Textarea = styled.textarea`

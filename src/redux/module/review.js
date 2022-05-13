@@ -8,6 +8,7 @@ const ADD_COMMENT = "ADD_COMMENT";
 const EDIT_COMMENT = "EDIT_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
 const ONE_COMMENT = "ONE_COMMENT";
+const TOTAL_ELEMENTS = "TOTAL_ELEMENTS";
 
 // Action Creators
 export const getComment = createAction(GET_COMMENT, (reviewList) => ({
@@ -25,7 +26,9 @@ export const deleteComment = createAction(DELETE_COMMENT, (reviewId) => ({
 export const getOneComment = createAction(ONE_COMMENT, (reviewList) => ({
   reviewList,
 }));
-
+export const totalElements = createAction(TOTAL_ELEMENTS, (totalElements) => ({
+  totalElements,
+}));
 //미들웨어
 
 //리뷰등록
@@ -39,8 +42,10 @@ export const addCommentDB = (postId, formdata, config) => {
       );
 
       if (response.status === 201) {
+        window.location.reload();
         console.log(response.data);
         dispatch(addComment(response.data));
+        window.alert("후기가 등록되었습니다!");
       }
     } catch (err) {
       console.log("에러발생", err);
@@ -57,9 +62,10 @@ export const getCommentDB = (postId, pageno) => {
       );
 
       if (response.status === 200) {
-        console.log("후기조회 성공!");
+        console.log("후기조회", response.data.totalElements);
         console.log(response.data.reviewList);
         dispatch(getComment(response.data.reviewList));
+        dispatch(totalElements(response.data.totalElements));
       }
     } catch (err) {
       console.log("에러발생", err);
@@ -106,6 +112,7 @@ export const deleteCommentDB = (reviewId) => {
 };
 
 const initialComment = {
+  totalElements: 0,
   reviewList: [
     {
       reviewId: 1,
@@ -127,7 +134,7 @@ export default handleActions(
       }),
     [ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        draft.reviewList.push(action.payload.reviewList);
+        draft.reviewList.unshift(action.payload.reviewList);
       }),
     [EDIT_COMMENT]: (state, action) =>
       produce(state, (draft) => {
@@ -145,6 +152,10 @@ export default handleActions(
     [ONE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         draft.reviewList = action.payload.reviewList;
+      }),
+    [TOTAL_ELEMENTS]: (state, action) =>
+      produce(state, (draft) => {
+        draft.totalElements = action.payload.totalElements;
       }),
   },
   initialComment
