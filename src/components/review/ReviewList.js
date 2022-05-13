@@ -4,13 +4,12 @@ import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import { getCommentDB } from "../../redux/module/review";
 
-const ReviewList = ({ nickName, reviewContents, reviewImgUrl }) => {
+const ReviewList = ({ nickName, reviewContents, reviewImgUrl, totalCnt }) => {
   const params = useParams();
-  const history = useHistory();
   const postId = params.id;
-  const reviewList = useSelector((state) => state.review.reviewList);
   const dispatch = useDispatch();
 
+  console.log(totalCnt);
   // 리뷰조회;
   useEffect(() => {
     dispatch(getCommentDB(postId));

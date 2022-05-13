@@ -1,19 +1,28 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import {
   deleteCommentDB,
   getCommentDB,
   getOneCommentDB,
 } from "../../redux/module/review";
+import ModalImg from "./ModalImg";
 
 const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const params = useParams();
+  const postId = params.productId;
   const profilUrl = useSelector((state) => state.user.list.profileImg);
 
   const [editing, setEditing] = useState(false);
+  const [imgModal, setImgModal] = useState(false);
+
+  const onClick = () => {
+    setImgModal(true);
+    console.log(imgModal);
+  };
 
   //삭제버튼
   const deleteBtn = () => {
@@ -32,6 +41,8 @@ const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
 
     // dispatch(editCommentDB(reviewId));
   };
+
+  console.log(reviewImgUrl);
   return (
     <>
       <Card>
@@ -58,10 +69,11 @@ const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
             </Btns>
           )}
         </UpperContents>
-
-        <Image>
-          <ImagePop src={reviewImgUrl}></ImagePop>
-        </Image>
+        {reviewImgUrl === null ? null : (
+          <Image onClick={onClick}>
+            <ImagePop src={reviewImgUrl}></ImagePop>
+          </Image>
+        )}
 
         <Content>
           <div>
@@ -73,6 +85,14 @@ const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
           </div>
         </Content>
       </Card>
+
+      {imgModal && (
+        <ModalImg
+          reviewImgUrl={reviewImgUrl}
+          postId={postId}
+          setImgModal={setImgModal}
+        />
+      )}
     </>
   );
 };

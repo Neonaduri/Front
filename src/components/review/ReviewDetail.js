@@ -8,14 +8,16 @@ import { addCommentDB, getCommentDB } from "../../redux/module/review";
 import Back from "../../static/images/button/back.png";
 import ReviewItem from "./ReviewItem";
 import Camera from "../../static/images/icon/camera.png";
+import underBar from "../../static/images/underBar.png";
 
 const ReviewDetail = () => {
   const params = useParams();
   const postId = params.productId;
-  const [files, setFiles] = useState(null);
+  const [files, setFiles] = useState();
   const reviewList = useSelector((state) => state.review.reviewList);
+  const totalCnt = useSelector((state) => state.review.totalElements);
   const reviewRef = useRef();
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState("");
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -37,6 +39,18 @@ const ReviewDetail = () => {
     };
   };
 
+  // const encodeFileToBase64 = (fileBlob) => {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(fileBlob);
+  //   return new Promise((resolve) => {
+  //     reader.onload = () => {
+  //       setPreview(reader.result);
+  //       resolve();
+  //     };
+  //   });
+  // };
+
+  console.log(preview);
   //리뷰조회
   useEffect(() => {
     dispatch(getCommentDB(postId));
@@ -58,30 +72,23 @@ const ReviewDetail = () => {
 
   const ReviewBtnClick = () => {
     //이미지, 텍스트 모두있는경우
-    if (reviewValue.reviewImgFile !== null && files !== null) {
+    if (files === undefined) {
       const formdata = new FormData();
-      formdata.append("reviewImgFile", files[0]);
+      formdata.append(
+        "reviewImgFile",
+        new File([], "", { type: "text/plane" })
+      );
       formdata.append("reviewContents", reviewValue.reviewContents);
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       };
-
       dispatch(addCommentDB(postId, formdata, config));
-      setReviewValue({
-        reviewContents: "",
-        reviewImgFile: "",
-      });
-
-      //이미지 없는경우
-    } else if (files === null) {
+    } else {
       const formdata = new FormData();
-      formdata.append("reviewImgFile", new File([], { type: "text/plane" }));
-      //비어있는 파일이 안감 ....
-
+      formdata.append("reviewImgFile", files[0]);
       formdata.append("reviewContents", reviewValue.reviewContents);
-
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -97,7 +104,6 @@ const ReviewDetail = () => {
     // }
   };
 
-  // console.log(files);
   return (
     <>
       <ReviewBox>
@@ -108,7 +114,7 @@ const ReviewDetail = () => {
           }}
         ></Img>
         <h2>
-          리뷰<span>({reviewList.length})</span>
+          리뷰<span>({totalCnt})</span>
         </h2>
       </ReviewBox>
 
@@ -119,37 +125,42 @@ const ReviewDetail = () => {
           })}
       </Container>
 
-      <ContainerInput>
-        <ReviewInputBox>
-          <TextareaAutosize
-            autoFocus
-            name="reviewContents"
-            type="text"
-            placeholder="리뷰를 작성해주세요"
-            onChange={onChangeFormValue}
-            ref={reviewRef}
-            style={{
-              width: "273px",
-              padding: "10px",
-              resize: "none",
-              overflow: "hidden",
-              outline: "none",
-            }}
-          />
-
-          <Label htmlFor="chooseFile">
-            <Icon src={Camera}></Icon>
-          </Label>
-          <Button onClick={ReviewBtnClick}>등록</Button>
-        </ReviewInputBox>
-        <form method="post" encType="multipart/form-data"></form>
-        <File
-          type="file"
-          id="chooseFile"
-          accept="image/*"
-          onChange={onImgFile}
-        ></File>
-      </ContainerInput>
+      <Wrap>
+        <ContainerInput>
+          <ReviewInputBox>
+            <WriteBox>
+              {preview && <Test src={preview}></Test>}
+              <TextareaAutosize
+                autoFocus
+                name="reviewContents"
+                type="text"
+                placeholder="리뷰를 작성해주세요"
+                onChange={onChangeFormValue}
+                ref={reviewRef}
+                style={{
+                  width: "273px",
+                  padding: "10px",
+                  resize: "none",
+                  overflow: "hidden",
+                  outline: "none",
+                  border: 0,
+                }}
+              ></TextareaAutosize>
+              <Label htmlFor="chooseFile">
+                <Icon src={Camera}></Icon>
+              </Label>
+            </WriteBox>
+            <Button onClick={ReviewBtnClick}>등록</Button>
+          </ReviewInputBox>
+          <form method="post" encType="multipart/form-data"></form>
+          <FileName
+            type="file"
+            id="chooseFile"
+            accept="image/*"
+            onChange={onImgChange}
+          ></FileName>
+        </ContainerInput>
+      </Wrap>
     </>
   );
 };
@@ -157,16 +168,43 @@ const ReviewDetail = () => {
 export default ReviewDetail;
 
 const ReviewInputBox = styled.div`
+  position: relative;
   display: flex;
-  justify-content: left;
+  justify-content: center;
+  /* background-color: white; */
   align-items: center;
   height: 18px;
-  margin-top: 20px;
+  margin-top: 30px;
   padding: 10px;
-  resize: none;
 `;
 
-const File = styled.input`
+const Wrap = styled.div`
+  position: fixed;
+`;
+
+const Test = styled.img`
+  display: flex;
+  width: 40px;
+  height: 64px;
+  object-fit: cover;
+`;
+
+const WriteBox = styled.div`
+  background-color: white;
+  border: 1px solid #cacaca;
+  border-radius: 5px;
+  margin-right: 70px;
+  margin-bottom: 20px;
+`;
+
+// const Bar = styled.img`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin-left: 120px;
+// `;
+
+const FileName = styled.input`
   visibility: hidden;
 `;
 
@@ -179,25 +217,29 @@ const ContainerInput = styled.div`
   width: 100%;
   height: 83px;
   background: #ffffff;
-  border-top: 1px solid #cacaca;
+  /* border-top: 1px solid #cacaca; */
   border-radius: 0px;
   position: fixed;
-  /* position: relative; */
+  background-color: white;
   bottom: 0;
 `;
 
 const Button = styled.button`
   width: 60px;
   height: 39px;
+  bottom: 35px;
+  right: 40px;
   background: #56be91;
   border-radius: 5px;
+  position: fixed;
   border: 0;
   color: white;
 `;
 
 const Icon = styled.img`
-  position: relative;
-  right: 30px;
+  position: absolute;
+  right: 110px;
+  bottom: 8px;
   width: 24px;
   height: 24px;
 `;
@@ -207,7 +249,7 @@ const Container = styled.div`
   align-items: center;
   margin-top: 20px;
   width: 100%;
-  margin-bottom: 90px;
+  margin-bottom: 190px;
 `;
 
 const ReviewBox = styled.div`
@@ -216,7 +258,8 @@ const ReviewBox = styled.div`
   align-items: center;
   height: 18px;
   margin-top: 20px;
-  padding: 10px;
+  padding: 20px;
+  margin-left: 10px;
   display: flex;
   h2 {
     font-weight: 700;

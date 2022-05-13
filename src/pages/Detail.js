@@ -16,6 +16,11 @@ const Detail = () => {
   const postId = params.id;
   const dayCnt = useSelector((state) => state.plan.detailPlan.dateCnt);
   const reviewList = useSelector((state) => state.review.reviewList);
+  const totalCnt = useSelector((state) => state.review.totalElements);
+
+  console.log(totalCnt);
+
+  console.log(reviewList);
   const [dayNow, setDayNow] = useState(1);
   const arr = reviewList.slice(0, 3);
   let dateCntArr = [];
@@ -49,10 +54,11 @@ const Detail = () => {
       </div>
 
       <Line></Line>
+
       {/* 리뷰페이지입니다 */}
       <ReviewBox>
         <h2>
-          리뷰<span>({reviewList.length})</span>
+          리뷰<span>({totalCnt})</span>
         </h2>
         <img
           src={addMore}
@@ -65,7 +71,7 @@ const Detail = () => {
       <ReviewPage>
         {arr &&
           arr.map((item, id) => {
-            return <ReviewList key={id} {...item} />;
+            return <ReviewList key={id} {...item} totalCnt={totalCnt} />;
           })}
       </ReviewPage>
     </>
