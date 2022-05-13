@@ -1,8 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import axiosInstance from "../../shared/request";
 import { RESP } from "../../shared/response";
-import jwtDecode from "jwt-decode";
 import apis from "../../shared/request";
 
 //action
@@ -36,11 +34,12 @@ const emailCheckDB = (username) => {
         userName: username,
       });
       // const response = RESP.IDCHECKPOST;
-      if (response.status === 200) {
+      if (response.status === 201) {
         dispatch(emailCheck(true));
       }
     } catch (err) {
-      if (err.response.data.status === "BAD_REQUEST") {
+      console.log(err.response);
+      if (err.response.data === 400) {
         dispatch(emailCheck(false));
       }
     }
@@ -48,18 +47,22 @@ const emailCheckDB = (username) => {
 };
 const signUpDB = (username, nickName, password, passwordCheck) => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.post("/user/signup", {
-      userName: username,
-      nickName,
-      password,
-      passwordCheck,
-    });
-    // const response = RESP.SIGNUPPOST;
-    if (response.status === 200) {
-      window.alert("회원가입 완료! 로그인 해주세요:)");
-      history.replace("/login");
-    } else {
-      console.log(response);
+    try {
+      const response = await apis.axiosInstance.post("/user/signup", {
+        userName: username,
+        nickName,
+        password,
+        passwordCheck,
+      });
+      // const response = RESP.SIGNUPPOST;
+      if (response.status === 201) {
+        window.alert("회원가입 완료! 로그인 해주세요:)");
+        history.replace("/login");
+      } else {
+        console.log(response);
+      }
+    } catch (err) {
+      console.log(err.response);
     }
   };
 };
@@ -72,13 +75,14 @@ const logInDB = (username, password) => {
       });
       // const response = RESP.LOGINPOST;
       console.log(response);
-      if (response.status === 200) {
+      if (response.status === 201) {
         const token = response.headers.authorization;
+        // const token = response.token;
         localStorage.setItem("token", token);
       }
       if (localStorage.getItem("token")) {
         dispatch(isLoginDB());
-        history.replace("/");
+        window.location.replace("/");
       }
     } catch (err) {
       console.log(err);
@@ -168,8 +172,9 @@ const googleLoginDB = (code) => {
 
 const getMyLikePostDB = () => {
   return async function (dispatch, getState, { history }) {
-    // const response = await apis.axiosInstance.get("/api/user/mypage/like");
-    const response = RESP.MYPAGELIKEGET;
+    const response = await apis.axiosInstance.get("/api/user/mypage/like/1");
+    // const response = RESP.MYPAGELIKEGET;
+    console.log(response);
     if (response.status === 200) {
       dispatch(getLikedPost(response));
     }
@@ -177,10 +182,11 @@ const getMyLikePostDB = () => {
 };
 const getMyReviewDB = () => {
   return async function (dispatch, getState, { history }) {
-    // const response = await apis.axiosInstance.get("/api/user/mypage/review");
-    const response = RESP.MYREVIEWGET;
-    if (response) {
-      dispatch(getMyReview(response));
+    const response = await apis.axiosInstance.get("/api/user/mypage/review");
+    // const response = RESP.MYREVIEWGET;
+    console.log(response);
+    if (response.status === 200) {
+      dispatch(getMyReview(response.data));
     }
   };
 };
@@ -192,9 +198,10 @@ const editProfileDB = (formdata, config) => {
       formdata,
       config
     );
-    if (response.status === 200) {
+    console.log(response);
+    if (response.status === 201) {
       alert("프로필이 수정되었습니다.");
-      history.replace("/mypage");
+      window.location.replace("/");
     }
   };
 };

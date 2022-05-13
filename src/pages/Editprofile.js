@@ -78,11 +78,13 @@ const Editprofile = () => {
 
   return (
     <Container>
-      {preview === null ? (
-        <img src={userInfo.profileImg} />
-      ) : (
-        <img src={preview} />
-      )}
+      <Imgdiv>
+        {preview === null ? (
+          <img src={userInfo.profileImg} />
+        ) : (
+          <img src={preview} />
+        )}
+      </Imgdiv>
 
       <input type="file" accept="image/*" onChange={onImgChange}></input>
       <button
@@ -105,12 +107,11 @@ const Editprofile = () => {
     </Container>
   );
 };
-
-const Container = styled.div`
-  img {
-    width: 70px;
-    height: 70px;
-  }
+const Imgdiv = styled.div`
+  width: 70px;
+  height: 70px;
 `;
+
+const Container = styled.div``;
 
 export default Editprofile;

@@ -44,6 +44,17 @@ const Schedule = ({ dayNow }) => {
       setPlace(fixedPlace);
       setPlaceKey(fixedPlaceKey);
     });
+    return () =>
+      onValue(fixedPlaceRef, (snapshot) => {
+        let fixedPlace = [];
+        let fixedPlaceKey = [];
+        snapshot.forEach((child) => {
+          fixedPlace.push(child.val());
+          fixedPlaceKey.push(child.key);
+        });
+        setPlace(fixedPlace);
+        setPlaceKey(fixedPlaceKey);
+      });
   }, [dayNow]);
 
   const deletePlaceClick = (e) => {
@@ -124,20 +135,6 @@ const Schedule = ({ dayNow }) => {
     });
   };
 
-  useEffect(() => {
-    let unlisten = history.listen((location) => {
-      if (history.action === "PUSH") {
-        dispatch(planAction.exitBrowserOnPlanDB(postId));
-      }
-      if (history.action === "POP") {
-        dispatch(planAction.exitBrowserOnPlanDB(postId));
-      }
-
-      return () => {
-        unlisten();
-      };
-    });
-  }, []);
   return (
     <div>
       {place?.map((p, idx) => {

@@ -4,7 +4,7 @@ export const RESP = {
     startDate: "2022-04-22",
     endDate: "2022-04-25",
     dateCnt: 2,
-    title: "남자끼리 제주도 여행",
+    postTitle: "남자끼리 제주도 여행",
     location: "제주도",
     theme: "힐링",
     islike: false,

@@ -74,6 +74,7 @@ const NavWrapper = styled.footer`
   right: 0;
   width: 100%;
   background-color: white;
+  z-index: 9999;
 `;
 
 const NavItem = styled.button`

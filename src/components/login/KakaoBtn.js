@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import kakaologin from "../../static/images/logo/kakao_login_large_narrow.png";
+import kakaologin from "../../static/images/logo/kakao_login.png";
 
 const KakaoBtn = () => {
   const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
@@ -18,7 +18,8 @@ const KakaoBtn = () => {
 };
 
 const Img = styled.img`
-  height: 50px;
+  height: 45px;
+  border-radius: 10px;
 `;
 
 export default KakaoBtn;

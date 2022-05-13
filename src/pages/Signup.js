@@ -13,6 +13,9 @@ const Signup = (props) => {
   const passCheckRef = useRef();
   const [visuable, setVisuable] = useState(false);
   const [visuable2, setVisuable2] = useState(false);
+  const [passChange, setPassChange] = useState(undefined);
+  const [pass, setPass] = useState();
+  const [permit, setPermit] = useState(undefined);
 
   const signupBtnClick = () => {
     const nickName = nicknameRef.current.value;
@@ -32,6 +35,30 @@ const Signup = (props) => {
     }
     dispatch(userAction.signUpDB(username, nickName, password, passwordCheck));
   };
+
+  const onChangePassword = (e) => {
+    const value = e.target.value;
+    setPass(value);
+    if (value.length > 3 && value.length < 13) {
+      setPassChange(true);
+    } else if (value.length === 0) {
+      setPassChange(undefined);
+    } else {
+      setPassChange(false);
+    }
+  };
+  const onChangeReCheck = (e) => {
+    const value = e.target.value;
+    if (pass === value) {
+      setPermit(true);
+    } else if (value.length === 0) {
+      setPermit(undefined);
+    } else {
+      setPermit(false);
+    }
+  };
+
+  console.log(passChange);
   return (
     <div>
       <Inputbox>
@@ -43,7 +70,21 @@ const Signup = (props) => {
           placeholder="4자리 이상 12자리 미만"
           id="password"
           ref={passRef}
+          onChange={(e) => onChangePassword(e)}
         ></input>
+        {passChange === false ? (
+          <span style={{ marginTop: "-18px", color: "red", fontSize: "14px" }}>
+            사용할 수 없는 비밀번호입니다.
+          </span>
+        ) : null}
+        {passChange === true ? (
+          <span
+            style={{ marginTop: "-18px", color: "#41B67E", fontSize: "14px" }}
+          >
+            사용할 수 있는 비밀번호입니다.
+          </span>
+        ) : null}
+
         {visuable ? (
           <PassEyeImg
             src={openeye}
@@ -65,7 +106,20 @@ const Signup = (props) => {
           placeholder="비밀번호 재입력"
           id="passCheck"
           ref={passCheckRef}
+          onChange={(e) => onChangeReCheck(e)}
         ></input>
+        {permit === true ? (
+          <span
+            style={{ marginTop: "-18px", color: "#41B67E", fontSize: "14px" }}
+          >
+            비밀번호가 확인되었습니다.
+          </span>
+        ) : null}
+        {permit === false ? (
+          <span style={{ marginTop: "-18px", color: "red", fontSize: "14px" }}>
+            비밀번호가 일치하지 않습니다.
+          </span>
+        ) : null}
         {visuable2 ? (
           <PassEyeImg2
             src={openeye}
@@ -88,42 +142,44 @@ const Signup = (props) => {
     </div>
   );
 };
+
 const PassEyeImg2 = styled.img`
   width: 20px;
   position: absolute;
   right: 10px;
-  bottom: 28px;
+  bottom: 27px;
 `;
 
 const PassEyeImg = styled.img`
   width: 20px;
   position: absolute;
   right: 10px;
-  bottom: 122px;
+  bottom: 124px;
 `;
 
 const Inputbox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 90%;
   margin: auto;
   margin-top: 20px;
   position: relative;
-  label {
-    font-size: 20px;
-  }
   input {
     font-size: 16px;
     height: 40px;
     margin-bottom: 20px;
+    margin-top: 5px;
     border: none;
     border-bottom: 3px solid #eeeeee;
-    margin-top: 10px;
     transition: 0.3s;
     &:focus {
       outline: none;
-      border-bottom: 3px solid #62ce8b;
+      border-bottom: 3px solid #41b67e;
     }
+  }
+  label {
+    font-size: 16px;
+    margin-top: 10px;
   }
 `;
 const Buttondiv = styled.div`
@@ -135,7 +191,7 @@ const Buttondiv = styled.div`
     width: 100%;
     height: 40px;
     font-size: 20px;
-    background-color: #62ce8b;
+    background-color: #41b67e;
     border: none;
     border-radius: 7px;
     margin-top: 10px;

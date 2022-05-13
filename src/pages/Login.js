@@ -4,7 +4,7 @@ import styled from "styled-components";
 import GoogleBtn from "../components/login/GoogleBtn";
 import KakaoBtn from "../components/login/KakaoBtn";
 import { userAction } from "../redux/module/user";
-import Logo from "../static/images/logo/Logo.png";
+import loginBGimg from "../static/images/bgImage/loginbackground.png";
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();
@@ -31,12 +31,17 @@ const Login = ({ history }) => {
     }
     dispatch(userAction.logInDB(username, password));
   };
+
+  if (localStorage.getItem("token")) {
+    history.push("/");
+  }
   return (
     <div>
       <Logodiv>
-        <img src={Logo}></img>
+        <img src={loginBGimg}></img>
       </Logodiv>
       <Inputdiv props={disabled}>
+        <span>떠나볼 준비를 해볼까요?</span>
         <input
           placeholder="너나들이 계정 (이메일)"
           ref={usernameRef}
@@ -83,20 +88,21 @@ const Login = ({ history }) => {
 const Logodiv = styled.div`
   width: 100%;
   display: flex;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   img {
-    margin: auto;
+    width: 100%;
   }
 `;
 const Socialdiv = styled.div`
-  width: 60%;
   display: flex;
-  flex-direction: column;
+  width: 40%;
   align-items: center;
+  justify-content: space-around;
   padding-top: 40px;
   div {
-    margin-bottom: 5px;
+    &:first-child {
+      padding-bottom: 9px;
+    }
   }
 `;
 
@@ -113,7 +119,7 @@ const Bottomdiv = styled.div`
     &:first-child {
       position: absolute;
       background-color: white;
-      top: -10px;
+      top: -15px;
       padding: 3px 10px;
       color: #eeeeee;
       font-weight: 700;
@@ -136,25 +142,30 @@ const Inputdiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin-top: -20px;
+  span {
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 700;
+  }
   input {
     width: 80%;
-    height: 40px;
-    font-size: 20px;
+    height: 35px;
+    font-size: 16px;
     margin-bottom: 20px;
     border: none;
     border-bottom: 3px solid #eeeeee;
     transition: 0.3s;
     &:focus {
       outline: none;
-      border-bottom: 3px solid #62ce8b;
+      border-bottom: 3px solid #41b67e;
     }
   }
   button {
     width: 80%;
-    height: 40px;
+    height: 34px;
     font-size: 20px;
-    background-color: #62ce8b;
+    background-color: #41b67e;
     border: none;
     border-radius: 7px;
     margin-top: 10px;

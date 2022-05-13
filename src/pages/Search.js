@@ -20,6 +20,7 @@ const Search = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [pageno, setPageno] = useState(1);
+  const [serching, setSearching] = useState(false);
   const searchList = useSelector((state) => state.post.searchList);
   const keyWord = useSelector((state) => state.post.keyword);
 
@@ -32,6 +33,7 @@ const Search = () => {
       setPageno(1);
       dispatch(getKeywordPostDB(e.target.value, pageno));
       dispatch(keywordDB(e.target.value));
+      setSearching(true);
     }
   };
 
@@ -64,15 +66,25 @@ const Search = () => {
         </div>
       </Suggest>
       {/* 검색리스트 페이지 */}
-      <div>
+      {searchList.length === 0 && serching === true ? (
+        <NotFound />
+      ) : (
+        <div>
+          <Title>{keyWord} </Title>
+          {searchList &&
+            searchList.map((item, idx) => {
+              return <SearchItem key={idx} {...item} />;
+            })}
+        </div>
+      )}
+      {/* <div>
         <Title>{keyWord} </Title>
         {searchList &&
           searchList.map((item, idx) => {
             return <SearchItem key={idx} {...item} />;
           })}
-      </div>
+      </div> */}
 
-      {/* <NotFound />  : searchList없을때 보여주기 */}
       <Footer />
     </Container>
   );
@@ -117,7 +129,7 @@ const Input = styled.input`
   font-size: 16px;
   &:focus {
     outline: none;
-    border-bottom: 1px solid #62ce8b;
+    border-bottom: 1px solid #41b67e;
   }
 `;
 

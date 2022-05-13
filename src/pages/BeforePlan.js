@@ -41,13 +41,6 @@ const BeforePlan = () => {
           placeholder="채팅방의 닉네임을 입력해주세요."
           ref={nickNameRef}
         ></input>
-        <label htmlFor="pass">채팅방 비밀번호</label>
-        <input
-          placeholder="채팅방 비밀번호"
-          id="pass"
-          type="password"
-          ref={passwordRef}
-        ></input>
       </Inputdiv>
       <div>
         <button onClick={() => clickJoinPlanBtn()}>플랜채팅방 입장하기</button>

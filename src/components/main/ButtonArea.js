@@ -108,6 +108,6 @@ const BtnArea = styled.button`
   padding: 4px 10px;
   border: none;
   color: white;
-  background: #62ce8b;
+  background: #41b67e;
   border-radius: 20px;
 `;

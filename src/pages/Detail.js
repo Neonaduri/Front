@@ -16,7 +16,6 @@ const Detail = () => {
   const postId = params.id;
   const dayCnt = useSelector((state) => state.plan.detailPlan.dateCnt);
   const [dayNow, setDayNow] = useState(1);
-
   let dateCntArr = [];
   for (let i = 1; i <= dayCnt; i++) {
     dateCntArr.push(i);
@@ -69,12 +68,16 @@ const DayBtnDiv = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-around;
+<<<<<<< HEAD
+  position: absolute;
+=======
   /* position: absolute; */
   top: 340px;
+>>>>>>> 47c8623524b5c56159b657fed00cc6fea68075e7
   button {
     display: block;
     width: 50px;
-    background-color: #62ce8b;
+    background-color: #41b67e;
     border: none;
     border-radius: 10px;
     padding: 3px 5px;
