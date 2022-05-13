@@ -2,22 +2,12 @@ import React, { useState } from "react";
 import Grid from "../elements/Grid";
 import styled from "styled-components";
 import { useHistory } from "react-router";
-import healing from "../../static/images/icon/healing.png";
-import fire from "../../static/images/icon/fire.png";
-import pet from "../../static/images/icon/pet.png";
-import food from "../../static/images/icon/food.png";
-import hotel from "../../static/images/icon/hotel.png";
-import activity from "../../static/images/icon/activity.png";
-import etc from "../../static/images/icon/etc.png";
+import { useDispatch } from "react-redux";
+import { getThemePostDB, keywordDB } from "../../redux/module/post";
+import { theme1, theme2 } from "../elements/ArrValue";
 
 const MakePlan = () => {
-  const history = useHistory();
-
-  const onClick = (e) => {
-    const theme = e.target.value;
-
-    console.log(theme);
-  };
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -26,45 +16,40 @@ const MakePlan = () => {
         <Container>
           <Grid flex>
             <Wrap>
-              <Img>
-                <Icon src={healing} />
-                <Tit onClick={onClick}>힐링</Tit>
-              </Img>
-
-              <Img>
-                <Icon src={pet} />
-                <Tit4 onClick={onClick} value="힐링">
-                  애견동반
-                </Tit4>
-              </Img>
-
-              <Img>
-                <Icon src={food} />
-                <Tit>맛집</Tit>
-              </Img>
-
-              <Img>
-                <Icon src={hotel} />
-                <Tit3>호캉스</Tit3>
-              </Img>
+              {theme1.map((item, idx) => {
+                return (
+                  <ImgContainer
+                    key={idx}
+                    onClick={() => {
+                      const keyword = item.value;
+                      dispatch(getThemePostDB(keyword));
+                      dispatch(keywordDB(keyword));
+                    }}
+                  >
+                    <Icon src={item.src} />
+                    <ImgTitle>{item.value}</ImgTitle>
+                  </ImgContainer>
+                );
+              })}
             </Wrap>
           </Grid>
+
           <Grid flex>
             <Wrap>
-              <Img>
-                <Icon src={activity} />
-                <Tit4>액티비티</Tit4>
-              </Img>
-
-              <Img>
-                <Icon src={fire} />
-                <Tit>캠핑</Tit>
-              </Img>
-
-              <Img>
-                <Icon src={etc} />
-                <Tit>기타</Tit>
-              </Img>
+              {theme2.map((item, idx) => {
+                return (
+                  <ImgContainer
+                    key={idx}
+                    onClick={() => {
+                      const keyword = item.value;
+                      dispatch(getThemePostDB(keyword));
+                    }}
+                  >
+                    <Icon src={item.src} />
+                    <ImgTitle>{item.value}</ImgTitle>
+                  </ImgContainer>
+                );
+              })}
             </Wrap>
           </Grid>
         </Container>
@@ -86,7 +71,7 @@ const Icon = styled.img`
   cursor: pointer;
 `;
 
-const Tit = styled.span`
+const ImgTitle = styled.span`
   position: absolute;
   display: flex;
   justify-content: center;
@@ -119,7 +104,7 @@ const Tit4 = styled.span`
   color: #363636;
 `;
 
-const Img = styled.div`
+const ImgContainer = styled.div`
   width: 80px;
   position: relative;
   margin: 2px;

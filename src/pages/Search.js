@@ -1,18 +1,27 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/common/Footer";
 import search from "../static/images/icon/search.png";
 import { keywordSuggestList } from "../components/elements/ArrValue";
-import { useDispatch } from "react-redux";
-import NotFound from "../shared/NotFound";
+import { useDispatch, useSelector } from "react-redux";
 import SearchList from "../components/search/SearchList";
 import back from "../static/images/icon/back.png";
 import { useHistory } from "react-router";
+import {
+  getKeywordPostDB,
+  getSearchPost,
+  keywordDB,
+} from "../redux/module/post";
+import { actionCreators } from "../redux/module/post";
+import SearchItem from "../components/search/SearchItem";
+import NotFound from "../shared/NotFound";
 
-const Search = (props) => {
+const Search = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  let keyword;
+  const [pageno, setPageno] = useState(1);
+  const searchList = useSelector((state) => state.post.searchList);
+  const keyWord = useSelector((state) => state.post.keyword);
 
   const suggestBtnClick = (e) => {
     console.log(e.target.id);
@@ -20,8 +29,9 @@ const Search = (props) => {
 
   const searchEnter = (e) => {
     if (e.key === "Enter") {
-      keyword = e.target.value;
-      console.log(keyword);
+      setPageno(1);
+      dispatch(getKeywordPostDB(e.target.value, pageno));
+      dispatch(keywordDB(e.target.value));
     }
   };
 
@@ -30,19 +40,18 @@ const Search = (props) => {
       <div>
         <Input
           placeholder="어떤 여행 계획표를 찾으시나요?"
-          // onChange={onSearch}
           onKeyPress={(e) => searchEnter(e)}
         />
         <Img
           src={back}
           onClick={() => {
-            history.back();
+            history.push("/");
           }}
         ></Img>
         <I src={search}></I>
       </div>
       {/* 추천키워드 */}
-      {/* <Suggest>
+      <Suggest>
         <h4>추천 키워드</h4>
         <div>
           {keywordSuggestList.map((keyword, idx) => {
@@ -53,11 +62,17 @@ const Search = (props) => {
             );
           })}
         </div>
-      </Suggest> */}
-
+      </Suggest>
       {/* 검색리스트 페이지 */}
-      <SearchList />
+      <div>
+        <Title>{keyWord} </Title>
+        {searchList &&
+          searchList.map((item, idx) => {
+            return <SearchItem key={idx} {...item} />;
+          })}
+      </div>
 
+      {/* <NotFound />  : searchList없을때 보여주기 */}
       <Footer />
     </Container>
   );
@@ -121,4 +136,19 @@ const Img = styled.img`
 
 const Container = styled.div`
   position: relative;
+  padding-bottom: 90px;
+`;
+
+const Title = styled.div`
+  position: relative;
+  width: 119px;
+  height: 22px;
+  left: 16px;
+  font-family: "Apple SD Gothic Neo";
+  font-style: normal;
+  font-weight: 600;
+  top: 20px;
+  font-size: 18px;
+  line-height: 22px;
+  color: #363636;
 `;

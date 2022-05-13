@@ -1,11 +1,13 @@
 import React from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import love from "../../static/images/icon/love.png";
 import Union from "../../static/images/icon/Union.png";
 
-const Location = ({ postTitle, likeCnt, reviewCnt, postImgUrl }) => {
+const Location = ({ postTitle, likeCnt, reviewCnt, postImgUrl, postId }) => {
+  const history = useHistory();
   return (
-    <Wrap>
+    <Wrap onClick={() => history.push(`/detail/${postId}`)}>
       <ImagePop src={postImgUrl} />
       <div>
         <Content>{postTitle}</Content>
@@ -51,6 +53,9 @@ const Content = styled.div`
   line-height: 17px;
   color: #363636;
   font-family: "Apple SD Gothic Neo";
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 const Like = styled.div`

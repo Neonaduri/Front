@@ -17,6 +17,12 @@ const MainPage = ({ history }) => {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const bestList = useSelector((state) => state.post.bestList);
+  const locationList = useSelector(
+    (state) => state.post.locationList.locationList
+  );
+
+  console.log("베스트플랜은?", bestList);
+  console.log("지역별플랜은?", locationList);
 
   const settings = {
     slidesToShow: 2,
@@ -30,7 +36,7 @@ const MainPage = ({ history }) => {
     pauseOnFocus: true,
     pauseOnHover: true,
     autoplay: true,
-    speed: 2000,
+    speed: 1000,
   };
 
   if (!token) {
@@ -39,7 +45,7 @@ const MainPage = ({ history }) => {
 
   useEffect(() => {
     dispatch(getBestPostDB());
-    dispatch(getLocationPostDB());
+    dispatch(getLocationPostDB("서울")); //디폴트 지역설정
   }, []);
 
   return (
@@ -47,6 +53,7 @@ const MainPage = ({ history }) => {
       <Section>
         <Banner />
         <MakePlan />
+
         {/* 인기여행 */}
         <Wrapper>
           <Container>
@@ -54,9 +61,10 @@ const MainPage = ({ history }) => {
               <Title>인기 여행</Title>
             </Name>
             <StyledSlide {...settings}>
-              {bestList.map((item, i) => {
-                return <Popular key={i} {...item} />;
-              })}
+              {bestList &&
+                bestList.map((item, id) => {
+                  return <Popular key={id} {...item} />;
+                })}
             </StyledSlide>
           </Container>
           {/* 인기 여행 */}
@@ -69,13 +77,15 @@ const MainPage = ({ history }) => {
             </LoName>
             <ButtonArea />
             <StyledSlide {...settings}>
-              {bestList.map((item, i) => {
-                return <Location key={i} {...item} />;
-              })}
+              {locationList &&
+                locationList.map((item, id) => {
+                  return <Location key={id} {...item} />;
+                })}
             </StyledSlide>
           </Container>
         </Wrapper>
         {/* 지역별 여행 */}
+
         <Footer />
       </Section>
     </>
@@ -113,11 +123,6 @@ const StyledSlide = styled(Slider)`
 
   .slick-dots {
     display: none !important;
-  }
-
-  .slick-arrow {
-    transform: translate(30px, 150px);
-    cursor: pointer;
   }
 `;
 
