@@ -40,7 +40,7 @@ const Myplan = () => {
   const closeModal = () => {
     setModalOpen(false);
   };
-  console.log(myAllPlan);
+
   if (myAllPlan.length === 0) {
     return (
       <>

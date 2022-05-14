@@ -102,7 +102,7 @@ const Emailcheck = ({ history }) => {
         close={closeModal}
         header="사용 가능한 이메일입니다."
       ></Modal>
-      {emailCheck ? <Signup email={emailRef.current?.value}></Signup> : null}
+      <Signup email={emailRef.current?.value} emailCheck={emailCheck}></Signup>
     </Container>
   );
 };

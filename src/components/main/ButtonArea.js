@@ -13,7 +13,6 @@ const ButtonArea = (props) => {
     const location = e.target.value;
 
     dispatch(getLocationPostDB(location));
-    console.log(location);
   };
 
   const settings = {

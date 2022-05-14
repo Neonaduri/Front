@@ -20,7 +20,7 @@ import { planAction } from "../../redux/module/plan";
 import hamburger from "../../static/images/icon/hamburger.png";
 import Modalroompass from "../common/Modalroompass";
 
-const Schedule = () => {
+const Schedule = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const postId = useParams().postId;
@@ -32,7 +32,7 @@ const Schedule = () => {
   const dateCnt = useSelector((state) => state.plan.list.dateCnt);
   const timeRef = useRef();
   const minuteRef = useRef();
-  const [dayNow, setDayNow] = useState(1);
+  const [dayNow, setDayNow] = useState(props.dayNow);
   const [hamburgerNum, setHamburgerNum] = useState(null);
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
   const [deleteIndex, setDeleteIdx] = useState();

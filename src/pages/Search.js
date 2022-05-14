@@ -23,7 +23,7 @@ const Search = () => {
   const [serching, setSearching] = useState(false);
   const searchList = useSelector((state) => state.post.searchList);
   const keyWord = useSelector((state) => state.post.keyword);
-  console.log(searchList);
+
   const suggestBtnClick = (e) => {
     console.log(e.target.id);
   };

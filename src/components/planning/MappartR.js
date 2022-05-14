@@ -38,6 +38,7 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
   const [polyLineArr, setPolyLineArr] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [linkModalOpen, setLinkModalOpen] = useState(false);
+  const [changingKeyword, setChangingKeyword] = useState("");
   const [marker, setMarker] = useState();
   const [latlng, setLatlng] = useState({
     lat: 37.5,
@@ -58,6 +59,15 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
       });
       setPolyLineArr(arr);
     });
+    return () =>
+      onValue(fixedLatLngRef, (snapshot) => {
+        let arr = [];
+        snapshot.forEach((child) => {
+          let val = child.val();
+          arr.push({ lat: val.lat, lng: val.lng });
+        });
+        setPolyLineArr(arr);
+      });
   }, [dayNow]);
 
   const inputPlanTime = (marker) => {
@@ -115,12 +125,12 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
         }
         setMarkers(markers);
         map.setBounds(bounds);
+        setChangingKeyword("");
       }
     });
   }, [map, searchPlace]);
 
   const findLatLng = (latlng) => {
-    console.log(latlng);
     setLatlng(latlng);
   };
 
@@ -134,6 +144,10 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
     const url = window.location.href + "/join";
     navigator.clipboard.writeText(url);
     setModalOpen(false);
+  };
+
+  const changeKeyword = (e) => {
+    setChangingKeyword(e.target.value);
   };
 
   return (
@@ -161,12 +175,16 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
         placeholder="검색어를 입력해주세요."
         onKeyDown={(e) => {
           if (e.code === "Enter") {
-            setSearchPlace(e.target.value);
-            e.target.value = "";
+            setSearchPlace(changingKeyword);
+            // e.target.value = "";
             setLatlng(undefined);
           }
         }}
+        onChange={(e) => {
+          changeKeyword(e);
+        }}
         ref={keywordRef}
+        value={changingKeyword}
       ></PlaceInput>
       <PlaceBtn onClick={copyLinkBtnClick}>
         <img src={sharebtn} />

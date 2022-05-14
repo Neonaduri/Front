@@ -8,8 +8,6 @@ const SearchList = ({ keyword, pageno, setTarget }) => {
   const searchList = useSelector((state) => state.post.searchList);
   const totalPage = useSelector((state) => state?.post?.totalPage);
 
-  console.log(totalPage);
-
   return (
     <>
       <div>

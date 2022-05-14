@@ -8,6 +8,7 @@ import openeye from "../static/images/icon/openeye.png";
 const Signup = (props) => {
   const dispatch = useDispatch();
   const username = props.email;
+  const emailCheck = props.emailCheck;
   const nicknameRef = useRef();
   const passRef = useRef();
   const passCheckRef = useRef();
@@ -16,6 +17,7 @@ const Signup = (props) => {
   const [passChange, setPassChange] = useState(undefined);
   const [pass, setPass] = useState();
   const [permit, setPermit] = useState(undefined);
+  console.log(emailCheck);
 
   const signupBtnClick = () => {
     const nickName = nicknameRef.current.value;
@@ -58,12 +60,16 @@ const Signup = (props) => {
     }
   };
 
-  console.log(passChange);
   return (
     <div>
       <Inputbox>
         <label htmlFor="nick">닉네임을 입력해주세요.</label>
-        <input placeholder="닉네임" id="nick" ref={nicknameRef}></input>
+        <input
+          placeholder="닉네임"
+          id="nick"
+          ref={nicknameRef}
+          disabled={!emailCheck}
+        ></input>
         <label htmlFor="password">비밀번호를 입력해주세요.</label>
         <input
           type={visuable ? "text" : "password"}
@@ -71,6 +77,7 @@ const Signup = (props) => {
           id="password"
           ref={passRef}
           onChange={(e) => onChangePassword(e)}
+          disabled={!emailCheck}
         ></input>
         {passChange === false ? (
           <span style={{ marginTop: "-18px", color: "red", fontSize: "14px" }}>
@@ -107,6 +114,7 @@ const Signup = (props) => {
           id="passCheck"
           ref={passCheckRef}
           onChange={(e) => onChangeReCheck(e)}
+          disabled={!emailCheck}
         ></input>
         {permit === true ? (
           <span

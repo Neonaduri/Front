@@ -21,7 +21,6 @@ const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
 
   const onClick = () => {
     setImgModal(true);
-    console.log(imgModal);
   };
 
   //삭제버튼
@@ -42,7 +41,6 @@ const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
     // dispatch(editCommentDB(reviewId));
   };
 
-  console.log(reviewImgUrl);
   return (
     <>
       <Card>

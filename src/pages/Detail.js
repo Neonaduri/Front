@@ -18,9 +18,6 @@ const Detail = () => {
   const reviewList = useSelector((state) => state.review.reviewList);
   const totalCnt = useSelector((state) => state.review.totalElements);
 
-  console.log(totalCnt);
-
-  console.log(reviewList);
   const [dayNow, setDayNow] = useState(1);
   const arr = reviewList.slice(0, 3);
   let dateCntArr = [];

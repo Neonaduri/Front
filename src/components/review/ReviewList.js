@@ -9,19 +9,19 @@ const ReviewList = ({ nickName, reviewContents, reviewImgUrl, totalCnt }) => {
   const postId = params.id;
   const dispatch = useDispatch();
 
-  console.log(totalCnt);
   // 리뷰조회;
   useEffect(() => {
     dispatch(getCommentDB(postId));
   }, []);
 
   //상세페이지 아래에 있는 리뷰페이지
+  console.log(reviewImgUrl);
   return (
     <>
       <Container>
         <Nickname>{nickName}</Nickname>
         <Box>
-          <Img src={reviewImgUrl}></Img>
+          {reviewImgUrl === null ? null : <Img src={reviewImgUrl}></Img>}
           <Text>{reviewContents}</Text>
         </Box>
       </Container>

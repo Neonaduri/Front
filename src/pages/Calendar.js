@@ -93,9 +93,10 @@ const Calendar = () => {
     closeTheme();
   };
 
-  const daynum = moment(startDateRef).day();
-  const today = days[daynum];
-  const nextday = days[daynum + 1];
+  const todaynum = moment(startDateRef).day();
+  const today = days[todaynum];
+  const enddaynum = moment(endDateRef).day();
+  const endday = days[enddaynum];
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -165,7 +166,7 @@ const Calendar = () => {
               isOpen={isOpenTheme}
               onClose={closeTheme}
               initialSnap={1}
-              snapPoints={[600, 400, 100, 0]}
+              snapPoints={[500, 400, 100, 0]}
             >
               <Sheet.Container>
                 <Sheet.Header onClick={() => setOpenTheme(false)} />
@@ -192,7 +193,7 @@ const Calendar = () => {
           <div onClick={open}>
             <img src={calender} style={{ height: "35px" }} />
             <span>
-              {startDate}({today}) ~ {endDate}({nextday})
+              {startDate}({today}) ~ {endDate}({endday})
             </span>
             <img src={goRight} style={{ height: "18px" }} />
           </div>
@@ -200,7 +201,7 @@ const Calendar = () => {
             rootId="root"
             isOpen={isOpen}
             onClose={close}
-            snapPoints={[600, 400, 100, 0]}
+            snapPoints={[400, 400, 100, 0]}
           >
             <Sheet.Container>
               <Sheet.Header />
@@ -211,7 +212,7 @@ const Calendar = () => {
                   onChange={(item) => setState([item.selection])}
                   moveRangeOnFirstSelection={false}
                   ranges={state}
-                  months={2}
+                  months={1}
                   direction="vertical"
                   rangeColors={["#41B67E"]}
                   showDateDisplay={false}
@@ -381,7 +382,6 @@ const CustomSheet = styled(Sheet)`
   }
   .react-modal-sheet-content {
     margin: auto;
-    margin-top: -15px;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -8,7 +8,7 @@ import Calendar from "./pages/Calendar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Emailcheck from "./pages/Emailcheck";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { userAction } from "./redux/module/user";
 import KakaoRedirect from "./pages/KakaoRedirect";

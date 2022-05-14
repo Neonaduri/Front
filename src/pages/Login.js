@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import GoogleBtn from "../components/login/GoogleBtn";
 import KakaoBtn from "../components/login/KakaoBtn";
 import { userAction } from "../redux/module/user";
+import Splash from "../shared/Splash";
 import loginBGimg from "../static/images/bgImage/loginbackground.png";
 
 const Login = ({ history }) => {
@@ -13,6 +14,7 @@ const Login = ({ history }) => {
   const emailRegExp =
     /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
   const [disabled, setDisabled] = useState(false);
+  const [splash, setSplash] = useState(true);
 
   const emailFormCheck = (e) => {
     const inputEmail = e.target.value;
@@ -35,6 +37,15 @@ const Login = ({ history }) => {
   if (localStorage.getItem("token")) {
     history.push("/");
   }
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setSplash(false);
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
   return (
     <div>
       <Logodiv>
@@ -81,6 +92,7 @@ const Login = ({ history }) => {
           </span>
         </div>
       </Bottomdiv>
+      {splash ? <Splash /> : null}
     </div>
   );
 };
