@@ -25,7 +25,9 @@ const Search = () => {
   const keyWord = useSelector((state) => state.post.keyword);
   console.log(searchList);
   const suggestBtnClick = (e) => {
-    console.log(e.target.id);
+    dispatch(getKeywordPostDB(e.target.value, pageno));
+    dispatch(keywordDB(e.target.value));
+    console.log(e.target.value);
   };
 
   const searchEnter = (e) => {
@@ -58,7 +60,7 @@ const Search = () => {
         <div>
           {keywordSuggestList.map((keyword, idx) => {
             return (
-              <button key={idx} onClick={suggestBtnClick} id={keyword}>
+              <button key={idx} onClick={suggestBtnClick} value={keyword}>
                 {keyword}
               </button>
             );
@@ -70,20 +72,13 @@ const Search = () => {
         <NotFound />
       ) : (
         <div>
-          <Title>{keyWord} </Title>
+          <Title>{keyWord} 여행계획표 </Title>
           {searchList &&
             searchList.map((item, idx) => {
               return <SearchItem key={idx} {...item} />;
             })}
         </div>
       )}
-      {/* <div>
-        <Title>{keyWord} </Title>
-        {searchList &&
-          searchList.map((item, idx) => {
-            return <SearchItem key={idx} {...item} />;
-          })}
-      </div> */}
 
       <Footer />
     </Container>
@@ -153,13 +148,13 @@ const Container = styled.div`
 
 const Title = styled.div`
   position: relative;
-  width: 119px;
+  width: 100%;
   height: 22px;
   left: 16px;
   font-family: "Apple SD Gothic Neo";
   font-style: normal;
   font-weight: 600;
-  top: 20px;
+  top: 10px;
   font-size: 18px;
   line-height: 22px;
   color: #363636;

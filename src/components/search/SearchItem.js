@@ -26,15 +26,17 @@ const SearchItem = ({
         </Wrap>
 
         {/* 카테고리 */}
-        <Box>
-          <Content>{location}</Content>
-          <Content>{theme}</Content>
-        </Box>
+        <BoxTop>
+          <Term>22.05.03 ~ 22.05.30</Term>
+          <Cons>
+            <Content>{location}</Content>
+            <Content>{theme}</Content>
+          </Cons>
+        </BoxTop>
 
         <Box>
           <Contain>
             <Con>{postTitle}</Con>
-            <Term>22.05.03 ~ 22.05.30</Term>
           </Contain>
         </Box>
 
@@ -65,9 +67,9 @@ const Wrap = styled.div`
   margin-left: 18px;
 `;
 
-const Wrapper = styled.div`
-  position: relative;
-  left: 0;
+const Cons = styled.div`
+  display: flex;
+  padding: 0 10px;
 `;
 
 const Nickname = styled.div`
@@ -76,7 +78,7 @@ const Nickname = styled.div`
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
-  color: #363636;
+  color: #8d8d8d;
   display: flex;
   justify-content: left;
   align-items: center;
@@ -101,7 +103,7 @@ const ImagePop = styled.img`
   position: absolute;
   border-radius: 5px;
   width: 128px;
-  height: 115px;
+  height: 95px;
   object-fit: cover;
   margin-top: 30px;
   margin-right: 20px;
@@ -109,9 +111,17 @@ const ImagePop = styled.img`
 
 const Box = styled.div`
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 15px;
+  margin-left: 150px;
+  margin-top: 5px;
+`;
+
+const BoxTop = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 35px;
   margin-left: 150px;
 `;
 
@@ -119,7 +129,6 @@ const Content = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 15px;
   margin-left: 5px;
   font-style: normal;
   font-weight: 500;
@@ -135,7 +144,7 @@ const Content = styled.div`
 const SectionBox = styled.div`
   position: relative;
   left: 70px;
-  top: 10px;
+  top: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -153,13 +162,17 @@ const Contain = styled.div`
   font-size: 16px;
   color: #363636;
   margin-left: 10px;
+  margin-bottom: 10px;
 `;
 
 const Term = styled.span`
+  font-family: "Apple SD Gothic Neo";
+  font-style: normal;
   font-weight: 500;
-  font-size: 14px;
-  color: #8d8d8d;
-  margin-top: 2px;
+  font-size: 12px;
+  line-height: 12px;
+  color: #cacaca;
+  padding: 0 10px;
 `;
 
 const Bar = styled.div`

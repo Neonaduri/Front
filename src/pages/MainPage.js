@@ -38,9 +38,9 @@ const MainPage = ({ history }) => {
     speed: 1000,
   };
 
-  // if (!token) {
-  //   history.push("/login");
-  // }
+  if (!token) {
+    history.push("/login");
+  }
 
   useEffect(() => {
     dispatch(getBestPostDB());
@@ -72,7 +72,13 @@ const MainPage = ({ history }) => {
           <Container>
             <LoName>
               <LoTitle>지역별 여행 계획표</LoTitle>
-              <Plus>더보기</Plus>
+              <Plus
+                onClick={() => {
+                  history.push("/search");
+                }}
+              >
+                더보기
+              </Plus>
             </LoName>
             <ButtonArea />
             <StyledSlide {...settings}>
@@ -128,7 +134,7 @@ const StyledSlide = styled(Slider)`
 const Section = styled.section`
   justify-content: center;
   align-content: center;
-  background-color: #eeeeee;
+  background-color: #f5f5f5; ;
 `;
 
 const Name = styled.div`
@@ -137,8 +143,13 @@ const Name = styled.div`
 `;
 
 const Title = styled.div`
-  color: #585858;
-  font-weight: 500;
+  font-family: "Apple SD Gothic Neo";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #363636;
+  padding: 10px 0;
 `;
 
 const Container = styled.div`
@@ -148,8 +159,13 @@ const Container = styled.div`
 `;
 
 const LoTitle = styled.div`
-  color: #585858;
-  font-weight: 700;
+  font-family: "Apple SD Gothic Neo";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #363636;
+  padding: 20px 0;
 `;
 
 const LoName = styled.div`
@@ -162,4 +178,5 @@ const Plus = styled.div`
   font-size: small;
   color: #363636;
   cursor: pointer;
+  padding: 20px 0;
 `;
