@@ -166,8 +166,8 @@ const googleLoginDB = (code) => {
 
 const getMyLikePostDB = () => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.get("/api/user/mypage/like/1");
-    // const response = RESP.MYPAGELIKEGET;
+    // const response = await apis.axiosInstance.get("/api/user/mypage/like/1");
+    const response = RESP.MYPAGELIKEGET;
     if (response.status === 200) {
       dispatch(getLikedPost(response));
     }
@@ -175,10 +175,11 @@ const getMyLikePostDB = () => {
 };
 const getMyReviewDB = () => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.get("/api/user/mypage/review");
-    // const response = RESP.MYREVIEWGET;
-    if (response.status === 200) {
-      dispatch(getMyReview(response.data));
+    // const response = await apis.axiosInstance.get("/api/user/mypage/review");
+    const response = RESP.MYREVIEWGET;
+
+    if (response) {
+      dispatch(getMyReview(response));
     }
   };
 };

@@ -234,7 +234,7 @@ const Calendar = () => {
 
 const Locationselect = styled.div`
   font-size: 20px;
-  border: 1px solid #cacaca;
+  border: 1px solid ${({ theme }) => theme.colors.borderColor};
   width: 250px;
   text-align: center;
   padding: 5px 0px;
@@ -242,7 +242,7 @@ const Locationselect = styled.div`
   border-radius: 14px;
   transition: 0.2s;
   &:active {
-    background-color: #41b67e;
+    background-color: ${({ theme }) => theme.colors.mainGreen};
     color: white;
   }
 `;
@@ -250,7 +250,7 @@ const Locationselect = styled.div`
 const Buttondiv = styled.div`
   button {
     width: 100%;
-    background-color: #41b67e;
+    background-color: ${({ theme }) => theme.colors.mainGreen};
     border: none;
     border-radius: 5px;
     padding: 10px 0px;
@@ -265,7 +265,7 @@ const Datediv = styled.div`
   flex-direction: column;
   margin-top: -30px;
   div {
-    border: 1px solid #cacaca;
+    border: 1px solid ${({ theme }) => theme.colors.borderColor};
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -278,19 +278,12 @@ const Themediv = styled.div`
   display: flex;
   flex-direction: column;
   width: 45%;
-  select {
-    width: 100%;
-    font-size: 16px;
-    border: 1px solid #cacaca;
-    border-radius: 7px;
-    padding: 5px 3px;
-  }
   div {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 6px 4px;
-    border: 1px solid #cacaca;
+    border: 1px solid ${({ theme }) => theme.colors.text3};
     border-radius: 8px;
     img {
       width: 12px;
@@ -302,19 +295,12 @@ const Locationdiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 45%;
-  select {
-    width: 100%;
-    font-size: 16px;
-    border: 1px solid #cacaca;
-    border-radius: 5px;
-    padding: 5px 3px;
-  }
   div {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 6px 4px;
-    border: 1px solid #cacaca;
+    border: 1px solid ${({ theme }) => theme.colors.text3};
     border-radius: 8px;
     img {
       width: 12px;
@@ -329,12 +315,12 @@ const PostTitlediv = styled.div`
     width: 100%;
     margin: auto;
     border: none;
-    border-bottom: 1px solid #cacaca;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
     height: 34px;
     font-size: 16px;
     &:focus {
       outline: none;
-      border-bottom: 1px solid #41b67e;
+      border-bottom: 1px solid ${({ theme }) => theme.colors.mainGreen};
     }
   }
 `;
@@ -360,7 +346,7 @@ const Titlediv = styled.div`
 `;
 
 const FixdateBtn = styled.button`
-  background-color: #41b67e;
+  background-color: ${({ theme }) => theme.colors.mainGreen};
   width: 90%;
   height: 30px;
   margin-top: -10px;

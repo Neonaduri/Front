@@ -57,10 +57,10 @@
 }
 
 .modal>section>footer button {
-    padding: 6px 30px;
+    padding: 10px 40px;
     color: #fff;
     background-color: #41B67E;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 15px;
 }
 

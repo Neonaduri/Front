@@ -12,6 +12,7 @@ import ModalfixTime from "../components/common/ModalfixTime";
 import InfinityScroll from "../shared/InfinityScroll";
 import mapSmall from "../static/images/icon/map_small_img.png";
 import imgLogin from "../static/images/icon/loginCharacter.png";
+import NopostAlert from "../components/myplan/NopostAlert";
 
 const Myplan = () => {
   const history = useHistory();
@@ -42,27 +43,7 @@ const Myplan = () => {
   };
 
   if (myAllPlan.length === 0) {
-    return (
-      <>
-        <NopostContainer>
-          <div style={{ marginTop: "-20px" }}>
-            <Titleline title={"계획"} />
-          </div>
-          <div>
-            <img src={imgLogin} />
-            <span>등록된 계획표가 없습니다!</span>
-            <button
-              onClick={() => {
-                history.push("/planning");
-              }}
-            >
-              계획하러 가기!
-            </button>
-          </div>
-        </NopostContainer>
-        <Footer />
-      </>
-    );
+    return <NopostAlert />;
   }
 
   return (
@@ -77,9 +58,9 @@ const Myplan = () => {
           계획하러 가기!
         </button>
       </Plusdiv>
-      <div style={{ backgroundColor: "#f5f5f5", padding: " 10px 15px" }}>
-        <span style={{ fontSize: "16px" }}>나의 계획표</span>
-      </div>
+      <MyplanTextdiv>
+        <span>나의 계획표</span>
+      </MyplanTextdiv>
       <Middlediv ref={middledivRef} id="container">
         <InfinityScroll
           callNext={() => {
@@ -141,33 +122,10 @@ const Myplan = () => {
   );
 };
 
-const NopostContainer = styled.div`
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: auto;
-    margin-top: 20px;
-    img {
-      margin-top: 50px;
-      width: 170px;
-      margin-bottom: 10px;
-    }
-    span {
-      margin-top: 20px;
-      font-size: 20px;
-      margin-bottom: 20px;
-    }
-    button {
-      background-color: #41b67e;
-      border: none;
-      padding: 15px 30px;
-      margin-top: 20px;
-      border-radius: 10px;
-      font-size: 18px;
-      color: white;
-    }
-  }
+const MyplanTextdiv = styled.div`
+  background-color: ${({ theme }) => theme.colors.borderColor};
+  padding: 10px 15px;
+  font-size: 16px;
 `;
 
 const EditModal = styled.div`
@@ -198,7 +156,7 @@ const BottomCarddiv = styled.div`
       justify-content: space-around;
 
       small {
-        color: #8d8d8d;
+        color: ${({ theme }) => theme.colors.text2};
       }
       div {
         width: 50px;
@@ -214,21 +172,22 @@ const BottomCarddiv = styled.div`
     &:last-child {
       display: flex;
       justify-content: center;
-      border-top: 1px solid #f5f5f5;
+      border-top: 1px solid ${({ theme }) => theme.colors.borderColor};
       padding: 10px 0px;
+      margin-top: 3px;
       button {
-        padding: 5px 0px;
+        padding: 3px 0px;
         background-color: inherit;
         border: none;
         font-size: 16px;
-        color: #41b67e;
+        color: ${({ theme }) => theme.colors.mainGreen};
       }
     }
   }
 `;
 const UpperCarddiv = styled.div`
   display: flex;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
   align-items: center;
   justify-content: space-between;
   padding: 7px 10px;
@@ -252,12 +211,12 @@ const UpperCarddiv = styled.div`
         font-size: 20px;
       }
       &:nth-child(2) {
-        background-color: #eeeeee;
+        background-color: ${({ theme }) => theme.colors.borderColor};
         margin-left: 10px;
         padding: 2px 2px;
         border-radius: 2px;
         font-size: 12px;
-        color: #8d8d8d;
+        color: ${({ theme }) => theme.colors.text2};
       }
     }
   }
@@ -273,7 +232,7 @@ const Plusdiv = styled.div`
   button {
     width: 70%;
     height: 50px;
-    background-color: #41b67e;
+    background-color: ${({ theme }) => theme.colors.mainGreen};
     border: none;
     border-radius: 8px;
     color: white;
@@ -282,7 +241,7 @@ const Plusdiv = styled.div`
 `;
 
 const PostCard = styled.div`
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid ${({ theme }) => theme.colors.borderColor};
   border-radius: 5px;
   margin: 5px 2px;
   box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.1);
@@ -295,7 +254,7 @@ const Middlediv = styled.div`
   padding: 0px 10px;
   height: 60%;
   overflow: scroll;
-  background-color: #f5f5f5;
+  background-color: ${({ theme }) => theme.colors.borderColor};
 `;
 
 export default Myplan;

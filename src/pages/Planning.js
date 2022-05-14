@@ -43,25 +43,20 @@ const Planning = (props) => {
       <DayBtnDiv>
         {dateCntArr.map((date, idx) => {
           return (
-            <button
+            <DayBtn
               key={idx}
               onClick={() => {
                 setDayNow(date);
               }}
               idx={idx}
-              dayNow={dayNow}
-              style={{
-                borderBottom: idx + 1 === dayNow ? "3px solid #56BE91" : null,
-                color: idx + 1 === dayNow ? "black" : null,
-              }}
+              daynow={dayNow}
             >
               DAY {date}
-            </button>
+            </DayBtn>
           );
         })}
       </DayBtnDiv>
       <MappartR dayNow={dayNow} startDay={startDay} endDay={endDay} />
-
       <CustomSheet
         rootId="root"
         isOpen={isOpen}
@@ -72,7 +67,7 @@ const Planning = (props) => {
         <Sheet.Container>
           <Sheet.Header onClick={close} />
           <Sheet.Content>
-            <Schedule dayNow={dayNow} />
+            <Schedule daynow={dayNow} />
             <SubmitBtn />
           </Sheet.Content>
         </Sheet.Container>
@@ -126,7 +121,7 @@ const TriggerBtn = styled.button`
     width: 10%;
     height: 4px;
     border-radius: 2px;
-    background-color: #cacaca;
+    background-color: ${({ theme }) => theme.colors.text3};
   }
 `;
 
@@ -136,24 +131,20 @@ const DayBtnDiv = styled.div`
   width: 100%;
   justify-content: space-around;
   position: absolute;
-  top: 9.5vh;
-  button {
-    display: block;
-    width: 55px;
-    background-color: white;
-    border: none;
-    padding: 3px 5px;
-    color: #8d8d8d;
-    font-size: 16px;
-  }
+  top: 9.3vh;
 `;
 
-const Inputdiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  input {
-    margin-bottom: 20px;
-    width: 200px;
-  }
+const DayBtn = styled.button`
+  display: block;
+  width: 55px;
+  background-color: white;
+  border: none;
+  padding: 3px 5px;
+  color: ${({ theme }) => theme.colors.text2};
+  font-size: 16px;
+  border-bottom: ${(props) =>
+    props.idx + 1 === props.daynow ? `3px solid #56BE91` : null};
+  color: ${(props) => (props.idx + 1 === props.daynow ? "black" : null)};
 `;
+
 export default Planning;

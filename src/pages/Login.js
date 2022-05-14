@@ -81,7 +81,7 @@ const Login = ({ history }) => {
             <KakaoBtn></KakaoBtn>
           </div>
         </Socialdiv>
-        <div style={{ marginTop: "10px" }}>
+        <ToSignupDiv>
           <h4>아직 회원이 아니신가요?</h4>
           <span
             onClick={() => {
@@ -90,12 +90,16 @@ const Login = ({ history }) => {
           >
             회원가입
           </span>
-        </div>
+        </ToSignupDiv>
       </Bottomdiv>
       {splash ? <Splash /> : null}
     </div>
   );
 };
+
+const ToSignupDiv = styled.div`
+  margin-top: 10px;
+`;
 
 const Logodiv = styled.div`
   width: 100%;
@@ -122,7 +126,7 @@ const Bottomdiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-top: 2px solid #eeeeee;
+  border-top: 2px solid ${({ theme }) => theme.colors.borderColor};
   width: 80%;
   margin: auto;
   margin-top: 40px;
@@ -133,7 +137,7 @@ const Bottomdiv = styled.div`
       background-color: white;
       top: -15px;
       padding: 3px 10px;
-      color: #eeeeee;
+      color: ${({ theme }) => theme.colors.text3};
       font-weight: 700;
     }
   }
@@ -166,18 +170,18 @@ const Inputdiv = styled.div`
     font-size: 16px;
     margin-bottom: 20px;
     border: none;
-    border-bottom: 3px solid #eeeeee;
+    border-bottom: 3px solid ${({ theme }) => theme.colors.borderColor};
     transition: 0.3s;
     &:focus {
       outline: none;
-      border-bottom: 3px solid #41b67e;
+      border-bottom: 3px solid ${({ theme }) => theme.colors.mainGreen};
     }
   }
   button {
     width: 80%;
     height: 34px;
     font-size: 20px;
-    background-color: #41b67e;
+    background-color: ${({ theme }) => theme.colors.mainGreen};
     border: none;
     border-radius: 7px;
     margin-top: 10px;

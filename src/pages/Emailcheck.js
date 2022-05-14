@@ -118,10 +118,10 @@ const CheckBtndiv = styled.div`
     height: 30px;
     font-size: 16px;
     background-color: white;
-    border: 2px solid #41b67e;
+    border: 2px solid ${({ theme }) => theme.colors.mainGreen};
     border-radius: 7px;
     margin-top: 10px;
-    color: #41b67e;
+    color: ${({ theme }) => theme.colors.mainGreen};
     cursor: pointer;
     position: absolute;
     right: 20px;
@@ -144,14 +144,13 @@ const Inputdiv = styled.div`
       width: 74%;
       font-size: 16px;
       height: 40px;
-
       border: none;
-      border-bottom: 3px solid #eeeeee;
+      border-bottom: 3px solid ${({ theme }) => theme.colors.borderColor};
       margin-top: 15px;
       transition: 0.3s;
       &:focus {
         outline: none;
-        border-bottom: 3px solid #41b67e;
+        border-bottom: 3px solid ${({ theme }) => theme.colors.mainGreen};
       }
     }
   }
