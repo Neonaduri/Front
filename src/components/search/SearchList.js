@@ -2,11 +2,9 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import SearchItem from "./SearchItem";
-// import useIntersectionObserver from "../hooks/useIntersectionObserver";
 
 const SearchList = ({ keyword, pageno, setTarget }) => {
   const searchList = useSelector((state) => state.post.searchList);
-  const totalPage = useSelector((state) => state?.post?.totalPage);
 
   return (
     <>
@@ -17,7 +15,6 @@ const SearchList = ({ keyword, pageno, setTarget }) => {
             return <SearchItem key={idx} {...item} />;
           })}
       </div>
-      {/* {totalPage > pageno ? <div ref={setTarget}> </div> : null} */}
     </>
   );
 };

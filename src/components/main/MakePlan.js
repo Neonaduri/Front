@@ -26,7 +26,9 @@ const MakePlan = () => {
                       dispatch(keywordDB(keyword));
                     }}
                   >
-                    <Icon src={item.src} />
+                    <IconBox>
+                      <Icon src={item.src}></Icon>
+                    </IconBox>
                     <ImgTitle>{item.value}</ImgTitle>
                   </ImgContainer>
                 );
@@ -43,9 +45,12 @@ const MakePlan = () => {
                     onClick={() => {
                       const keyword = item.value;
                       dispatch(getThemePostDB(keyword));
+                      dispatch(keywordDB(keyword));
                     }}
                   >
-                    <Icon src={item.src} />
+                    <IconBox>
+                      <Icon src={item.src}></Icon>
+                    </IconBox>
                     <ImgTitle>{item.value}</ImgTitle>
                   </ImgContainer>
                 );
@@ -61,25 +66,34 @@ const MakePlan = () => {
 export default MakePlan;
 
 const Container = styled.div`
-  margin-top: 35px;
+  margin-top: 10px;
 `;
 
 const Icon = styled.img`
-  width: 100%;
-  height: 100%;
-  position: relative;
+  width: 65%;
   cursor: pointer;
 `;
 
-const ImgTitle = styled.span`
-  position: absolute;
+const IconBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  top: 70px;
-  left: 26px;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  border: 1px solid #ececec;
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+`;
+
+const ImgTitle = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 14px;
   font-size: small;
   color: #363636;
+  margin-right: 35px;
 `;
 
 const Tit3 = styled.span`
@@ -115,7 +129,7 @@ const Div = styled.div`
   background-color: #ffffff;
   border-radius: 30px 30px 0px 0px;
   box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.05);
-  padding: 40px 0;
+  padding: 30px 0;
   margin-bottom: 10px;
 `;
 
@@ -123,10 +137,15 @@ const Wrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 40px;
 `;
 
 const Title = styled.div`
-  color: #585858;
-  padding-left: 25px;
-  font-weight: 500;
+  font-family: "Apple SD Gothic Neo";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  margin-left: 26px;
+  color: #363636;
 `;
