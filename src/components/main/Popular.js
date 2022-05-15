@@ -82,7 +82,7 @@ const Content = styled.div`
 const Box = styled.div`
   background: white;
   border-radius: 10px;
-  box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
   width: 100%;
   height: 60px;
   position: absolute;

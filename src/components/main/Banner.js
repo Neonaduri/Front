@@ -12,58 +12,53 @@ const Banner = () => {
     slidesToScroll: 1,
     centerMode: true,
     centerPadding: "0px",
-    arrows: true,
-    dots: true,
     fade: false,
     infinite: true,
-    pauseOnFocus: true,
-    pauseOnHover: true,
     autoplay: true,
     speed: 1000,
   };
 
   return (
     <>
-      <Container>
+      <div>
         <Section>
           <StyledSlide {...settings}>
             <div>
               <Img src={post1} />
               <Button>
-                <A
+                <Link
                   href="https://www.ktourmap.com/spotDetails.jsp?contentId=2818498"
                   target="_blank"
                 >
                   행사보러가기
-                </A>
+                </Link>
               </Button>
             </div>
 
             <div>
               <Img src={post2}></Img>
               <Button>
-                <A href="https://hansanmosi.kr/home" target="_blank">
+                <Link href="https://hansanmosi.kr/home" target="_blank">
                   행사보러가기
-                </A>
+                </Link>
               </Button>
             </div>
           </StyledSlide>
         </Section>
-      </Container>
+      </div>
     </>
   );
 };
 
 export default Banner;
 
-const Container = styled.div``;
-
 const Section = styled.section`
   width: 100%;
   height: 335px;
+  margin-bottom: 10px;
 `;
 
-const A = styled.a`
+const Link = styled.a`
   text-decoration: none;
   color: white;
 `;
@@ -91,12 +86,6 @@ const Button = styled.button`
 const StyledSlide = styled(Slider)`
   width: 100%;
 
-  .slick-list {
-    width: 100%;
-    height: 380px;
-    margin: 0 auto;
-  }
-
   .slick-track {
     display: flex;
     height: 100%;
@@ -104,10 +93,5 @@ const StyledSlide = styled(Slider)`
 
   .slick-dots {
     display: none !important;
-  }
-
-  .slick-arrow {
-    transform: translate(30px, 150px);
-    cursor: pointer;
   }
 `;
