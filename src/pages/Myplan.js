@@ -6,17 +6,15 @@ import Titleline from "../components/elements/Titleline";
 import { planAction } from "../redux/module/plan";
 import Footer from "../components/common/Footer";
 import hamburger from "../static/images/icon/hamburger.png";
-import love from "../static/images/icon/love.png";
-import talkbox from "../static/images/icon/Union.png";
 import ModalfixTime from "../components/common/ModalfixTime";
 import InfinityScroll from "../shared/InfinityScroll";
 import mapSmall from "../static/images/icon/map_small_img.png";
-import imgLogin from "../static/images/icon/loginCharacter.png";
 import NopostAlert from "../components/myplan/NopostAlert";
 
 const Myplan = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.user.isLogin);
   const myAllPlan = useSelector((state) => state.plan.myPlanList);
   const paging = useSelector((state) => state.plan.paging);
   const lastPage = useSelector((state) => state.plan.paging.lastPage);
@@ -42,12 +40,16 @@ const Myplan = () => {
     setModalOpen(false);
   };
 
+  if (!isLogin) {
+    history.replace("/login");
+  }
+
   if (myAllPlan.length === 0) {
     return <NopostAlert />;
   }
 
   return (
-    <div style={{ height: "100%" }}>
+    <Container>
       <Titleline title={"계획"} />
       <Plusdiv>
         <button
@@ -118,9 +120,13 @@ const Myplan = () => {
         </InfinityScroll>
       </Middlediv>
       <Footer />
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  height: 100%;
+`;
 
 const MyplanTextdiv = styled.div`
   background-color: ${({ theme }) => theme.colors.borderColor};
@@ -138,7 +144,8 @@ const EditModal = styled.div`
     justify-content: center;
     align-items: center;
     height: 40px;
-    font-size: 18px;
+    font-size: 20px;
+    margin-bottom: 5px;
   }
 `;
 

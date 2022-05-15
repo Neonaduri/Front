@@ -2,10 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import Grid from "./Grid";
 
-const Button = () => {
+const Button = ({ content, onClick, width, height }) => {
   return (
     <Grid flex>
-      <BannerBtn>계획 보러가기</BannerBtn>
+      <BannerBtn onClick={onClick} width={width} height={height}>
+        {content}
+      </BannerBtn>
     </Grid>
   );
 };
@@ -13,10 +15,13 @@ const Button = () => {
 export default Button;
 
 const BannerBtn = styled.button`
-  width: 200px;
-  height: 70px;
-  background: #c4c4c4;
-  border-radius: 20px;
-  margin: 50px 0;
+  width: 100%;
+  height: ${(props) => (props.height === "slim" ? "35px" : "45px")};
+  background: ${({ theme }) => theme.colors.mainGreen};
+  border-radius: 10px;
   border: none;
+  color: white;
+  font-size: 18px;
+  width: ${(props) => (props.width ? `${props.width}` : "100%")};
+  cursor: pointer;
 `;

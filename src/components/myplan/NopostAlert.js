@@ -4,6 +4,7 @@ import Titleline from "../elements/Titleline";
 import imgLogin from "../../static/images/icon/loginCharacter.png";
 import { useHistory } from "react-router";
 import Footer from "../common/Footer";
+import Button from "../elements/Button";
 
 const NopostAlert = () => {
   const history = useHistory();
@@ -11,19 +12,18 @@ const NopostAlert = () => {
   return (
     <>
       <NopostContainer>
-        <div style={{ marginTop: "-20px" }}>
+        <div>
           <Titleline title={"계획"} />
         </div>
         <div>
           <img src={imgLogin} />
           <span>등록된 계획표가 없습니다!</span>
-          <button
+          <Button
+            content={"계획하러 가기!"}
             onClick={() => {
               history.push("/planning");
             }}
-          >
-            계획하러 가기!
-          </button>
+          />
         </div>
       </NopostContainer>
       <Footer />
@@ -38,6 +38,12 @@ const NopostContainer = styled.div`
     align-items: center;
     margin: auto;
     margin-top: 20px;
+    &:first-child {
+      margin-top: 0px;
+    }
+    &:last-child {
+      width: 80%;
+    }
     img {
       margin-top: 50px;
       width: 170px;
@@ -47,15 +53,6 @@ const NopostContainer = styled.div`
       margin-top: 20px;
       font-size: 20px;
       margin-bottom: 20px;
-    }
-    button {
-      background-color: ${({ theme }) => theme.colors.mainGreen};
-      border: none;
-      padding: 15px 30px;
-      margin-top: 20px;
-      border-radius: 10px;
-      font-size: 18px;
-      color: white;
     }
   }
 `;

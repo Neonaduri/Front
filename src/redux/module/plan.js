@@ -49,7 +49,7 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
         startDate,
         endDate,
         dateCnt,
-        postTitle: title,
+        postTitle: title.value,
         location,
         theme,
       },
@@ -59,7 +59,6 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
         },
       }
     );
-    // const response = RESP.MAKEPLANPOST;
 
     if (response.status === 201) {
       const db = getDatabase();

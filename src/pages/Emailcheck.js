@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import Signup from "./Signup";
 import { FaAngleLeft } from "react-icons/fa";
 import styled from "styled-components";
+import Button from "../components/elements/Button";
 
 const Emailcheck = ({ history }) => {
   const dispatch = useDispatch();
@@ -82,17 +83,9 @@ const Emailcheck = ({ history }) => {
         {regExpMatch ? (
           <>
             {emailCheck ? (
-              <button
-                onClick={checkEmailClick}
-                style={{
-                  backgroundColor: "#41B67E",
-                  color: "white",
-                }}
-              >
-                중복체크 완료
-              </button>
+              <Button onClick={checkEmailClick} content={"중복체크 완료"} />
             ) : (
-              <button onClick={checkEmailClick}>중복확인</button>
+              <Button onClick={checkEmailClick} content={"중복확인"} />
             )}
           </>
         ) : null}
@@ -122,7 +115,6 @@ const CheckBtndiv = styled.div`
     border-radius: 7px;
     margin-top: 10px;
     color: ${({ theme }) => theme.colors.mainGreen};
-    cursor: pointer;
     position: absolute;
     right: 20px;
     top: 133px;

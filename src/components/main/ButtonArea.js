@@ -5,13 +5,13 @@ import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { getLocationPostDB } from "../../redux/module/post";
+import { area } from "../elements/ArrValue";
 
 const ButtonArea = (props) => {
   const dispatch = useDispatch();
 
   const onClick = (e) => {
     const location = e.target.value;
-
     dispatch(getLocationPostDB(location));
   };
 
@@ -31,37 +31,13 @@ const ButtonArea = (props) => {
 
   return (
     <StyledSlide {...settings}>
-      <BtnArea onClick={onClick} value="서울">
-        서울
-      </BtnArea>
-
-      <BtnArea onClick={onClick} value="부산">
-        부산
-      </BtnArea>
-
-      <BtnArea onClick={onClick} value="경주">
-        경주
-      </BtnArea>
-
-      <BtnArea onClick={onClick} value="전주">
-        전주
-      </BtnArea>
-
-      <BtnArea onClick={onClick} value="안동">
-        안동
-      </BtnArea>
-
-      <BtnArea onClick={onClick} value="여수">
-        여수
-      </BtnArea>
-
-      <BtnArea onClick={onClick} value="강릉">
-        강릉
-      </BtnArea>
-
-      <BtnArea onClick={onClick} value="제주">
-        제주
-      </BtnArea>
+      {area.map((area, idx) => {
+        return (
+          <BtnArea key={idx} onClick={onClick} value={area}>
+            {area}
+          </BtnArea>
+        );
+      })}
     </StyledSlide>
   );
 };

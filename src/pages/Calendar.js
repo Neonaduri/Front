@@ -15,15 +15,13 @@ import styled from "styled-components";
 import Titleline from "../components/elements/Titleline";
 import backicon from "../static/images/icon/back.png";
 import downbtn from "../static/images/icon/downbtn.png";
+import useInput from "../components/hooks/useInput";
+import Button from "../components/elements/Button";
 
 const Calendar = () => {
   const history = useHistory();
   const moment = require("moment");
   const dispatch = useDispatch();
-  const titleRef = useRef();
-  const areaRef = useRef();
-  const themeRef = useRef();
-  const userInfo = useSelector((state) => state.user.list);
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -34,7 +32,6 @@ const Calendar = () => {
   const days = ["일", "월", "화", "수", "목", "금", "토"];
   const [locationInBtn, setLocationInBtn] = useState("서울");
   const [themeInBtn, setThemeInBtn] = useState("액티비티");
-
   const startDateRef = state[0].startDate;
   const startDate = moment(startDateRef).format("YYYY-MM-DD");
   const endDateRef = state[0].endDate;
@@ -44,6 +41,8 @@ const Calendar = () => {
   const [isOpen, setOpen] = React.useState(false);
   const [isOpenLoca, setOpenLoca] = React.useState(false);
   const [isOpenTheme, setOpenTheme] = React.useState(false);
+  const title = useInput();
+
   const open = () => setOpen(true);
   const openLoca = () => {
     setOpenLoca(true);
@@ -58,18 +57,16 @@ const Calendar = () => {
   const closeTheme = () => setOpenTheme(false);
 
   const createBtnClick = () => {
-    const title = titleRef.current.value;
     const location = locationInBtn;
     const theme = themeInBtn;
     if (dateCnt > 7) {
       alert("날짜는 최대 7일입니다! 🤗");
       return;
     }
-    if (title.length < 2) {
+    if (title.value.length < 2) {
       alert("여행명을 상세히 입력해주세요! 🤗");
       return;
     }
-    // sessionStorage.setItem("roomNick", userInfo.nickName);
     dispatch(
       planAction.createRoomDB(
         title,
@@ -112,9 +109,9 @@ const Calendar = () => {
         <PostTitlediv>
           <label htmlFor="title">여행명</label>
           <input
-            id="title"
-            ref={titleRef}
             placeholder="여행 계획명을 작성해주세요."
+            {...title}
+            id="title"
           ></input>
         </PostTitlediv>
         <div
@@ -224,9 +221,9 @@ const Calendar = () => {
             <Sheet.Backdrop />
           </CustomSheet>
         </Datediv>
-        <Buttondiv>
-          <button onClick={createBtnClick}>방만들기</button>
-        </Buttondiv>
+        <div>
+          <Button content={"방만들기"} onClick={createBtnClick} />
+        </div>
       </Container>
     </>
   );
@@ -244,19 +241,6 @@ const Locationselect = styled.div`
   &:active {
     background-color: ${({ theme }) => theme.colors.mainGreen};
     color: white;
-  }
-`;
-
-const Buttondiv = styled.div`
-  button {
-    width: 100%;
-    background-color: ${({ theme }) => theme.colors.mainGreen};
-    border: none;
-    border-radius: 5px;
-    padding: 10px 0px;
-    color: white;
-    font-size: 16px;
-    margin-top: -20px;
   }
 `;
 

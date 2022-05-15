@@ -13,7 +13,7 @@ import MyReviewCard from "../components/mypage/MyReviewCard";
 const Mypage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.user.list);
+  const isLogin = useSelector((state) => state.user.isLogin);
   const iLikedPost = useSelector((state) => state.user.iLikedPost?.postList);
   const myReview = useSelector((state) => state.user.myReview);
   const [cardList, setCardList] = useState(true);
@@ -22,6 +22,9 @@ const Mypage = () => {
     dispatch(userAction.getMyLikePostDB());
     dispatch(userAction.getMyReviewDB());
   }, []);
+  if (!isLogin) {
+    history.replace("/login");
+  }
 
   return (
     <div>

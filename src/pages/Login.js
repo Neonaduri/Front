@@ -1,37 +1,28 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import useInput from "../components/hooks/useInput";
 import GoogleBtn from "../components/login/GoogleBtn";
 import KakaoBtn from "../components/login/KakaoBtn";
 import { userAction } from "../redux/module/user";
 import Splash from "../shared/Splash";
 import loginBGimg from "../static/images/bgImage/loginbackground.png";
+import Button from "../components/elements/Button";
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();
-  const usernameRef = useRef();
-  const passwordRef = useRef();
   const emailRegExp =
     /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-  const [disabled, setDisabled] = useState(false);
   const [splash, setSplash] = useState(true);
+  const username = useInput();
+  const password = useInput();
 
-  const emailFormCheck = (e) => {
-    const inputEmail = e.target.value;
-    if (inputEmail.match(emailRegExp) === null) {
-      setDisabled(true);
-    } else {
-      setDisabled(false);
-    }
-  };
   const loginBtnClick = () => {
-    const username = usernameRef.current.value;
-    const password = passwordRef.current.value;
-    if (password.length < 4 || password.length > 11) {
+    if (password.value.length < 4 || password.value.length > 11) {
       alert("비밀번호는 4자리 이상, 12자리 미만입니다.");
       return;
     }
-    dispatch(userAction.logInDB(username, password));
+    dispatch(userAction.logInDB(username.value, password.value));
   };
 
   if (localStorage.getItem("token")) {
@@ -51,25 +42,16 @@ const Login = ({ history }) => {
       <Logodiv>
         <img src={loginBGimg}></img>
       </Logodiv>
-      <Inputdiv props={disabled}>
+      <Inputdiv>
         <span>떠나볼 준비를 해볼까요?</span>
-        <input
-          placeholder="너나들이 계정 (이메일)"
-          ref={usernameRef}
-          onChange={(e) => {
-            emailFormCheck(e);
-          }}
-        ></input>
-        <input placeholder="비밀번호" type="password" ref={passwordRef}></input>
-        {disabled ? (
-          <button disabled={true} style={{ color: "gray" }}>
-            로그인
-          </button>
-        ) : (
-          <button onClick={loginBtnClick} style={{ color: "white" }}>
-            로그인
-          </button>
-        )}
+        <input placeholder="너나들이 계정 (이메일)" {...username}></input>
+        <input placeholder="비밀번호" type="password" {...password}></input>
+        <Button
+          content={"로그인"}
+          onClick={loginBtnClick}
+          width={"300px"}
+          height={"slim"}
+        />
       </Inputdiv>
       <Bottomdiv>
         <span>간편 로그인</span>
@@ -176,16 +158,6 @@ const Inputdiv = styled.div`
       outline: none;
       border-bottom: 3px solid ${({ theme }) => theme.colors.mainGreen};
     }
-  }
-  button {
-    width: 80%;
-    height: 34px;
-    font-size: 20px;
-    background-color: ${({ theme }) => theme.colors.mainGreen};
-    border: none;
-    border-radius: 7px;
-    margin-top: 10px;
-    cursor: pointer;
   }
 `;
 

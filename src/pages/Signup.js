@@ -4,26 +4,24 @@ import styled from "styled-components";
 import { userAction } from "../redux/module/user";
 import closeeye from "../static/images/icon/eye.png";
 import openeye from "../static/images/icon/openeye.png";
+import useInput from "../components/hooks/useInput";
+import Button from "../components/elements/Button";
 
 const Signup = (props) => {
   const dispatch = useDispatch();
   const username = props.email;
   const emailCheck = props.emailCheck;
-  const nicknameRef = useRef();
-  const passRef = useRef();
-  const passCheckRef = useRef();
+  const [password, setPassword] = useState("");
+  const [passCheck, setPassCheck] = useState("");
   const [visuable, setVisuable] = useState(false);
   const [visuable2, setVisuable2] = useState(false);
   const [passChange, setPassChange] = useState(undefined);
   const [pass, setPass] = useState();
   const [permit, setPermit] = useState(undefined);
-  console.log(emailCheck);
+  const nickName = useInput();
 
   const signupBtnClick = () => {
-    const nickName = nicknameRef.current.value;
-    const password = passRef.current.value;
-    const passwordCheck = passCheckRef.current.value;
-    if (nickName.length < 3 || nickName.length > 11) {
+    if (nickName.value.length < 3 || nickName.value.length > 11) {
       alert("닉네임은 3자리 이상, 12자리 미만입니다.");
       return;
     }
@@ -31,29 +29,30 @@ const Signup = (props) => {
       alert("비밀번호는 4자리 이상, 12자리 미만입니다.");
       return;
     }
-    if (password !== passwordCheck) {
+    if (password !== passCheck) {
       alert("비밀번호를 다시 확인해주세요.");
       return;
     }
-    dispatch(userAction.signUpDB(username, nickName, password, passwordCheck));
+    dispatch(
+      userAction.signUpDB(username, nickName.value, password, passCheck)
+    );
   };
 
   const onChangePassword = (e) => {
-    const value = e.target.value;
-    setPass(value);
-    if (value.length > 3 && value.length < 13) {
+    setPassword(e.target.value);
+    if (e.target.value.length > 3 && e.target.value.length < 13) {
       setPassChange(true);
-    } else if (value.length === 0) {
+    } else if (e.target.value.length === 0) {
       setPassChange(undefined);
     } else {
       setPassChange(false);
     }
   };
   const onChangeReCheck = (e) => {
-    const value = e.target.value;
-    if (pass === value) {
+    setPassCheck(e.target.value);
+    if (password === e.target.value) {
       setPermit(true);
-    } else if (value.length === 0) {
+    } else if (e.target.value.length === 0) {
       setPermit(undefined);
     } else {
       setPermit(false);
@@ -66,17 +65,15 @@ const Signup = (props) => {
         <label htmlFor="nick">닉네임을 입력해주세요.</label>
         <input
           placeholder="닉네임"
-          id="nick"
-          ref={nicknameRef}
           disabled={!emailCheck}
+          {...nickName}
         ></input>
         <label htmlFor="password">비밀번호를 입력해주세요.</label>
         <input
           type={visuable ? "text" : "password"}
           placeholder="4자리 이상 12자리 미만"
-          id="password"
-          ref={passRef}
-          onChange={(e) => onChangePassword(e)}
+          value={password}
+          onChange={onChangePassword}
           disabled={!emailCheck}
         ></input>
         {passChange === false ? (
@@ -111,9 +108,8 @@ const Signup = (props) => {
         <input
           type={visuable2 ? "text" : "password"}
           placeholder="비밀번호 재입력"
-          id="passCheck"
-          ref={passCheckRef}
-          onChange={(e) => onChangeReCheck(e)}
+          value={passCheck}
+          onChange={onChangeReCheck}
           disabled={!emailCheck}
         ></input>
         {permit === true ? (
@@ -145,7 +141,7 @@ const Signup = (props) => {
         )}
       </Inputbox>
       <Buttondiv>
-        <button onClick={signupBtnClick}>회원가입</button>
+        <Button onClick={signupBtnClick} content={"회원가입"} />
       </Buttondiv>
     </div>
   );
@@ -191,21 +187,8 @@ const Inputbox = styled.div`
   }
 `;
 const Buttondiv = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 80%;
+  width: 90%;
   margin: auto;
-  button {
-    width: 100%;
-    height: 40px;
-    font-size: 20px;
-    background-color: #41b67e;
-    border: none;
-    border-radius: 7px;
-    margin-top: 10px;
-    color: white;
-    cursor: pointer;
-  }
 `;
 
 export default Signup;
