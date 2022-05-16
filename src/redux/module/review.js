@@ -36,7 +36,7 @@ export const addCommentDB = (postId, formdata, config) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.post(
-        `/api/detail/reviews/${postId} `,
+        `/detail/reviews/${postId} `,
         formdata,
         config
       );
@@ -57,7 +57,7 @@ export const getCommentDB = (postId, pageno) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.get(
-        `/api/detail/reviews/${postId}/1`
+        `/detail/reviews/${postId}/1`
       );
 
       if (response.status === 200) {
@@ -75,7 +75,7 @@ export const getOneCommentDB = (reviewId) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.get(
-        `/api/detail/reviews/edit/${reviewId}`
+        `/detail/reviews/edit/${reviewId}`
       );
 
       if (response.status === 201) {
@@ -92,7 +92,7 @@ export const deleteCommentDB = (reviewId) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.delete(
-        `/api/detail/reviews/${reviewId}`
+        `/detail/reviews/${reviewId}`
       );
       if (response.status === 200) {
         dispatch(deleteComment(reviewId));

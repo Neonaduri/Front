@@ -30,7 +30,7 @@ const getMyReview = createAction(GETMYREVIEW, (reviews) => ({ reviews }));
 const emailCheckDB = (username) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const response = await apis.axiosInstance.post("/api/idcheck", {
+      const response = await apis.axiosInstance.post("/idcheck", {
         userName: username,
       });
       // const response = RESP.IDCHECKPOST;
@@ -92,7 +92,7 @@ const logInDB = (username, password) => {
 const isLoginDB = () => {
   return async function (dispatch, getState, { history }) {
     try {
-      const response = await apis.axiosInstance.get("/api/islogin", {
+      const response = await apis.axiosInstance.get("/islogin", {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -191,7 +191,7 @@ const editProfileDB = (formdata, config) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.put(
-        "/api/user/mypage",
+        "/user/mypage",
         formdata,
         config
       );

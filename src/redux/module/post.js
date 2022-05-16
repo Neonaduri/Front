@@ -58,7 +58,7 @@ export const getBestPostDB = () => {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await apis.axiosInstance.get(`/api/planning/best`, {
+      const response = await apis.axiosInstance.get(`/plans/best`, {
         headers: {
           Authorization: `${token}`,
         },
@@ -78,9 +78,7 @@ export const getBestPostDB = () => {
 export const getLocationPostDB = (location, pageno) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const response = await apis.axiosInstance.get(
-        `/api/planning/location/${location}/1`
-      );
+      const response = await apis.axiosInstance.get(`/plans/${location}/1`);
       if (response.status === 200) {
         dispatch(getLocationPost(response.data));
       }
@@ -95,7 +93,7 @@ export const getKeywordPostDB = (keyword, pageno) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.get(
-        `/api/search/${keyword}/${pageno}`
+        `/plans/${keyword}/${pageno}`
       );
 
       if (response.status === 200) {
@@ -113,9 +111,7 @@ export const getKeywordPostDB = (keyword, pageno) => {
 export const getThemePostDB = (keyword) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const response = await apis.axiosInstance.get(
-        `/api/planning/theme/${keyword}/1`
-      );
+      const response = await apis.axiosInstance.get(`/plans/${keyword}/1`);
 
       if (response.status === 200) {
         dispatch(getSearchPost(response.data));
@@ -130,11 +126,7 @@ export const getThemePostDB = (keyword) => {
 export const clickWishPostDB = (postId) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const response = await apis.axiosInstance.post(
-        `/api/posts/like/${postId}`
-      );
-      console.log(response);
-      console.log(response.data.like);
+      const response = await apis.axiosInstance.post(`/plans/like/${postId}`);
       if (response.status === 201) {
         dispatch(clickWishInMain({ postId: postId, bool: response.data.like }));
       }
