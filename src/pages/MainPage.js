@@ -17,11 +17,9 @@ const MainPage = ({ history }) => {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const bestList = useSelector((state) => state.post.bestList);
-  const locationList = useSelector(
-    (state) => state.post.locationList.locationList
-  );
+  const locationList = useSelector((state) => state.post.locationList);
   const isLoading = useSelector((state) => state.post.isLoading);
-
+  console.log(locationList);
   const settings = {
     slidesToShow: 2,
     slidesToScroll: 1,

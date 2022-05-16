@@ -90,6 +90,9 @@ const SocialWishDiv = styled.div`
   left: 103px;
   width: 17px;
   z-index: 10;
+  img {
+    width: 17px;
+  }
 `;
 
 const Wrap = styled.div`

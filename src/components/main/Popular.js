@@ -58,6 +58,9 @@ const SocialWishDiv = styled.div`
   position: absolute;
   right: 10px;
   bottom: 70px;
+  img {
+    width: 24px;
+  }
 `;
 
 const SectionBox = styled.div`
@@ -94,7 +97,7 @@ const Content = styled.div`
   margin-top: 10px;
   margin-left: 13px;
   font-weight: 500;
-  font-size: 15px;
+  font-size: 14px;
   color: ${({ theme }) => theme.colors.text1};
   text-overflow: ellipsis;
   overflow: hidden;
@@ -114,7 +117,7 @@ const Box = styled.div`
 
 const ImagePop = styled.img`
   border-radius: 10px;
-  width: 100%;
+  width: 158px;
   height: 236px;
   object-fit: cover;
 `;

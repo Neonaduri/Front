@@ -13,6 +13,7 @@ const GETMYPLANNEXT = "getMyPlanNextPage";
 const GETDETAILPLAN = "getDetailPlan";
 const DELETEMYPLAN = "deleteMyPlan";
 const LOADING = "loading";
+const CLICKWISHINDETAIL = "clickWishInDetail";
 
 //init
 const init = {
@@ -39,6 +40,9 @@ const getDetailPlan = createAction(GETDETAILPLAN, (detailPlan) => ({
 }));
 const loading = createAction(LOADING, (isLoading) => ({ isLoading }));
 const deleteMyPlan = createAction(DELETEMYPLAN, (postId) => ({ postId }));
+const clickWishInDetail = createAction(CLICKWISHINDETAIL, (result) => ({
+  result,
+}));
 
 //middlewares
 const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
@@ -194,6 +198,20 @@ const getDetailPlanDB = (postId) => {
   };
 };
 
+const clickWishDetailPostDB = (postId) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const response = await apis.axiosInstance.post(`/plans/like/${postId}`);
+      if (response.status === 201) {
+        dispatch(clickWishInDetail(response.data.like));
+      }
+    } catch (err) {
+      Sentry.captureException(err);
+      console.log(err);
+    }
+  };
+};
+
 //reducer
 export default handleActions(
   {
@@ -228,6 +246,10 @@ export default handleActions(
         });
         draft.myPlanList = newMyPlanList;
       }),
+    [CLICKWISHINDETAIL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.detailPlan.islike = action.payload.result;
+      }),
   },
   init
 );
@@ -241,6 +263,7 @@ const planAction = {
   deleteMyPlanDB,
   exitBrowserOnPlanDB,
   getDetailPlanDB,
+  clickWishDetailPostDB,
 };
 
 export { planAction };

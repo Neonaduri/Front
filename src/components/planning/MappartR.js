@@ -236,7 +236,7 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
         <Polyline
           path={[polyLineArr]}
           strokeWeight={4} // 선의 두께 입니다
-          strokeColor={"#E93C3C"} // 선의 색깔입니다
+          strokeColor={`#FF6868`} // 선의 색깔입니다
           strokeOpacity={1} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
           strokeStyle={"solid"} // 선의 스타일입니다
         />

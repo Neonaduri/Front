@@ -68,7 +68,7 @@ const Planning = (props) => {
           <Sheet.Header onClick={close} />
           <Sheet.Content>
             <Schedule daynow={dayNow} />
-            <SubmitBtn />
+            <SubmitBtn dateCnt={dateCnt} />
           </Sheet.Content>
         </Sheet.Container>
         <Sheet.Backdrop />

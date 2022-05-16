@@ -23,9 +23,13 @@ const MapDetail = ({ dayNow }) => {
     setShowTraffic(!showTraffic);
   };
 
+  console.log(planByDay);
   const dayPlanPlaces = planByDay[dayNow - 1]?.places;
+  if (!dayPlanPlaces) {
+    return null;
+  }
 
-  if (dayPlanPlaces !== undefined) {
+  if (dayPlanPlaces.length !== 0) {
     for (let i = 0; i < dayPlanPlaces.length; i++) {
       let latlng = { lat: dayPlanPlaces[i].lat, lng: dayPlanPlaces[i].lng };
       latlngArr.push(latlng);
@@ -37,25 +41,17 @@ const MapDetail = ({ dayNow }) => {
       };
       markerArr.push(val);
     }
-  } else {
+  } else if (dayPlanPlaces.length === 0) {
     return (
       <>
-        <img
-          src={back}
-          onClick={() => {
-            history.push("/myplan");
-          }}
-        />
-        <Titleline title={detailPlan.postTitle} />
         <MapContainer>
           <Map
             onClick={() => setIsOpen(false)}
             center={{ lat: 37.4674137335801, lng: 126.434614441118 }}
             style={{
               width: "100%",
-              height: "280px",
+              height: "176px",
               borderRadius: "10px",
-              border: "1px solid black",
             }}
             level={10}
           ></Map>
@@ -64,40 +60,33 @@ const MapDetail = ({ dayNow }) => {
     );
   }
 
+  // {
+  /* <button onClick={clickTraffic}>교통정보 보기</button> */
+  // }
   return (
     <div>
-      <img
-        src={back}
-        onClick={() => {
-          history.goBack();
-        }}
-      />
-      <Titleline title={detailPlan.postTitle} />
       <MapContainer>
-        <button onClick={clickTraffic}>교통정보 보기</button>
-
         <Map
           onClick={() => setIsOpen(false)}
           center={latlngArr[0]}
           style={{
             width: "100%",
-            height: "280px",
+            height: "176px",
             borderRadius: "10px",
-            border: "1px solid black",
           }}
-          level={6}
+          level={9}
         >
           {markerArr.map((positions, idx) => (
             <MapMarker
               key={idx}
               position={positions.latlng}
               image={{
-                src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F37WUa%2FbtrCjEzIbYK%2FQAyIkqcQxyzcCAcVWQoWTk%2Fimg.png",
-                size: { width: 20, height: 20 },
+                src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FefFX6q%2FbtrCjFZ6mey%2Fr7CE69eKkBTJBkQJRc6n4k%2Fimg.png",
+                size: { width: 16, height: 16 },
                 options: {
                   offset: {
-                    x: 9,
-                    y: 12,
+                    x: 10,
+                    y: 10,
                   },
                 },
               }}
@@ -114,8 +103,8 @@ const MapDetail = ({ dayNow }) => {
           ))}
           <Polyline
             path={latlngArr}
-            strokeWeight={4} // 선의 두께 입니다
-            strokeColor={`#56BE91`} // 선의 색깔입니다
+            strokeWeight={3} // 선의 두께 입니다
+            strokeColor={`#8d8d8d`} // 선의 색깔입니다
             strokeOpacity={1} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
             strokeStyle={"solid"} // 선의 스타일입니다
           />
@@ -132,13 +121,14 @@ const InfoWindow = styled.div`
   position: relative;
 
   div {
-    padding: 0px 5px;
+    padding: 0px 6px;
     border-radius: 50%;
-    background-color: ${({ theme }) => theme.colors.mainGreen};
+    background-color: ${({ theme }) => theme.colors.mainRed};
     color: white;
+    font-size: 13px;
     position: absolute;
-    left: 65px;
-    top: 31px;
+    left: 64px;
+    top: 30px;
   }
 `;
 

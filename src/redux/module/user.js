@@ -85,7 +85,7 @@ const logInDB = (username, password) => {
       }
     } catch (err) {
       Sentry.captureException(err);
-      window.alert(err.response.data.exception);
+      window.alert(err.response.data);
     }
   };
 };
@@ -183,7 +183,7 @@ const getMyLikePostDB = () => {
       // const response = RESP.MYPAGELIKEGET;
       console.log(response);
       if (response.status === 200) {
-        dispatch(getLikedPost(response));
+        dispatch(getLikedPost(response.data.postList));
       }
     } catch (err) {
       Sentry.captureException(err);
@@ -197,7 +197,7 @@ const getMyReviewDB = () => {
       // const response = RESP.MYREVIEWGET;
       console.log(response);
       if (response) {
-        dispatch(getMyReview(response));
+        dispatch(getMyReview(response.data));
       }
     } catch (err) {
       Sentry.captureException(err);

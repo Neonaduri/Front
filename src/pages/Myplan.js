@@ -47,7 +47,7 @@ const Myplan = () => {
   if (myAllPlan.length === 0) {
     return <NopostAlert />;
   }
-
+  console.log(myAllPlan);
   return (
     <Container>
       <Titleline title={"계획"} />

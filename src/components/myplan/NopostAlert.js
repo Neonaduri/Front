@@ -1,60 +1,82 @@
 import React from "react";
 import styled from "styled-components";
 import Titleline from "../elements/Titleline";
-import imgLogin from "../../static/images/icon/loginCharacter.png";
+import imgLogin from "../../static/images/icon/nopostCharacter.png";
 import { useHistory } from "react-router";
 import Footer from "../common/Footer";
 import Button from "../elements/Button";
+import pencil from "../../static/images/icon/whitePencil.png";
 
 const NopostAlert = () => {
   const history = useHistory();
 
   return (
-    <>
+    <Container>
       <NopostContainer>
-        <div>
+        <TitleDiv>
           <Titleline title={"계획"} />
-        </div>
-        <div>
-          <img src={imgLogin} />
+        </TitleDiv>
+        <ContentDiv>
           <span>등록된 계획표가 없습니다!</span>
-          <Button
-            content={"계획하러 가기!"}
-            onClick={() => {
-              history.push("/planning");
-            }}
-          />
-        </div>
+          <img src={imgLogin} />
+          <ButtonDiv>
+            <img src={pencil} />
+            <Button
+              content={"계획하러 가기!"}
+              onClick={() => {
+                history.push("/planning");
+              }}
+            ></Button>
+          </ButtonDiv>
+        </ContentDiv>
       </NopostContainer>
       <Footer />
-    </>
+    </Container>
   );
 };
 
-const NopostContainer = styled.div`
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: auto;
-    margin-top: 20px;
-    &:first-child {
-      margin-top: 0px;
-    }
-    &:last-child {
-      width: 80%;
-    }
-    img {
-      margin-top: 50px;
-      width: 170px;
-      margin-bottom: 10px;
-    }
-    span {
-      margin-top: 20px;
-      font-size: 20px;
-      margin-bottom: 20px;
-    }
+const ContentDiv = styled.div`
+  margin-bottom: 40%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img {
+    width: 60%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  span {
+    font-size: 18px;
   }
 `;
+
+const Container = styled.div`
+  height: 90%;
+`;
+
+const NopostContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const ButtonDiv = styled.div`
+  position: relative;
+  width: 80%;
+  img {
+    width: 15px;
+    height: 15px;
+    color: white;
+    position: absolute;
+    bottom: -17px;
+    left: 75px;
+  }
+`;
+
+const TitleDiv = styled.div``;
 
 export default NopostAlert;

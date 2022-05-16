@@ -86,6 +86,7 @@ export const getLocationPostDB = (location, pageno) => {
       const response = await apis.axiosInstance.get(
         `/plans/location/${location}/1`
       );
+      console.log(response);
       if (response.status === 200) {
         dispatch(getLocationPost(response.data));
       }
@@ -175,12 +176,12 @@ export default handleActions(
       }),
     [GET_LOCATION_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.locationList = action.payload.locationList;
+        draft.locationList = action.payload.locationList.planList;
         draft.isLoading = true;
       }),
     [GET_SEARCH_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.searchList = action.payload.searchList.resultList;
+        draft.searchList = action.payload.searchList.planList;
       }),
     [LAST_PAGE]: (state, action) =>
       produce(state, (draft) => {

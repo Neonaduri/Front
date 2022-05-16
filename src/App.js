@@ -16,8 +16,6 @@ import GoogleRedirect from "./pages/GoogleRedirect";
 import UploadComplete from "./pages/UploadComplete";
 import Myplan from "./pages/Myplan";
 import Mypage from "./pages/Mypage";
-import Editprofile from "./pages/Editprofile";
-
 import styled, { ThemeProvider } from "styled-components";
 import MobileFrame from "./components/common/MobileFrame";
 import Search from "./pages/Search";
@@ -26,6 +24,7 @@ import Splash from "./shared/Splash";
 import Detail from "./pages/Detail";
 import ReviewDetail from "./components/review/ReviewDetail";
 import theme from "./assets/styles/theme";
+import MyEdit from "./pages/MyEdit";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -61,7 +60,7 @@ function App(props) {
               <Route path="/uploadcomplete" component={UploadComplete} />
               <Route path="/myplan" component={Myplan} />
               <Route path="/mypage" component={Mypage} />
-              <Route path="/editprofile" component={Editprofile} />
+              <Route path="/myedit" component={MyEdit} />
               <Route path="/detail/:id" exact component={Detail} />
               <Route
                 path="/detail/:productId/write"

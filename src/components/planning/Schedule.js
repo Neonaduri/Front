@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Map, Polyline } from "react-kakao-maps-sdk";
+import { Map, Polyline, MapMarker } from "react-kakao-maps-sdk";
 import RTdatabase from "../../firebase";
 import {
   getDatabase,
@@ -194,11 +194,31 @@ const Schedule = (props) => {
           }}
           level={5}
         >
+          {latlngArr.map((letlng, idx) => {
+            return (
+              <MapMarker
+                key={idx}
+                position={letlng}
+                image={{
+                  src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FefFX6q%2FbtrCjFZ6mey%2Fr7CE69eKkBTJBkQJRc6n4k%2Fimg.png",
+                  size: { width: 16, height: 16 },
+                  options: {
+                    offset: {
+                      x: 7,
+                      y: 9,
+                    },
+                  },
+                }}
+                clickable={true}
+              ></MapMarker>
+            );
+          })}
+
           <Polyline
             path={latlngArr}
-            strokeWeight={4} // 선의 두께 입니다
-            strokeColor={"red"} // 선의 색깔입니다
-            strokeOpacity={0.8} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+            strokeWeight={3} // 선의 두께 입니다
+            strokeColor={`#8d8d8d`} // 선의 색깔입니다
+            strokeOpacity={1} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
             strokeStyle={"solid"} // 선의 스타일입니다
           />
         </Map>
@@ -229,10 +249,9 @@ const Schedule = (props) => {
                   <NumColumnBar></NumColumnBar>
                 ) : null}
               </div>
-
-              <span>
+              <FixedTime>
                 {hour}: {minute}
-              </span>
+              </FixedTime>
             </Timediv>
             <Contentdiv>
               <div>
@@ -255,6 +274,7 @@ const Schedule = (props) => {
               <textarea
                 id={idx}
                 value={p.placeMemo}
+                placeholder="남기고 싶은 메모를 입력하세요."
                 onChange={(e) => changeMemoInput(e)}
               ></textarea>
               {hamburgerNum === idx ? (
@@ -346,6 +366,11 @@ const Schedule = (props) => {
   );
 };
 
+const FixedTime = styled.span`
+  font-size: 15px;
+  margin-left: -3px;
+`;
+
 const MapContainer = styled.div`
   padding: 5px 10px;
 `;
@@ -374,7 +399,7 @@ const ToggleBox = styled.div`
   border: 1px solid black;
   display: flex;
   flex-direction: column;
-  width: 35%;
+  width: 40%;
   border-radius: 15px;
   border-top-right-radius: 0px;
   position: absolute;
@@ -395,20 +420,20 @@ const ToggleBox = styled.div`
 `;
 
 const NumColumnBar = styled.span`
-  width: 5px;
+  width: 2px;
   height: 100px;
-  background-color: ${({ theme }) => theme.colors.mainGreen};
+  background-color: ${({ theme }) => theme.colors.borderColor};
   position: absolute;
   top: 20px;
 `;
 
 const Timediv = styled.div`
-  width: 20%;
+  width: 22%;
   display: flex;
   padding-left: 15px;
   padding-top: 5px;
   div {
-    background-color: ${({ theme }) => theme.colors.mainGreen};
+    background-color: ${({ theme }) => theme.colors.mainRed};
     width: 20px;
     height: 20px;
     color: white;
@@ -420,12 +445,15 @@ const Timediv = styled.div`
     margin-right: 5px;
     position: relative;
   }
+  span {
+  }
 `;
 const Contentdiv = styled.div`
-  width: 80%;
+  width: 78%;
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
+  margin-left: 10px;
   position: relative;
   div {
     display: flex;
@@ -433,14 +461,16 @@ const Contentdiv = styled.div`
     align-items: center;
     img {
       height: 20px;
+      margin-top: 4px;
       margin-right: 10px;
     }
     h4 {
-      font-size: 18px;
+      font-size: 16px;
+      margin-top: 4px;
     }
   }
   textarea {
-    width: 90%;
+    width: 95%;
     outline: none;
     border: 1px solid ${({ theme }) => theme.colors.text3};
     border-radius: 5px;
@@ -448,6 +478,8 @@ const Contentdiv = styled.div`
   }
   span {
     color: ${({ theme }) => theme.colors.text2};
+    font-size: 12px;
+    margin-top: 3px;
   }
 `;
 
