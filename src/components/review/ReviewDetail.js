@@ -100,35 +100,38 @@ const ReviewDetail = () => {
       };
       dispatch(addCommentDB(postId, formdata, config));
     }
-    // for (let key of formdata.keys()) {
-    //   console.log(key);
-    // }
-    // for (let value of formdata.values()) {
-    //   console.log(value);
-    // }
   };
 
   //수정완료버튼
-  const editCompleteBtn = (reviewId) => {
-    const formdata = new FormData();
-    formdata.append("reviewImgUrl", reviewItemData.reviewImgUrl); //기존이미지
-    formdata.append("reviewImgFile", files[0]); //이미지변경
-    formdata.append("reviewContents", reviewItemData.reviewContents);
-    //리뷰텍스트
+  const editCompleteBtn = () => {
+    if (files === undefined) {
+      const formdata = new FormData();
+      formdata.append("reviewImgUrl", reviewItemData.reviewImgUrl);
+      formdata.append(
+        "reviewImgFile",
+        new File([], "", { type: "text/plane" })
+      );
+      formdata.append("reviewContents", reviewItemData.reviewContents);
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
+    } else {
+      const formdata = new FormData();
+      formdata.append("reviewImgUrl", reviewItemData.reviewImgUrl); //기존이미지
+      formdata.append("reviewImgFile", files[0]); //이미지변경
+      formdata.append("reviewContents", reviewItemData.reviewContents);
+      //리뷰텍스트
 
-    const config = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    };
-    dispatch(editCommentDB(reviewId, formdata, config));
-
-    // for (let key of formdata.keys()) {
-    //   console.log(key);
-    // }
-    // for (let value of formdata.values()) {
-    //   console.log(value);
-    // }
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
+    }
   };
 
   return (
@@ -150,6 +153,7 @@ const ReviewDetail = () => {
           reviewList.map((item, id) => {
             return (
               <ReviewItem
+                setReviewItemData={setReviewItemData}
                 cancelEdit={cancelEdit}
                 handleEdit={handleEdit}
                 key={id}
@@ -163,32 +167,43 @@ const ReviewDetail = () => {
         <ContainerInput>
           <ReviewInputBox>
             <WriteBox>
-              {isEdit ? (
-                <Test src={reviewItemData.reviewImgUrl}></Test>
-              ) : (
-                <Test src={preview && preview}></Test>
-              )}
+              <Photo>
+                {(files || reviewItemData.reviewImgUrl) && (
+                  <div>
+                    {isEdit ? (
+                      <Test src={reviewItemData.reviewImgUrl}></Test>
+                    ) : (
+                      <Test src={preview}></Test>
+                    )}
+                  </div>
+                )}
+              </Photo>
 
-              <TextareaAutosize
-                autoFocus
-                name="reviewContents"
-                type="text"
-                placeholder="리뷰를 작성해주세요"
-                onChange={onChangeFormValue}
-                value={reviewItemData.reviewContents}
-                ref={reviewRef}
-                style={{
-                  width: "273px",
-                  padding: "10px",
-                  resize: "none",
-                  overflow: "hidden",
-                  outline: "none",
-                  border: 0,
-                }}
-              ></TextareaAutosize>
-              <Label htmlFor="chooseFile">
-                <Icon src={Camera}></Icon>
-              </Label>
+              <Memo>
+                <TextareaAutosize
+                  autoFocus
+                  name="reviewContents"
+                  type="text"
+                  placeholder="리뷰를 작성해주세요"
+                  onChange={onChangeFormValue}
+                  value={reviewItemData.reviewContents}
+                  ref={reviewRef}
+                  style={{
+                    display: "flex",
+                    width: "270px",
+                    height: "35px",
+                    padding: "8px",
+                    resize: "none",
+                    overflow: "hidden",
+                    outline: "none",
+                    border: 0,
+                    margin: "0 0 0 3px",
+                  }}
+                ></TextareaAutosize>
+                <Label htmlFor="chooseFile">
+                  <Icon src={Camera}></Icon>
+                </Label>
+              </Memo>
             </WriteBox>
             {isEdit ? (
               <Button onClick={editCompleteBtn}>수정</Button>
@@ -216,11 +231,21 @@ const ReviewInputBox = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
-  /* background-color: white; */
   align-items: center;
   height: 18px;
-  margin-top: 30px;
+  /* margin-top: 30px; */
   padding: 10px;
+`;
+
+const Photo = styled.div`
+  display: block;
+  justify-content: center;
+`;
+
+const Memo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Wrap = styled.div`
@@ -229,17 +254,19 @@ const Wrap = styled.div`
 
 const Test = styled.img`
   display: flex;
-  width: 40px;
-  height: 64px;
+  width: 55px;
+  height: 60px;
   object-fit: cover;
 `;
 
 const WriteBox = styled.div`
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
   background-color: white;
   border: 1px solid #cacaca;
   border-radius: 5px;
-  margin-right: 70px;
-  margin-bottom: 20px;
+  margin-right: 5px;
 `;
 
 // const Bar = styled.img`
@@ -272,21 +299,19 @@ const ContainerInput = styled.div`
 const Button = styled.button`
   width: 60px;
   height: 39px;
-  bottom: 35px;
-  right: 40px;
   background: #56be91;
   border-radius: 5px;
-  position: fixed;
   border: 0;
   color: white;
 `;
 
 const Icon = styled.img`
-  position: absolute;
-  right: 110px;
-  bottom: 8px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
   width: 24px;
   height: 24px;
+  margin-right: 3px;
 `;
 
 const Container = styled.div`

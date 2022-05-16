@@ -21,7 +21,7 @@ const ReviewList = ({ nickName, reviewContents, reviewImgUrl, totalCnt }) => {
       <Container>
         <Nickname>{nickName}</Nickname>
         <Box>
-          <Img src={reviewImgUrl}></Img>
+          {reviewImgUrl ? <Img src={reviewImgUrl}></Img> : null}
           <Text>{reviewContents}</Text>
         </Box>
       </Container>
@@ -59,15 +59,15 @@ const Nickname = styled.div`
 
 const Box = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
 `;
 
 const Text = styled.div`
-  display: -webkit-box;
   width: 206px;
   object-fit: cover;
   border-radius: 5px;
+  margin-left: 10px;
   color: #363636;
   font-style: normal;
   font-weight: 500;
@@ -75,7 +75,5 @@ const Text = styled.div`
   line-height: 17px;
   text-overflow: ellipsis;
   overflow: hidden;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
   font-family: "Apple SD Gothic Neo";
 `;

@@ -102,9 +102,11 @@ export const editCommentDB = (reviewId, formdata, config) => {
         config
       );
 
-      if (response.status === 200) {
+      if (response.status === 201) {
+        window.location.reload();
         console.log("후기수정", response.data);
         dispatch(editComment(response.data));
+        window.alert("수정이 완료되었어요!");
       }
     } catch (err) {
       console.log("에러발생", err);
@@ -117,7 +119,7 @@ export const deleteCommentDB = (reviewId) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.delete(
-        `/api/detail/reviews/${reviewId}`
+        `/detail/reviews/${reviewId}`
       );
       console.log("후기삭제 성공!");
       if (response.status === 200) {
@@ -158,9 +160,10 @@ export default handleActions(
       }),
     [EDIT_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        draft.reviewList = draft.reviewList.filter(
-          (item) => item.reviewId === action.payload.reviewId
+        const newReview = draft.reviewList.filter(
+          (item) => item.reviewId !== action.payload.reviewId
         );
+        draft.reviewList = newReview;
       }),
     [DELETE_COMMENT]: (state, action) =>
       produce(state, (draft) => {

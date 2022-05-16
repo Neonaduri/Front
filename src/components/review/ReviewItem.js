@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
-import {
-  deleteCommentDB,
-  editCommentDB,
-  getCommentDB,
-  getOneCommentDB,
-} from "../../redux/module/review";
+import { deleteCommentDB } from "../../redux/module/review";
 import ModalImg from "./ModalImg";
 
 const ReviewItem = ({
@@ -28,7 +23,6 @@ const ReviewItem = ({
   const [editing, setEditing] = useState(false);
   const [imgModal, setImgModal] = useState(false);
 
-  console.log(reviewId);
   const onClick = () => {
     setImgModal(true);
   };
