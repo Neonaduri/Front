@@ -42,7 +42,6 @@ const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
     // dispatch(editCommentDB(reviewId));
   };
 
-  console.log(reviewImgUrl);
   return (
     <>
       <Card>

@@ -25,6 +25,7 @@ import BeforePlan from "./pages/BeforePlan";
 import Splash from "./shared/Splash";
 import Detail from "./pages/Detail";
 import ReviewDetail from "./components/review/ReviewDetail";
+import ScrollTop from "./components/common/ScrollTop";
 
 function App(props) {
   const dispatch = useDispatch();

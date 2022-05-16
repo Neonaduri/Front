@@ -92,9 +92,7 @@ export const getLocationPostDB = (location, pageno) => {
 export const getKeywordPostDB = (keyword, pageno) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const response = await apis.axiosInstance.get(
-        `/api/search/${keyword}/${pageno}`
-      );
+      const response = await apis.axiosInstance.get(`/api/search/${keyword}/1`);
 
       if (response.status === 200) {
         console.log(response);

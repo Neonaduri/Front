@@ -5,12 +5,18 @@ import Banner from "../components/main/Banner";
 import Location from "../components/main/Location";
 import MakePlan from "../components/main/MakePlan";
 import Popular from "../components/main/Popular";
-import { getBestPostDB, getLocationPostDB } from "../redux/module/post";
+import {
+  getBestPostDB,
+  getKeywordPostDB,
+  getLocationPostDB,
+  keywordDB,
+} from "../redux/module/post";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonArea from "../components/main/ButtonArea";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import ScrollTop from "../components/common/ScrollTop";
 
 const MainPage = ({ history }) => {
   const token = localStorage.getItem("token");
@@ -19,6 +25,7 @@ const MainPage = ({ history }) => {
   const locationList = useSelector(
     (state) => state.post.locationList.locationList
   );
+  const keyword = useSelector((state) => state.post.keyword);
 
   console.log("베스트플랜은?", bestList);
   console.log("지역별플랜은?", locationList);
@@ -73,7 +80,8 @@ const MainPage = ({ history }) => {
             <LoName>
               <LoTitle>지역별 여행 계획표</LoTitle>
               <Plus
-                onClick={() => {
+                onClick={(e) => {
+                  dispatch(getKeywordPostDB(keyword));
                   history.push("/search");
                 }}
               >
