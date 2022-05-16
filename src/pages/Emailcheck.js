@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import Signup from "./Signup";
 import { FaAngleLeft } from "react-icons/fa";
 import styled from "styled-components";
+import Button from "../components/elements/Button";
 
 const Emailcheck = ({ history }) => {
   const dispatch = useDispatch();
@@ -82,17 +83,9 @@ const Emailcheck = ({ history }) => {
         {regExpMatch ? (
           <>
             {emailCheck ? (
-              <button
-                onClick={checkEmailClick}
-                style={{
-                  backgroundColor: "#41B67E",
-                  color: "white",
-                }}
-              >
-                중복체크 완료
-              </button>
+              <Button onClick={checkEmailClick} content={"중복체크 완료"} />
             ) : (
-              <button onClick={checkEmailClick}>중복확인</button>
+              <Button onClick={checkEmailClick} content={"중복확인"} />
             )}
           </>
         ) : null}
@@ -102,7 +95,7 @@ const Emailcheck = ({ history }) => {
         close={closeModal}
         header="사용 가능한 이메일입니다."
       ></Modal>
-      {emailCheck ? <Signup email={emailRef.current?.value}></Signup> : null}
+      <Signup email={emailRef.current?.value} emailCheck={emailCheck}></Signup>
     </Container>
   );
 };
@@ -118,11 +111,10 @@ const CheckBtndiv = styled.div`
     height: 30px;
     font-size: 16px;
     background-color: white;
-    border: 2px solid #41b67e;
+    border: 2px solid ${({ theme }) => theme.colors.mainGreen};
     border-radius: 7px;
     margin-top: 10px;
-    color: #41b67e;
-    cursor: pointer;
+    color: ${({ theme }) => theme.colors.mainGreen};
     position: absolute;
     right: 20px;
     top: 133px;
@@ -144,14 +136,13 @@ const Inputdiv = styled.div`
       width: 74%;
       font-size: 16px;
       height: 40px;
-
       border: none;
-      border-bottom: 3px solid #eeeeee;
+      border-bottom: 3px solid ${({ theme }) => theme.colors.borderColor};
       margin-top: 15px;
       transition: 0.3s;
       &:focus {
         outline: none;
-        border-bottom: 3px solid #41b67e;
+        border-bottom: 3px solid ${({ theme }) => theme.colors.mainGreen};
       }
     }
   }

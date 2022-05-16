@@ -19,6 +19,7 @@ const initialState = {
   islastPage: false,
   totalPage: 1,
   keyword: "",
+  isLoading: false,
 };
 
 // actionCreators
@@ -60,7 +61,6 @@ export const getBestPostDB = () => {
         },
       });
       if (response.status === 200) {
-        console.log(response);
         dispatch(getBestPost(response.data));
       }
     } catch (err) {
@@ -79,7 +79,6 @@ export const getLocationPostDB = (location, pageno) => {
         `/api/planning/location/${location}/1`
       );
       if (response.status === 200) {
-        console.log(response);
         dispatch(getLocationPost(response.data));
       }
     } catch (err) {
@@ -97,7 +96,6 @@ export const getKeywordPostDB = (keyword, pageno) => {
       );
 
       if (response.status === 200) {
-        console.log(response);
         dispatch(getSearchPost(response.data));
         dispatch(islastPage(response.data.islastPage));
         dispatch(totalPage(response.data.totalPage));
@@ -117,7 +115,6 @@ export const getThemePostDB = (keyword) => {
       );
 
       if (response.status === 200) {
-        console.log(response);
         dispatch(getSearchPost(response.data));
         history.push("/search");
       }
@@ -137,6 +134,7 @@ export default handleActions(
     [GET_LOCATION_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.locationList = action.payload.locationList;
+        draft.isLoading = true;
       }),
     [GET_SEARCH_POST]: (state, action) =>
       produce(state, (draft) => {

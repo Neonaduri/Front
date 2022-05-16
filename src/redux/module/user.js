@@ -38,10 +38,12 @@ const emailCheckDB = (username) => {
         dispatch(emailCheck(true));
       }
     } catch (err) {
-      console.log(err.response);
-      if (err.response.data === 400) {
+      if (err.response === undefined) {
         dispatch(emailCheck(false));
       }
+      // if (err.response === 400) {
+      // dispatch(emailCheck(false));
+      // }
     }
   };
 };
@@ -57,9 +59,7 @@ const signUpDB = (username, nickName, password, passwordCheck) => {
       // const response = RESP.SIGNUPPOST;
       if (response.status === 201) {
         window.alert("회원가입 완료! 로그인 해주세요:)");
-        history.replace("/login");
-      } else {
-        console.log(response);
+        window.location.replace("/login");
       }
     } catch (err) {
       console.log(err.response);
@@ -74,7 +74,6 @@ const logInDB = (username, password) => {
         password,
       });
       // const response = RESP.LOGINPOST;
-      console.log(response);
       if (response.status === 200) {
         const token = response.headers.authorization;
         // const token = response.token;
@@ -141,7 +140,6 @@ const kakaoLoginDB = (code) => {
     const response = await apis.axiosInstance.get(
       `/user/kakao/callback?code=${code}`
     );
-    console.log(response);
     if (response.status === 200) {
       const token = response.headers.authorization;
       localStorage.setItem("token", token);
@@ -154,11 +152,10 @@ const kakaoLoginDB = (code) => {
 };
 const googleLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
-    console.log(code);
     const response = await apis.axiosInstance.get(
       `user/google/callback?code=${code}`
     );
-    console.log(response);
+
     if (response.status === 200) {
       const token = response.headers.authorization;
       localStorage.setItem("token", token);
@@ -172,9 +169,8 @@ const googleLoginDB = (code) => {
 
 const getMyLikePostDB = () => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.get("/api/user/mypage/like/1");
-    // const response = RESP.MYPAGELIKEGET;
-    console.log(response);
+    // const response = await apis.axiosInstance.get("/api/user/mypage/like/1");
+    const response = RESP.MYPAGELIKEGET;
     if (response.status === 200) {
       dispatch(getLikedPost(response));
     }
@@ -182,11 +178,11 @@ const getMyLikePostDB = () => {
 };
 const getMyReviewDB = () => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.get("/api/user/mypage/review");
-    // const response = RESP.MYREVIEWGET;
-    console.log(response);
-    if (response.status === 200) {
-      dispatch(getMyReview(response.data));
+    // const response = await apis.axiosInstance.get("/api/user/mypage/review");
+    const response = RESP.MYREVIEWGET;
+
+    if (response) {
+      dispatch(getMyReview(response));
     }
   };
 };
@@ -199,7 +195,6 @@ const editProfileDB = (formdata, config) => {
         formdata,
         config
       );
-      console.log(response);
       if (response.status === 201) {
         alert("프로필이 수정되었습니다.");
         window.location.replace("/");

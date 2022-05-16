@@ -10,8 +10,6 @@ const SubmitBtn = () => {
   const postId = useParams().postId;
   const db = getDatabase();
   const isLogin = useSelector((state) => state.user.isLogin);
-  const loginUser = useSelector((state) => state.user.list);
-  const nowPlan = useSelector((state) => state.plan.list);
   const [fixedPlan, setFixedPlan] = useState();
 
   useEffect(() => {
@@ -59,7 +57,6 @@ const SubmitBtn = () => {
         ispublic: true,
         days: allPlan,
       };
-      // console.log(data);
       dispatch(planAction.completePlanDB(data));
     }
   };
@@ -87,7 +84,6 @@ const SubmitBtn = () => {
         ispublic: false,
         days: allPlan,
       };
-      // console.log(data);
       dispatch(planAction.completePlanDB(data));
     }
   };
@@ -95,7 +91,6 @@ const SubmitBtn = () => {
   if (!isLogin) {
     return null;
   }
-
   return (
     <Container>
       <button onClick={submitPlanPrivate}>나만보기</button>
@@ -107,24 +102,24 @@ const SubmitBtn = () => {
 const Container = styled.div`
   display: flex;
   justify-content: space-around;
-  border-top: 1px solid #cacaca;
+  border-top: 1px solid ${({ theme }) => theme.colors.borderColor};
   padding-bottom: 15px;
   padding-top: 5px;
   button {
     width: 40%;
     padding: 5px 0px;
     &:first-child {
-      border: 1px solid #cacaca;
+      border: 1px solid ${({ theme }) => theme.colors.text3};
       border-radius: 5px;
       background-color: white;
-      color: #8d8d8d;
+      color: ${({ theme }) => theme.colors.text2};
       padding: 10px 0px;
       font-size: 16px;
     }
     &:last-child {
-      border: 1px solid #cacaca;
+      border: 1px solid ${({ theme }) => theme.colors.borderColor};
       border-radius: 5px;
-      background-color: #56be91;
+      background-color: ${({ theme }) => theme.colors.mainGreen};
       color: white;
       padding: 10px 0px;
       font-size: 16px;

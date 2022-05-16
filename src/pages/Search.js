@@ -1,18 +1,12 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/common/Footer";
 import search from "../static/images/icon/search.png";
 import { keywordSuggestList } from "../components/elements/ArrValue";
 import { useDispatch, useSelector } from "react-redux";
-import SearchList from "../components/search/SearchList";
 import back from "../static/images/icon/back.png";
 import { useHistory } from "react-router";
-import {
-  getKeywordPostDB,
-  getSearchPost,
-  keywordDB,
-} from "../redux/module/post";
-import { actionCreators } from "../redux/module/post";
+import { getKeywordPostDB, keywordDB } from "../redux/module/post";
 import SearchItem from "../components/search/SearchItem";
 import NotFound from "../shared/NotFound";
 
@@ -23,7 +17,7 @@ const Search = () => {
   const [serching, setSearching] = useState(false);
   const searchList = useSelector((state) => state.post.searchList);
   const keyWord = useSelector((state) => state.post.keyword);
-  console.log(searchList);
+
   const suggestBtnClick = (e) => {
     dispatch(getKeywordPostDB(e.target.value, pageno));
     dispatch(keywordDB(e.target.value));

@@ -6,7 +6,6 @@ import { planAction } from "../redux/module/plan";
 import styled from "styled-components";
 import ScheduleDetail from "../components/detail/ScheduleDetail";
 import ReviewList from "../components/review/ReviewList";
-import Footer from "../components/common/Footer";
 import addMore from "../static/images/button/addMore.png";
 
 const Detail = () => {
@@ -17,12 +16,9 @@ const Detail = () => {
   const dayCnt = useSelector((state) => state.plan.detailPlan.dateCnt);
   const reviewList = useSelector((state) => state.review.reviewList);
   const totalCnt = useSelector((state) => state.review.totalElements);
-
-  console.log(totalCnt);
-
-  console.log(reviewList);
   const [dayNow, setDayNow] = useState(1);
   const arr = reviewList.slice(0, 3);
+
   let dateCntArr = [];
   for (let i = 1; i <= dayCnt; i++) {
     dateCntArr.push(i);
@@ -31,6 +27,7 @@ const Detail = () => {
   useEffect(() => {
     dispatch(planAction.getDetailPlanDB(postId));
   }, []);
+
   return (
     <>
       <div>
@@ -48,7 +45,6 @@ const Detail = () => {
             );
           })}
         </DayBtnDiv>
-
         <MapDetail dayNow={dayNow} />
         <ScheduleDetail dayNow={dayNow} />
       </div>
@@ -87,7 +83,7 @@ const DayBtnDiv = styled.div`
   button {
     display: block;
     width: 50px;
-    background-color: #41b67e;
+    background-color: ${({ theme }) => theme.colors.mainGreen};
     border: none;
     border-radius: 10px;
     padding: 3px 5px;
@@ -97,7 +93,7 @@ const DayBtnDiv = styled.div`
 const Line = styled.div`
   width: 100%;
   height: 10px;
-  background: #f5f5f5;
+  background: ${({ theme }) => theme.colors.borderColor};
   margin: 20px 0;
 `;
 
@@ -120,7 +116,7 @@ const ReviewBox = styled.div`
     font-weight: 700;
     font-size: 18px;
     line-height: 18px;
-    color: #363636;
+    color: ${({ theme }) => theme.colors.text1};
 
     span {
       margin-left: 4px;

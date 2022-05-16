@@ -1,28 +1,22 @@
-import React, { Children, useEffect, useRef, useState } from "react";
-import { Map, MapMarker, Polyline, MapTypeId } from "react-kakao-maps-sdk";
+import React, { useEffect, useRef, useState } from "react";
+import { Map, Polyline } from "react-kakao-maps-sdk";
 import RTdatabase from "../../firebase";
 import {
   getDatabase,
   ref,
   onValue,
   remove,
-  update,
   query,
   orderByChild,
   runTransaction,
 } from "firebase/database";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import styled from "styled-components";
-import _ from "lodash";
 import ModalfixTime from "../common/ModalfixTime";
-import { useDispatch, useSelector } from "react-redux";
-import { planAction } from "../../redux/module/plan";
+import { useSelector } from "react-redux";
 import hamburger from "../../static/images/icon/hamburger.png";
-import Modalroompass from "../common/Modalroompass";
 
-const Schedule = () => {
-  const history = useHistory();
-  const dispatch = useDispatch();
+const Schedule = (props) => {
   const postId = useParams().postId;
   const db = getDatabase();
   const [place, setPlace] = useState();
@@ -32,7 +26,7 @@ const Schedule = () => {
   const dateCnt = useSelector((state) => state.plan.list.dateCnt);
   const timeRef = useRef();
   const minuteRef = useRef();
-  const [dayNow, setDayNow] = useState(1);
+  const [dayNow, setDayNow] = useState(props.daynow);
   const [hamburgerNum, setHamburgerNum] = useState(null);
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
   const [deleteIndex, setDeleteIdx] = useState();
@@ -81,6 +75,7 @@ const Schedule = () => {
   const deletePlaceClick = (e) => {
     setdeleteModalOpen(true);
     setDeleteIdx(e.target.id);
+    setHamburgerNum(null);
   };
   const realDeleteBtn = () => {
     const targetKey = placeKey[deleteIndex];
@@ -132,7 +127,40 @@ const Schedule = () => {
   };
 
   if (latlngArr.length === 0) {
-    return null;
+    return (
+      <Container>
+        <TitieDiv>
+          <span>여행 계획표</span>
+        </TitieDiv>
+        <DayBtndiv>
+          {dateCntArr.map((date, idx) => {
+            return (
+              <DayBtn
+                key={idx}
+                onClick={() => {
+                  setDayNow(date);
+                }}
+                idx={idx}
+                daynow={dayNow}
+              >
+                DAY {date}
+              </DayBtn>
+            );
+          })}
+        </DayBtndiv>
+        <MapContainer>
+          <Map
+            center={{ lat: 37.4674137335801, lng: 126.434614441118 }}
+            style={{
+              width: "100%",
+              height: "230px",
+              borderRadius: "10px",
+            }}
+            level={10}
+          ></Map>
+        </MapContainer>
+      </Container>
+    );
   }
 
   return (
@@ -143,22 +171,20 @@ const Schedule = () => {
       <DayBtndiv>
         {dateCntArr.map((date, idx) => {
           return (
-            <button
+            <DayBtn
               key={idx}
               onClick={() => {
                 setDayNow(date);
               }}
-              style={{
-                borderBottom: idx + 1 === dayNow ? "3px solid #56BE91" : null,
-                color: idx + 1 === dayNow ? "black" : "#8d8d8d",
-              }}
+              idx={idx}
+              daynow={dayNow}
             >
               DAY {date}
-            </button>
+            </DayBtn>
           );
         })}
       </DayBtndiv>
-      <div style={{ padding: "5px 10px" }}>
+      <MapContainer>
         <Map
           center={latlngArr[0]}
           style={{
@@ -176,7 +202,7 @@ const Schedule = () => {
             strokeStyle={"solid"} // 선의 스타일입니다
           />
         </Map>
-      </div>
+      </MapContainer>
       {place?.map((p, idx) => {
         const planTimeStr = String(p.planTime);
         let hour;
@@ -320,12 +346,25 @@ const Schedule = () => {
   );
 };
 
+const MapContainer = styled.div`
+  padding: 5px 10px;
+`;
+
+const DayBtn = styled.button`
+  border: none;
+  background-color: inherit;
+  font-size: 16px;
+  border-bottom: ${(props) =>
+    props.idx + 1 === props.daynow ? `3px solid #56BE91` : null};
+  color: ${(props) => (props.idx + 1 === props.daynow ? "black" : null)};
+`;
+
 const DeleteClickedDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   button {
-    background-color: #e93c3c;
+    background-color: ${({ theme }) => theme.colors.mainRed};
     color: white;
     width: 30px;
   }
@@ -336,7 +375,8 @@ const ToggleBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 35%;
-  border-radius: 5px;
+  border-radius: 15px;
+  border-top-right-radius: 0px;
   position: absolute;
   background-color: white;
   right: 20px;
@@ -357,7 +397,7 @@ const ToggleBox = styled.div`
 const NumColumnBar = styled.span`
   width: 5px;
   height: 100px;
-  background-color: #56be91;
+  background-color: ${({ theme }) => theme.colors.mainGreen};
   position: absolute;
   top: 20px;
 `;
@@ -368,7 +408,7 @@ const Timediv = styled.div`
   padding-left: 15px;
   padding-top: 5px;
   div {
-    background-color: #56be91;
+    background-color: ${({ theme }) => theme.colors.mainGreen};
     width: 20px;
     height: 20px;
     color: white;
@@ -402,12 +442,12 @@ const Contentdiv = styled.div`
   textarea {
     width: 90%;
     outline: none;
-    border: 1px solid #cacaca;
+    border: 1px solid ${({ theme }) => theme.colors.text3};
     border-radius: 5px;
     font-size: 15px;
   }
   span {
-    color: #8d8d8d;
+    color: ${({ theme }) => theme.colors.text2};
   }
 `;
 
@@ -431,11 +471,6 @@ const TitieDiv = styled.div`
 const DayBtndiv = styled.div`
   display: flex;
   justify-content: space-around;
-  button {
-    border: none;
-    background-color: inherit;
-    font-size: 16px;
-  }
 `;
 
 const TimeModal = styled.div`

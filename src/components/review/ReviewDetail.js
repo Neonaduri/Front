@@ -50,7 +50,6 @@ const ReviewDetail = () => {
   //   });
   // };
 
-  console.log(preview);
   //리뷰조회
   useEffect(() => {
     dispatch(getCommentDB(postId));
