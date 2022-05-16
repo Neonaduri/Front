@@ -13,6 +13,8 @@ const SearchItem = ({
   reviewCnt,
   postTitle,
   postImgUrl,
+  startDate,
+  endDate,
 }) => {
   const nickname = useSelector((state) => state.user.list.nickName);
   const history = useHistory();
@@ -27,7 +29,9 @@ const SearchItem = ({
 
         {/* 카테고리 */}
         <BoxTop>
-          <Term>22.05.03 ~ 22.05.30</Term>
+          <Term>
+            {startDate} ~ {endDate}
+          </Term>
           <Cons>
             <Content>{location}</Content>
             <Content>{theme}</Content>
@@ -69,7 +73,9 @@ const Wrap = styled.div`
 
 const Cons = styled.div`
   display: flex;
-  padding: 0 10px;
+  /* justify-content: right; */
+  /* padding: 0 5px; */
+  margin-right: 5px;
 `;
 
 const Nickname = styled.div`
@@ -169,7 +175,7 @@ const Term = styled.span`
   font-family: "Apple SD Gothic Neo";
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 10px;
   line-height: 12px;
   color: #cacaca;
   padding: 0 10px;

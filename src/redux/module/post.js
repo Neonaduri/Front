@@ -1,6 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
-import axios from "axios";
 import apis from "../../shared/request";
 
 // action
@@ -19,6 +18,7 @@ const initialState = {
   islastPage: false,
   totalPage: 1,
   keyword: "",
+  isLoading: false,
 };
 
 // actionCreators
@@ -54,13 +54,12 @@ export const getBestPostDB = () => {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await apis.axiosInstance.get(`/api/planning/best`, {
+      const response = await apis.axiosInstance.get(`/plans/best`, {
         headers: {
           Authorization: `${token}`,
         },
       });
       if (response.status === 200) {
-        console.log(response);
         dispatch(getBestPost(response.data));
       }
     } catch (err) {
@@ -76,10 +75,9 @@ export const getLocationPostDB = (location, pageno) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.get(
-        `/api/planning/location/${location}/1`
+        `/plans/location/${location}/1`
       );
       if (response.status === 200) {
-        console.log(response);
         dispatch(getLocationPost(response.data));
       }
     } catch (err) {
@@ -92,10 +90,11 @@ export const getLocationPostDB = (location, pageno) => {
 export const getKeywordPostDB = (keyword, pageno) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const response = await apis.axiosInstance.get(`/api/search/${keyword}/1`);
+      const response = await apis.axiosInstance.get(
+        `/plans/keyword/${keyword}/1`
+      );
 
       if (response.status === 200) {
-        console.log(response);
         dispatch(getSearchPost(response.data));
         dispatch(islastPage(response.data.islastPage));
         dispatch(totalPage(response.data.totalPage));
@@ -107,15 +106,12 @@ export const getKeywordPostDB = (keyword, pageno) => {
 };
 
 //테마별 조회 [메인]
-export const getThemePostDB = (keyword) => {
+export const getThemePostDB = (theme) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const response = await apis.axiosInstance.get(
-        `/api/planning/theme/${keyword}/1`
-      );
+      const response = await apis.axiosInstance.get(`/plans/theme/${theme}/1`);
 
       if (response.status === 200) {
-        console.log(response);
         dispatch(getSearchPost(response.data));
         history.push("/search");
       }
@@ -135,6 +131,7 @@ export default handleActions(
     [GET_LOCATION_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.locationList = action.payload.locationList;
+        draft.isLoading = true;
       }),
     [GET_SEARCH_POST]: (state, action) =>
       produce(state, (draft) => {

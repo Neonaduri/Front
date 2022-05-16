@@ -29,8 +29,8 @@ const Editprofile = () => {
 
   const editBtnClick = () => {
     const nickName = nickNameRef.current.value;
-    if (nickName.length < 3) {
-      alert("닉네임은 3자리 이상입니다.");
+    if (nickName.length < 2) {
+      alert("닉네임은 2자리 이상 입력해 주세요.");
       return;
     }
     if (preview !== null && preview !== "delete") {

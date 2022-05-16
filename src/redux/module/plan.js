@@ -49,7 +49,7 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
         startDate,
         endDate,
         dateCnt,
-        postTitle: title,
+        postTitle: title.value,
         location,
         theme,
       },
@@ -59,8 +59,7 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
         },
       }
     );
-    // const response = RESP.MAKEPLANPOST;
-    console.log(response);
+
     if (response.status === 201) {
       const db = getDatabase();
       set(ref(db, `${response.data.postId}`), {
@@ -93,7 +92,7 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
 
 const getRoomDB = (postId) => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.get(`/api/makeplan/${postId}`, {
+    const response = await apis.axiosInstance.get(`/plans/${postId}`, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -108,14 +107,12 @@ const getRoomDB = (postId) => {
 const completePlanDB = (data) => {
   return async function (dispatch, getState, { history }) {
     try {
-      console.log(data);
-      const response = await apis.axiosInstance.put("/api/saveplan", data, {
+      const response = await apis.axiosInstance.put("/plans/save", data, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
       });
       // const response = RESP.SAVEPLANPUT;
-      console.log(response);
       if (response.status === 201) {
         history.replace("/uploadcomplete");
       }
@@ -128,7 +125,7 @@ const completePlanDB = (data) => {
 const getMyPlanPage1DB = () => {
   return async function (dispatch, getState, { history }) {
     dispatch(loading(true));
-    const response = await apis.axiosInstance.get("/api/user/getplan/1");
+    const response = await apis.axiosInstance.get("/user/plans/1");
     // const response = RESP.GETPLANGET;
     let paging = {
       start: 2,
@@ -143,7 +140,7 @@ const getMyPlanPage1DB = () => {
 const getMyPlanNextPageDB = (page) => {
   return async function (dispatch, getState, { history }) {
     dispatch(loading(true));
-    const response = await apis.axiosInstance.get(`/api/user/getplan/${page}`);
+    const response = await apis.axiosInstance.get(`/user/plans/${page}`);
     let paging = {
       start: page + 1,
       lastPage: response.data.islastPage,
@@ -156,10 +153,7 @@ const getMyPlanNextPageDB = (page) => {
 
 const deleteMyPlanDB = (postId) => {
   return async function (dispatch, getState, { history }) {
-    console.log(postId);
-    const response = await apis.axiosInstance.delete(
-      `/api/user/delplan/${postId}`
-    );
+    const response = await apis.axiosInstance.delete(`/user/plans/${postId}`);
     // const response = RESP.DELPLANDELETE;
     if (response.status === 200) {
       dispatch(deleteMyPlan(postId));
@@ -169,16 +163,15 @@ const deleteMyPlanDB = (postId) => {
 
 const exitBrowserOnPlanDB = (postId) => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.delete(`/api/makeplan/${postId}`);
-    console.log(response);
+    const response = await apis.axiosInstance.delete(`/plans/${postId}`);
   };
 };
 
 const getDetailPlanDB = (postId) => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.get(`/api/detail/${postId}`);
+    const response = await apis.axiosInstance.get(`/plans/detail/${postId}`);
     // const response = RESP.DETAILPOSTIDGET;
-    console.log(response);
+
     if (response) {
       dispatch(getDetailPlan(response.data));
     }

@@ -12,13 +12,13 @@ import {
 } from "firebase/database";
 import { useHistory, useParams } from "react-router";
 import ModalfixTime from "../common/ModalfixTime";
-import { FaAngleLeft } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { planAction } from "../../redux/module/plan";
 import sharebtn from "../../static/images/icon/sharebtn.png";
 import Slide from "../../shared/SlickSlider";
 import Modalroompass from "../common/Modalroompass";
 import cancel from "../../static/images/icon/cancel.png";
+import back from "../../static/images/icon/back.png";
 
 const { kakao } = window;
 
@@ -38,6 +38,7 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
   const [polyLineArr, setPolyLineArr] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [linkModalOpen, setLinkModalOpen] = useState(false);
+  const [changingKeyword, setChangingKeyword] = useState("");
   const [marker, setMarker] = useState();
   const [latlng, setLatlng] = useState({
     lat: 37.5,
@@ -58,6 +59,15 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
       });
       setPolyLineArr(arr);
     });
+    return () =>
+      onValue(fixedLatLngRef, (snapshot) => {
+        let arr = [];
+        snapshot.forEach((child) => {
+          let val = child.val();
+          arr.push({ lat: val.lat, lng: val.lng });
+        });
+        setPolyLineArr(arr);
+      });
   }, [dayNow]);
 
   const inputPlanTime = (marker) => {
@@ -115,12 +125,12 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
         }
         setMarkers(markers);
         map.setBounds(bounds);
+        setChangingKeyword("");
       }
     });
   }, [map, searchPlace]);
 
   const findLatLng = (latlng) => {
-    console.log(latlng);
     setLatlng(latlng);
   };
 
@@ -131,28 +141,29 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
     setLinkModalOpen(false);
   };
   const copyLink = () => {
-    const url = window.location.href + "/join";
+    const url = window.location.href;
     navigator.clipboard.writeText(url);
     setModalOpen(false);
   };
 
+  const changeKeyword = (e) => {
+    setChangingKeyword(e.target.value);
+  };
+
   return (
     <Container>
-      <FaAngleLeft
-        onClick={() => {
-          dispatch(planAction.exitBrowserOnPlanDB(postId));
-          history.push("/myplan");
-        }}
-        style={{
-          position: "absolute",
-          top: "27px",
-          left: "15px",
-          fontSize: "20px",
-          zIndex: "99",
-        }}
-      />
       <HeadLineDiv>
-        <span>{thisPlan.postTitle}</span>
+        <div>
+          <img
+            src={back}
+            onClick={() => {
+              dispatch(planAction.exitBrowserOnPlanDB(postId));
+              history.push("/myplan");
+            }}
+          />
+          <span>{thisPlan.postTitle}</span>
+          <span></span>
+        </div>
         <small>
           {thisPlan.startDate}({startDay}) ~ {thisPlan.endDate}({endDay})
         </small>
@@ -161,12 +172,16 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
         placeholder="검색어를 입력해주세요."
         onKeyDown={(e) => {
           if (e.code === "Enter") {
-            setSearchPlace(e.target.value);
-            e.target.value = "";
+            setSearchPlace(changingKeyword);
+            // e.target.value = "";
             setLatlng(undefined);
           }
         }}
+        onChange={(e) => {
+          changeKeyword(e);
+        }}
         ref={keywordRef}
+        value={changingKeyword}
       ></PlaceInput>
       <PlaceBtn onClick={copyLinkBtnClick}>
         <img src={sharebtn} />
@@ -187,6 +202,7 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
         }}
         level={latlng === undefined ? 7 : 3}
         onCreate={setMap}
+        onClick={() => setInfo("")}
       >
         {markers.map((marker) => (
           <MapMarker
@@ -195,27 +211,25 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
             onClick={() => setInfo(marker)}
           >
             {info && info.content === marker.content && (
-              <div style={{ color: "#000" }}>
+              <Infowindow>
                 <div>
-                  <span>{marker.content}</span>
-                  <button onClick={() => setInfo("")}>닫기</button>
+                  <h4>{marker.content}</h4>
                 </div>
                 <span>
-                  <a href={marker.infomation.place_url}>
+                  <a href={marker.infomation.place_url} target="_blank">
                     {marker.infomation.place_name} 바로가기
                   </a>
                 </span>
                 <div>
                   <button
                     onClick={() => {
-                      // clickFixPlace(marker);
                       inputPlanTime(marker);
                     }}
                   >
                     확정하기
                   </button>
                 </div>
-              </div>
+              </Infowindow>
             )}
           </MapMarker>
         ))}
@@ -294,15 +308,13 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
               <h4>친구 초대하기</h4>
               <span>초대는 최대 5인까지 가능합니다.</span>
             </InviteTextdiv>
-            <div
-              style={{ display: "flex", alignItems: "center", width: "85%" }}
-            >
+            <InviteContentDiv>
               <input
-                defaultValue={window.location.href + "/join"}
+                defaultValue={window.location.href}
                 disabled={true}
               ></input>
               <ModalBtn onClick={copyLink}>복사</ModalBtn>
-            </div>
+            </InviteContentDiv>
           </ModalContent>
         }
       ></Modalroompass>
@@ -310,18 +322,51 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
   );
 };
 
+const Infowindow = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  span {
+    font-size: 14px;
+  }
+  button {
+    background-color: ${({ theme }) => theme.colors.mainGreen};
+    color: white;
+    border: none;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+`;
+
+const InviteContentDiv = styled.div`
+  display: flex;
+  align-items: center;
+  width: 85%;
+`;
+
 const HeadLineDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 13.5vh;
+  width: 100%;
+  padding: 0px 10px;
+  div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    span {
+      margin-right: 12px;
+    }
+  }
   span {
     font-size: 20px;
     margin-top: -7px;
   }
   small {
-    color: #8d8d8d;
+    color: ${({ theme }) => theme.colors.text2};
   }
 `;
 
@@ -370,54 +415,6 @@ const Container = styled.div`
   position: relative;
 `;
 
-const PlaceListCard = styled.div`
-  z-index: 2;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  border: none;
-  margin: 0px 5px;
-  border-radius: 5px;
-
-  div {
-    &:first-child {
-      padding: 2px 10px;
-      display: flex;
-      flex-direction: column;
-      small {
-        color: #8d8d8d;
-      }
-      span {
-        font-size: 14px;
-      }
-    }
-    &:nth-child(2) {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      button {
-        width: 50%;
-        border: none;
-        padding: 5px 2px;
-        &:first-child {
-          background-color: white;
-          color: #56be91;
-          border-bottom-left-radius: 5px;
-          a {
-            text-decoration: none;
-            color: #56be91;
-          }
-        }
-        &:last-child {
-          background-color: #56be91;
-          color: white;
-          border-bottom-right-radius: 5px;
-        }
-      }
-    }
-  }
-`;
-
 const PlaceInput = styled.input`
   position: absolute;
   z-index: 2;
@@ -459,7 +456,7 @@ const InviteTextdiv = styled.div`
   }
   span {
     font-size: 15px;
-    color: #8d8d8d;
+    color: ${({ theme }) => theme.colors.text2};
     margin-top: 5px;
   }
 `;
@@ -471,7 +468,7 @@ const Canceldiv = styled.div`
 `;
 
 const ModalBtn = styled.button`
-  background-color: #41b67e;
+  background-color: ${({ theme }) => theme.colors.mainGreen};
   border-radius: 5px;
   color: white;
   height: 40px;
@@ -490,10 +487,10 @@ const ModalContent = styled.div`
     font-size: 15px;
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid #cacaca;
+    border: 1px solid ${({ theme }) => theme.colors.text3};
     background-color: inherit;
     height: 40px;
-    color: #8d8d8d;
+    color: ${({ theme }) => theme.colors.text2};
   }
 `;
 

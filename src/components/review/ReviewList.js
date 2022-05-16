@@ -9,6 +9,7 @@ const ReviewList = ({ nickName, reviewContents, reviewImgUrl, totalCnt }) => {
   const postId = params.id;
   const dispatch = useDispatch();
 
+  console.log(totalCnt);
   // 리뷰조회;
   useEffect(() => {
     dispatch(getCommentDB(postId));

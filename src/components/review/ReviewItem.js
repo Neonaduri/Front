@@ -4,24 +4,33 @@ import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import {
   deleteCommentDB,
+  editCommentDB,
   getCommentDB,
   getOneCommentDB,
 } from "../../redux/module/review";
 import ModalImg from "./ModalImg";
 
-const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
+const ReviewItem = ({
+  reviewImgUrl,
+  reviewContents,
+  nickName,
+  reviewId,
+  handleEdit,
+  handleEditCancel,
+  preview,
+  cancelEdit,
+}) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const params = useParams();
   const postId = params.productId;
   const profilUrl = useSelector((state) => state.user.list.profileImg);
-
   const [editing, setEditing] = useState(false);
   const [imgModal, setImgModal] = useState(false);
 
+  console.log(reviewId);
   const onClick = () => {
     setImgModal(true);
-    console.log(imgModal);
   };
 
   //삭제버튼
@@ -32,14 +41,19 @@ const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
   //수정 취소버튼
   const cancleBtn = () => {
     setEditing(false);
+    cancelEdit(false);
   };
 
   //수정버튼
   const getEditBtn = () => {
-    dispatch(getOneCommentDB(reviewId));
     setEditing(true);
-
-    // dispatch(editCommentDB(reviewId));
+    handleEdit({
+      reviewImgUrl,
+      reviewContents,
+      nickName,
+      reviewId,
+      preview,
+    });
   };
 
   return (
@@ -58,7 +72,6 @@ const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
 
           {editing ? (
             <div>
-              <Button onClick={deleteBtn}>수정완료</Button>
               <Button onClick={cancleBtn}>취소하기</Button>
             </div>
           ) : (
@@ -75,13 +88,7 @@ const ReviewItem = ({ reviewImgUrl, reviewContents, nickName, reviewId }) => {
         )}
 
         <Content>
-          <div>
-            {editing ? (
-              <Textarea defaultValue={reviewContents}></Textarea>
-            ) : (
-              <p>{reviewContents}</p>
-            )}
-          </div>
+          <p>{reviewContents}</p>
         </Content>
       </Card>
 

@@ -40,7 +40,7 @@ const ButtonArea = () => {
     <StyledSlide {...settings}>
       {area.map((item, idx) => {
         return (
-          <BtnArea onClick={onClick} value={item}>
+          <BtnArea onClick={onClick} value={item} key={idx}>
             {item}
           </BtnArea>
         );

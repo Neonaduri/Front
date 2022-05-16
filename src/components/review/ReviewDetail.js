@@ -4,11 +4,14 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
-import { addCommentDB, getCommentDB } from "../../redux/module/review";
+import {
+  addCommentDB,
+  editCommentDB,
+  getCommentDB,
+} from "../../redux/module/review";
 import Back from "../../static/images/button/back.png";
 import ReviewItem from "./ReviewItem";
 import Camera from "../../static/images/icon/camera.png";
-import underBar from "../../static/images/underBar.png";
 
 const ReviewDetail = () => {
   const params = useParams();
@@ -17,14 +20,28 @@ const ReviewDetail = () => {
   const reviewList = useSelector((state) => state.review.reviewList);
   const totalCnt = useSelector((state) => state.review.totalElements);
   const reviewRef = useRef();
+  const [isEdit, setIsEdit] = useState(false);
   const [preview, setPreview] = useState("");
+  const [reviewItemData, setReviewItemData] = useState({
+    reviewId: null,
+    nickName: "",
+    reviewContents: "",
+    reviewImgUrl: "",
+    createdAt: "",
+    modifiedAt: "",
+  });
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const [reviewValue, setReviewValue] = useState({
-    reviewContents: "",
-    reviewImgFile: "",
-  });
+
+  const handleEdit = (item) => {
+    setReviewItemData(item);
+    setIsEdit(true);
+  };
+
+  const cancelEdit = () => {
+    setIsEdit(false);
+  };
 
   //이미지 미리보기
   const onImgChange = (e) => {
@@ -39,17 +56,6 @@ const ReviewDetail = () => {
     };
   };
 
-  // const encodeFileToBase64 = (fileBlob) => {
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(fileBlob);
-  //   return new Promise((resolve) => {
-  //     reader.onload = () => {
-  //       setPreview(reader.result);
-  //       resolve();
-  //     };
-  //   });
-  // };
-
   //리뷰조회
   useEffect(() => {
     dispatch(getCommentDB(postId));
@@ -63,21 +69,20 @@ const ReviewDetail = () => {
   const onChangeFormValue = (e) => {
     const { name, value } = e.target;
 
-    setReviewValue({
-      ...reviewValue,
+    setReviewItemData({
+      ...reviewItemData,
       [name]: value,
     });
   };
 
   const ReviewBtnClick = () => {
-    //이미지, 텍스트 모두있는경우
     if (files === undefined) {
       const formdata = new FormData();
       formdata.append(
         "reviewImgFile",
         new File([], "", { type: "text/plane" })
       );
-      formdata.append("reviewContents", reviewValue.reviewContents);
+      formdata.append("reviewContents", reviewItemData.reviewContents);
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -87,7 +92,7 @@ const ReviewDetail = () => {
     } else {
       const formdata = new FormData();
       formdata.append("reviewImgFile", files[0]);
-      formdata.append("reviewContents", reviewValue.reviewContents);
+      formdata.append("reviewContents", reviewItemData.reviewContents);
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -95,6 +100,29 @@ const ReviewDetail = () => {
       };
       dispatch(addCommentDB(postId, formdata, config));
     }
+    // for (let key of formdata.keys()) {
+    //   console.log(key);
+    // }
+    // for (let value of formdata.values()) {
+    //   console.log(value);
+    // }
+  };
+
+  //수정완료버튼
+  const editCompleteBtn = (reviewId) => {
+    const formdata = new FormData();
+    formdata.append("reviewImgUrl", reviewItemData.reviewImgUrl); //기존이미지
+    formdata.append("reviewImgFile", files[0]); //이미지변경
+    formdata.append("reviewContents", reviewItemData.reviewContents);
+    //리뷰텍스트
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    dispatch(editCommentDB(reviewId, formdata, config));
+
     // for (let key of formdata.keys()) {
     //   console.log(key);
     // }
@@ -120,7 +148,14 @@ const ReviewDetail = () => {
       <Container>
         {reviewList &&
           reviewList.map((item, id) => {
-            return <ReviewItem key={id} {...item} />;
+            return (
+              <ReviewItem
+                cancelEdit={cancelEdit}
+                handleEdit={handleEdit}
+                key={id}
+                {...item}
+              />
+            );
           })}
       </Container>
 
@@ -128,13 +163,19 @@ const ReviewDetail = () => {
         <ContainerInput>
           <ReviewInputBox>
             <WriteBox>
-              {preview && <Test src={preview}></Test>}
+              {isEdit ? (
+                <Test src={reviewItemData.reviewImgUrl}></Test>
+              ) : (
+                <Test src={preview && preview}></Test>
+              )}
+
               <TextareaAutosize
                 autoFocus
                 name="reviewContents"
                 type="text"
                 placeholder="리뷰를 작성해주세요"
                 onChange={onChangeFormValue}
+                value={reviewItemData.reviewContents}
                 ref={reviewRef}
                 style={{
                   width: "273px",
@@ -149,7 +190,11 @@ const ReviewDetail = () => {
                 <Icon src={Camera}></Icon>
               </Label>
             </WriteBox>
-            <Button onClick={ReviewBtnClick}>등록</Button>
+            {isEdit ? (
+              <Button onClick={editCompleteBtn}>수정</Button>
+            ) : (
+              <Button onClick={ReviewBtnClick}>등록</Button>
+            )}
           </ReviewInputBox>
           <form method="post" encType="multipart/form-data"></form>
           <FileName
@@ -157,6 +202,7 @@ const ReviewDetail = () => {
             id="chooseFile"
             accept="image/*"
             onChange={onImgChange}
+            onClick={onImgFile}
           ></FileName>
         </ContainerInput>
       </Wrap>

@@ -2,35 +2,22 @@ import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import Schedule from "../components/planning/Schedule";
 import { planAction } from "../redux/module/plan";
 import MappartR from "../components/planning/MappartR";
 import SubmitBtn from "../components/planning/SubmitBtn";
-import Openvidu from "../components/planning/Openvidu";
 import moment from "moment";
-import Footer from "../components/common/Footer";
 import Sheet from "react-modal-sheet";
-import { OpenVidu } from "openvidu-browser";
-import apis from "../shared/request";
 
 const Planning = (props) => {
-  const history = useHistory();
   const dispatch = useDispatch();
   const params = useParams();
-  const nickNameRef = useRef();
   const postId = params.postId;
   const dateCnt = useSelector((state) => state.plan.list.dateCnt);
   const planInfo = useSelector((state) => state.plan.list);
   const [dayNow, setDayNow] = useState(1);
   const days = ["일", "월", "화", "수", "목", "금", "토"];
-  const userInfo = useSelector((state) => state.user.list);
-
-  // const clickJoinPlanBtn = () => {
-  //   const roomNick = nickNameRef.current.value;
-  //   console.log(roomNick);
-  //   sessionStorage.setItem("roomNick", roomNick);
-  // };
 
   let dateCntArr = [];
   for (let i = 1; i <= dateCnt; i++) {
@@ -47,65 +34,40 @@ const Planning = (props) => {
   const endDay = days[endDaynum];
 
   const [isOpen, setOpen] = React.useState(false);
-  const [publisher, setPublisher] = useState();
 
   const open = () => setOpen(true);
   const close = () => setOpen(false);
-  //////////////////////////////////////////////////////////////////////
-
-  // if (!sessionStorage.getItem("roomNick")) {
-  //   return (
-  //     <Container>
-  //       <Inputdiv>
-  //         <label htmlFor="nickname">닉네임</label>
-  //         <input
-  //           id="nickname"
-  //           type="text"
-  //           placeholder="채팅방의 닉네임을 입력해주세요."
-  //           ref={nickNameRef}
-  //         ></input>
-  //       </Inputdiv>
-  //       <div>
-  //         <button onClick={joinSession}>플랜채팅방 입장하기</button>
-  //       </div>
-  //     </Container>
-  //   );
-  // }
 
   return (
     <Container>
       <DayBtnDiv>
         {dateCntArr.map((date, idx) => {
           return (
-            <button
+            <DayBtn
               key={idx}
               onClick={() => {
                 setDayNow(date);
               }}
-              style={{
-                borderBottom: idx + 1 === dayNow ? "3px solid #56BE91" : null,
-                color: idx + 1 === dayNow ? "black" : null,
-              }}
+              idx={idx}
+              daynow={dayNow}
             >
               DAY {date}
-            </button>
+            </DayBtn>
           );
         })}
       </DayBtnDiv>
       <MappartR dayNow={dayNow} startDay={startDay} endDay={endDay} />
-
-      {/* <Openvidu /> */}
       <CustomSheet
         rootId="root"
         isOpen={isOpen}
         onClose={close}
-        snapPoints={[650, 500, 100, 0]}
+        snapPoints={[730, 500, 100, 0]}
         disableDrag={true}
       >
         <Sheet.Container>
           <Sheet.Header onClick={close} />
           <Sheet.Content>
-            <Schedule dayNow={dayNow} />
+            <Schedule daynow={dayNow} />
             <SubmitBtn />
           </Sheet.Content>
         </Sheet.Container>
@@ -159,7 +121,7 @@ const TriggerBtn = styled.button`
     width: 10%;
     height: 4px;
     border-radius: 2px;
-    background-color: #cacaca;
+    background-color: ${({ theme }) => theme.colors.text3};
   }
 `;
 
@@ -169,24 +131,20 @@ const DayBtnDiv = styled.div`
   width: 100%;
   justify-content: space-around;
   position: absolute;
-  top: 9.5vh;
-  button {
-    display: block;
-    width: 55px;
-    background-color: white;
-    border: none;
-    padding: 3px 5px;
-    color: #8d8d8d;
-    font-size: 16px;
-  }
+  top: 9.3vh;
 `;
 
-const Inputdiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  input {
-    margin-bottom: 20px;
-    width: 200px;
-  }
+const DayBtn = styled.button`
+  display: block;
+  width: 55px;
+  background-color: white;
+  border: none;
+  padding: 3px 5px;
+  color: ${({ theme }) => theme.colors.text2};
+  font-size: 16px;
+  border-bottom: ${(props) =>
+    props.idx + 1 === props.daynow ? `3px solid #56BE91` : null};
+  color: ${(props) => (props.idx + 1 === props.daynow ? "black" : null)};
 `;
+
 export default Planning;

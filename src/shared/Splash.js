@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import Logo from "../static/images/logo/Logo.png";
+import splash from "../static/images/bgImage/splash.png";
 
 const Splash = () => {
   return (
     <Outter>
-      <img src={Logo}></img>
+      <img src={splash}></img>
     </Outter>
   );
 };
@@ -20,9 +20,7 @@ const Outter = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  img {
-    width: 70px;
-  }
+  z-index: 9999;
 `;
 
 export default Splash;

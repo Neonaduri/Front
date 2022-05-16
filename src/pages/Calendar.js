@@ -15,15 +15,13 @@ import styled from "styled-components";
 import Titleline from "../components/elements/Titleline";
 import backicon from "../static/images/icon/back.png";
 import downbtn from "../static/images/icon/downbtn.png";
+import useInput from "../components/hooks/useInput";
+import Button from "../components/elements/Button";
 
 const Calendar = () => {
   const history = useHistory();
   const moment = require("moment");
   const dispatch = useDispatch();
-  const titleRef = useRef();
-  const areaRef = useRef();
-  const themeRef = useRef();
-  const userInfo = useSelector((state) => state.user.list);
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -34,7 +32,6 @@ const Calendar = () => {
   const days = ["일", "월", "화", "수", "목", "금", "토"];
   const [locationInBtn, setLocationInBtn] = useState("서울");
   const [themeInBtn, setThemeInBtn] = useState("액티비티");
-
   const startDateRef = state[0].startDate;
   const startDate = moment(startDateRef).format("YYYY-MM-DD");
   const endDateRef = state[0].endDate;
@@ -44,6 +41,8 @@ const Calendar = () => {
   const [isOpen, setOpen] = React.useState(false);
   const [isOpenLoca, setOpenLoca] = React.useState(false);
   const [isOpenTheme, setOpenTheme] = React.useState(false);
+  const title = useInput();
+
   const open = () => setOpen(true);
   const openLoca = () => {
     setOpenLoca(true);
@@ -58,18 +57,16 @@ const Calendar = () => {
   const closeTheme = () => setOpenTheme(false);
 
   const createBtnClick = () => {
-    const title = titleRef.current.value;
     const location = locationInBtn;
     const theme = themeInBtn;
     if (dateCnt > 7) {
       alert("날짜는 최대 7일입니다! 🤗");
       return;
     }
-    if (title.length < 2) {
+    if (title.value.length < 2) {
       alert("여행명을 상세히 입력해주세요! 🤗");
       return;
     }
-    // sessionStorage.setItem("roomNick", userInfo.nickName);
     dispatch(
       planAction.createRoomDB(
         title,
@@ -93,9 +90,10 @@ const Calendar = () => {
     closeTheme();
   };
 
-  const daynum = moment(startDateRef).day();
-  const today = days[daynum];
-  const nextday = days[daynum + 1];
+  const todaynum = moment(startDateRef).day();
+  const today = days[todaynum];
+  const enddaynum = moment(endDateRef).day();
+  const endday = days[enddaynum];
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -111,9 +109,9 @@ const Calendar = () => {
         <PostTitlediv>
           <label htmlFor="title">여행명</label>
           <input
-            id="title"
-            ref={titleRef}
             placeholder="여행 계획명을 작성해주세요."
+            {...title}
+            id="title"
           ></input>
         </PostTitlediv>
         <div
@@ -165,7 +163,7 @@ const Calendar = () => {
               isOpen={isOpenTheme}
               onClose={closeTheme}
               initialSnap={1}
-              snapPoints={[600, 400, 100, 0]}
+              snapPoints={[500, 400, 100, 0]}
             >
               <Sheet.Container>
                 <Sheet.Header onClick={() => setOpenTheme(false)} />
@@ -192,7 +190,7 @@ const Calendar = () => {
           <div onClick={open}>
             <img src={calender} style={{ height: "35px" }} />
             <span>
-              {startDate}({today}) ~ {endDate}({nextday})
+              {startDate}({today}) ~ {endDate}({endday})
             </span>
             <img src={goRight} style={{ height: "18px" }} />
           </div>
@@ -200,7 +198,7 @@ const Calendar = () => {
             rootId="root"
             isOpen={isOpen}
             onClose={close}
-            snapPoints={[600, 400, 100, 0]}
+            snapPoints={[400, 400, 100, 0]}
           >
             <Sheet.Container>
               <Sheet.Header />
@@ -211,7 +209,7 @@ const Calendar = () => {
                   onChange={(item) => setState([item.selection])}
                   moveRangeOnFirstSelection={false}
                   ranges={state}
-                  months={2}
+                  months={1}
                   direction="vertical"
                   rangeColors={["#41B67E"]}
                   showDateDisplay={false}
@@ -223,9 +221,9 @@ const Calendar = () => {
             <Sheet.Backdrop />
           </CustomSheet>
         </Datediv>
-        <Buttondiv>
-          <button onClick={createBtnClick}>방만들기</button>
-        </Buttondiv>
+        <div>
+          <Button content={"방만들기"} onClick={createBtnClick} />
+        </div>
       </Container>
     </>
   );
@@ -233,7 +231,7 @@ const Calendar = () => {
 
 const Locationselect = styled.div`
   font-size: 20px;
-  border: 1px solid #cacaca;
+  border: 1px solid ${({ theme }) => theme.colors.borderColor};
   width: 250px;
   text-align: center;
   padding: 5px 0px;
@@ -241,21 +239,8 @@ const Locationselect = styled.div`
   border-radius: 14px;
   transition: 0.2s;
   &:active {
-    background-color: #41b67e;
+    background-color: ${({ theme }) => theme.colors.mainGreen};
     color: white;
-  }
-`;
-
-const Buttondiv = styled.div`
-  button {
-    width: 100%;
-    background-color: #41b67e;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 0px;
-    color: white;
-    font-size: 16px;
-    margin-top: -20px;
   }
 `;
 
@@ -264,7 +249,7 @@ const Datediv = styled.div`
   flex-direction: column;
   margin-top: -30px;
   div {
-    border: 1px solid #cacaca;
+    border: 1px solid ${({ theme }) => theme.colors.borderColor};
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -277,19 +262,12 @@ const Themediv = styled.div`
   display: flex;
   flex-direction: column;
   width: 45%;
-  select {
-    width: 100%;
-    font-size: 16px;
-    border: 1px solid #cacaca;
-    border-radius: 7px;
-    padding: 5px 3px;
-  }
   div {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 6px 4px;
-    border: 1px solid #cacaca;
+    border: 1px solid ${({ theme }) => theme.colors.text3};
     border-radius: 8px;
     img {
       width: 12px;
@@ -301,19 +279,12 @@ const Locationdiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 45%;
-  select {
-    width: 100%;
-    font-size: 16px;
-    border: 1px solid #cacaca;
-    border-radius: 5px;
-    padding: 5px 3px;
-  }
   div {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 6px 4px;
-    border: 1px solid #cacaca;
+    border: 1px solid ${({ theme }) => theme.colors.text3};
     border-radius: 8px;
     img {
       width: 12px;
@@ -328,12 +299,12 @@ const PostTitlediv = styled.div`
     width: 100%;
     margin: auto;
     border: none;
-    border-bottom: 1px solid #cacaca;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
     height: 34px;
     font-size: 16px;
     &:focus {
       outline: none;
-      border-bottom: 1px solid #41b67e;
+      border-bottom: 1px solid ${({ theme }) => theme.colors.mainGreen};
     }
   }
 `;
@@ -359,7 +330,7 @@ const Titlediv = styled.div`
 `;
 
 const FixdateBtn = styled.button`
-  background-color: #41b67e;
+  background-color: ${({ theme }) => theme.colors.mainGreen};
   width: 90%;
   height: 30px;
   margin-top: -10px;
@@ -381,7 +352,6 @@ const CustomSheet = styled(Sheet)`
   }
   .react-modal-sheet-content {
     margin: auto;
-    margin-top: -15px;
     display: flex;
     flex-direction: column;
     align-items: center;

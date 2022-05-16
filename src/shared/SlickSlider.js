@@ -4,15 +4,7 @@ import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ModalfixTime from "../components/common/ModalfixTime";
-import {
-  getDatabase,
-  push,
-  ref,
-  set,
-  onValue,
-  query,
-  orderByChild,
-} from "firebase/database";
+import { getDatabase, push, ref, set } from "firebase/database";
 import { useParams } from "react-router";
 
 const Slide = ({ sliders, dayNow, callback }) => {
@@ -140,6 +132,8 @@ const Slide = ({ sliders, dayNow, callback }) => {
   );
 };
 
+export default Slide;
+
 const TimeModal = styled.div`
   display: flex;
   flex-direction: column;
@@ -168,8 +162,6 @@ const TimeModal = styled.div`
     }
   }
 `;
-
-export default Slide;
 
 const settings = {
   dots: false,

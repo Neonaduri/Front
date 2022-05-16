@@ -14,6 +14,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import ButtonArea from "../components/main/ButtonArea";
 import Slider from "react-slick";
+import Splash from "../shared/Splash";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ScrollTop from "../components/common/ScrollTop";
@@ -25,10 +26,13 @@ const MainPage = ({ history }) => {
   const locationList = useSelector(
     (state) => state.post.locationList.locationList
   );
+
   const keyword = useSelector((state) => state.post.keyword);
 
   console.log("베스트플랜은?", bestList);
   console.log("지역별플랜은?", locationList);
+
+  const isLoading = useSelector((state) => state.post.isLoading);
 
   const settings = {
     slidesToShow: 2,
@@ -45,9 +49,9 @@ const MainPage = ({ history }) => {
     speed: 1000,
   };
 
-  if (!token) {
-    history.push("/login");
-  }
+  // if (!token) {
+  //   history.push("/login");
+  // }
 
   useEffect(() => {
     dispatch(getBestPostDB());
@@ -101,6 +105,7 @@ const MainPage = ({ history }) => {
 
         <Footer />
       </Section>
+      {isLoading ? null : <Splash />}
     </>
   );
 };

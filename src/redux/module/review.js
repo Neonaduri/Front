@@ -36,7 +36,7 @@ export const addCommentDB = (postId, formdata, config) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.post(
-        `/api/detail/reviews/${postId} `,
+        `/detail/reviews/${postId} `,
         formdata,
         config
       );
@@ -58,7 +58,7 @@ export const getCommentDB = (postId, pageno) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.get(
-        `/api/detail/reviews/${postId}/1`
+        `/detail/reviews/${postId}/1`
       );
 
       if (response.status === 200) {
@@ -85,6 +85,26 @@ export const getOneCommentDB = (reviewId) => {
         console.log("리뷰조회 성공!");
         console.log(response.data);
         dispatch(getOneComment(response.data));
+      }
+    } catch (err) {
+      console.log("에러발생", err);
+    }
+  };
+};
+
+//리뷰수정
+export const editCommentDB = (reviewId, formdata, config) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const response = await apis.axiosInstance.put(
+        `/detail/reviews/${reviewId}`,
+        formdata,
+        config
+      );
+
+      if (response.status === 200) {
+        console.log("후기수정", response.data);
+        dispatch(editComment(response.data));
       }
     } catch (err) {
       console.log("에러발생", err);
