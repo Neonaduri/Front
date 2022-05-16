@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import apis from "../../shared/request";
+import * as Sentry from "@sentry/react";
 
 // Actions Types
 const GET_COMMENT = "GET_COMMENT";
@@ -47,6 +48,7 @@ export const addCommentDB = (postId, formdata, config) => {
         window.alert("후기가 등록되었습니다!");
       }
     } catch (err) {
+      Sentry.captureException(err);
       console.log("에러발생", err);
     }
   };
@@ -65,6 +67,7 @@ export const getCommentDB = (postId, pageno) => {
         dispatch(totalElements(response.data.totalElements));
       }
     } catch (err) {
+      Sentry.captureException(err);
       console.log("에러발생", err);
     }
   };
@@ -82,6 +85,7 @@ export const getOneCommentDB = (reviewId) => {
         dispatch(getOneComment(response.data));
       }
     } catch (err) {
+      Sentry.captureException(err);
       console.log("에러발생", err);
     }
   };
@@ -99,6 +103,7 @@ export const deleteCommentDB = (reviewId) => {
         window.alert("삭제가 완료되었어요!");
       }
     } catch (err) {
+      Sentry.captureException(err);
       console.log("에러발생", err);
     }
   };

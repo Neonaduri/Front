@@ -22,7 +22,6 @@ const ScheduleDetail = ({ dayNow }) => {
   return (
     <Container>
       {dayPlanPlaces.map((place, idx) => {
-        console.log(place);
         return (
           <PlaceCard key={idx}>
             <div>

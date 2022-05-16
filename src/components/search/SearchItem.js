@@ -1,40 +1,62 @@
 import React, { forwardRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import { clickWishSearchPostDB } from "../../redux/module/post";
 import styled from "styled-components";
-import love from "../../static/images/icon/love.png";
+import wish from "../../static/images/icon/wish.png";
 import review from "../../static/images/icon/review.png";
+import clickedWish from "../../static/images/icon/clickedWish.png";
+import unClickedWish from "../../static/images/icon/unClickedWish.png";
 
 const SearchItem = ({
   location,
   theme,
+  islike,
   postId,
   likeCnt,
   reviewCnt,
   postTitle,
   postImgUrl,
+  startDate,
+  endDate,
+  user,
 }) => {
-  const nickname = useSelector((state) => state.user.list.nickName);
+  const dispatch = useDispatch();
   const history = useHistory();
+  const newStartDate = startDate.substr(2);
+  const newEndDate = endDate.substr(2);
+  const clickWishPost = (e) => {
+    const postId = e.target.id;
+    dispatch(clickWishSearchPostDB(postId));
+  };
 
   return (
-    <div onClick={() => history.push(`/detail/${postId}`)}>
+    <div>
       {/* 하나의 리스트 */}
       <div>
         <Wrap>
           <ImagePop src={postImgUrl} />
+          <SocialWishDiv onClick={(e) => clickWishPost(e)}>
+            {islike ? (
+              <img src={clickedWish} id={postId} />
+            ) : (
+              <img src={unClickedWish} id={postId} />
+            )}
+          </SocialWishDiv>
         </Wrap>
 
         {/* 카테고리 */}
-        <BoxTop>
-          <Term>22.05.03 ~ 22.05.30</Term>
+        <BoxTop onClick={() => history.push(`/detail/${postId}`)}>
+          <Term>
+            {newStartDate} ~ {newEndDate}
+          </Term>
           <Cons>
             <Content>{location}</Content>
             <Content>{theme}</Content>
           </Cons>
         </BoxTop>
 
-        <Box>
+        <Box onClick={() => history.push(`/detail/${postId}`)}>
           <Contain>
             <Con>{postTitle}</Con>
           </Contain>
@@ -42,10 +64,10 @@ const SearchItem = ({
 
         {/* 좋아요, 댓글개수 */}
         <SectionBox>
-          <Nickname>{nickname}</Nickname>
+          <Nickname>{user.nickName}</Nickname>
           <Like>
             <Like>
-              <img src={love} />
+              <img src={wish} />
               <Cnt>{likeCnt}</Cnt>
             </Like>
             <Like>
@@ -62,9 +84,18 @@ const SearchItem = ({
 
 export default SearchItem;
 
+const SocialWishDiv = styled.div`
+  position: absolute;
+  top: 98px;
+  left: 103px;
+  width: 17px;
+  z-index: 10;
+`;
+
 const Wrap = styled.div`
   display: flex;
-  margin-left: 18px;
+  margin-left: 16px;
+  position: relative;
 `;
 
 const Cons = styled.div`
@@ -121,7 +152,7 @@ const BoxTop = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: 35px;
-  margin-left: 150px;
+  margin-left: 145px;
 `;
 
 const Content = styled.div`
@@ -168,7 +199,7 @@ const Term = styled.span`
   font-size: 12px;
   line-height: 12px;
   color: ${({ theme }) => theme.colors.text2};
-  padding: 0 10px;
+  padding: 0 0 0 10px;
 `;
 
 const Bar = styled.div`

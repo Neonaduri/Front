@@ -2,6 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import axios from "axios";
 import apis from "../../shared/request";
+import * as Sentry from "@sentry/react";
 
 // action
 const GET_BEST_POST = "GET_BEST_POST";
@@ -11,6 +12,7 @@ const LAST_PAGE = "LAST_PAGE";
 const TOTAL = "TOTAL";
 const KEYWORD = "KEYWORD";
 const CLICKWISHINMAIN = "clickWishInMain";
+const CLICKWISHINSEARCH = "clickWishInsearch";
 
 // initialState
 const initialState = {
@@ -45,6 +47,9 @@ const totalPage = createAction(TOTAL, (totalPage) => ({
 }));
 
 const clickWishInMain = createAction(CLICKWISHINMAIN, (result) => ({ result }));
+const clickWishInSearch = createAction(CLICKWISHINSEARCH, (result) => ({
+  result,
+}));
 
 export const keywordDB = createAction(KEYWORD, (keyword) => ({
   keyword,
@@ -55,9 +60,8 @@ export const keywordDB = createAction(KEYWORD, (keyword) => ({
 //인기 여행플랜[메인]
 export const getBestPostDB = () => {
   return async function (dispatch, getState, { history }) {
-    const token = localStorage.getItem("token");
-
     try {
+      const token = localStorage.getItem("token");
       const response = await apis.axiosInstance.get(`/plans/best`, {
         headers: {
           Authorization: `${token}`,
@@ -67,6 +71,7 @@ export const getBestPostDB = () => {
         dispatch(getBestPost(response.data));
       }
     } catch (err) {
+      Sentry.captureException(err);
       console.log("에러!!", err);
     }
   };
@@ -78,11 +83,14 @@ export const getBestPostDB = () => {
 export const getLocationPostDB = (location, pageno) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const response = await apis.axiosInstance.get(`/plans/${location}/1`);
+      const response = await apis.axiosInstance.get(
+        `/plans/location/${location}/1`
+      );
       if (response.status === 200) {
         dispatch(getLocationPost(response.data));
       }
     } catch (err) {
+      Sentry.captureException(err);
       console.log("에러발생", err);
     }
   };
@@ -93,15 +101,16 @@ export const getKeywordPostDB = (keyword, pageno) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.get(
-        `/plans/${keyword}/${pageno}`
+        `/plans/keyword/${keyword}/${pageno}`
       );
-
+      console.log(response);
       if (response.status === 200) {
         dispatch(getSearchPost(response.data));
         dispatch(islastPage(response.data.islastPage));
         dispatch(totalPage(response.data.totalPage));
       }
     } catch (err) {
+      Sentry.captureException(err);
       console.log("에러발생", err);
     }
   };
@@ -111,18 +120,21 @@ export const getKeywordPostDB = (keyword, pageno) => {
 export const getThemePostDB = (keyword) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const response = await apis.axiosInstance.get(`/plans/${keyword}/1`);
+      const response = await apis.axiosInstance.get(
+        `/plans/theme/${keyword}/1`
+      );
 
       if (response.status === 200) {
         dispatch(getSearchPost(response.data));
         history.push("/search");
       }
     } catch (err) {
+      Sentry.captureException(err);
       console.log("에러발생", err);
     }
   };
 };
-// 찜하기
+// 찜하기-메인화면에서 인기게시물 찜한경우
 export const clickWishPostDB = (postId) => {
   return async function (dispatch, getState, { history }) {
     try {
@@ -131,6 +143,24 @@ export const clickWishPostDB = (postId) => {
         dispatch(clickWishInMain({ postId: postId, bool: response.data.like }));
       }
     } catch (err) {
+      Sentry.captureException(err);
+      console.log(err);
+    }
+  };
+};
+
+// 찜하기-검색페이지에서 검색결과 찜한경우
+export const clickWishSearchPostDB = (postId) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const response = await apis.axiosInstance.post(`/plans/like/${postId}`);
+      if (response.status === 201) {
+        dispatch(
+          clickWishInSearch({ postId: postId, bool: response.data.like })
+        );
+      }
+    } catch (err) {
+      Sentry.captureException(err);
       console.log(err);
     }
   };
@@ -175,6 +205,24 @@ export default handleActions(
           });
         } else {
           draft.bestList.map((post) => {
+            if (post.postId === parseInt(action.payload.result.postId)) {
+              post.likeCnt -= 1;
+              post.islike = false;
+            }
+          });
+        }
+      }),
+    [CLICKWISHINSEARCH]: (state, action) =>
+      produce(state, (draft) => {
+        if (action.payload.result.bool) {
+          draft.searchList.map((post) => {
+            if (post.postId === parseInt(action.payload.result.postId)) {
+              post.likeCnt += 1;
+              post.islike = true;
+            }
+          });
+        } else {
+          draft.searchList.map((post) => {
             if (post.postId === parseInt(action.payload.result.postId)) {
               post.likeCnt -= 1;
               post.islike = false;

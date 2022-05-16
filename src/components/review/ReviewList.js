@@ -15,7 +15,7 @@ const ReviewList = ({ nickName, reviewContents, reviewImgUrl, totalCnt }) => {
   }, []);
 
   //상세페이지 아래에 있는 리뷰페이지
-  console.log(reviewImgUrl);
+
   return (
     <>
       <Container>

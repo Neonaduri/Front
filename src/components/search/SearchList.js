@@ -12,6 +12,7 @@ const SearchList = ({ keyword, pageno, setTarget }) => {
         <Title>{keyword} 관련 키워드</Title>
         {searchList &&
           searchList.map((item, idx) => {
+            console.log(item);
             return <SearchItem key={idx} {...item} />;
           })}
       </div>

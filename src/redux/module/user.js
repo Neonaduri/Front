@@ -2,6 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { RESP } from "../../shared/response";
 import apis from "../../shared/request";
+import * as Sentry from "@sentry/react";
 
 //action
 const EMAILCHECK = "emailCheck";
@@ -34,16 +35,15 @@ const emailCheckDB = (username) => {
         userName: username,
       });
       // const response = RESP.IDCHECKPOST;
+      console.log(response);
       if (response.status === 201) {
         dispatch(emailCheck(true));
       }
     } catch (err) {
-      if (err.response === undefined) {
+      Sentry.captureException(err);
+      if (err.response.status === 400) {
         dispatch(emailCheck(false));
       }
-      // if (err.response === 400) {
-      // dispatch(emailCheck(false));
-      // }
     }
   };
 };
@@ -62,7 +62,7 @@ const signUpDB = (username, nickName, password, passwordCheck) => {
         window.location.replace("/login");
       }
     } catch (err) {
-      console.log(err.response);
+      Sentry.captureException(err);
     }
   };
 };
@@ -84,7 +84,7 @@ const logInDB = (username, password) => {
         window.location.replace("/");
       }
     } catch (err) {
-      console.log(err);
+      Sentry.captureException(err);
       window.alert(err.response.data.exception);
     }
   };
@@ -131,58 +131,76 @@ const isLoginDB = () => {
         // dispatch(isLogin(response));
       }
     } catch (err) {
-      // console.log(err.response);
+      Sentry.captureException(err);
     }
   };
 };
 const kakaoLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.get(
-      `/user/kakao/callback?code=${code}`
-    );
-    if (response.status === 200) {
-      const token = response.headers.authorization;
-      localStorage.setItem("token", token);
-    }
-    if (localStorage.getItem("token")) {
-      dispatch(isLoginDB());
-      history.replace("/");
+    try {
+      const response = await apis.axiosInstance.get(
+        `/user/kakao/callback?code=${code}`
+      );
+      if (response.status === 200) {
+        const token = response.headers.authorization;
+        localStorage.setItem("token", token);
+      }
+      if (localStorage.getItem("token")) {
+        dispatch(isLoginDB());
+        history.replace("/");
+      }
+    } catch (err) {
+      Sentry.captureException(err);
     }
   };
 };
+
 const googleLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.get(
-      `user/google/callback?code=${code}`
-    );
+    try {
+      const response = await apis.axiosInstance.get(
+        `user/google/callback?code=${code}`
+      );
 
-    if (response.status === 200) {
-      const token = response.headers.authorization;
-      localStorage.setItem("token", token);
-    }
-    if (localStorage.getItem("token")) {
-      dispatch(isLoginDB());
-      history.replace("/");
+      if (response.status === 200) {
+        const token = response.headers.authorization;
+        localStorage.setItem("token", token);
+      }
+      if (localStorage.getItem("token")) {
+        dispatch(isLoginDB());
+        history.replace("/");
+      }
+    } catch (err) {
+      Sentry.captureException(err);
     }
   };
 };
 
 const getMyLikePostDB = () => {
   return async function (dispatch, getState, { history }) {
-    // const response = await apis.axiosInstance.get("/api/user/mypage/like/1");
-    const response = RESP.MYPAGELIKEGET;
-    if (response.status === 200) {
-      dispatch(getLikedPost(response));
+    try {
+      const response = await apis.axiosInstance.get("/user/plans/like/1");
+      // const response = RESP.MYPAGELIKEGET;
+      console.log(response);
+      if (response.status === 200) {
+        dispatch(getLikedPost(response));
+      }
+    } catch (err) {
+      Sentry.captureException(err);
     }
   };
 };
 const getMyReviewDB = () => {
   return async function (dispatch, getState, { history }) {
-    // const response = await apis.axiosInstance.get("/api/user/mypage/review");
-    const response = RESP.MYREVIEWGET;
-
-    if (response) {
-      dispatch(getMyReview(response));
+    try {
+      const response = await apis.axiosInstance.get("/user/review");
+      // const response = RESP.MYREVIEWGET;
+      console.log(response);
+      if (response) {
+        dispatch(getMyReview(response));
+      }
+    } catch (err) {
+      Sentry.captureException(err);
     }
   };
 };
@@ -200,6 +218,7 @@ const editProfileDB = (formdata, config) => {
         window.location.replace("/");
       }
     } catch (err) {
+      Sentry.captureException(err);
       console.log(err.response);
     }
   };

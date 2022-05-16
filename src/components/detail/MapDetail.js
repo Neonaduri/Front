@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Map, MapMarker, Polyline, MapTypeId } from "react-kakao-maps-sdk";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import Titleline from "../../components/elements/Titleline";
-import { FaAngleLeft } from "react-icons/fa";
-import { useHistory } from "react-router";
+import back from "../../static/images/icon/back.png";
 
 const MapDetail = ({ dayNow }) => {
   const { kakao } = window;
@@ -24,7 +24,7 @@ const MapDetail = ({ dayNow }) => {
   };
 
   const dayPlanPlaces = planByDay[dayNow - 1]?.places;
-  console.log(dayPlanPlaces);
+
   if (dayPlanPlaces !== undefined) {
     for (let i = 0; i < dayPlanPlaces.length; i++) {
       let latlng = { lat: dayPlanPlaces[i].lat, lng: dayPlanPlaces[i].lng };
@@ -40,15 +40,10 @@ const MapDetail = ({ dayNow }) => {
   } else {
     return (
       <>
-        <FaAngleLeft
+        <img
+          src={back}
           onClick={() => {
             history.push("/myplan");
-          }}
-          style={{
-            position: "absolute",
-            top: "25px",
-            left: "15px",
-            fontSize: "20px",
           }}
         />
         <Titleline title={detailPlan.postTitle} />
@@ -71,15 +66,10 @@ const MapDetail = ({ dayNow }) => {
 
   return (
     <div>
-      <FaAngleLeft
+      <img
+        src={back}
         onClick={() => {
           history.goBack();
-        }}
-        style={{
-          position: "absolute",
-          top: "25px",
-          left: "15px",
-          fontSize: "20px",
         }}
       />
       <Titleline title={detailPlan.postTitle} />
@@ -101,16 +91,16 @@ const MapDetail = ({ dayNow }) => {
             <MapMarker
               key={idx}
               position={positions.latlng}
-              // image={{
-              //   src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png",
-              //   size: { width: 45, height: 50 },
-              //   options: {
-              //     offset: {
-              //       x: 27,
-              //       y: 69,
-              //     },
-              //   },
-              // }}
+              image={{
+                src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F37WUa%2FbtrCjEzIbYK%2FQAyIkqcQxyzcCAcVWQoWTk%2Fimg.png",
+                size: { width: 20, height: 20 },
+                options: {
+                  offset: {
+                    x: 9,
+                    y: 12,
+                  },
+                },
+              }}
               clickable={true}
               onClick={() => setIsOpen(true)}
             >
@@ -125,8 +115,8 @@ const MapDetail = ({ dayNow }) => {
           <Polyline
             path={latlngArr}
             strokeWeight={4} // 선의 두께 입니다
-            strokeColor={"red"} // 선의 색깔입니다
-            strokeOpacity={0.8} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+            strokeColor={`#56BE91`} // 선의 색깔입니다
+            strokeOpacity={1} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
             strokeStyle={"solid"} // 선의 스타일입니다
           />
           {showTraffic ? (
@@ -142,14 +132,13 @@ const InfoWindow = styled.div`
   position: relative;
 
   div {
-    border: 1px solid black;
-    padding: 0px 7px;
+    padding: 0px 5px;
     border-radius: 50%;
-    background-color: #41b67e;
+    background-color: ${({ theme }) => theme.colors.mainGreen};
     color: white;
     position: absolute;
-    left: 63px;
-    top: 33px;
+    left: 65px;
+    top: 31px;
   }
 `;
 

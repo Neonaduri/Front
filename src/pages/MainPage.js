@@ -40,10 +40,11 @@ const MainPage = ({ history }) => {
   if (!token) {
     history.push("/login");
   }
+  const initLocation = "서울";
 
   useEffect(() => {
     dispatch(getBestPostDB());
-    dispatch(getLocationPostDB("서울")); //디폴트 지역설정
+    dispatch(getLocationPostDB(initLocation)); //디폴트 지역설정
   }, []);
 
   return (
