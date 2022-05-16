@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import love from "../../static/images/icon/love.png";
-import Union from "../../static/images/icon/Union.png";
+import review from "../../static/images/icon/review.png";
 
 const SearchItem = ({
   location,
@@ -49,7 +49,7 @@ const SearchItem = ({
               <Cnt>{likeCnt}</Cnt>
             </Like>
             <Like>
-              <img src={Union} />
+              <img src={review} />
               <Cnt>{reviewCnt}</Cnt>
             </Like>
           </Like>
@@ -73,12 +73,11 @@ const Cons = styled.div`
 `;
 
 const Nickname = styled.div`
-  font-family: "Apple SD Gothic Neo";
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
-  color: #8d8d8d;
+  color: ${({ theme }) => theme.colors.text2};
   display: flex;
   justify-content: left;
   align-items: center;
@@ -93,7 +92,7 @@ const Like = styled.div`
 
 const Cnt = styled.div`
   margin-left: 5px;
-  color: #8d8d8d;
+  color: ${({ theme }) => theme.colors.text2};
   font-weight: 500;
   font-size: 12px;
   line-height: 12px;
@@ -134,9 +133,8 @@ const Content = styled.div`
   font-weight: 500;
   font-size: 10px;
   line-height: 17px;
-  color: #8d8d8d;
-  font-family: "Apple SD Gothic Neo";
-  background: #eeeeee;
+  color: ${({ theme }) => theme.colors.text2};
+  background: ${({ theme }) => theme.colors.borderColor};
   border-radius: 2px;
   padding: 0 5px;
 `;
@@ -154,29 +152,27 @@ const SectionBox = styled.div`
 const Con = styled.div`
   font-weight: 600;
   font-size: 16px;
-  color: #363636;
+  color: ${({ theme }) => theme.colors.text1};
 `;
 
 const Contain = styled.div`
   font-weight: 600;
   font-size: 16px;
-  color: #363636;
   margin-left: 10px;
   margin-bottom: 10px;
 `;
 
 const Term = styled.span`
-  font-family: "Apple SD Gothic Neo";
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 12px;
-  color: #cacaca;
+  color: ${({ theme }) => theme.colors.text2};
   padding: 0 10px;
 `;
 
 const Bar = styled.div`
-  border: 1px solid #eeeeee;
+  border: 1px solid ${({ theme }) => theme.colors.borderColor};
   margin-top: 20px;
   margin-left: 20px;
   width: 90%;

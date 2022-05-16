@@ -10,6 +10,7 @@ const GET_SEARCH_POST = "GET_SEARCH_POST";
 const LAST_PAGE = "LAST_PAGE";
 const TOTAL = "TOTAL";
 const KEYWORD = "KEYWORD";
+const CLICKWISHINMAIN = "clickWishInMain";
 
 // initialState
 const initialState = {
@@ -42,6 +43,8 @@ const islastPage = createAction(LAST_PAGE, (islastPage) => ({
 const totalPage = createAction(TOTAL, (totalPage) => ({
   totalPage,
 }));
+
+const clickWishInMain = createAction(CLICKWISHINMAIN, (result) => ({ result }));
 
 export const keywordDB = createAction(KEYWORD, (keyword) => ({
   keyword,
@@ -123,6 +126,23 @@ export const getThemePostDB = (keyword) => {
     }
   };
 };
+// 찜하기
+export const clickWishPostDB = (postId) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const response = await apis.axiosInstance.post(
+        `/api/posts/like/${postId}`
+      );
+      console.log(response);
+      console.log(response.data.like);
+      if (response.status === 201) {
+        dispatch(clickWishInMain({ postId: postId, bool: response.data.like }));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 
 // reducer
 export default handleActions(
@@ -151,6 +171,24 @@ export default handleActions(
     [KEYWORD]: (state, action) =>
       produce(state, (draft) => {
         draft.keyword = action.payload.keyword;
+      }),
+    [CLICKWISHINMAIN]: (state, action) =>
+      produce(state, (draft) => {
+        if (action.payload.result.bool) {
+          draft.bestList.map((post) => {
+            if (post.postId === parseInt(action.payload.result.postId)) {
+              post.likeCnt += 1;
+              post.islike = true;
+            }
+          });
+        } else {
+          draft.bestList.map((post) => {
+            if (post.postId === parseInt(action.payload.result.postId)) {
+              post.likeCnt -= 1;
+              post.islike = false;
+            }
+          });
+        }
       }),
   },
   initialState

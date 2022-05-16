@@ -24,8 +24,8 @@ const MainPage = ({ history }) => {
 
   const settings = {
     slidesToShow: 2,
-    slidesToScroll: 2,
-    centerMode: true,
+    slidesToScroll: 1,
+    centerMode: false,
     centerPadding: "0px",
     arrows: true,
     dots: true,
@@ -34,7 +34,7 @@ const MainPage = ({ history }) => {
     pauseOnFocus: true,
     pauseOnHover: true,
     autoplay: true,
-    speed: 1000,
+    speed: 2500,
   };
 
   if (!token) {

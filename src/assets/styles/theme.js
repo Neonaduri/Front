@@ -1,5 +1,3 @@
-import styled from "styled-components";
-
 const colors = {
   mainGreen: "#56BE91",
   mainRed: "#E93C3C",

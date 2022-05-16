@@ -1,28 +1,49 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-
-import love from "../../static/images/icon/love.png";
-import Union from "../../static/images/icon/Union.png";
-import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { clickWishPostDB } from "../../redux/module/post";
 
-const Popular = ({ postTitle, likeCnt, reviewCnt, postImgUrl, postId }) => {
-  const locationList = useSelector((state) => state.post.locationList);
+import review from "../../static/images/icon/review.png";
+import wish from "../../static/images/icon/wish.png";
+import clickedWish from "../../static/images/icon/clickedWish.png";
+import unClickedWish from "../../static/images/icon/unClickedWish.png";
+
+const Popular = ({
+  postTitle,
+  likeCnt,
+  reviewCnt,
+  postImgUrl,
+  postId,
+  islike,
+}) => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const clickWishPost = (e) => {
+    const postId = e.target.id;
+    dispatch(clickWishPostDB(postId));
+  };
 
   return (
-    <Wrap onClick={() => history.push(`/detail/${postId}`)}>
+    <Wrap>
       <ImagePop src={postImgUrl} />
-      <Box>
+      <SocialWishDiv onClick={(e) => clickWishPost(e)}>
+        {islike ? (
+          <img src={clickedWish} id={postId} />
+        ) : (
+          <img src={unClickedWish} id={postId} />
+        )}
+      </SocialWishDiv>
+      <Box onClick={() => history.push(`/detail/${postId}`)}>
         <Content>{postTitle}</Content>
         <SectionBox>
           <Like>
-            <img src={love} />
+            <img src={wish} />
             <Cnt>{likeCnt}</Cnt>
           </Like>
-
           <Like>
-            <img src={Union} />
+            <img src={review} />
             <Cnt>{reviewCnt}</Cnt>
           </Like>
         </SectionBox>
@@ -33,9 +54,16 @@ const Popular = ({ postTitle, likeCnt, reviewCnt, postImgUrl, postId }) => {
 
 export default Popular;
 
+const SocialWishDiv = styled.div`
+  position: absolute;
+  right: 10px;
+  bottom: 70px;
+`;
+
 const SectionBox = styled.div`
   display: flex;
   margin-top: 5px;
+  position: relative;
 `;
 
 const Wrap = styled.div`
@@ -46,10 +74,9 @@ const Wrap = styled.div`
 `;
 
 const Like = styled.div`
-  margin-left: 4px;
   display: flex;
-  justify-content: left;
   align-items: center;
+  margin-right: 1px;
 `;
 
 const Cnt = styled.div`
@@ -64,14 +91,11 @@ const Content = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
-  margin-top: 15px;
-  margin-left: 10px;
-  font-style: normal;
+  margin-top: 10px;
+  margin-left: 13px;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  color: #363636;
-  font-family: "Apple SD Gothic Neo";
+  font-size: 15px;
+  color: ${({ theme }) => theme.colors.text1};
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -85,6 +109,7 @@ const Box = styled.div`
   height: 60px;
   position: absolute;
   bottom: 0;
+  left: -8px;
 `;
 
 const ImagePop = styled.img`
