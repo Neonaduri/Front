@@ -104,7 +104,9 @@ const Wrap = styled.div`
 
 const Cons = styled.div`
   display: flex;
-  padding: 0 10px;
+  /* justify-content: right; */
+  /* padding: 0 5px; */
+  margin-right: 5px;
 `;
 
 const Nickname = styled.div`
@@ -200,7 +202,7 @@ const Contain = styled.div`
 const Term = styled.span`
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 10px;
   line-height: 12px;
   color: ${({ theme }) => theme.colors.text2};
   padding: 0 0 0 10px;

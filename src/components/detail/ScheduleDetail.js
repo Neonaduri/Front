@@ -16,7 +16,7 @@ const ScheduleDetail = ({ dayNow }) => {
   const postId = params.id;
   const arr = reviewList.slice(0, 3);
 
-  if (!planByDay) {
+  if (!planByDay || !userByDay) {
     return null;
   }
 

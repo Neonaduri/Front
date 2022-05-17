@@ -9,21 +9,23 @@ const ReviewList = ({ nickName, reviewContents, reviewImgUrl, totalCnt }) => {
   const postId = params.id;
   const dispatch = useDispatch();
 
+  // console.log(totalCnt);
   // 리뷰조회;
   useEffect(() => {
     dispatch(getCommentDB(postId));
   }, []);
 
   //상세페이지 아래에 있는 리뷰페이지
-
   return (
-    <Container>
-      <Nickname>{nickName}</Nickname>
-      <Box>
-        {reviewImgUrl === null ? null : <Img src={reviewImgUrl}></Img>}
-        <Text>{reviewContents}</Text>
-      </Box>
-    </Container>
+    <>
+      <Container>
+        <Nickname>{nickName}</Nickname>
+        <Box>
+          {reviewImgUrl ? <Img src={reviewImgUrl}></Img> : null}
+          <Text>{reviewContents}</Text>
+        </Box>
+      </Container>
+    </>
   );
 };
 
@@ -57,15 +59,15 @@ const Nickname = styled.div`
 
 const Box = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
 `;
 
 const Text = styled.div`
-  display: -webkit-box;
   width: 206px;
   object-fit: cover;
   border-radius: 5px;
+  margin-left: 10px;
   color: #363636;
   font-style: normal;
   font-weight: 500;
@@ -73,7 +75,5 @@ const Text = styled.div`
   line-height: 17px;
   text-overflow: ellipsis;
   overflow: hidden;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
   font-family: "Apple SD Gothic Neo";
 `;

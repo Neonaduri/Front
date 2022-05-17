@@ -5,22 +5,47 @@ import Banner from "../components/main/Banner";
 import Location from "../components/main/Location";
 import MakePlan from "../components/main/MakePlan";
 import Popular from "../components/main/Popular";
-import { getBestPostDB, getLocationPostDB } from "../redux/module/post";
+import {
+  getBestPostDB,
+  getKeywordPostDB,
+  getLocationPostDB,
+  keywordDB,
+} from "../redux/module/post";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonArea from "../components/main/ButtonArea";
 import Slider from "react-slick";
 import Splash from "../shared/Splash";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import ScrollTop from "../components/common/ScrollTop";
 
 const MainPage = ({ history }) => {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const bestList = useSelector((state) => state.post.bestList);
   const locationList = useSelector((state) => state.post.locationList);
+
+  const keyword = useSelector((state) => state.post.keyword);
+
+  console.log("베스트플랜은?", bestList);
+  console.log("지역별플랜은?", locationList);
+
   const isLoading = useSelector((state) => state.post.isLoading);
-  console.log(locationList);
-  const settings = {
+
+  const settings1 = {
+    slidesToShow: 2,
+    slidesToScroll: 2,
+    centerMode: true,
+    centerPadding: "0px",
+    arrows: true,
+    dots: true,
+    fade: false,
+    infinite: true,
+    pauseOnFocus: true,
+    pauseOnHover: true,
+  };
+
+  const settings2 = {
     slidesToShow: 2,
     slidesToScroll: 1,
     centerMode: false,
@@ -57,7 +82,7 @@ const MainPage = ({ history }) => {
             <Name>
               <Title>인기 여행</Title>
             </Name>
-            <StyledSlide {...settings}>
+            <StyledSlide {...settings1}>
               {bestList &&
                 bestList.map((item, id) => {
                   return <Popular key={id} {...item} />;
@@ -71,7 +96,8 @@ const MainPage = ({ history }) => {
             <LoName>
               <LoTitle>지역별 여행 계획표</LoTitle>
               <Plus
-                onClick={() => {
+                onClick={(e) => {
+                  dispatch(getKeywordPostDB(keyword));
                   history.push("/search");
                 }}
               >
@@ -79,7 +105,7 @@ const MainPage = ({ history }) => {
               </Plus>
             </LoName>
             <ButtonArea />
-            <StyledSlide {...settings}>
+            <StyledSlide {...settings2}>
               {locationList &&
                 locationList.map((item, id) => {
                   return <Location key={id} {...item} />;

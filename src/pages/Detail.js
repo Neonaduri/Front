@@ -35,6 +35,7 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(planAction.getDetailPlanDB(postId));
+    // dispatch(getCommentDB(postId));
   }, []);
 
   return (

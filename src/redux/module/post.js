@@ -1,6 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
-import axios from "axios";
 import apis from "../../shared/request";
 import * as Sentry from "@sentry/react";
 
@@ -22,7 +21,7 @@ const initialState = {
   bestList: [],
   locationList: [],
   searchList: [],
-  islastPage: false,
+  paging: { start: null, isLastPage: false },
   totalPage: 1,
   keyword: "",
   isLoading: false,
@@ -99,7 +98,6 @@ export const getLocationPostDB = (location) => {
         `/plans/location/${location}/1`
       );
       console.log(response);
-
       if (response.status === 200) {
         dispatch(getLocationPost(response.data.planList));
       }
@@ -171,12 +169,10 @@ export const getKeywordPostDB = (keyword, pageno) => {
 };
 
 //테마별 조회 [메인]
-export const getThemePostDB = (keyword) => {
+export const getThemePostDB = (theme) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const response = await apis.axiosInstance.get(
-        `/plans/theme/${keyword}/1`
-      );
+      const response = await apis.axiosInstance.get(`/plans/theme/${theme}/1`);
 
       if (response.status === 200) {
         dispatch(getSearchPost(response.data));

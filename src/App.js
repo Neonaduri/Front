@@ -23,6 +23,7 @@ import BeforePlan from "./pages/BeforePlan";
 import Splash from "./shared/Splash";
 import Detail from "./pages/Detail";
 import ReviewDetail from "./components/review/ReviewDetail";
+import ScrollTop from "./components/common/ScrollTop";
 import theme from "./assets/styles/theme";
 import MyEdit from "./pages/MyEdit";
 import Myscrap from "./pages/Myscrap";

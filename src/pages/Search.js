@@ -19,9 +19,8 @@ const Search = () => {
   const keyWord = useSelector((state) => state.post.keyword);
 
   const suggestBtnClick = (e) => {
-    dispatch(getKeywordPostDB(e.target.value, pageno));
     dispatch(keywordDB(e.target.value));
-    console.log(e.target.value);
+    dispatch(getKeywordPostDB(e.target.value, pageno));
   };
 
   const searchEnter = (e) => {
