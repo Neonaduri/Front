@@ -1,12 +1,21 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-const MyReviewCard = ({ review, idx }) => {
+const MyReviewCard = () => {
+  const myReview = useSelector((state) => state.user.myReview);
+
   return (
-    <ReviewCard key={idx}>
-      <span>{review.nickName}</span>
-      <span>{review.reviewComment}</span>
-    </ReviewCard>
+    <>
+      {myReview.map((review, idx) => {
+        return (
+          <ReviewCard key={idx}>
+            <span>{review.nickName}</span>
+            <span>{review.reviewContents}</span>
+          </ReviewCard>
+        );
+      })}
+    </>
   );
 };
 

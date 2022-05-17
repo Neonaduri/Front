@@ -15,10 +15,9 @@ const Button = ({ content, onClick, width, height }) => {
 export default Button;
 
 const BannerBtn = styled.button`
-  width: 100%;
   height: ${(props) => (props.height === "slim" ? "35px" : "45px")};
   background: ${({ theme }) => theme.colors.mainGreen};
-  border-radius: 10px;
+  border-radius: 5px;
   border: none;
   color: white;
   font-size: 18px;

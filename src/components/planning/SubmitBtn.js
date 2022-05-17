@@ -5,7 +5,7 @@ import { getDatabase, ref, onValue } from "firebase/database";
 import { useDispatch, useSelector } from "react-redux";
 import { planAction } from "../../redux/module/plan";
 
-const SubmitBtn = () => {
+const SubmitBtn = ({ dateCnt }) => {
   const dispatch = useDispatch();
   const postId = useParams().postId;
   const db = getDatabase();
@@ -34,17 +34,25 @@ const SubmitBtn = () => {
   }, []);
 
   const submitPlanPublic = () => {
+    let nullObj = {};
+    for (let i = 1; i <= dateCnt; i++) {
+      nullObj[`day${i}`] = {};
+    }
+    const finalObj = Object.assign(nullObj, fixedPlan.allPlan);
+    // console.log(finalObj);
+
     if (fixedPlan.allPlan === undefined) {
       alert("저장된 플랜이 없습니다.");
       return;
     } else if (fixedPlan.allPlan !== undefined) {
-      const allPlanValues = Object.values(fixedPlan.allPlan);
+      const allPlanValues = Object.values(finalObj);
 
       let allPlan = [];
       for (let i = 0; i < allPlanValues.length; i++) {
         const value = Object.values(allPlanValues[i]);
         allPlan.push({ places: value });
       }
+
       const data = {
         postId: fixedPlan.postId,
         startDate: fixedPlan.startDate,
@@ -57,6 +65,7 @@ const SubmitBtn = () => {
         ispublic: true,
         days: allPlan,
       };
+      // console.log(data);
       dispatch(planAction.completePlanDB(data));
     }
   };

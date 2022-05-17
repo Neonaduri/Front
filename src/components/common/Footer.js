@@ -78,6 +78,8 @@ const NavWrapper = styled.footer`
   background-color: white;
   border-top: 1px solid #cacaca;
   z-index: 9999;
+  border-top: 2px solid ${({ theme }) => theme.colors.borderColor};
+  background-color: white;
 `;
 
 const NavItem = styled.button`

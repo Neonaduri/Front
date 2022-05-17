@@ -1,20 +1,33 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-const BookedPostcard = ({ post, idx }) => {
+const BookedPostcard = () => {
+  const postList = useSelector((state) => state.user?.iLikedPost);
+  console.log(postList);
+
+  if (postList === null) {
+    return <div>??</div>;
+  }
   return (
-    <PostCard key={idx}>
-      <div>
-        <img src={post.postImg}></img>
-      </div>
-      <div>
-        <span>{post.title}</span>
-        <span>
-          {post.startDate}~{post.endDate}
-        </span>
-        <span>{post.location}</span>
-      </div>
-    </PostCard>
+    <>
+      {postList.map((post, idx) => {
+        return (
+          <PostCard key={idx}>
+            <div>
+              <img src={post.postImg}></img>
+            </div>
+            <div>
+              <span>{post.postTitle}</span>
+              <span>
+                {post.startDate}~{post.endDate}
+              </span>
+              <span>{post.location}</span>
+            </div>
+          </PostCard>
+        );
+      })}
+    </>
   );
 };
 

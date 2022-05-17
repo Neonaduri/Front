@@ -9,6 +9,8 @@ import MappartR from "../components/planning/MappartR";
 import SubmitBtn from "../components/planning/SubmitBtn";
 import moment from "moment";
 import Sheet from "react-modal-sheet";
+import Footer from "../components/common/Footer";
+import Logo from "../static/images/logo/Logo.png";
 
 const Planning = (props) => {
   const dispatch = useDispatch();
@@ -68,14 +70,17 @@ const Planning = (props) => {
           <Sheet.Header onClick={close} />
           <Sheet.Content>
             <Schedule daynow={dayNow} />
-            <SubmitBtn />
+            <SubmitBtn dateCnt={dateCnt} />
           </Sheet.Content>
         </Sheet.Container>
         <Sheet.Backdrop />
       </CustomSheet>
       <TriggerBtn onClick={open}>
-        <div></div>
+        <div>
+          <img src={Logo} />
+        </div>
       </TriggerBtn>
+      <Footer />
     </Container>
   );
 };
@@ -108,7 +113,7 @@ const TriggerBtn = styled.button`
   background-color: white;
   width: 100%;
   border: none;
-  height: 5%;
+  height: 12%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,10 +123,19 @@ const TriggerBtn = styled.button`
   bottom: 0px;
   z-index: 10;
   div {
-    width: 10%;
-    height: 4px;
-    border-radius: 2px;
-    background-color: ${({ theme }) => theme.colors.text3};
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    background-color: ${({ theme }) => theme.colors.mainGreen};
+    border-radius: 50%;
+    border: 3px solid white;
+    bottom: 60px;
+    z-index: 9999;
+    img {
+      margin-top: 6px;
+      width: 20px;
+      height: 20px;
+    }
   }
 `;
 
