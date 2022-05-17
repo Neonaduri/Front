@@ -1,13 +1,17 @@
 import React, { forwardRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import { clickWishSearchPostDB } from "../../redux/module/post";
 import styled from "styled-components";
-import love from "../../static/images/icon/love.png";
-import Union from "../../static/images/icon/Union.png";
+import wish from "../../static/images/icon/wish.png";
+import review from "../../static/images/icon/review.png";
+import clickedWish from "../../static/images/icon/clickedWish.png";
+import unClickedWish from "../../static/images/icon/unClickedWish.png";
 
 const SearchItem = ({
   location,
   theme,
+  islike,
   postId,
   likeCnt,
   reviewCnt,
@@ -15,60 +19,87 @@ const SearchItem = ({
   postImgUrl,
   startDate,
   endDate,
+  user,
 }) => {
-  const nickname = useSelector((state) => state.user.list.nickName);
+  const dispatch = useDispatch();
   const history = useHistory();
+  const newStartDate = startDate.substr(2);
+  const newEndDate = endDate.substr(2);
+  const clickWishPost = (e) => {
+    const postId = e.target.id;
+    dispatch(clickWishSearchPostDB(postId));
+  };
 
   return (
-    <div onClick={() => history.push(`/detail/${postId}`)}>
-      {/* 하나의 리스트 */}
-      <div>
-        <Wrap>
-          <ImagePop src={postImgUrl} />
-        </Wrap>
+    <Container>
+      <Wrap>
+        <ImagePop src={postImgUrl} />
+        <SocialWishDiv onClick={(e) => clickWishPost(e)}>
+          {islike ? (
+            <img src={clickedWish} id={postId} />
+          ) : (
+            <img src={unClickedWish} id={postId} />
+          )}
+        </SocialWishDiv>
+      </Wrap>
 
-        {/* 카테고리 */}
-        <BoxTop>
-          <Term>
-            {startDate} ~ {endDate}
-          </Term>
-          <Cons>
-            <Content>{location}</Content>
-            <Content>{theme}</Content>
-          </Cons>
-        </BoxTop>
+      {/* 카테고리 */}
+      <BoxTop onClick={() => history.push(`/detail/${postId}`)}>
+        <Term>
+          {newStartDate} ~ {newEndDate}
+        </Term>
+        <Cons>
+          <Content>{location}</Content>
+          <Content>{theme}</Content>
+        </Cons>
+      </BoxTop>
 
-        <Box>
-          <Contain>
-            <Con>{postTitle}</Con>
-          </Contain>
-        </Box>
+      <Box onClick={() => history.push(`/detail/${postId}`)}>
+        <Contain>
+          <Con>{postTitle}</Con>
+        </Contain>
+      </Box>
 
-        {/* 좋아요, 댓글개수 */}
-        <SectionBox>
-          <Nickname>{nickname}</Nickname>
+      {/* 좋아요, 댓글개수 */}
+      <SectionBox>
+        <Nickname>{user.nickName}</Nickname>
+        <Like>
           <Like>
-            <Like>
-              <img src={love} />
-              <Cnt>{likeCnt}</Cnt>
-            </Like>
-            <Like>
-              <img src={Union} />
-              <Cnt>{reviewCnt}</Cnt>
-            </Like>
+            <img src={wish} />
+            <Cnt>{likeCnt}</Cnt>
           </Like>
-        </SectionBox>
-        <Bar></Bar>
-      </div>
-    </div>
+          <Like>
+            <img src={review} />
+            <Cnt>{reviewCnt}</Cnt>
+          </Like>
+        </Like>
+      </SectionBox>
+      <Bar></Bar>
+    </Container>
   );
 };
 
 export default SearchItem;
 
+const Container = styled.div`
+  width: 375px;
+`;
+
+const SocialWishDiv = styled.div`
+  position: absolute;
+  top: 98px;
+  left: 103px;
+  width: 17px;
+  z-index: 10;
+  img {
+    width: 17px;
+  }
+`;
+
 const Wrap = styled.div`
   display: flex;
-  margin-left: 18px;
+  margin-left: 16px;
+  position: relative;
 `;
 
 const Cons = styled.div`
@@ -79,12 +110,11 @@ const Cons = styled.div`
 `;
 
 const Nickname = styled.div`
-  font-family: "Apple SD Gothic Neo";
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
-  color: #8d8d8d;
+  color: ${({ theme }) => theme.colors.text2};
   display: flex;
   justify-content: left;
   align-items: center;
@@ -99,7 +129,7 @@ const Like = styled.div`
 
 const Cnt = styled.div`
   margin-left: 5px;
-  color: #8d8d8d;
+  color: ${({ theme }) => theme.colors.text2};
   font-weight: 500;
   font-size: 12px;
   line-height: 12px;
@@ -128,7 +158,7 @@ const BoxTop = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: 35px;
-  margin-left: 150px;
+  margin-left: 145px;
 `;
 
 const Content = styled.div`
@@ -140,9 +170,8 @@ const Content = styled.div`
   font-weight: 500;
   font-size: 10px;
   line-height: 17px;
-  color: #8d8d8d;
-  font-family: "Apple SD Gothic Neo";
-  background: #eeeeee;
+  color: ${({ theme }) => theme.colors.text2};
+  background: ${({ theme }) => theme.colors.borderColor};
   border-radius: 2px;
   padding: 0 5px;
 `;
@@ -160,29 +189,27 @@ const SectionBox = styled.div`
 const Con = styled.div`
   font-weight: 600;
   font-size: 16px;
-  color: #363636;
+  color: ${({ theme }) => theme.colors.text1};
 `;
 
 const Contain = styled.div`
   font-weight: 600;
   font-size: 16px;
-  color: #363636;
   margin-left: 10px;
   margin-bottom: 10px;
 `;
 
 const Term = styled.span`
-  font-family: "Apple SD Gothic Neo";
   font-style: normal;
   font-weight: 500;
   font-size: 10px;
   line-height: 12px;
-  color: #cacaca;
-  padding: 0 10px;
+  color: ${({ theme }) => theme.colors.text2};
+  padding: 0 0 0 10px;
 `;
 
 const Bar = styled.div`
-  border: 1px solid #eeeeee;
+  border: 1px solid ${({ theme }) => theme.colors.borderColor};
   margin-top: 20px;
   margin-left: 20px;
   width: 90%;

@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
+import ScheduleDetail from "../components/detail/ScheduleDetail";
 import MapDetail from "../components/detail/MapDetail";
 import { planAction } from "../redux/module/plan";
 import styled from "styled-components";
-import ScheduleDetail from "../components/detail/ScheduleDetail";
 import ReviewList from "../components/review/ReviewList";
 import addMore from "../static/images/button/addMore.png";
-import { getCommentDB } from "../redux/module/review";
+import back from "../static/images/icon/back.png";
+import Titleline from "../components/elements/Titleline";
+import wish from "../static/images/icon/wish2x.png";
+import wishgreen from "../static/images/icon/wishGreen.png";
 
 const Detail = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const params = useParams();
   const postId = params.id;
+  const detailPlan = useSelector((state) => state.plan.detailPlan);
   const dayCnt = useSelector((state) => state.plan.detailPlan.dateCnt);
   const reviewList = useSelector((state) => state.review.reviewList);
   const totalCnt = useSelector((state) => state.review.totalElements);
@@ -25,31 +29,58 @@ const Detail = () => {
     dateCntArr.push(i);
   }
 
+  const clickWishBtn = () => {
+    dispatch(planAction.clickWishDetailPostDB(postId));
+  };
+
   useEffect(() => {
     dispatch(planAction.getDetailPlanDB(postId));
-    dispatch(getCommentDB(postId));
+    // dispatch(getCommentDB(postId));
   }, []);
 
   return (
-    <>
-      <div>
+    <Container>
+      <HeadDiv>
+        <img
+          src={back}
+          onClick={() => {
+            window.location.replace("/");
+          }}
+        />
+        <Titleline title={detailPlan.postTitle} />
+        {detailPlan.islike ? (
+          <img src={wishgreen} onClick={clickWishBtn} />
+        ) : (
+          <img src={wish} onClick={clickWishBtn} />
+        )}
+      </HeadDiv>
+      <ImageDiv>
+        <img src={detailPlan.postImgUrl} />
+      </ImageDiv>
+      <ContentDiv>
         <DayBtnDiv>
           {dateCntArr.map((date, idx) => {
             return (
-              <button
+              <DayBtn
                 key={idx}
                 onClick={() => {
                   setDayNow(date);
                 }}
+                idx={idx}
+                daynow={dayNow}
               >
-                {date}일차
-              </button>
+                DAY {date}
+              </DayBtn>
             );
           })}
         </DayBtnDiv>
-        <MapDetail dayNow={dayNow} />
-        <ScheduleDetail dayNow={dayNow} />
-      </div>
+        <div>
+          <MapDetail dayNow={dayNow} />
+        </div>
+        <div>
+          <ScheduleDetail dayNow={dayNow} />
+        </div>
+      </ContentDiv>
 
       <Line></Line>
 
@@ -72,24 +103,59 @@ const Detail = () => {
             return <ReviewList key={id} {...item} totalCnt={totalCnt} />;
           })}
       </ReviewPage>
-    </>
+    </Container>
   );
 };
 
 const DayBtnDiv = styled.div`
-  z-index: 2;
   display: flex;
   width: 100%;
   justify-content: space-around;
-  top: 340px;
-  button {
-    display: block;
-    width: 50px;
-    background-color: ${({ theme }) => theme.colors.mainGreen};
-    border: none;
-    border-radius: 10px;
-    padding: 3px 5px;
+  padding: 8px 0px;
+`;
+const DayBtn = styled.button`
+  display: block;
+  width: 55px;
+  background-color: white;
+  border: none;
+  padding: 3px 5px;
+  color: ${({ theme }) => theme.colors.text2};
+  font-size: 16px;
+  border-bottom: ${(props) =>
+    props.idx + 1 === props.daynow ? `3px solid #56BE91` : null};
+  color: ${(props) => (props.idx + 1 === props.daynow ? "black" : null)};
+`;
+
+const ContentDiv = styled.div`
+  width: 100%;
+  background-color: white;
+  height: 100%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  position: absolute;
+  top: 215px;
+`;
+
+const ImageDiv = styled.div`
+  width: 100%;
+  img {
+    width: 100%;
   }
+`;
+
+const HeadDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 18px;
+  margin-top: 5px;
+  img {
+    margin-bottom: -7px;
+  }
+`;
+
+const Container = styled.div`
+  position: relative;
 `;
 
 const Line = styled.div`

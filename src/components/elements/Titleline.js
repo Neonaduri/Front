@@ -15,7 +15,7 @@ const Titlepart = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 18px;
   margin-top: 10px;
 `;
 

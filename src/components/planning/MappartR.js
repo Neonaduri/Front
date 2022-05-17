@@ -19,6 +19,7 @@ import Slide from "../../shared/SlickSlider";
 import Modalroompass from "../common/Modalroompass";
 import cancel from "../../static/images/icon/cancel.png";
 import back from "../../static/images/icon/back.png";
+import goright from "../../static/images/icon/goRight.png";
 
 const { kakao } = window;
 
@@ -40,6 +41,7 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
   const [linkModalOpen, setLinkModalOpen] = useState(false);
   const [changingKeyword, setChangingKeyword] = useState("");
   const [marker, setMarker] = useState();
+  const [hidden, setHidden] = useState(false);
   const [latlng, setLatlng] = useState({
     lat: 37.5,
     lng: 127,
@@ -236,12 +238,30 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
         <Polyline
           path={[polyLineArr]}
           strokeWeight={4} // 선의 두께 입니다
-          strokeColor={"#E93C3C"} // 선의 색깔입니다
+          strokeColor={`#FF6868`} // 선의 색깔입니다
           strokeOpacity={1} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
           strokeStyle={"solid"} // 선의 스타일입니다
         />
       </Map>
-      <PlaceList>
+      {hidden === false ? (
+        <HideBtn
+          onClick={() => {
+            setHidden(true);
+          }}
+        >
+          <img src={back} />
+        </HideBtn>
+      ) : (
+        <HideBtn
+          onClick={() => {
+            setHidden(false);
+          }}
+        >
+          <img src={goright} />
+        </HideBtn>
+      )}
+
+      <PlaceList hidden={hidden}>
         <Slide sliders={markers} dayNow={dayNow} callback={findLatLng} />
       </PlaceList>
       <ModalfixTime
@@ -322,6 +342,31 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
   );
 };
 
+const HideBtn = styled.button`
+  background-color: ${({ theme }) => theme.colors.mainGreen};
+  border: none;
+  position: absolute;
+  z-index: 9999;
+  bottom: 128px;
+  left: 5px;
+  border-radius: 5px;
+  height: 50px;
+`;
+
+const PlaceList = styled.div`
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  white-space: nowrap;
+  background-color: inherit;
+  z-index: 5;
+  scroll-behavior: auto;
+  position: absolute;
+  bottom: 100px;
+  padding-left: 30px;
+  visibility: ${(props) => (props.hidden ? "hidden" : null)};
+`;
+
 const Infowindow = styled.div`
   display: flex;
   flex-direction: column;
@@ -366,7 +411,7 @@ const HeadLineDiv = styled.div`
     margin-top: -7px;
   }
   small {
-    color: ${({ theme }) => theme.colors.text2};
+    color: ${({ theme }) => theme.colors.text3};
   }
 `;
 
@@ -399,18 +444,6 @@ const TimeModal = styled.div`
   }
 `;
 
-const PlaceList = styled.div`
-  display: flex;
-  flex-direction: row;
-  overflow-x: auto;
-  white-space: nowrap;
-  background-color: inherit;
-  z-index: 5;
-  scroll-behavior: auto;
-  position: absolute;
-  bottom: 45px;
-`;
-
 const Container = styled.div`
   position: relative;
 `;
@@ -436,15 +469,11 @@ const PlaceBtn = styled.div`
   border-radius: 50%;
   position: absolute;
   top: 14.3vh;
-  right: 30px;
+  right: 25px;
   z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
-  img {
-    margin-left: 2px;
-    margin-bottom: 2px;
-  }
 `;
 const InviteTextdiv = styled.div`
   display: flex;

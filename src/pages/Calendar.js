@@ -112,6 +112,7 @@ const Calendar = () => {
             placeholder="여행 계획명을 작성해주세요."
             {...title}
             id="title"
+            maxLength={15}
           ></input>
         </PostTitlediv>
         <div

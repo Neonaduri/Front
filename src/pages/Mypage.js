@@ -6,77 +6,123 @@ import { useDispatch } from "react-redux";
 import { userAction } from "../redux/module/user";
 import { useHistory } from "react-router";
 import Footer from "../components/common/Footer";
-import MyInfo from "../components/mypage/MyInfo";
 import BookedPostcard from "../components/mypage/BookedPostcard";
 import MyReviewCard from "../components/mypage/MyReviewCard";
+import alarm from "../static/images/icon/alarm.png";
+import MypageBtn from "../components/mypage/MypageBtn";
 
 const Mypage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
-  const iLikedPost = useSelector((state) => state.user.iLikedPost?.postList);
-  const myReview = useSelector((state) => state.user.myReview);
+  const loginUser = useSelector((state) => state.user.list);
   const [cardList, setCardList] = useState(true);
 
-  useEffect(() => {
-    dispatch(userAction.getMyLikePostDB());
-    dispatch(userAction.getMyReviewDB());
-  }, []);
+  const logoutClick = () => {
+    localStorage.removeItem("token");
+    history.replace("/login");
+  };
+
   if (!isLogin) {
     history.replace("/login");
   }
 
   return (
     <div>
-      <Titleline title={"마이페이지"} />
-      <MyInfo />
-      <Selectdiv>
-        <button
-          onClick={() => {
-            setCardList(true);
-          }}
-        >
-          찜한 여행
-        </button>
-        <button
-          onClick={() => {
-            setCardList(false);
-          }}
-        >
-          내 댓글보기
-        </button>
-      </Selectdiv>
-
-      {cardList ? (
+      <HeaderDiv>
+        <div></div>
+        <Titleline title={"마이페이지"} />
+        <img src={alarm} />
+      </HeaderDiv>
+      <UserinfoDiv>
         <div>
-          {iLikedPost?.map((post, idx) => {
-            return <BookedPostcard post={post} idx={idx} key={idx} />;
-          })}
+          <img src={loginUser.profileImg} />
         </div>
-      ) : (
         <div>
-          {myReview.map((review, idx) => {
-            return <MyReviewCard review={review} idx={idx} key={idx} />;
-          })}
+          <h3>{loginUser.nickName}</h3>
+          <span>{loginUser.userName}</span>
         </div>
-      )}
+      </UserinfoDiv>
+      <PageBtnDiv>
+        <MypageBtn
+          content={"내 계정 관리"}
+          onClick={() => {
+            history.push("/mypage/edit");
+          }}
+        />
+        <MypageBtn
+          content={"스크랩 보기"}
+          onClick={() => {
+            history.push("/mypage/scrap");
+          }}
+        />
+        <MypageBtn
+          content={"내 댓글 보기"}
+          onClick={() => {
+            history.push("/mypage/review");
+          }}
+        />
+      </PageBtnDiv>
+      <RestDiv>
+        <span onClick={logoutClick}>로그아웃</span>
+      </RestDiv>
       <Footer />
     </div>
   );
 };
 
-const Selectdiv = styled.div`
-  border-top: 1px solid ${({ theme }) => theme.colors.borderColor};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
+const RestDiv = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: ${({ theme }) => theme.colors.text4};
+  padding: 10px 0px;
+  span {
+    color: ${({ theme }) => theme.colors.mainRed};
+    padding: 0px 10px;
+  }
+`;
+
+const PageBtnDiv = styled.div`
+  border-top: 10px solid ${({ theme }) => theme.colors.borderColor};
+`;
+
+const UserinfoDiv = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  padding: 10px 30px;
-  button {
-    background-color: ${({ theme }) => theme.colors.mainGreen};
-    border: none;
-    padding: 5px 10px;
-    font-size: 15px;
+  padding: 10px 15px;
+  margin-top: 20px;
+  div {
+    &:first-child {
+      img {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        margin-right: 15px;
+      }
+    }
+    &:last-child {
+      h3 {
+        font-size: 16px;
+      }
+      span {
+        font-size: 14px;
+        color: ${({ theme }) => theme.colors.text2};
+      }
+    }
+  }
+`;
+
+const HeaderDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 15px;
+  img {
+    margin-top: 6px;
+  }
+  div {
+    padding-left: 30px;
   }
 `;
 

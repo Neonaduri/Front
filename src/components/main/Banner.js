@@ -10,12 +10,12 @@ const Banner = () => {
   const settings = {
     slidesToShow: 1,
     slidesToScroll: 1,
-    centerMode: true,
+    centerMode: false,
     centerPadding: "0px",
     fade: false,
     infinite: true,
     autoplay: true,
-    speed: 1000,
+    speed: 2000,
   };
 
   return (

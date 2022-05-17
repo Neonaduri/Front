@@ -23,9 +23,7 @@ const MainPage = ({ history }) => {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const bestList = useSelector((state) => state.post.bestList);
-  const locationList = useSelector(
-    (state) => state.post.locationList.locationList
-  );
+  const locationList = useSelector((state) => state.post.locationList);
 
   const keyword = useSelector((state) => state.post.keyword);
 
@@ -49,8 +47,8 @@ const MainPage = ({ history }) => {
 
   const settings2 = {
     slidesToShow: 2,
-    slidesToScroll: 2,
-    centerMode: true,
+    slidesToScroll: 1,
+    centerMode: false,
     centerPadding: "0px",
     arrows: true,
     dots: true,
@@ -59,16 +57,17 @@ const MainPage = ({ history }) => {
     pauseOnFocus: true,
     pauseOnHover: true,
     autoplay: true,
-    speed: 1000,
+    speed: 2500,
   };
 
-  // if (!token) {
-  //   history.push("/login");
-  // }
+  if (!token) {
+    history.push("/login");
+  }
+  const initLocation = "서울";
 
   useEffect(() => {
     dispatch(getBestPostDB());
-    dispatch(getLocationPostDB("서울")); //디폴트 지역설정
+    dispatch(getLocationPostDB(initLocation)); //디폴트 지역설정
   }, []);
 
   return (
@@ -98,6 +97,7 @@ const MainPage = ({ history }) => {
               <LoTitle>지역별 여행 계획표</LoTitle>
               <Plus
                 onClick={(e) => {
+                  console.log(keyword);
                   dispatch(getKeywordPostDB(keyword));
                   history.push("/search");
                 }}
@@ -118,7 +118,7 @@ const MainPage = ({ history }) => {
 
         <Footer />
       </Section>
-      {isLoading ? null : <Splash />}
+      {isLoading ? <Splash /> : null}
     </>
   );
 };

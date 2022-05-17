@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Map, MapMarker, Polyline, MapTypeId } from "react-kakao-maps-sdk";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import Titleline from "../../components/elements/Titleline";
-import { FaAngleLeft } from "react-icons/fa";
-import { useHistory } from "react-router";
+import back from "../../static/images/icon/back.png";
 
 const MapDetail = ({ dayNow }) => {
   const { kakao } = window;
@@ -23,9 +23,13 @@ const MapDetail = ({ dayNow }) => {
     setShowTraffic(!showTraffic);
   };
 
+  console.log(planByDay);
   const dayPlanPlaces = planByDay[dayNow - 1]?.places;
-  // console.log(dayPlanPlaces);
-  if (dayPlanPlaces !== undefined) {
+  if (!dayPlanPlaces) {
+    return null;
+  }
+
+  if (dayPlanPlaces.length !== 0) {
     for (let i = 0; i < dayPlanPlaces.length; i++) {
       let latlng = { lat: dayPlanPlaces[i].lat, lng: dayPlanPlaces[i].lng };
       latlngArr.push(latlng);
@@ -37,30 +41,17 @@ const MapDetail = ({ dayNow }) => {
       };
       markerArr.push(val);
     }
-  } else {
+  } else if (dayPlanPlaces.length === 0) {
     return (
       <>
-        <FaAngleLeft
-          onClick={() => {
-            history.push("/myplan");
-          }}
-          style={{
-            position: "absolute",
-            top: "25px",
-            left: "15px",
-            fontSize: "20px",
-          }}
-        />
-        <Titleline title={detailPlan.postTitle} />
         <MapContainer>
           <Map
             onClick={() => setIsOpen(false)}
             center={{ lat: 37.4674137335801, lng: 126.434614441118 }}
             style={{
               width: "100%",
-              height: "280px",
+              height: "176px",
               borderRadius: "10px",
-              border: "1px solid black",
             }}
             level={10}
           ></Map>
@@ -69,48 +60,36 @@ const MapDetail = ({ dayNow }) => {
     );
   }
 
+  // {
+  /* <button onClick={clickTraffic}>교통정보 보기</button> */
+  // }
   return (
     <div>
-      <FaAngleLeft
-        onClick={() => {
-          history.goBack();
-        }}
-        style={{
-          position: "absolute",
-          top: "25px",
-          left: "15px",
-          fontSize: "20px",
-        }}
-      />
-      <Titleline title={detailPlan.postTitle} />
       <MapContainer>
-        <button onClick={clickTraffic}>교통정보 보기</button>
-
         <Map
           onClick={() => setIsOpen(false)}
           center={latlngArr[0]}
           style={{
             width: "100%",
-            height: "280px",
+            height: "176px",
             borderRadius: "10px",
-            border: "1px solid black",
           }}
-          level={6}
+          level={9}
         >
           {markerArr.map((positions, idx) => (
             <MapMarker
               key={idx}
               position={positions.latlng}
-              // image={{
-              //   src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png",
-              //   size: { width: 45, height: 50 },
-              //   options: {
-              //     offset: {
-              //       x: 27,
-              //       y: 69,
-              //     },
-              //   },
-              // }}
+              image={{
+                src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FefFX6q%2FbtrCjFZ6mey%2Fr7CE69eKkBTJBkQJRc6n4k%2Fimg.png",
+                size: { width: 16, height: 16 },
+                options: {
+                  offset: {
+                    x: 10,
+                    y: 10,
+                  },
+                },
+              }}
               clickable={true}
               onClick={() => setIsOpen(true)}
             >
@@ -124,9 +103,9 @@ const MapDetail = ({ dayNow }) => {
           ))}
           <Polyline
             path={latlngArr}
-            strokeWeight={4} // 선의 두께 입니다
-            strokeColor={"red"} // 선의 색깔입니다
-            strokeOpacity={0.8} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+            strokeWeight={3} // 선의 두께 입니다
+            strokeColor={`#8d8d8d`} // 선의 색깔입니다
+            strokeOpacity={1} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
             strokeStyle={"solid"} // 선의 스타일입니다
           />
           {showTraffic ? (
@@ -142,14 +121,14 @@ const InfoWindow = styled.div`
   position: relative;
 
   div {
-    border: 1px solid black;
-    padding: 0px 7px;
+    padding: 0px 6px;
     border-radius: 50%;
-    background-color: #41b67e;
+    background-color: ${({ theme }) => theme.colors.mainRed};
     color: white;
+    font-size: 13px;
     position: absolute;
-    left: 63px;
-    top: 33px;
+    left: 64px;
+    top: 30px;
   }
 `;
 

@@ -1,8 +1,8 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { RESP } from "../../shared/response";
-import { getDatabase, push, ref, set } from "firebase/database";
+import { getDatabase, ref, set } from "firebase/database";
 import apis from "../../shared/request";
+import * as Sentry from "@sentry/react";
 
 //action
 const CREATEROOM = "createRoom";
@@ -13,6 +13,7 @@ const GETMYPLANNEXT = "getMyPlanNextPage";
 const GETDETAILPLAN = "getDetailPlan";
 const DELETEMYPLAN = "deleteMyPlan";
 const LOADING = "loading";
+const CLICKWISHINDETAIL = "clickWishInDetail";
 
 //init
 const init = {
@@ -39,68 +40,64 @@ const getDetailPlan = createAction(GETDETAILPLAN, (detailPlan) => ({
 }));
 const loading = createAction(LOADING, (isLoading) => ({ isLoading }));
 const deleteMyPlan = createAction(DELETEMYPLAN, (postId) => ({ postId }));
+const clickWishInDetail = createAction(CLICKWISHINDETAIL, (result) => ({
+  result,
+}));
 
 //middlewares
 const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.post(
-      "/plans",
-      {
-        startDate,
-        endDate,
-        dateCnt,
-        postTitle: title.value,
-        location,
-        theme,
-      },
-      {
-        headers: {
-          Authorization: localStorage.getItem("token"),
+    try {
+      const response = await apis.axiosInstance.post(
+        "/plans",
+        {
+          startDate,
+          endDate,
+          dateCnt,
+          postTitle: title.value,
+          location,
+          theme,
         },
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+      if (response.status === 201) {
+        const db = getDatabase();
+        set(ref(db, `${response.data.postId}`), {
+          postId: response.data.postId,
+          startDate: response.data.startDate,
+          endDate: response.data.endDate,
+          dateCnt: response.data.dateCnt,
+          title: response.data.postTitle,
+          location: response.data.location,
+          theme: response.data.theme,
+          islike: false,
+        });
+        dispatch(createRoom(response.data));
+        history.push(`/planning/${response.data.postId}`);
       }
-    );
-
-    if (response.status === 201) {
-      const db = getDatabase();
-      set(ref(db, `${response.data.postId}`), {
-        postId: response.data.postId,
-        startDate: response.data.startDate,
-        endDate: response.data.endDate,
-        dateCnt: response.data.dateCnt,
-        title: response.data.postTitle,
-        location: response.data.location,
-        theme: response.data.theme,
-        islike: false,
-      });
-      // set(ref(db, `${response.postId}`), {
-      //   postId: response.postId,
-      //   startDate: response.startDate,
-      //   endDate: response.endDate,
-      //   dateCnt: response.dateCnt,
-      //   title: response.postTitle,
-      //   location: response.location,
-      //   theme: response.theme,
-      //   islike: false,
-      // });
-      dispatch(createRoom(response.data));
-      // dispatch(createRoom(response));
-      history.push(`/planning/${response.data.postId}`);
-      // history.push(`/planning/${response.postId}`);
+    } catch (err) {
+      Sentry.captureException(err);
     }
   };
 };
 
 const getRoomDB = (postId) => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.get(`/plans/${postId}`, {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    });
-    // const response = RESP.MAKEPLANGET;
-    if (response.status === 200) {
-      dispatch(createRoom(response.data));
-      // dispatch(createRoom(response));
+    try {
+      const response = await apis.axiosInstance.get(`/plans/${postId}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      if (response.status === 200) {
+        dispatch(createRoom(response.data));
+      }
+    } catch (err) {
+      Sentry.captureException(err);
     }
   };
 };
@@ -117,6 +114,7 @@ const completePlanDB = (data) => {
         history.replace("/uploadcomplete");
       }
     } catch (err) {
+      Sentry.captureException(err);
       console.log(err.response);
     }
   };
@@ -124,56 +122,93 @@ const completePlanDB = (data) => {
 
 const getMyPlanPage1DB = () => {
   return async function (dispatch, getState, { history }) {
-    dispatch(loading(true));
-    const response = await apis.axiosInstance.get("/user/plans/1");
-    // const response = RESP.GETPLANGET;
-    let paging = {
-      start: 2,
-      lastPage: response.data.islastPage,
-    };
-    if (response.status === 200) {
-      dispatch(getMyPlanPage1(response.data.myplanList, paging));
+    try {
+      dispatch(loading(true));
+      const response = await apis.axiosInstance.get("/user/plans/1");
+      // const response = RESP.GETPLANGET;
+      let paging = {
+        start: 2,
+        lastPage: response.data.islastPage,
+      };
+      if (response.status === 200) {
+        dispatch(getMyPlanPage1(response.data.myplanList, paging));
+      }
+    } catch (err) {
+      Sentry.captureException(err);
     }
   };
 };
 
 const getMyPlanNextPageDB = (page) => {
   return async function (dispatch, getState, { history }) {
-    dispatch(loading(true));
-    const response = await apis.axiosInstance.get(`/user/plans/${page}`);
-    let paging = {
-      start: page + 1,
-      lastPage: response.data.islastPage,
-    };
-    if (response.status === 200) {
-      dispatch(getMyPlanNextPage(response.data.myplanList, paging));
+    try {
+      dispatch(loading(true));
+      const response = await apis.axiosInstance.get(`/user/plans/${page}`);
+      let paging = {
+        start: page + 1,
+        lastPage: response.data.islastPage,
+      };
+      if (response.status === 200) {
+        dispatch(getMyPlanNextPage(response.data.myplanList, paging));
+      }
+    } catch (err) {
+      Sentry.captureException(err);
     }
   };
 };
 
 const deleteMyPlanDB = (postId) => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.delete(`/user/plans/${postId}`);
-    // const response = RESP.DELPLANDELETE;
-    if (response.status === 200) {
-      dispatch(deleteMyPlan(postId));
+    try {
+      const response = await apis.axiosInstance.delete(`/user/plans/${postId}`);
+      // const response = RESP.DELPLANDELETE;
+      if (response.status === 200) {
+        dispatch(deleteMyPlan(postId));
+      }
+    } catch (err) {
+      Sentry.captureException(err);
+      console.log(err);
     }
   };
 };
 
 const exitBrowserOnPlanDB = (postId) => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.delete(`/plans/${postId}`);
+    try {
+      const response = await apis.axiosInstance.delete(`/plans/${postId}`);
+    } catch (err) {
+      Sentry.captureException(err);
+    }
   };
 };
 
 const getDetailPlanDB = (postId) => {
   return async function (dispatch, getState, { history }) {
-    const response = await apis.axiosInstance.get(`/plans/detail/${postId}`);
-    // const response = RESP.DETAILPOSTIDGET;
+    try {
+      const response = await apis.axiosInstance.get(`/plans/detail/${postId}`);
+      // const response = RESP.DETAILPOSTIDGET;
+      console.log(response);
+      if (response.status === 200) {
+        dispatch(getDetailPlan(response.data));
+      }
+    } catch (err) {
+      Sentry.captureException(err);
+      console.log(err);
+    }
+  };
+};
 
-    if (response) {
-      dispatch(getDetailPlan(response.data));
+// 찜하기-상세페이지에서 검색결과 찜한경우
+const clickWishDetailPostDB = (postId) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const response = await apis.axiosInstance.post(`/plans/like/${postId}`);
+      if (response.status === 201) {
+        dispatch(clickWishInDetail(response.data.like));
+      }
+    } catch (err) {
+      Sentry.captureException(err);
+      console.log(err);
     }
   };
 };
@@ -212,6 +247,10 @@ export default handleActions(
         });
         draft.myPlanList = newMyPlanList;
       }),
+    [CLICKWISHINDETAIL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.detailPlan.islike = action.payload.result;
+      }),
   },
   init
 );
@@ -225,6 +264,7 @@ const planAction = {
   deleteMyPlanDB,
   exitBrowserOnPlanDB,
   getDetailPlanDB,
+  clickWishDetailPostDB,
 };
 
 export { planAction };
