@@ -23,6 +23,8 @@ const Myplan = () => {
   const [clickedId, setClickedId] = useState();
   const middledivRef = useRef();
 
+  console.log(paging, lastPage, isLoading);
+
   const moreBtnClick = (e) => {
     setModalOpen(true);
     setClickedId(e.target.id);

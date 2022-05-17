@@ -7,6 +7,7 @@ import styled from "styled-components";
 import ScheduleDetail from "../components/detail/ScheduleDetail";
 import ReviewList from "../components/review/ReviewList";
 import addMore from "../static/images/button/addMore.png";
+import { getCommentDB } from "../redux/module/review";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(planAction.getDetailPlanDB(postId));
+    dispatch(getCommentDB(postId));
   }, []);
 
   return (

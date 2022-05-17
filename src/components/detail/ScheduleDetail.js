@@ -7,7 +7,7 @@ const ScheduleDetail = ({ dayNow }) => {
   const userByDay = useSelector((state) => state.plan?.detailPlan.user);
   const loginUser = useSelector((state) => state.user.list);
 
-  if (!planByDay) {
+  if (!planByDay || !userByDay) {
     return null;
   }
   const dayPlanPlaces = planByDay[dayNow - 1]?.places;
@@ -22,7 +22,7 @@ const ScheduleDetail = ({ dayNow }) => {
   return (
     <Container>
       {dayPlanPlaces.map((place, idx) => {
-        console.log(place);
+        // console.log(place);
         return (
           <PlaceCard key={idx}>
             <div>

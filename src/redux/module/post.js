@@ -1,6 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
-import axios from "axios";
 import apis from "../../shared/request";
 
 // action
@@ -16,7 +15,7 @@ const initialState = {
   bestList: [],
   locationList: [],
   searchList: [],
-  islastPage: false,
+  paging: { start: null, isLastPage: false },
   totalPage: 1,
   keyword: "",
   isLoading: false,
@@ -55,7 +54,7 @@ export const getBestPostDB = () => {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await apis.axiosInstance.get(`/api/planning/best`, {
+      const response = await apis.axiosInstance.get(`/plans/best`, {
         headers: {
           Authorization: `${token}`,
         },
@@ -76,7 +75,7 @@ export const getLocationPostDB = (location, pageno) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.get(
-        `/api/planning/location/${location}/1`
+        `/plans/location/${location}/1`
       );
       if (response.status === 200) {
         dispatch(getLocationPost(response.data));
@@ -92,7 +91,7 @@ export const getKeywordPostDB = (keyword, pageno) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.get(
-        `/api/search/${keyword}/${pageno}`
+        `/plans/keyword/${keyword}/1`
       );
 
       if (response.status === 200) {
@@ -107,12 +106,10 @@ export const getKeywordPostDB = (keyword, pageno) => {
 };
 
 //테마별 조회 [메인]
-export const getThemePostDB = (keyword) => {
+export const getThemePostDB = (theme) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const response = await apis.axiosInstance.get(
-        `/api/planning/theme/${keyword}/1`
-      );
+      const response = await apis.axiosInstance.get(`/plans/theme/${theme}/1`);
 
       if (response.status === 200) {
         dispatch(getSearchPost(response.data));

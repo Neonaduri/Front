@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -14,12 +14,13 @@ import { area } from "../elements/ArrValue";
 
 const ButtonArea = () => {
   const dispatch = useDispatch();
+  const [selectVal, setSelectVal] = useState("서울");
 
   const onClick = (e) => {
     const location = e.target.value;
+    setSelectVal(e.target.value);
     dispatch(getLocationPostDB(location));
     dispatch(keywordDB(location));
-    dispatch(getKeywordPostDB(location));
   };
 
   const settings = {
@@ -40,7 +41,13 @@ const ButtonArea = () => {
     <StyledSlide {...settings}>
       {area.map((item, idx) => {
         return (
-          <BtnArea onClick={onClick} value={item} key={idx}>
+          <BtnArea
+            selectVal={selectVal}
+            item={item}
+            onClick={onClick}
+            value={item}
+            key={idx}
+          >
             {item}
           </BtnArea>
         );
@@ -80,9 +87,10 @@ const StyledSlide = styled(Slider)`
 `;
 
 const BtnArea = styled.button`
-  background: #ffffff;
+  background: ${(props) =>
+    props.selectVal === props.item ? "#56be91" : "#fff"};
   border: 1px solid #cacaca;
-  color: #cacaca;
+  color: ${(props) => (props.selectVal === props.item ? "white" : "#cacaca")};
   border-radius: 20px;
   margin-top: 10px;
   padding: 4px 10px;
@@ -92,11 +100,4 @@ const BtnArea = styled.button`
   padding: 4px 14px;
   gap: 10px;
   cursor: pointer;
-
-  &:focus {
-    border: none;
-    color: white;
-    background: #56be91;
-    border-radius: 20px;
-  }
 `;

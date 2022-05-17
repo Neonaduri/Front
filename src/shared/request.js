@@ -1,8 +1,18 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://43.200.3.188:8080",
+  baseURL: " http://43.200.3.188",
 });
+
+// const axiosOVInstance = axios.create({
+//   baseURL: "https://ohyeryung.shop",
+//   headers: {
+//     "content-type": "application/json",
+//     accept: "application/json",
+//     Authorization: localStorage.getItem("token"),
+//   },
+//   withCredentials: true,
+// });
 
 // 가지고 있는 토큰 넣어주기!
 // 로그인 전이면 토큰이 없으니 못 넣어요.
@@ -21,7 +31,7 @@ axiosInstance.interceptors.response.use(
     try {
       const errResponseStatus = error.response.status;
       const errResponseData = error.response.data;
-      const prevRequest = error.config;
+      const prevRequest = error.config; // 이전요청 정보
 
       // access token이 만료되어 발생하는 에러인 경우
       // 백엔드와 에러메세지와 status 코드를 사전에 협의할 것
