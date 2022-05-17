@@ -34,7 +34,20 @@ const MainPage = ({ history }) => {
 
   const isLoading = useSelector((state) => state.post.isLoading);
 
-  const settings = {
+  const settings1 = {
+    slidesToShow: 2,
+    slidesToScroll: 2,
+    centerMode: true,
+    centerPadding: "0px",
+    arrows: true,
+    dots: true,
+    fade: false,
+    infinite: true,
+    pauseOnFocus: true,
+    pauseOnHover: true,
+  };
+
+  const settings2 = {
     slidesToShow: 2,
     slidesToScroll: 2,
     centerMode: true,
@@ -70,7 +83,7 @@ const MainPage = ({ history }) => {
             <Name>
               <Title>인기 여행</Title>
             </Name>
-            <StyledSlide {...settings}>
+            <StyledSlide {...settings1}>
               {bestList &&
                 bestList.map((item, id) => {
                   return <Popular key={id} {...item} />;
@@ -93,7 +106,7 @@ const MainPage = ({ history }) => {
               </Plus>
             </LoName>
             <ButtonArea />
-            <StyledSlide {...settings}>
+            <StyledSlide {...settings2}>
               {locationList &&
                 locationList.map((item, id) => {
                   return <Location key={id} {...item} />;

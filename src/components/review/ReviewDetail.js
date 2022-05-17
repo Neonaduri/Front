@@ -8,10 +8,13 @@ import {
   addCommentDB,
   editCommentDB,
   getCommentDB,
+  getNextCommentDB,
 } from "../../redux/module/review";
 import Back from "../../static/images/button/back.png";
 import ReviewItem from "./ReviewItem";
 import Camera from "../../static/images/icon/camera.png";
+import InfinityScroll from "../../shared/InfinityScroll";
+import x from "../../static/images/x.png";
 
 const ReviewDetail = () => {
   const params = useParams();
@@ -19,9 +22,12 @@ const ReviewDetail = () => {
   const [files, setFiles] = useState();
   const reviewList = useSelector((state) => state.review.reviewList);
   const totalCnt = useSelector((state) => state.review.totalElements);
+  const paging = useSelector((state) => state.review.paging);
+  const isLoading = useSelector((state) => state.review.isLoading);
+  const lastPage = useSelector((state) => state.review.paging.lastPage);
   const reviewRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
-  const [preview, setPreview] = useState("");
+  const [preview, setPreview] = useState(null);
   const [reviewItemData, setReviewItemData] = useState({
     reviewId: null,
     nickName: "",
@@ -33,6 +39,7 @@ const ReviewDetail = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const middledivRef = useRef();
 
   const handleEdit = (item) => {
     setReviewItemData(item);
@@ -134,6 +141,17 @@ const ReviewDetail = () => {
     }
   };
 
+  const deleteImg = () => {
+    setPreview("");
+  };
+
+  const deleteEditImg = (e) => {
+    setReviewItemData({
+      reviewImgUrl: "",
+    });
+    onImgChange(e);
+  };
+
   return (
     <>
       <ReviewBox>
@@ -147,80 +165,100 @@ const ReviewDetail = () => {
           리뷰<span>({totalCnt})</span>
         </h2>
       </ReviewBox>
+      <Middlediv ref={middledivRef} id="container">
+        <InfinityScroll
+          callNext={() => {
+            dispatch(getNextCommentDB(postId, paging.start));
+            console.log(postId, paging.start);
+          }}
+          is_next={lastPage ? false : true}
+          loading={isLoading}
+          ref={middledivRef}
+        >
+          <Container>
+            {reviewList &&
+              reviewList.map((item, id) => {
+                return (
+                  <ReviewItem
+                    setReviewItemData={setReviewItemData}
+                    cancelEdit={cancelEdit}
+                    handleEdit={handleEdit}
+                    key={id}
+                    {...item}
+                  />
+                );
+              })}
+          </Container>
+        </InfinityScroll>
+      </Middlediv>
 
-      <Container>
-        {reviewList &&
-          reviewList.map((item, id) => {
-            return (
-              <ReviewItem
-                setReviewItemData={setReviewItemData}
-                cancelEdit={cancelEdit}
-                handleEdit={handleEdit}
-                key={id}
-                {...item}
-              />
-            );
-          })}
-      </Container>
-
-      <Wrap>
-        <ContainerInput>
-          <ReviewInputBox>
-            <WriteBox>
-              <Photo>
-                {(files || reviewItemData.reviewImgUrl) && (
-                  <div>
-                    {isEdit ? (
+      <ContainerInput>
+        <ReviewInputBox>
+          <WriteBox>
+            <Photo>
+              {(files || reviewItemData.reviewImgUrl) && (
+                <div>
+                  {isEdit ? (
+                    <Preview>
                       <Test src={reviewItemData.reviewImgUrl}></Test>
-                    ) : (
+                      <X
+                        onClick={deleteEditImg}
+                        src={(preview || reviewItemData.reviewImgUrl) && x}
+                      ></X>
+                    </Preview>
+                  ) : (
+                    <Preview>
                       <Test src={preview}></Test>
-                    )}
-                  </div>
-                )}
-              </Photo>
+                      <X onClick={deleteImg} src={x}></X>
+                    </Preview>
+                  )}
+                </div>
+              )}
+            </Photo>
 
-              <Memo>
-                <TextareaAutosize
-                  autoFocus
-                  name="reviewContents"
-                  type="text"
-                  placeholder="리뷰를 작성해주세요"
-                  onChange={onChangeFormValue}
-                  value={reviewItemData.reviewContents}
-                  ref={reviewRef}
-                  style={{
-                    display: "flex",
-                    width: "270px",
-                    height: "35px",
-                    padding: "8px",
-                    resize: "none",
-                    overflow: "hidden",
-                    outline: "none",
-                    border: 0,
-                    margin: "0 0 0 3px",
-                  }}
-                ></TextareaAutosize>
-                <Label htmlFor="chooseFile">
-                  <Icon src={Camera}></Icon>
-                </Label>
-              </Memo>
-            </WriteBox>
+            <Memo>
+              <TextareaAutosize
+                autoFocus
+                name="reviewContents"
+                type="text"
+                placeholder="리뷰를 작성해주세요"
+                onChange={onChangeFormValue}
+                value={reviewItemData.reviewContents}
+                ref={reviewRef}
+                style={{
+                  display: "flex",
+                  width: "260px",
+                  height: "35px",
+                  // padding: "8px",
+                  resize: "none",
+                  overflow: "hidden",
+                  outline: "none",
+                  border: 0,
+                  margin: "0 0 0 3px",
+                }}
+              ></TextareaAutosize>
+              <Label htmlFor="chooseFile">
+                <Icon src={Camera}></Icon>
+              </Label>
+            </Memo>
+          </WriteBox>
+
+          <ButtonDiv>
             {isEdit ? (
               <Button onClick={editCompleteBtn}>수정</Button>
             ) : (
               <Button onClick={ReviewBtnClick}>등록</Button>
             )}
-          </ReviewInputBox>
-          <form method="post" encType="multipart/form-data"></form>
-          <FileName
-            type="file"
-            id="chooseFile"
-            accept="image/*"
-            onChange={onImgChange}
-            onClick={onImgFile}
-          ></FileName>
-        </ContainerInput>
-      </Wrap>
+          </ButtonDiv>
+        </ReviewInputBox>
+
+        <FileName
+          type="file"
+          id="chooseFile"
+          accept="image/*"
+          onChange={onImgChange}
+        ></FileName>
+      </ContainerInput>
     </>
   );
 };
@@ -228,18 +266,41 @@ const ReviewDetail = () => {
 export default ReviewDetail;
 
 const ReviewInputBox = styled.div`
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 18px;
-  /* margin-top: 30px; */
-  padding: 10px;
+  /* height: 18px; */
 `;
 
 const Photo = styled.div`
   display: block;
   justify-content: center;
+  /* padding: 10px; */
+`;
+
+const ButtonDiv = styled.div`
+  display: flex;
+  align-items: baseline;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* background-color: tomato; */
+  padding: 5px;
+`;
+
+const X = styled.img`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 12px;
+  bottom: 2px;
+  cursor: pointer;
+  width: ${(props) => (props.src ? "19px" : "")};
+  height: ${(props) => (props.src ? "19px" : "")};
+`;
+
+const Preview = styled.div`
+  display: flex;
 `;
 
 const Memo = styled.div`
@@ -248,15 +309,12 @@ const Memo = styled.div`
   align-items: center;
 `;
 
-const Wrap = styled.div`
-  position: fixed;
-`;
-
 const Test = styled.img`
   display: flex;
-  width: 55px;
-  height: 60px;
+  width: ${(props) => (props.src ? "64px" : "")};
+  height: ${(props) => (props.src ? "75px" : "")};
   object-fit: cover;
+  border-radius: 3px;
 `;
 
 const WriteBox = styled.div`
@@ -266,7 +324,8 @@ const WriteBox = styled.div`
   background-color: white;
   border: 1px solid #cacaca;
   border-radius: 5px;
-  margin-right: 5px;
+  /* margin-right: 5px; */
+  padding: 5px;
 `;
 
 // const Bar = styled.img`
@@ -287,18 +346,26 @@ const Label = styled.label`
 
 const ContainerInput = styled.div`
   width: 100%;
-  height: 83px;
   background: #ffffff;
-  /* border-top: 1px solid #cacaca; */
   border-radius: 0px;
   position: fixed;
   background-color: white;
   bottom: 0;
+  padding: 0 10px;
+`;
+
+const Middlediv = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0px 10px;
+  height: 100%;
+  overflow: scroll;
 `;
 
 const Button = styled.button`
-  width: 60px;
-  height: 39px;
+  width: 55px;
+  margin-left: 3px;
+  height: 35px;
   background: #56be91;
   border-radius: 5px;
   border: 0;

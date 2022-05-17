@@ -24,7 +24,7 @@ const MapDetail = ({ dayNow }) => {
   };
 
   const dayPlanPlaces = planByDay[dayNow - 1]?.places;
-  console.log(dayPlanPlaces);
+  // console.log(dayPlanPlaces);
   if (dayPlanPlaces !== undefined) {
     for (let i = 0; i < dayPlanPlaces.length; i++) {
       let latlng = { lat: dayPlanPlaces[i].lat, lng: dayPlanPlaces[i].lng };

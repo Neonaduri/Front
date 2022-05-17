@@ -15,7 +15,7 @@ const initialState = {
   bestList: [],
   locationList: [],
   searchList: [],
-  islastPage: false,
+  paging: { start: null, isLastPage: false },
   totalPage: 1,
   keyword: "",
   isLoading: false,

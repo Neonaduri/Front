@@ -44,7 +44,7 @@ const deleteMyPlan = createAction(DELETEMYPLAN, (postId) => ({ postId }));
 const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
   return async function (dispatch, getState, { history }) {
     const response = await apis.axiosInstance.post(
-      "/api/makeplan",
+      "/plans",
       {
         startDate,
         endDate,

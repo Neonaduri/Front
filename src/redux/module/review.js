@@ -4,16 +4,26 @@ import apis from "../../shared/request";
 
 // Actions Types
 const GET_COMMENT = "GET_COMMENT";
+const GET_NEXT_COMMENT = "GET_NEXT_COMMENT";
 const ADD_COMMENT = "ADD_COMMENT";
 const EDIT_COMMENT = "EDIT_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
 const ONE_COMMENT = "ONE_COMMENT";
 const TOTAL_ELEMENTS = "TOTAL_ELEMENTS";
+const LOADING = "loading";
 
 // Action Creators
-export const getComment = createAction(GET_COMMENT, (reviewList) => ({
+export const getComment = createAction(GET_COMMENT, (reviewList, paging) => ({
   reviewList,
+  paging,
 }));
+export const getNextComment = createAction(
+  GET_NEXT_COMMENT,
+  (reviewList, paging) => ({
+    reviewList,
+    paging,
+  })
+);
 export const addComment = createAction(ADD_COMMENT, (reviewList) => ({
   reviewList,
 }));
@@ -29,6 +39,7 @@ export const getOneComment = createAction(ONE_COMMENT, (reviewList) => ({
 export const totalElements = createAction(TOTAL_ELEMENTS, (totalElements) => ({
   totalElements,
 }));
+const loading = createAction(LOADING, (isLoading) => ({ isLoading }));
 //미들웨어
 
 //리뷰등록
@@ -56,16 +67,43 @@ export const addCommentDB = (postId, formdata, config) => {
 //리뷰조회
 export const getCommentDB = (postId, pageno) => {
   return async function (dispatch, getState, { history }) {
+    dispatch(loading(true));
     try {
       const response = await apis.axiosInstance.get(
         `/detail/reviews/${postId}/1`
       );
 
+      let paging = {
+        start: 2,
+        lastPage: response.data.islastPage,
+      };
+
       if (response.status === 200) {
-        console.log("후기조회", response.data.totalElements);
-        console.log(response.data.reviewList);
-        dispatch(getComment(response.data.reviewList));
+        dispatch(getComment(response.data.reviewList, paging));
         dispatch(totalElements(response.data.totalElements));
+      }
+    } catch (err) {
+      console.log("에러발생", err);
+    }
+  };
+};
+
+export const getNextCommentDB = (postId, pageno) => {
+  return async function (dispatch, getState, { history }) {
+    dispatch(loading(true));
+    try {
+      const response = await apis.axiosInstance.get(
+        `/detail/reviews/${postId}/${pageno}`
+      );
+
+      let paging = {
+        start: pageno + 1,
+        lastPage: response.data.islastPage,
+      };
+
+      if (response.status === 200) {
+        console.log(response.data);
+        dispatch(getNextComment(response.data.reviewList, paging));
       }
     } catch (err) {
       console.log("에러발생", err);
@@ -135,6 +173,8 @@ export const deleteCommentDB = (reviewId) => {
 
 const initialComment = {
   totalElements: 0,
+  paging: { start: null, islastPage: false },
+  isLoading: false,
   reviewList: [
     {
       reviewId: 1,
@@ -153,6 +193,14 @@ export default handleActions(
     [GET_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         draft.reviewList = action.payload.reviewList;
+        draft.paging = action.payload.paging;
+        draft.isLoading = false;
+      }),
+    [GET_NEXT_COMMENT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.reviewList.push(...action.payload.reviewList);
+        draft.paging = action.payload.paging;
+        draft.isLoading = false;
       }),
     [ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
@@ -179,6 +227,10 @@ export default handleActions(
     [TOTAL_ELEMENTS]: (state, action) =>
       produce(state, (draft) => {
         draft.totalElements = action.payload.totalElements;
+      }),
+    [LOADING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.isLoading = action.payload.isLoading;
       }),
   },
   initialComment

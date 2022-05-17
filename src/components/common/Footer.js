@@ -9,6 +9,7 @@ import beforeHome from "../../static/images/icon/beforeHome.png";
 import activeSearch from "../../static/images/icon/activeSearch.png";
 import activePlan from "../../static/images/icon/activePlan.png";
 import activeMypage from "../../static/images/icon/activeMypage.png";
+import underBar from "../../static/images/underBar.png";
 
 const Footer = (props) => {
   const history = useHistory();
@@ -58,8 +59,8 @@ const Footer = (props) => {
               <Logo src={getSrc(path, defaultSrc, activeSrc)} />
             </NavItem>
           ))}
-          <Bar></Bar>
         </Container>
+        <Bar src={underBar}></Bar>
       </NavWrapper>
     </>
   );
@@ -73,7 +74,9 @@ const NavWrapper = styled.footer`
   left: 0;
   right: 0;
   width: 100%;
+  height: 75px;
   background-color: white;
+  border-top: 1px solid #cacaca;
   z-index: 9999;
 `;
 
@@ -83,21 +86,15 @@ const NavItem = styled.button`
   outline: none;
 `;
 
-const Bar = styled.div`
-  position: absolute;
-  width: 130px;
-  height: 5px;
-  left: 123px;
-  top: 598px;
-  background: #000000;
-  border-radius: 50px;
+const Bar = styled.img`
+  margin-left: 120px;
 `;
 
 const Container = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  padding: 15px 30px;
+  padding: 5px 30px;
 `;
 
 const Logo = styled.img`

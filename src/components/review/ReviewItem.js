@@ -75,7 +75,7 @@ const ReviewItem = ({
             </Btns>
           )}
         </UpperContents>
-        {reviewImgUrl === null ? null : (
+        {reviewImgUrl && (
           <Image onClick={onClick}>
             <ImagePop src={reviewImgUrl}></ImagePop>
           </Image>
@@ -153,10 +153,6 @@ const Image = styled.div`
   object-fit: cover;
   width: 100%;
   height: 241px;
-`;
-
-const Textarea = styled.textarea`
-  resize: none;
 `;
 
 const Content = styled.div`
