@@ -73,7 +73,7 @@ const Mypage = () => {
 
 const RestDiv = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 50vh;
   background-color: ${({ theme }) => theme.colors.text4};
   padding: 10px 0px;
   span {
@@ -98,6 +98,7 @@ const UserinfoDiv = styled.div`
         height: 70px;
         border-radius: 50%;
         margin-right: 15px;
+        object-fit: cover;
       }
     }
     &:last-child {

@@ -67,6 +67,10 @@ const Calendar = () => {
       alert("여행명을 상세히 입력해주세요! 🤗");
       return;
     }
+    if (title.value.length > 30) {
+      alert("여행명은 최대 30자까지 가능합니다! 🤗");
+      return;
+    }
     dispatch(
       planAction.createRoomDB(
         title,
@@ -112,7 +116,6 @@ const Calendar = () => {
             placeholder="여행 계획명을 작성해주세요."
             {...title}
             id="title"
-            maxLength={15}
           ></input>
         </PostTitlediv>
         <div

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/common/Footer";
 import search from "../static/images/icon/search.png";
@@ -9,6 +9,7 @@ import { useHistory } from "react-router";
 import { getKeywordPostDB, keywordDB } from "../redux/module/post";
 import SearchItem from "../components/search/SearchItem";
 import NotFound from "../shared/NotFound";
+import InfinityScroll from "../shared/InfinityScroll";
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,10 @@ const Search = () => {
   const [serching, setSearching] = useState(false);
   const searchList = useSelector((state) => state.post.searchList);
   const keyWord = useSelector((state) => state.post.keyword);
+  const contentDivRef = useRef();
+  const isLoading = useSelector((state) => state.post.isLoading);
+  const nextPage = useSelector((state) => state.post.paging?.start);
+  let lastPage = useSelector((state) => state.post.paging?.lastpage);
 
   const suggestBtnClick = (e) => {
     dispatch(keywordDB(e.target.value));
@@ -25,16 +30,18 @@ const Search = () => {
 
   const searchEnter = (e) => {
     if (e.key === "Enter") {
-      setPageno(1);
-      dispatch(getKeywordPostDB(e.target.value, pageno));
+      dispatch(getKeywordPostDB(e.target.value));
       dispatch(keywordDB(e.target.value));
       setSearching(true);
     }
   };
 
+  if (lastPage === undefined) {
+    lastPage = true;
+  }
   return (
     <Container>
-      <div>
+      <HeaderDiv>
         <Input
           placeholder="어떤 여행 계획표를 찾으시나요?"
           onKeyPress={(e) => searchEnter(e)}
@@ -46,7 +53,7 @@ const Search = () => {
           }}
         ></Img>
         <I src={search}></I>
-      </div>
+      </HeaderDiv>
       {/* 추천키워드 */}
       <Suggest>
         <h4>추천 키워드</h4>
@@ -60,17 +67,26 @@ const Search = () => {
           })}
         </div>
       </Suggest>
+      <Title>{keyWord} 여행계획표 </Title>
       {/* 검색리스트 페이지 */}
       {searchList.length === 0 && serching === true ? (
         <NotFound />
       ) : (
-        <div>
-          <Title>{keyWord} 여행계획표 </Title>
-          {searchList &&
-            searchList.map((item, idx) => {
-              return <SearchItem key={idx} {...item} />;
-            })}
-        </div>
+        <ContentDiv ref={contentDivRef}>
+          <InfinityScroll
+            callNext={() => {
+              dispatch(getKeywordPostDB(keyWord, nextPage));
+            }}
+            is_next={lastPage ? false : true}
+            loading={isLoading}
+            ref={contentDivRef}
+          >
+            {searchList &&
+              searchList?.map((item, idx) => {
+                return <SearchItem key={idx} {...item} />;
+              })}
+          </InfinityScroll>
+        </ContentDiv>
       )}
 
       <Footer />
@@ -80,8 +96,18 @@ const Search = () => {
 
 export default Search;
 
+const ContentDiv = styled.div`
+  height: 80%;
+  overflow-y: scroll;
+`;
+
+const HeaderDiv = styled.div`
+  height: 5%;
+`;
+
 const Suggest = styled.div`
-  padding: 25px;
+  padding: 20px 15px;
+  height: 14%;
   h4 {
     font-size: 16px;
     font-weight: 500;
@@ -90,7 +116,7 @@ const Suggest = styled.div`
     color: #363636;
   }
   div {
-    margin-top: 15px;
+    margin-top: 7px;
     width: 100%;
   }
   button {
@@ -107,7 +133,7 @@ const Suggest = styled.div`
 `;
 
 const Input = styled.input`
-  width: 80%;
+  width: 78%;
   display: flex;
   margin: auto;
   margin-top: 20px;
@@ -137,18 +163,18 @@ const Img = styled.img`
 const Container = styled.div`
   position: relative;
   padding-bottom: 90px;
+  height: 100%;
 `;
 
 const Title = styled.div`
   position: relative;
   width: 100%;
-  height: 22px;
+  height: 4%;
   left: 16px;
   font-family: "Apple SD Gothic Neo";
   font-style: normal;
   font-weight: 600;
-  top: 10px;
   font-size: 18px;
   line-height: 22px;
-  color: #363636;
+  color: ${({ theme }) => theme.colors.text1};
 `;

@@ -23,8 +23,6 @@ const Myplan = () => {
   const [clickedId, setClickedId] = useState();
   const middledivRef = useRef();
 
-  console.log(paging, lastPage, isLoading);
-
   const moreBtnClick = (e) => {
     setModalOpen(true);
     setClickedId(e.target.id);
@@ -49,6 +47,15 @@ const Myplan = () => {
   if (myAllPlan.length === 0) {
     return <NopostAlert />;
   }
+  const textCut = (text) => {
+    let value;
+    if (text.length > 15) {
+      value = `${text.substring(0, 15)}...`;
+    } else {
+      value = text;
+    }
+    return value;
+  };
 
   return (
     <Container>
@@ -79,7 +86,7 @@ const Myplan = () => {
               <PostCard key={idx}>
                 <UpperCarddiv>
                   <div>
-                    <span>{plan.postTitle}</span>
+                    <span>{textCut(plan.postTitle)}</span>
                     <span>{plan.theme}</span>
                   </div>
                   <button onClick={(e) => moreBtnClick(e)}>
@@ -261,7 +268,7 @@ const Middlediv = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 10px;
-  height: 60%;
+  height: 65%;
   overflow: scroll;
   background-color: ${({ theme }) => theme.colors.borderColor};
 `;
