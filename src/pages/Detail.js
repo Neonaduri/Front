@@ -36,14 +36,14 @@ const Detail = () => {
   useEffect(() => {
     dispatch(planAction.getDetailPlanDB(postId));
   }, []);
-  console.log(detailPlan.islike);
+
   return (
     <Container>
       <HeadDiv>
         <img
           src={back}
           onClick={() => {
-            history.goBack();
+            window.location.replace("/");
           }}
         />
         <Titleline title={detailPlan.postTitle} />

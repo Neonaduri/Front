@@ -45,23 +45,21 @@ const Footer = (props) => {
   ];
 
   return (
-    <>
-      <NavWrapper>
-        <Container>
-          {navData.map(({ path, defaultSrc, activeSrc }, idx) => (
-            <NavItem
-              key={idx}
-              onClick={() => {
-                history.push(path);
-              }}
-            >
-              <Logo src={getSrc(path, defaultSrc, activeSrc)} />
-            </NavItem>
-          ))}
-          <Bar></Bar>
-        </Container>
-      </NavWrapper>
-    </>
+    <NavWrapper>
+      <Container>
+        {navData.map(({ path, defaultSrc, activeSrc }, idx) => (
+          <NavItem
+            key={idx}
+            onClick={() => {
+              history.push(path);
+            }}
+          >
+            <Logo src={getSrc(path, defaultSrc, activeSrc)} />
+          </NavItem>
+        ))}
+        <Bar></Bar>
+      </Container>
+    </NavWrapper>
   );
 };
 
@@ -73,8 +71,9 @@ const NavWrapper = styled.footer`
   left: 0;
   right: 0;
   width: 100%;
-  background-color: white;
   z-index: 9999;
+  border-top: 2px solid ${({ theme }) => theme.colors.borderColor};
+  background-color: white;
 `;
 
 const NavItem = styled.button`
@@ -97,7 +96,7 @@ const Container = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  padding: 15px 30px;
+  padding: 10px 30px;
 `;
 
 const Logo = styled.img`

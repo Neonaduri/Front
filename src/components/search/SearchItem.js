@@ -31,58 +31,59 @@ const SearchItem = ({
   };
 
   return (
-    <div>
-      {/* 하나의 리스트 */}
-      <div>
-        <Wrap>
-          <ImagePop src={postImgUrl} />
-          <SocialWishDiv onClick={(e) => clickWishPost(e)}>
-            {islike ? (
-              <img src={clickedWish} id={postId} />
-            ) : (
-              <img src={unClickedWish} id={postId} />
-            )}
-          </SocialWishDiv>
-        </Wrap>
+    <Container>
+      <Wrap>
+        <ImagePop src={postImgUrl} />
+        <SocialWishDiv onClick={(e) => clickWishPost(e)}>
+          {islike ? (
+            <img src={clickedWish} id={postId} />
+          ) : (
+            <img src={unClickedWish} id={postId} />
+          )}
+        </SocialWishDiv>
+      </Wrap>
 
-        {/* 카테고리 */}
-        <BoxTop onClick={() => history.push(`/detail/${postId}`)}>
-          <Term>
-            {newStartDate} ~ {newEndDate}
-          </Term>
-          <Cons>
-            <Content>{location}</Content>
-            <Content>{theme}</Content>
-          </Cons>
-        </BoxTop>
+      {/* 카테고리 */}
+      <BoxTop onClick={() => history.push(`/detail/${postId}`)}>
+        <Term>
+          {newStartDate} ~ {newEndDate}
+        </Term>
+        <Cons>
+          <Content>{location}</Content>
+          <Content>{theme}</Content>
+        </Cons>
+      </BoxTop>
 
-        <Box onClick={() => history.push(`/detail/${postId}`)}>
-          <Contain>
-            <Con>{postTitle}</Con>
-          </Contain>
-        </Box>
+      <Box onClick={() => history.push(`/detail/${postId}`)}>
+        <Contain>
+          <Con>{postTitle}</Con>
+        </Contain>
+      </Box>
 
-        {/* 좋아요, 댓글개수 */}
-        <SectionBox>
-          <Nickname>{user.nickName}</Nickname>
+      {/* 좋아요, 댓글개수 */}
+      <SectionBox>
+        <Nickname>{user.nickName}</Nickname>
+        <Like>
           <Like>
-            <Like>
-              <img src={wish} />
-              <Cnt>{likeCnt}</Cnt>
-            </Like>
-            <Like>
-              <img src={review} />
-              <Cnt>{reviewCnt}</Cnt>
-            </Like>
+            <img src={wish} />
+            <Cnt>{likeCnt}</Cnt>
           </Like>
-        </SectionBox>
-        <Bar></Bar>
-      </div>
-    </div>
+          <Like>
+            <img src={review} />
+            <Cnt>{reviewCnt}</Cnt>
+          </Like>
+        </Like>
+      </SectionBox>
+      <Bar></Bar>
+    </Container>
   );
 };
 
 export default SearchItem;
+
+const Container = styled.div`
+  width: 375px;
+`;
 
 const SocialWishDiv = styled.div`
   position: absolute;

@@ -30,6 +30,7 @@ export const getOneComment = createAction(ONE_COMMENT, (reviewList) => ({
 export const totalElements = createAction(TOTAL_ELEMENTS, (totalElements) => ({
   totalElements,
 }));
+
 //미들웨어
 
 //리뷰등록

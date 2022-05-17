@@ -1,11 +1,21 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
+import ReviewList from "../../components/review/ReviewList";
+import addMore from "../../static/images/button/addMore.png";
 
 const ScheduleDetail = ({ dayNow }) => {
+  const history = useHistory();
   const planByDay = useSelector((state) => state.plan?.detailPlan.days);
   const userByDay = useSelector((state) => state.plan?.detailPlan.user);
   const loginUser = useSelector((state) => state.user.list);
+  const reviewList = useSelector((state) => state.review.reviewList);
+  const totalCnt = useSelector((state) => state.review.totalElements);
+  const params = useParams();
+  const postId = params.id;
+  const arr = reviewList.slice(0, 3);
+
   if (!planByDay) {
     return null;
   }
@@ -79,9 +89,45 @@ const ScheduleDetail = ({ dayNow }) => {
           </PlaceCard>
         );
       })}
+      <ReviewBox>
+        <h2>
+          리뷰 <span>({totalCnt})</span>
+        </h2>
+        <img
+          src={addMore}
+          onClick={() => {
+            history.push(`${postId}/write`);
+          }}
+        ></img>
+      </ReviewBox>
+
+      <ReviewPage>
+        {arr &&
+          arr.map((item, id) => {
+            return <ReviewList key={id} {...item} totalCnt={totalCnt} />;
+          })}
+      </ReviewPage>
     </Container>
   );
 };
+
+const ReviewPage = styled.div``;
+
+const ReviewBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 15px;
+  width: 100%;
+  height: 18px;
+  border-top: 10px solid ${({ theme }) => theme.colors.borderColor};
+  h2 {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 18px;
+    color: ${({ theme }) => theme.colors.text1};
+  }
+`;
 
 const NoPlanContainer = styled.div`
   padding: 10px;

@@ -198,6 +198,7 @@ const getDetailPlanDB = (postId) => {
   };
 };
 
+// 찜하기-상세페이지에서 검색결과 찜한경우
 const clickWishDetailPostDB = (postId) => {
   return async function (dispatch, getState, { history }) {
     try {

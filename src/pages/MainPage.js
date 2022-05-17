@@ -91,7 +91,7 @@ const MainPage = ({ history }) => {
 
         <Footer />
       </Section>
-      {isLoading ? null : <Splash />}
+      {isLoading ? <Splash /> : null}
     </>
   );
 };

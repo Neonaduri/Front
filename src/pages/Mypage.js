@@ -23,10 +23,6 @@ const Mypage = () => {
     history.replace("/login");
   };
 
-  useEffect(() => {
-    dispatch(userAction.getMyLikePostDB());
-    dispatch(userAction.getMyReviewDB());
-  }, []);
   if (!isLogin) {
     history.replace("/login");
   }
@@ -51,11 +47,21 @@ const Mypage = () => {
         <MypageBtn
           content={"내 계정 관리"}
           onClick={() => {
-            history.push("/myedit");
+            history.push("/mypage/edit");
           }}
         />
-        <MypageBtn content={"스크랩 보기"} />
-        <MypageBtn content={"내 댓글 보기"} />
+        <MypageBtn
+          content={"스크랩 보기"}
+          onClick={() => {
+            history.push("/mypage/scrap");
+          }}
+        />
+        <MypageBtn
+          content={"내 댓글 보기"}
+          onClick={() => {
+            history.push("/mypage/review");
+          }}
+        />
       </PageBtnDiv>
       <RestDiv>
         <span onClick={logoutClick}>로그아웃</span>

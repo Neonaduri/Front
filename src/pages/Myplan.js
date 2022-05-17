@@ -47,7 +47,7 @@ const Myplan = () => {
   if (myAllPlan.length === 0) {
     return <NopostAlert />;
   }
-  console.log(myAllPlan);
+
   return (
     <Container>
       <Titleline title={"계획"} />
@@ -215,7 +215,7 @@ const UpperCarddiv = styled.div`
     align-items: center;
     span {
       &:first-child {
-        font-size: 20px;
+        font-size: 18px;
       }
       &:nth-child(2) {
         background-color: ${({ theme }) => theme.colors.borderColor};

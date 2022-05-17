@@ -10,6 +10,8 @@ const SIGNUP = "signup";
 const ISLOGIN = "isLogin";
 const GETLIKEDPOST = "getLikedPost";
 const GETMYREVIEW = "getMyReview";
+const CLICKWISHINMYSCRAP = "clickWishInMyscrap";
+const DELETE_COMMENT_MYPAGE = "DELETE_COMMENT_MYPAGE";
 
 //init
 const init = {
@@ -26,6 +28,12 @@ const signUp = createAction(SIGNUP, (result) => ({ result }));
 const isLogin = createAction(ISLOGIN, (user) => ({ user }));
 const getLikedPost = createAction(GETLIKEDPOST, (posts) => ({ posts }));
 const getMyReview = createAction(GETMYREVIEW, (reviews) => ({ reviews }));
+const clickWishInMyscrap = createAction(CLICKWISHINMYSCRAP, (result) => ({
+  result,
+}));
+const deleteCommentMypage = createAction(DELETE_COMMENT_MYPAGE, (reviewId) => ({
+  reviewId,
+}));
 
 //middlewares
 const emailCheckDB = (username) => {
@@ -181,7 +189,6 @@ const getMyLikePostDB = () => {
     try {
       const response = await apis.axiosInstance.get("/user/plans/like/1");
       // const response = RESP.MYPAGELIKEGET;
-      console.log(response);
       if (response.status === 200) {
         dispatch(getLikedPost(response.data.postList));
       }
@@ -195,7 +202,6 @@ const getMyReviewDB = () => {
     try {
       const response = await apis.axiosInstance.get("/user/review");
       // const response = RESP.MYREVIEWGET;
-      console.log(response);
       if (response) {
         dispatch(getMyReview(response.data));
       }
@@ -224,6 +230,40 @@ const editProfileDB = (formdata, config) => {
   };
 };
 
+// 찜하기-마이페이지에서 내가 찜한 게시물 찜하기 클릭한 경우(찜하기 제거됨)
+const clickWishMyScrapDB = (postId) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const response = await apis.axiosInstance.post(`/plans/like/${postId}`);
+      if (response.status === 201) {
+        dispatch(
+          clickWishInMyscrap({ postId: postId, bool: response.data.like })
+        );
+      }
+    } catch (err) {
+      Sentry.captureException(err);
+      console.log(err);
+    }
+  };
+};
+
+//내 댓글보기에서 리뷰삭제
+export const deleteCommentInMypageDB = (reviewId) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const response = await apis.axiosInstance.delete(
+        `/detail/reviews/${reviewId}`
+      );
+      if (response.status === 200) {
+        dispatch(deleteCommentMypage(reviewId));
+      }
+    } catch (err) {
+      Sentry.captureException(err);
+      console.log("에러발생", err);
+    }
+  };
+};
+
 //reducer
 export default handleActions(
   {
@@ -244,6 +284,29 @@ export default handleActions(
       produce(state, (draft) => {
         draft.myReview = action.payload.reviews;
       }),
+    [CLICKWISHINMYSCRAP]: (state, action) =>
+      produce(state, (draft) => {
+        if (action.payload.result.bool === false) {
+          draft.iLikedPost.map((post) => {
+            if (post.postId === parseInt(action.payload.result.postId)) {
+              post.islike = false;
+            }
+          });
+        } else {
+          draft.iLikedPost.map((post) => {
+            if (post.postId === parseInt(action.payload.result.postId)) {
+              post.islike = true;
+            }
+          });
+        }
+      }),
+    [DELETE_COMMENT_MYPAGE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.myReview = draft.myReview.filter((review) => {
+          console.log(review.reviewId, action.payload.reviewId);
+          return review.reviewId !== parseInt(action.payload.reviewId);
+        });
+      }),
   },
   init
 );
@@ -260,6 +323,7 @@ const userAction = {
   getMyLikePostDB,
   getMyReviewDB,
   editProfileDB,
+  clickWishMyScrapDB,
 };
 
 export { userAction };

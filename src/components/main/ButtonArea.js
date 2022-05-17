@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import {
   getKeywordPostDB,
-  getLocationPostDB,
+  getLocationPost1DB,
   getSearchPost,
   keywordDB,
 } from "../../redux/module/post";
@@ -17,7 +17,7 @@ const ButtonArea = () => {
 
   const onClick = (e) => {
     const location = e.target.value;
-    dispatch(getLocationPostDB(location));
+    dispatch(getLocationPost1DB(location));
     dispatch(keywordDB(location));
     dispatch(getKeywordPostDB(location));
   };

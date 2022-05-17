@@ -17,15 +17,13 @@ const ReviewList = ({ nickName, reviewContents, reviewImgUrl, totalCnt }) => {
   //상세페이지 아래에 있는 리뷰페이지
 
   return (
-    <>
-      <Container>
-        <Nickname>{nickName}</Nickname>
-        <Box>
-          {reviewImgUrl === null ? null : <Img src={reviewImgUrl}></Img>}
-          <Text>{reviewContents}</Text>
-        </Box>
-      </Container>
-    </>
+    <Container>
+      <Nickname>{nickName}</Nickname>
+      <Box>
+        {reviewImgUrl === null ? null : <Img src={reviewImgUrl}></Img>}
+        <Text>{reviewContents}</Text>
+      </Box>
+    </Container>
   );
 };
 
