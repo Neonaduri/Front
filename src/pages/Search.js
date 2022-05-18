@@ -163,7 +163,7 @@ const Img = styled.img`
 const Container = styled.div`
   position: relative;
   padding-bottom: 90px;
-  height: 100%;
+  height: 92%;
 `;
 
 const Title = styled.div`
