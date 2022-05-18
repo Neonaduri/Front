@@ -93,7 +93,7 @@ const logInDB = (username, password) => {
       }
     } catch (err) {
       Sentry.captureException(err);
-      window.alert(err.response.data);
+      window.alert(err.response.data.exception);
     }
   };
 };
@@ -155,7 +155,7 @@ const kakaoLoginDB = (code) => {
       }
       if (localStorage.getItem("token")) {
         dispatch(isLoginDB());
-        history.replace("/");
+        window.location.replace("/");
       }
     } catch (err) {
       Sentry.captureException(err);
@@ -164,6 +164,7 @@ const kakaoLoginDB = (code) => {
 };
 
 const googleLoginDB = (code) => {
+  console.log(code);
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.get(
@@ -180,6 +181,7 @@ const googleLoginDB = (code) => {
       }
     } catch (err) {
       Sentry.captureException(err);
+      console.log(err.response);
     }
   };
 };

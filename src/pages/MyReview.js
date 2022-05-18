@@ -135,6 +135,7 @@ const CardBodyDiv = styled.div`
     width: 96px;
     height: 72px;
     border-radius: 5px;
+    object-fit: cover;
   }
   p {
     font-size: 16px;

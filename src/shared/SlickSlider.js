@@ -146,6 +146,8 @@ const TimeModal = styled.div`
       select {
         width: 40%;
         font-size: 20px;
+        border-radius: 5px;
+        border-color: ${({ theme }) => theme.colors.borderColor};
       }
     }
     &:last-child {
@@ -158,6 +160,8 @@ const TimeModal = styled.div`
         padding: 10px 20px;
         border-radius: 10px;
         font-size: 20px;
+        color: white;
+        background-color: ${({ theme }) => theme.colors.mainGreen};
       }
     }
   }

@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import { deleteCommentDB } from "../../redux/module/review";
 import ModalImg from "./ModalImg";
+import moment from "moment";
 
 const ReviewItem = ({
   profileImgUrl,
@@ -15,12 +16,14 @@ const ReviewItem = ({
   handleEditCancel,
   preview,
   cancelEdit,
+  modifiedAt,
 }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const params = useParams();
   const postId = params.productId;
   const profilUrl = useSelector((state) => state.user.list.profileImg);
+  const loginUserNick = useSelector((state) => state.user.list.nickName);
   const [editing, setEditing] = useState(false);
   const [imgModal, setImgModal] = useState(false);
 
@@ -52,6 +55,27 @@ const ReviewItem = ({
     console.log(typeof reviewImgUrl);
   };
 
+  function displayedAt(createdAt) {
+    const milliSeconds = new Date() - createdAt;
+    const seconds = milliSeconds / 1000;
+    if (seconds < 60) return `방금 전`;
+    const minutes = seconds / 60;
+    if (minutes < 60) return `${Math.floor(minutes)}분 전`;
+    const hours = minutes / 60;
+    if (hours < 24) return `${Math.floor(hours)}시간 전`;
+    const days = hours / 24;
+    if (days < 7) return `${Math.floor(days)}일 전`;
+    const weeks = days / 7;
+    if (weeks < 5) return `${Math.floor(weeks)}주 전`;
+    const months = days / 30;
+    if (months < 12) return `${Math.floor(months)}개월 전`;
+    const years = days / 365;
+    return `${Math.floor(years)}년 전`;
+  }
+
+  const date = new Date(modifiedAt);
+  const dateMillisecond = date.getTime() + 3600000 * 9;
+
   return (
     <>
       <Card>
@@ -63,19 +87,25 @@ const ReviewItem = ({
                 history.push("/mypage");
               }}
             ></ProfileImg>
-            <p>{nickName}</p>
-          </Profile>
-
-          {editing ? (
             <div>
-              <Button onClick={cancleBtn}>취소하기</Button>
+              <p>{nickName}</p>
+              <small>{displayedAt(dateMillisecond)}</small>
             </div>
-          ) : (
-            <Btns>
-              <Button onClick={deleteBtn}>삭제</Button>
-              <Button onClick={getEditBtn}>수정</Button>
-            </Btns>
-          )}
+          </Profile>
+          {nickName === loginUserNick ? (
+            <>
+              {editing ? (
+                <div>
+                  <Button onClick={cancleBtn}>취소하기</Button>
+                </div>
+              ) : (
+                <Btns>
+                  <Button onClick={deleteBtn}>삭제</Button>
+                  <Button onClick={getEditBtn}>수정</Button>
+                </Btns>
+              )}
+            </>
+          ) : null}
         </UpperContents>
 
         {reviewImgUrl ? (
@@ -111,26 +141,35 @@ const Card = styled.div`
 const Btns = styled.div``;
 
 const ProfileImg = styled.img`
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
   border-radius: 50px;
-  margin: 10px 0;
+  margin-top: 10px;
   margin-right: 10px;
-  background-color: tomato;
   background-size: cover;
+  object-fit: cover;
 `;
 
 const Profile = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  div {
+    margin-top: 4px;
+    display: flex;
+    flex-direction: column;
+    small {
+      font-size: 12px;
+      color: ${({ theme }) => theme.colors.text3};
+    }
+  }
 `;
 
 const UpperContents = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 16px;
+  padding: 0 20px;
 `;
 
 const Button = styled.button`
@@ -149,25 +188,25 @@ const Button = styled.button`
 const ImagePop = styled.img`
   border-radius: 15px;
   width: 100%;
-  height: 241px;
-  object-fit: cover;
   padding: 10px;
+  height: 200px;
+  object-fit: cover;
 `;
 
 const Image = styled.div`
   object-fit: cover;
-  width: 100%;
-  height: 241px;
+  width: 91%;
+  height: 200px;
+  margin: auto;
 `;
 
 const Content = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 10px;
-  font-family: "Lato";
-  font-style: normal;
-  font-weight: 400;
   font-size: 14px;
-  line-height: 20px;
-  color: #585858;
+  color: ${({ theme }) => theme.colors.text1};
+  width: 90%;
+  padding: 0px 10px;
+  margin: auto;
+  p {
+    margin-top: 5px;
+  }
 `;

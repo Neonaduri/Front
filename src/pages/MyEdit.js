@@ -7,6 +7,7 @@ import Footer from "../components/common/Footer";
 import { useHistory } from "react-router";
 import Button from "../components/elements/Button";
 import { userAction } from "../redux/module/user";
+import x from "../static/images/icon/x.png";
 
 const MyEdit = () => {
   const dispatch = useDispatch();
@@ -96,12 +97,26 @@ const MyEdit = () => {
       </HeaderDiv>
       <UserinfoDiv>
         <div>
-          {preview === null ? (
-            <img src={loginUser.profileImg} />
-          ) : (
-            <img src={preview} />
-          )}
+          {preview !== "delete" ? (
+            <>
+              {preview === null ? (
+                <img src={loginUser.profileImg} />
+              ) : (
+                <img src={preview} />
+              )}
+            </>
+          ) : null}
         </div>
+        {preview === "delete" ? null : (
+          <ProfileDeleteBtn
+            onClick={() => {
+              setPreview("delete");
+            }}
+          >
+            <img src={x} />
+          </ProfileDeleteBtn>
+        )}
+
         <label htmlFor="ex_file">업로드</label>
         <input
           type="file"
@@ -138,6 +153,15 @@ const MyEdit = () => {
   );
 };
 
+const ProfileDeleteBtn = styled.div`
+  position: relative;
+  img {
+    bottom: 57px;
+    right: -48px;
+    position: absolute;
+    width: 26px;
+  }
+`;
 const BtnDiv = styled.div`
   margin-top: 30px;
 `;
