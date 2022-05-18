@@ -96,28 +96,6 @@ const ImgTitle = styled.span`
   margin-right: 35px;
 `;
 
-const Tit3 = styled.span`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 70px;
-  left: 23px;
-  font-size: small;
-  color: #363636;
-`;
-
-const Tit4 = styled.span`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 70px;
-  left: 18px;
-  font-size: small;
-  color: #363636;
-`;
-
 const ImgContainer = styled.div`
   width: 80px;
   position: relative;

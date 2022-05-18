@@ -10,7 +10,6 @@ const GET_LOCATION_POST = "getLocationMain";
 const GET_SEARCH_POST = "GET_SEARCH_POST";
 const GET_SEARCH_NEXT_POST = "GET_SEARCH_NEXT_POST";
 const LAST_PAGE = "LAST_PAGE";
-const TOTAL = "TOTAL";
 const KEYWORD = "KEYWORD";
 const CLICKWISHINMAIN = "clickWishInMain";
 const CLICKWISHINSEARCH = "clickWishInsearch";
@@ -21,7 +20,6 @@ const initialState = {
   locationList: [],
   searchList: [],
   paging: { start: null, isLastPage: false },
-  totalPage: 1,
   keyword: "",
   isLoading: false,
   paging: {},
@@ -43,14 +41,6 @@ export const getSearchPost = createAction(GET_SEARCH_POST, (searchList) => ({
 
 const getSearchNextPost = createAction(GET_SEARCH_NEXT_POST, (searchList) => ({
   searchList,
-}));
-
-const islastPage = createAction(LAST_PAGE, (islastPage) => ({
-  islastPage,
-}));
-
-const totalPage = createAction(TOTAL, (totalPage) => ({
-  totalPage,
 }));
 
 const clickWishInMain = createAction(CLICKWISHINMAIN, (result) => ({ result }));
@@ -121,6 +111,7 @@ export const getKeywordPostDB = (keyword, pageno) => {
         start: page + 1,
         lastpage: response.data.islastPage,
       };
+      console.log("getKeyword", response);
       if (response.status === 200) {
         if (page === 1) {
           dispatch(getSearchPost({ planList: response.data.planList, paging }));
@@ -138,16 +129,32 @@ export const getKeywordPostDB = (keyword, pageno) => {
 };
 
 //테마별 조회 [메인]
-export const getThemePostDB = (theme) => {
+export const getThemePostDB = (theme, pageno) => {
   return async function (dispatch, getState, { history }) {
     dispatch(loading(true));
+    let page;
+    if (pageno === undefined) {
+      page = 1;
+    } else {
+      page = pageno;
+    }
     try {
-      const response = await apis.axiosInstance.get(`/plans/theme/${theme}/1`);
-      console.log(response);
+      const response = await apis.axiosInstance.get(
+        `/plans/theme/${theme}/${page}`
+      );
+      console.log("getTheme", response);
+      let paging = {
+        start: page + 1,
+        lastpage: response.data.islastPage,
+      };
       if (response.status === 200) {
-        dispatch(getSearchPost(response.data));
-        dispatch(islastPage(response.data.islastPage));
-        dispatch(totalPage(response.data.totalPage));
+        if (page === 1) {
+          dispatch(getSearchPost({ planList: response.data.planList, paging }));
+        } else {
+          dispatch(
+            getSearchNextPost({ planList: response.data.planList, paging })
+          );
+        }
         history.push("/search");
       }
     } catch (err) {
@@ -199,10 +206,12 @@ export default handleActions(
     [GET_BEST_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.bestList = action.payload.bestList;
+        draft.isLoading = false;
       }),
     [GET_LOCATION_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.locationList = action.payload.locationList;
+        draft.isLoading = false;
       }),
     [GET_SEARCH_POST]: (state, action) =>
       produce(state, (draft) => {
@@ -216,14 +225,7 @@ export default handleActions(
         draft.paging = action.payload.searchList.paging;
         draft.isLoading = false;
       }),
-    [LAST_PAGE]: (state, action) =>
-      produce(state, (draft) => {
-        draft.islastPage = action.payload.islastPage;
-      }),
-    [TOTAL]: (state, action) =>
-      produce(state, (draft) => {
-        draft.totalPage = action.payload.totalPage;
-      }),
+
     [KEYWORD]: (state, action) =>
       produce(state, (draft) => {
         draft.keyword = action.payload.keyword;
@@ -270,7 +272,6 @@ export default handleActions(
 
 const actionCreators = {
   getBestPostDB,
-  islastPage,
 };
 
 export { actionCreators };
