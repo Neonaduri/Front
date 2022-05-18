@@ -105,12 +105,6 @@ const ReviewDetail = () => {
     }
   };
 
-  console.log(
-    files,
-    reviewItemData.reviewImgUrl,
-    reviewItemData.reviewContents,
-    reviewItemData.reviewId
-  );
   //수정완료버튼
   const editCompleteBtn = () => {
     //이미지없이 텍스트수정
@@ -212,7 +206,6 @@ const ReviewDetail = () => {
           <Container>
             {reviewList &&
               reviewList.map((item, id) => {
-                console.log(item);
                 return (
                   <ReviewItem
                     setReviewItemData={setReviewItemData}

@@ -60,6 +60,7 @@ const MainPage = ({ history }) => {
   if (!token) {
     history.push("/login");
   }
+
   const initLocation = "서울";
 
   useEffect(() => {
