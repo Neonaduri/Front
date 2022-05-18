@@ -68,11 +68,6 @@ const ReviewDetail = () => {
     dispatch(getCommentDB(postId));
   }, []);
 
-  const onImgFile = (e) => {
-    const file = e.target.files;
-    setFiles(file);
-  };
-
   const onChangeFormValue = (e) => {
     const { name, value } = e.target;
 
@@ -82,6 +77,7 @@ const ReviewDetail = () => {
     });
   };
 
+  //후기등록 로직
   const ReviewBtnClick = () => {
     if (files === undefined) {
       const formdata = new FormData();
@@ -109,9 +105,30 @@ const ReviewDetail = () => {
     }
   };
 
+  console.log(
+    files,
+    reviewItemData.reviewImgUrl,
+    reviewItemData.reviewContents,
+    reviewItemData.reviewId
+  );
   //수정완료버튼
   const editCompleteBtn = () => {
-    if (files === undefined) {
+    //이미지없이 텍스트수정
+    if (reviewItemData.reviewImgUrl === null) {
+      const formdata = new FormData();
+      formdata.append("reviewImgUrl", "");
+      formdata.append(
+        "reviewImgFile",
+        new File([], "", { type: "text/plane" })
+      );
+      formdata.append("reviewContents", reviewItemData.reviewContents);
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
+    } else if (files === undefined) {
       const formdata = new FormData();
       formdata.append("reviewImgUrl", reviewItemData.reviewImgUrl);
       formdata.append(
@@ -119,6 +136,22 @@ const ReviewDetail = () => {
         new File([], "", { type: "text/plane" })
       );
       formdata.append("reviewContents", reviewItemData.reviewContents);
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
+    } else if (reviewItemData.reviewImgUrl === "" && files === undefined) {
+      const formdata = new FormData();
+      formdata.append("reviewImgUrl", ""); //기존이미지
+      formdata.append(
+        "reviewImgFile",
+        new File([], "", { type: "text/plane" })
+      );
+      formdata.append("reviewContents", reviewItemData.reviewContents);
+      //리뷰텍스트
+
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -143,13 +176,15 @@ const ReviewDetail = () => {
 
   const deleteImg = () => {
     setPreview("");
+    setFiles(undefined);
   };
 
-  const deleteEditImg = (e) => {
+  const deleteEditImg = () => {
     setReviewItemData({
+      ...reviewItemData,
       reviewImgUrl: "",
     });
-    onImgChange(e);
+    setFiles(undefined);
   };
 
   return (
@@ -169,7 +204,6 @@ const ReviewDetail = () => {
         <InfinityScroll
           callNext={() => {
             dispatch(getNextCommentDB(postId, paging.start));
-            console.log(postId, paging.start);
           }}
           is_next={lastPage ? false : true}
           loading={isLoading}
@@ -201,7 +235,12 @@ const ReviewDetail = () => {
                 <div>
                   {isEdit ? (
                     <Preview>
-                      <Test src={reviewItemData.reviewImgUrl}></Test>
+                      <Test
+                        src={
+                          (preview || reviewItemData.reviewImgUrl) &&
+                          (preview || reviewItemData.reviewImgUrl)
+                        }
+                      ></Test>
                       <X
                         onClick={deleteEditImg}
                         src={(preview || reviewItemData.reviewImgUrl) && x}
@@ -210,7 +249,7 @@ const ReviewDetail = () => {
                   ) : (
                     <Preview>
                       <Test src={preview}></Test>
-                      <X onClick={deleteImg} src={x}></X>
+                      <X onClick={deleteImg} src={preview && x}></X>
                     </Preview>
                   )}
                 </div>
@@ -230,7 +269,6 @@ const ReviewDetail = () => {
                   display: "flex",
                   width: "260px",
                   height: "35px",
-                  // padding: "8px",
                   resize: "none",
                   overflow: "hidden",
                   outline: "none",
@@ -258,6 +296,7 @@ const ReviewDetail = () => {
           id="chooseFile"
           accept="image/*"
           onChange={onImgChange}
+          // onClick={onImgFile}
         ></FileName>
       </ContainerInput>
     </>

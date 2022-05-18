@@ -74,9 +74,10 @@ export const getBestPostDB = () => {
           Authorization: `${token}`,
         },
       });
-      if (response.status === 200) {
-        dispatch(getBestPost(response.data));
-      }
+      // if (response.status === 200) {
+      console.log(response);
+      dispatch(getBestPost(response.data));
+      // }
     } catch (err) {
       Sentry.captureException(err);
       console.log("에러!!", err);

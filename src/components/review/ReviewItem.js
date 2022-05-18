@@ -6,6 +6,7 @@ import { deleteCommentDB } from "../../redux/module/review";
 import ModalImg from "./ModalImg";
 
 const ReviewItem = ({
+  profileImgUrl,
   reviewImgUrl,
   reviewContents,
   nickName,
@@ -48,6 +49,7 @@ const ReviewItem = ({
       reviewId,
       preview,
     });
+    console.log(typeof reviewImgUrl);
   };
 
   return (
@@ -56,7 +58,7 @@ const ReviewItem = ({
         <UpperContents>
           <Profile>
             <ProfileImg
-              src={profilUrl}
+              src={profileImgUrl}
               onClick={() => {
                 history.push("/mypage");
               }}
@@ -75,10 +77,13 @@ const ReviewItem = ({
             </Btns>
           )}
         </UpperContents>
-        {reviewImgUrl && (
+
+        {reviewImgUrl ? (
           <Image onClick={onClick}>
             <ImagePop src={reviewImgUrl}></ImagePop>
           </Image>
+        ) : (
+          ""
         )}
 
         <Content>
