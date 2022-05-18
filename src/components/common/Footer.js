@@ -46,23 +46,21 @@ const Footer = (props) => {
   ];
 
   return (
-    <>
-      <NavWrapper>
-        <Container>
-          {navData.map(({ path, defaultSrc, activeSrc }, idx) => (
-            <NavItem
-              key={idx}
-              onClick={() => {
-                history.push(path);
-              }}
-            >
-              <Logo src={getSrc(path, defaultSrc, activeSrc)} />
-            </NavItem>
-          ))}
-        </Container>
-        <Bar src={underBar}></Bar>
-      </NavWrapper>
-    </>
+    <NavWrapper>
+      <Container>
+        {navData.map(({ path, defaultSrc, activeSrc }, idx) => (
+          <NavItem
+            key={idx}
+            onClick={() => {
+              history.push(path);
+            }}
+          >
+            <Logo src={getSrc(path, defaultSrc, activeSrc)} />
+          </NavItem>
+        ))}
+      </Container>
+      {/* <Bar src={underBar}></Bar> */}
+    </NavWrapper>
   );
 };
 
@@ -74,7 +72,7 @@ const NavWrapper = styled.footer`
   left: 0;
   right: 0;
   width: 100%;
-  height: 60px;
+  height: 8%;
   background-color: white;
   border-top: 1px solid #cacaca;
   z-index: 9999;

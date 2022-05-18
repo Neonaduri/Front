@@ -17,30 +17,27 @@ const ReviewList = ({ nickName, reviewContents, reviewImgUrl, totalCnt }) => {
 
   //상세페이지 아래에 있는 리뷰페이지
   return (
-    <>
-      <Container>
-        <Nickname>{nickName}</Nickname>
-        <Box>
-          {reviewImgUrl ? <Img src={reviewImgUrl}></Img> : null}
-          <Text>{reviewContents}</Text>
-        </Box>
-      </Container>
-    </>
+    <Container>
+      <Nickname>{nickName}</Nickname>
+      <Box>
+        {reviewImgUrl ? <Img src={reviewImgUrl}></Img> : null}
+        <Text>{reviewContents}</Text>
+      </Box>
+    </Container>
   );
 };
 
 export default ReviewList;
 
 const Container = styled.div`
-  padding: 30px 0;
-  border-bottom: 1px solid #ececec;
-  width: 343px;
-  margin-left: 16px;
+  padding: 20px 3px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
+  width: 100%;
 `;
 
 const Img = styled.img`
   width: 127px;
-  height: 100px;
+  height: 90px;
   object-fit: cover;
   border-radius: 5px;
   margin: 0 10px;

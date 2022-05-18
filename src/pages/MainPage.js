@@ -69,55 +69,52 @@ const MainPage = ({ history }) => {
   }, []);
 
   return (
-    <>
-      <Section>
-        <Banner />
-        <MakePlan />
+    <Section>
+      <Banner />
+      <MakePlan />
 
-        {/* 인기여행 */}
-        <Wrapper>
-          <Container>
-            <Name>
-              <Title>인기 여행</Title>
-            </Name>
-            <StyledSlide {...settings1}>
-              {bestList &&
-                bestList.map((item, id) => {
-                  return <Popular key={id} {...item} />;
-                })}
-            </StyledSlide>
-          </Container>
-          {/* 인기 여행 */}
+      {/* 인기여행 */}
+      <Wrapper>
+        <Container>
+          <Name>
+            <Title>인기 여행</Title>
+          </Name>
+          <StyledSlide {...settings1}>
+            {bestList &&
+              bestList.map((item, id) => {
+                return <Popular key={id} {...item} />;
+              })}
+          </StyledSlide>
+        </Container>
+        {/* 인기 여행 */}
 
-          {/* 지역별 여행 */}
-          <Container>
-            <LoName>
-              <LoTitle>지역별 여행 계획표</LoTitle>
-              <Plus
-                onClick={(e) => {
-                  console.log(keyword);
-                  dispatch(getKeywordPostDB(keyword));
-                  history.push("/search");
-                }}
-              >
-                더보기
-              </Plus>
-            </LoName>
-            <ButtonArea />
-            <StyledSlide {...settings2}>
-              {locationList &&
-                locationList.map((item, id) => {
-                  return <Location key={id} {...item} />;
-                })}
-            </StyledSlide>
-          </Container>
-        </Wrapper>
         {/* 지역별 여행 */}
+        <Container>
+          <LoName>
+            <LoTitle>지역별 여행 계획표</LoTitle>
+            <Plus
+              onClick={(e) => {
+                dispatch(getKeywordPostDB(keyword));
+                history.push("/search");
+              }}
+            >
+              더보기
+            </Plus>
+          </LoName>
+          <ButtonArea />
+          <StyledSlide {...settings2}>
+            {locationList &&
+              locationList.map((item, id) => {
+                return <Location key={id} {...item} />;
+              })}
+          </StyledSlide>
+        </Container>
+      </Wrapper>
+      {/* 지역별 여행 */}
 
-        <Footer />
-      </Section>
+      <Footer />
       {isLoading ? <Splash /> : null}
-    </>
+    </Section>
   );
 };
 
@@ -158,7 +155,8 @@ const StyledSlide = styled(Slider)`
 const Section = styled.section`
   justify-content: center;
   align-content: center;
-  background-color: #f5f5f5; ;
+  background-color: ${({ theme }) => theme.colors.borderColor};
+  height: 92%;
 `;
 
 const Name = styled.div`

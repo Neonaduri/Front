@@ -20,7 +20,7 @@ const initialState = {
   locationList: [],
   searchList: [],
   paging: { start: null, isLastPage: false },
-  keyword: "",
+  keyword: "서울",
   isLoading: false,
   paging: {},
 };
