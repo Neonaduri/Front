@@ -134,7 +134,7 @@ const Myplan = () => {
 };
 
 const Container = styled.div`
-  height: 100%;
+  height: 92%;
 `;
 
 const MyplanTextdiv = styled.div`

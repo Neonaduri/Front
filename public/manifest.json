@@ -1,0 +1,24 @@
+{
+  "background_color": "#ffffff",
+  "description": "Web site created using create-react-app",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Neonaduri",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "neonaduri",
+  "start_url": "/",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "./icons/favicon-16x16.png"
+    },
+    {
+      "src": "./icons/favicon-32x32.png"
+    },
+    {
+      "src": "./icons/favicon.ico",
+      "type": "image/x-icon"
+    }
+  ]
+}

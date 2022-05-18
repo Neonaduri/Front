@@ -18,7 +18,7 @@ const NopostAlert = () => {
         </TitleDiv>
         <ContentDiv>
           <span>등록된 계획표가 없습니다!</span>
-          <img src={imgLogin} />
+          <Img src={imgLogin} />
           <ButtonDiv>
             <img src={pencil} />
             <Button
@@ -62,6 +62,11 @@ const NopostContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+`;
+
+const Img = styled.img`
+  width: 217.18px;
+  height: 178px;
 `;
 
 const ButtonDiv = styled.div`
