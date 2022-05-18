@@ -27,9 +27,6 @@ const MainPage = ({ history }) => {
 
   const keyword = useSelector((state) => state.post.keyword);
 
-  console.log("베스트플랜은?", bestList);
-  console.log("지역별플랜은?", locationList);
-
   const isLoading = useSelector((state) => state.post.isLoading);
 
   const settings1 = {

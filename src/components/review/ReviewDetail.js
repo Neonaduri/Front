@@ -212,6 +212,7 @@ const ReviewDetail = () => {
           <Container>
             {reviewList &&
               reviewList.map((item, id) => {
+                console.log(item);
                 return (
                   <ReviewItem
                     setReviewItemData={setReviewItemData}

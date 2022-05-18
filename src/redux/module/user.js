@@ -303,7 +303,6 @@ export default handleActions(
     [DELETE_COMMENT_MYPAGE]: (state, action) =>
       produce(state, (draft) => {
         draft.myReview = draft.myReview.filter((review) => {
-          console.log(review.reviewId, action.payload.reviewId);
           return review.reviewId !== parseInt(action.payload.reviewId);
         });
       }),

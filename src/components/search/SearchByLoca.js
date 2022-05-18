@@ -6,13 +6,9 @@ import Footer from "../common/Footer";
 import { area } from "../elements/ArrValue";
 import ButtonArea from "../main/ButtonArea";
 import { useDispatch, useSelector } from "react-redux";
-import { getLocationPost1DB } from "../../redux/module/post";
 import Titleline from "../elements/Titleline";
 import back from "../../static/images/icon/back.png";
 import { useHistory } from "react-router";
-import InfiScrollSearch from "../../shared/InfiScrollSearch";
-import { planAction } from "../../redux/module/plan";
-import { getLocationPostNextDB } from "../../redux/module/post";
 
 const SearchByLoca = () => {
   const dispatch = useDispatch();
@@ -25,7 +21,7 @@ const SearchByLoca = () => {
 
   useEffect(() => {
     const initval = "서울";
-    dispatch(getLocationPost1DB(initval));
+    dispatch();
   }, []);
 
   return (

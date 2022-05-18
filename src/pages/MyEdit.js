@@ -12,7 +12,7 @@ const MyEdit = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const loginUser = useSelector((state) => state.user.list);
-  const [nickName, setNickName] = useState();
+  const [nickName, setNickName] = useState(loginUser.nickName);
   const [files, setFiles] = useState();
   const [preview, setPreview] = useState(null);
 
@@ -177,6 +177,7 @@ const UserinfoDiv = styled.div`
         width: 70px;
         height: 70px;
         border-radius: 50%;
+        object-fit: cover;
       }
     }
   }

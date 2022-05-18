@@ -23,8 +23,8 @@ const SearchItem = ({
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const newStartDate = startDate.substr(2);
-  const newEndDate = endDate.substr(2);
+  const newStartDate = startDate?.substr(2);
+  const newEndDate = endDate?.substr(2);
   const clickWishPost = (e) => {
     const postId = e.target.id;
     dispatch(clickWishSearchPostDB(postId));
@@ -32,185 +32,124 @@ const SearchItem = ({
 
   return (
     <Container>
-      <Wrap>
-        <ImagePop src={postImgUrl} />
-        <SocialWishDiv onClick={(e) => clickWishPost(e)}>
+      <LeftDiv>
+        <PostImg src={postImgUrl} />
+        <div onClick={(e) => clickWishPost(e)}>
           {islike ? (
             <img src={clickedWish} id={postId} />
           ) : (
             <img src={unClickedWish} id={postId} />
           )}
-        </SocialWishDiv>
-      </Wrap>
+        </div>
+      </LeftDiv>
+      <RightDiv>
+        <RightHeaderDiv onClick={() => history.push(`/detail/${postId}`)}>
+          <p>
+            {newStartDate} ~ {newEndDate}
+          </p>
+          <div>
+            <span>{location}</span>
+            <span>{theme}</span>
+          </div>
+        </RightHeaderDiv>
 
-      {/* 카테고리 */}
-      <BoxTop onClick={() => history.push(`/detail/${postId}`)}>
-        <Term>
-          {newStartDate} ~ {newEndDate}
-        </Term>
-        <Cons>
-          <Content>{location}</Content>
-          <Content>{theme}</Content>
-        </Cons>
-      </BoxTop>
+        <RigthMiddlediv onClick={() => history.push(`/detail/${postId}`)}>
+          <h3>{postTitle}</h3>
+        </RigthMiddlediv>
 
-      <Box onClick={() => history.push(`/detail/${postId}`)}>
-        <Contain>
-          <Con>{postTitle}</Con>
-        </Contain>
-      </Box>
-
-      {/* 좋아요, 댓글개수 */}
-      <SectionBox>
-        <Nickname>{user.nickName}</Nickname>
-        <Like>
-          <Like>
+        <RightBottomdiv>
+          <span>{user?.nickName}</span>
+          <div>
             <img src={wish} />
-            <Cnt>{likeCnt}</Cnt>
-          </Like>
-          <Like>
+            <small>{likeCnt}</small>
+
             <img src={review} />
-            <Cnt>{reviewCnt}</Cnt>
-          </Like>
-        </Like>
-      </SectionBox>
-      <Bar></Bar>
+            <small>{reviewCnt}</small>
+          </div>
+        </RightBottomdiv>
+      </RightDiv>
     </Container>
   );
 };
 
-export default SearchItem;
-
-const Container = styled.div`
-  width: 375px;
-`;
-
-const SocialWishDiv = styled.div`
-  position: absolute;
-  top: 98px;
-  left: 103px;
-  width: 17px;
-  z-index: 10;
-  img {
-    width: 17px;
+const RightBottomdiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  span {
+    font-size: 14px;
+    color: ${({ theme }) => theme.colors.text2};
+  }
+  div {
+    display: flex;
+    align-items: center;
+    img {
+      margin-left: 10px;
+      margin-right: 4px;
+    }
   }
 `;
 
-const Wrap = styled.div`
-  display: flex;
-  margin-left: 16px;
-  position: relative;
+const RigthMiddlediv = styled.div`
+  height: 53px;
+
+  h3 {
+    font-size: 16px;
+    margin: 5px 0px;
+  }
 `;
 
-const Cons = styled.div`
+const RightHeaderDiv = styled.div`
   display: flex;
-  /* justify-content: right; */
-  /* padding: 0 5px; */
-  margin-right: 5px;
-`;
-
-const Nickname = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  color: ${({ theme }) => theme.colors.text2};
-  display: flex;
-  justify-content: left;
   align-items: center;
+  justify-content: space-between;
+  p {
+    font-size: 12px;
+    color: ${({ theme }) => theme.colors.text3};
+  }
+  span {
+    font-size: 11px;
+    color: ${({ theme }) => theme.colors.text2};
+    background-color: ${({ theme }) => theme.colors.borderColor};
+    padding: 2px 4px;
+    border-radius: 5px;
+    margin: 0px 3px;
+  }
 `;
 
-const Like = styled.div`
-  margin-left: 10px;
+const RightDiv = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  padding-left: 5px;
+  margin-top: -3px;
+  width: 240px;
 `;
 
-const Cnt = styled.div`
-  margin-left: 5px;
-  color: ${({ theme }) => theme.colors.text2};
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 12px;
-`;
-
-const ImagePop = styled.img`
-  position: absolute;
-  border-radius: 5px;
+const PostImg = styled.img`
   width: 128px;
   height: 95px;
-  object-fit: cover;
-  margin-top: 30px;
-  margin-right: 20px;
+  border-radius: 5px;
 `;
-
-const Box = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-left: 150px;
-  margin-top: 5px;
-`;
-
-const BoxTop = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 35px;
-  margin-left: 145px;
-`;
-
-const Content = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 5px;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 10px;
-  line-height: 17px;
-  color: ${({ theme }) => theme.colors.text2};
-  background: ${({ theme }) => theme.colors.borderColor};
-  border-radius: 2px;
-  padding: 0 5px;
-`;
-
-const SectionBox = styled.div`
+const LeftDiv = styled.div`
   position: relative;
-  left: 70px;
-  top: 5px;
+  width: 130px;
+  div {
+    position: absolute;
+    left: 97px;
+    bottom: 8px;
+    img {
+      width: 22px;
+    }
+  }
+`;
+
+const Container = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 15px 90px;
+  justify-content: space-between;
+  padding: 10px 10px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
 `;
 
-const Con = styled.div`
-  font-weight: 600;
-  font-size: 16px;
-  color: ${({ theme }) => theme.colors.text1};
-`;
-
-const Contain = styled.div`
-  font-weight: 600;
-  font-size: 16px;
-  margin-left: 10px;
-  margin-bottom: 10px;
-`;
-
-const Term = styled.span`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 10px;
-  line-height: 12px;
-  color: ${({ theme }) => theme.colors.text2};
-  padding: 0 0 0 10px;
-`;
-
-const Bar = styled.div`
-  border: 1px solid ${({ theme }) => theme.colors.borderColor};
-  margin-top: 20px;
-  margin-left: 20px;
-  width: 90%;
-`;
+export default SearchItem;

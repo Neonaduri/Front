@@ -9,6 +9,24 @@ import goRight from "../static/images/icon/goRight.png";
 import { deleteCommentInMypageDB } from "../redux/module/user";
 import Footer from "../components/common/Footer";
 
+const displayedAt = (createdAt) => {
+  const milliSeconds = new Date() - createdAt;
+  const seconds = milliSeconds / 1000;
+  if (seconds < 60) return `방금 전`;
+  const minutes = seconds / 60;
+  if (minutes < 60) return `${Math.floor(minutes)}분 전`;
+  const hours = minutes / 60;
+  if (hours < 24) return `${Math.floor(hours)}시간 전`;
+  const days = hours / 24;
+  if (days < 7) return `${Math.floor(days)}일 전`;
+  const weeks = days / 7;
+  if (weeks < 5) return `${Math.floor(weeks)}주 전`;
+  const months = days / 30;
+  if (months < 12) return `${Math.floor(months)}개월 전`;
+  const years = days / 365;
+  return `${Math.floor(years)}년 전`;
+};
+
 const MyReview = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -37,16 +55,27 @@ const MyReview = () => {
       </HeaderDiv>
       <BodyDiv>
         {myReview?.map((review, idx) => {
+          const writeDate = review.modifiedAt;
+          const dateStr = writeDate.substring(0, 16);
+          const [date, time] = dateStr.split("T");
+          let content;
+          if (review.reviewContents.length > 90) {
+            content = `${review.reviewContents.substring(0, 90)} ...`;
+          } else {
+            content = review.reviewContents;
+          }
           return (
             <CardContainer key={idx}>
               <CardHeadDiv>
-                <small>{review.modifiedAt}</small>
+                <small>
+                  {date} / {time}
+                </small>
                 <span onClick={(e) => deleteBtnClick(e)} id={review.reviewId}>
                   삭제
                 </span>
               </CardHeadDiv>
               <CardBodyDiv>
-                <p>{review.reviewContents}</p>
+                <p>{content}</p>
                 {review.reviewImgUrl === null ? null : (
                   <img src={review.reviewImgUrl} />
                 )}
@@ -88,6 +117,7 @@ const Container = styled.div`
 const CardFooterDiv = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   span {
     font-size: 12px;
   }
@@ -100,8 +130,7 @@ const CardBodyDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 75px;
-  overflow-y: scroll;
+  padding: 5px 0px;
   img {
     width: 96px;
     height: 72px;

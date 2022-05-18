@@ -19,7 +19,7 @@ const InfinityScroll = forwardRef((props, ref) => {
     const scrollTop = container.scrollTop;
     const scrollHeight = container.scrollHeight;
 
-    if (scrollHeight - clientHeight - scrollTop < 60) {
+    if (scrollHeight - clientHeight - scrollTop < 80) {
       callNext();
     }
 

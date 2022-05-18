@@ -152,6 +152,15 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
     setChangingKeyword(e.target.value);
   };
 
+  const textCut = (text) => {
+    let value;
+    if (text.length > 15) {
+      value = `${text.substring(0, 15)}...`;
+    } else {
+      value = text;
+    }
+    return value;
+  };
   return (
     <Container>
       <HeadLineDiv>
@@ -163,7 +172,7 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
               history.push("/myplan");
             }}
           />
-          <span>{thisPlan.postTitle}</span>
+          <span>{textCut(thisPlan.postTitle)}</span>
           <span></span>
         </div>
         <small>
