@@ -7,9 +7,7 @@ import { BrowserTracing } from "@sentry/tracing";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "./redux/store";
-import ScrollRestoration from "react-scroll-restoration";
-import { Router } from "react-router";
-import ScrollToTop from "./shared/ScrollToTop";
+
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_REACT_DSN,
   integrations: [new BrowserTracing()],
