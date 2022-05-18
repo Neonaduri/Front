@@ -183,7 +183,7 @@ const Section = styled.section`
   justify-content: center;
   align-content: center;
   background-color: ${({ theme }) => theme.colors.borderColor};
-  height: 92%;
+  height: 97%;
 `;
 
 const Name = styled.div`

@@ -48,6 +48,7 @@ const emailCheckDB = (username) => {
         dispatch(emailCheck(true));
       }
     } catch (err) {
+      console.log(err.response);
       Sentry.captureException(err);
       if (err.response.status === 400) {
         dispatch(emailCheck(false));
@@ -92,6 +93,7 @@ const logInDB = (username, password) => {
         window.location.replace("/");
       }
     } catch (err) {
+      console.log(err.response);
       Sentry.captureException(err);
       window.alert(err.response.data.exception);
     }
@@ -145,6 +147,7 @@ const isLoginDB = () => {
 };
 const kakaoLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
+    console.log(code);
     try {
       const response = await apis.axiosInstance.get(
         `/user/kakao/callback?code=${code}`
@@ -170,6 +173,7 @@ const googleLoginDB = (code) => {
       const response = await apis.axiosInstance.get(
         `user/google/callback?code=${code}`
       );
+      console.log(response);
 
       if (response.status === 200) {
         const token = response.headers.authorization;

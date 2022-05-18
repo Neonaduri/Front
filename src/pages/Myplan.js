@@ -134,7 +134,7 @@ const Myplan = () => {
 };
 
 const Container = styled.div`
-  height: 92%;
+  height: 97%;
 `;
 
 const MyplanTextdiv = styled.div`
@@ -173,6 +173,7 @@ const BottomCarddiv = styled.div`
 
       small {
         color: ${({ theme }) => theme.colors.text2};
+        font-family: "apple1";
       }
       div {
         width: 50px;
@@ -225,6 +226,7 @@ const UpperCarddiv = styled.div`
     span {
       &:first-child {
         font-size: 18px;
+        font-family: "apple3";
       }
       &:nth-child(2) {
         background-color: ${({ theme }) => theme.colors.borderColor};

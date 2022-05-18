@@ -77,6 +77,7 @@ const RightBottomdiv = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 5px;
+  font-family: "apple1";
   span {
     font-size: 14px;
     color: ${({ theme }) => theme.colors.text2};
@@ -116,6 +117,7 @@ const RightHeaderDiv = styled.div`
     padding: 2px 4px;
     border-radius: 5px;
     margin: 0px 3px;
+    font-family: "apple1";
   }
 `;
 

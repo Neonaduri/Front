@@ -370,6 +370,7 @@ const Schedule = (props) => {
 const FixedTime = styled.span`
   font-size: 15px;
   margin-left: -3px;
+  font-family: "apple1";
 `;
 
 const MapContainer = styled.div`
@@ -466,7 +467,7 @@ const Contentdiv = styled.div`
       margin-right: 10px;
     }
     h4 {
-      font-size: 16px;
+      font-size: 17px;
       margin-top: 4px;
     }
   }
@@ -479,8 +480,9 @@ const Contentdiv = styled.div`
   }
   span {
     color: ${({ theme }) => theme.colors.text2};
-    font-size: 12px;
-    margin-top: 3px;
+    font-size: 13px;
+    margin: 3px 0px;
+    font-family: "apple1";
   }
 `;
 
@@ -499,6 +501,7 @@ const TitleDiv = styled.div`
   position: relative;
   span {
     font-size: 20px;
+    font-family: "apple3";
   }
   div {
     position: absolute;

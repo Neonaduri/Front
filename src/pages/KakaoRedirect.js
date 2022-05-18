@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 const KakaoRedirect = () => {
   const dispatch = useDispatch();
   let code = new URL(window.location.href).searchParams.get("code");
-
+  console.log(code);
   useEffect(() => {
     const kakaoLogin = async () => {
       await dispatch(userAction.kakaoLoginDB(code));

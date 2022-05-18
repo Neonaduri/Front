@@ -6,6 +6,7 @@ import Calendar from "./pages/Calendar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Emailcheck from "./pages/Emailcheck";
+import Helmet from "react-helmet";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { userAction } from "./redux/module/user";
@@ -17,7 +18,6 @@ import Mypage from "./pages/Mypage";
 import styled, { ThemeProvider } from "styled-components";
 import MobileFrame from "./components/common/MobileFrame";
 import Search from "./pages/Search";
-import BeforePlan from "./pages/BeforePlan";
 import Detail from "./pages/Detail";
 import ReviewDetail from "./components/review/ReviewDetail";
 import theme from "./assets/styles/theme";
@@ -36,37 +36,46 @@ function App(props) {
   }, []);
 
   return (
-    <>
-      <ThemeProvider theme={theme}>
-        <Wrap>
-          <MobileFrame className="MobileFramePage">
-            <Route path="/" exact component={MainPage} />
-            <Route path="/planning/:postId" exact component={Planning} />
-            <Route path="/planning/:postId/join" exact component={BeforePlan} />
-            <Route path="/planning" exact component={Calendar} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/emailcheck" exact component={Emailcheck} />
-            <Route path="/signup" exact component={Signup} />
-            <Route path="/search" exact component={Search} />
-            {/* <Route path="/search/location" exact component={SearchByLoca} /> */}
-            <Route path="/user/kakao/callback" component={KakaoRedirect} />
-            <Route path="/user/google/callback" component={GoogleRedirect} />
-            <Route path="/uploadcomplete" component={UploadComplete} />
-            <Route path="/myplan" component={Myplan} />
-            <Route path="/mypage" component={Mypage} exact />
-            <Route path="/mypage/edit" component={MyEdit} exact />
-            <Route path="/mypage/scrap" component={Myscrap} exact />
-            <Route path="/mypage/review" component={MyReview} exact />
-            <Route path="/detail/:id" exact component={Detail} />
-            <Route
-              path="/detail/:productId/write"
-              exact
-              component={ReviewDetail}
-            />
-          </MobileFrame>
-        </Wrap>
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={theme}>
+      <Helmet>
+        <title>너나들이 | 함께만든 우리만의 여행</title>
+        <meta property="og:title" content="함께만든 우리만의 여행, 너나들이" />
+        <meta
+          property="og:description"
+          content="너나들이 첫번째 베타테스트 오픈!"
+        />
+        <meta
+          property="og:image"
+          content="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuWMdv%2FbtrCxGqdv8X%2FhZa6JjCDY8iJHGd685Lr9K%2Fimg.png"
+        />
+      </Helmet>
+      <Wrap>
+        <MobileFrame className="MobileFramePage">
+          <Route path="/" exact component={MainPage} />
+          <Route path="/planning/:postId" exact component={Planning} />
+          <Route path="/planning" exact component={Calendar} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/emailcheck" exact component={Emailcheck} />
+          <Route path="/signup" exact component={Signup} />
+          <Route path="/search" exact component={Search} />
+          {/* <Route path="/search/location" exact component={SearchByLoca} /> */}
+          <Route path="/user/kakao/callback" component={KakaoRedirect} />
+          <Route path="/user/google/callback" component={GoogleRedirect} />
+          <Route path="/uploadcomplete" component={UploadComplete} />
+          <Route path="/myplan" component={Myplan} />
+          <Route path="/mypage" component={Mypage} exact />
+          <Route path="/mypage/edit" component={MyEdit} exact />
+          <Route path="/mypage/scrap" component={Myscrap} exact />
+          <Route path="/mypage/review" component={MyReview} exact />
+          <Route path="/detail/:id" exact component={Detail} />
+          <Route
+            path="/detail/:productId/write"
+            exact
+            component={ReviewDetail}
+          />
+        </MobileFrame>
+      </Wrap>
+    </ThemeProvider>
   );
 }
 

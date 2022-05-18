@@ -77,6 +77,7 @@ const Myscrap = () => {
 const Datediv = styled.div`
   font-size: 12px;
   color: ${({ theme }) => theme.colors.text3};
+  font-family: "apple1";
 `;
 
 const TitleDiv = styled.div`
