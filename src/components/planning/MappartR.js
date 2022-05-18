@@ -14,7 +14,7 @@ import { useHistory, useParams } from "react-router";
 import ModalfixTime from "../common/ModalfixTime";
 import { useDispatch, useSelector } from "react-redux";
 import { planAction } from "../../redux/module/plan";
-import sharebtn from "../../static/images/icon/shareBtn.png";
+import sharebtn from "../../static/images/icon/sharebtn.png";
 import Slide from "../../shared/SlickSlider";
 import Modalroompass from "../common/Modalroompass";
 import cancel from "../../static/images/icon/cancel.png";

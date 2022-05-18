@@ -79,9 +79,10 @@ export const getBestPostDB = () => {
           Authorization: `${token}`,
         },
       });
-      if (response.status === 200) {
-        dispatch(getBestPost(response.data));
-      }
+      // if (response.status === 200) {
+      console.log(response);
+      dispatch(getBestPost(response.data));
+      // }
     } catch (err) {
       Sentry.captureException(err);
       console.log("에러!!", err);
@@ -153,7 +154,7 @@ export const getKeywordPostDB = (keyword, pageno) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.get(
-        `/plans/keyword/${keyword}/${pageno}`
+        `/plans/keyword/${keyword}/1`
       );
       console.log(response);
       if (response.status === 200) {

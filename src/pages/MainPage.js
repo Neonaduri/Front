@@ -97,6 +97,7 @@ const MainPage = ({ history }) => {
               <LoTitle>지역별 여행 계획표</LoTitle>
               <Plus
                 onClick={(e) => {
+                  console.log(keyword);
                   dispatch(getKeywordPostDB(keyword));
                   history.push("/search");
                 }}
