@@ -19,6 +19,11 @@
     {
       "src": "./icons/favicon.ico",
       "type": "image/x-icon"
+    },
+    {
+      "src": "maskable_icon-_1_.ico",
+      "type": "image/x-icon",
+      "size": "256x256"
     }
   ]
 }
