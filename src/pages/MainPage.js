@@ -43,23 +43,18 @@ const MainPage = ({ history }) => {
   };
 
   const settings2 = {
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    centerMode: false,
-    centerPadding: "0px",
-    arrows: true,
     dots: true,
-    fade: false,
     infinite: true,
-    pauseOnFocus: true,
-    pauseOnHover: true,
     autoplay: true,
-    speed: 2500,
+    autoplaySpeed: 2000,
+    speed: 3000,
+    slidesToShow: 2,
+    slidesToScroll: 2,
   };
 
-  if (!token) {
-    history.push("/login");
-  }
+  // if (!token) {
+  //   history.push("/login");
+  // }
 
   const initLocation = "서울";
 
@@ -80,12 +75,12 @@ const MainPage = ({ history }) => {
             <Name>
               <Title>인기 여행</Title>
             </Name>
-            <StyledSlide {...settings1}>
+            <StyledSlide1 {...settings1}>
               {bestList &&
                 bestList.map((item, id) => {
                   return <Popular key={id} {...item} />;
                 })}
-            </StyledSlide>
+            </StyledSlide1>
           </Container>
           {/* 인기 여행 */}
 
@@ -104,19 +99,22 @@ const MainPage = ({ history }) => {
               </Plus>
             </LoName>
             <ButtonArea />
-            <StyledSlide {...settings2}>
-              {locationList &&
-                locationList.map((item, id) => {
-                  return <Location key={id} {...item} />;
-                })}
-            </StyledSlide>
+
+            <ImgWrap>
+              <StyledSlide2 {...settings2}>
+                {locationList &&
+                  locationList.map((item, id) => {
+                    return <Location key={id} {...item} />;
+                  })}
+              </StyledSlide2>
+            </ImgWrap>
           </Container>
         </Wrapper>
         {/* 지역별 여행 */}
 
         <Footer />
       </Section>
-      {isLoading ? <Splash /> : null}
+      {/* {isLoading ? <Splash /> : null} */}
     </>
   );
 };
@@ -132,7 +130,37 @@ const Wrapper = styled.div`
   background-color: #fff;
 `;
 
-const StyledSlide = styled(Slider)`
+const ImgWrap = styled.div`
+  position: relative;
+  display: flex;
+  margin-bottom: 17px;
+  text-align: start;
+`;
+
+const StyledSlide1 = styled(Slider)`
+  position: relative;
+  margin-top: 15px;
+  width: 100%;
+
+  .slick-list {
+    width: 335px;
+  }
+
+  .slick-track {
+    display: flex;
+    height: 100%;
+
+    div + div {
+      margin-left: 8px;
+    }
+  }
+
+  .slick-dots {
+    /* display: none !important; */
+  }
+`;
+
+const StyledSlide2 = styled(Slider)`
   position: relative;
   margin-top: 15px;
   width: 100%;

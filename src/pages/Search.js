@@ -97,6 +97,7 @@ const Search = () => {
 export default Search;
 
 const ContentDiv = styled.div`
+  margin-top: 20px;
   height: 80%;
   overflow-y: scroll;
 `;
@@ -171,6 +172,7 @@ const Title = styled.div`
   width: 100%;
   height: 4%;
   left: 16px;
+  top: 20px;
   font-family: "Apple SD Gothic Neo";
   font-style: normal;
   font-weight: 600;

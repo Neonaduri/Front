@@ -42,7 +42,8 @@ const ContentDiv = styled.div`
   align-items: center;
   justify-content: space-between;
   span {
-    width: 25%;
+    width: 15%;
+    padding: 2px;
     background-color: ${({ theme }) => theme.colors.borderColor};
     color: ${({ theme }) => theme.colors.text2};
     font-size: 10px;
