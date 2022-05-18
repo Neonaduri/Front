@@ -2,6 +2,8 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   baseURL: " http://54.180.103.147:8080",
+
+  // "https://ohyeryung.shop"
 });
 
 // const axiosOVInstance = axios.create({

@@ -14,7 +14,7 @@ import Back from "../../static/images/button/back.png";
 import ReviewItem from "./ReviewItem";
 import Camera from "../../static/images/icon/camera.png";
 import InfinityScroll from "../../shared/InfinityScroll";
-import x from "../../static/images/x.png";
+import x from "../../static/images/icon/x.png";
 
 const ReviewDetail = () => {
   const params = useParams();
@@ -184,17 +184,18 @@ const ReviewDetail = () => {
   return (
     <>
       <ReviewBox>
-        <Img
+        <img
           src={Back}
           onClick={() => {
             history.goBack();
           }}
-        ></Img>
+        ></img>
         <h2>
           리뷰<span>({totalCnt})</span>
         </h2>
+        <div> </div>
       </ReviewBox>
-      <Middlediv ref={middledivRef} id="container">
+      <Middlediv ref={middledivRef}>
         <InfinityScroll
           callNext={() => {
             dispatch(getNextCommentDB(postId, paging.start));
@@ -318,6 +319,7 @@ const ButtonDiv = styled.div`
   justify-content: flex-end;
   /* background-color: tomato; */
   padding: 5px;
+  z-index: 999;
 `;
 
 const X = styled.img`
@@ -352,6 +354,7 @@ const Test = styled.img`
 
 const WriteBox = styled.div`
   /* display: flex; */
+  width: 90%;
   justify-content: center;
   align-items: center;
   background-color: white;
@@ -385,13 +388,14 @@ const ContainerInput = styled.div`
   background-color: white;
   bottom: 0;
   padding: 0 10px;
+  border-top: 1px solid ${({ theme }) => theme.colors.borderColor};
 `;
 
 const Middlediv = styled.div`
+  height: 90%;
   display: flex;
   flex-direction: column;
-  padding: 0px 10px;
-  height: 100%;
+  padding: 20px 0px;
   overflow: scroll;
 `;
 
@@ -424,25 +428,19 @@ const Container = styled.div`
 
 const ReviewBox = styled.div`
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
-  height: 18px;
-  margin-top: 20px;
-  padding: 20px;
-  margin-left: 10px;
-  display: flex;
+  width: 100%;
+  padding: 18px 15px;
+  position: fixed;
+  background-color: white;
   h2 {
     font-weight: 700;
     font-size: 18px;
     line-height: 18px;
-    color: #363636;
-
+    color: ${({ theme }) => theme.colors.text1};
     span {
       margin-left: 4px;
     }
   }
-`;
-
-const Img = styled.img`
-  margin-right: 120px;
 `;

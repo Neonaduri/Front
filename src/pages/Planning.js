@@ -92,7 +92,6 @@ const CustomSheet = styled(Sheet)`
     /* custom styles */
   }
   .react-modal-sheet-header {
-    /* custom styles */
   }
   .react-modal-sheet-drag-indicator {
     /* custom styles */
@@ -145,7 +144,7 @@ const DayBtnDiv = styled.div`
   width: 100%;
   justify-content: space-around;
   position: absolute;
-  top: 9.3vh;
+  top: 9vh;
 `;
 
 const DayBtn = styled.button`

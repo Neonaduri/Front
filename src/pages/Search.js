@@ -57,7 +57,7 @@ const Search = () => {
       {/* 추천키워드 */}
       <Suggest>
         <h4>추천 키워드</h4>
-        <div>
+        <Div>
           {keywordSuggestList.map((keyword, idx) => {
             return (
               <button key={idx} onClick={suggestBtnClick} value={keyword}>
@@ -65,7 +65,7 @@ const Search = () => {
               </button>
             );
           })}
-        </div>
+        </Div>
       </Suggest>
       <Title>{keyWord} 여행계획표 </Title>
       {/* 검색리스트 페이지 */}
@@ -102,15 +102,22 @@ const ContentDiv = styled.div`
   overflow-y: scroll;
 `;
 
+const Div = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const HeaderDiv = styled.div`
   height: 5%;
+  margin-top: 10px;
 `;
 
 const Suggest = styled.div`
-  padding: 20px 15px;
+  padding: 25px 15px;
   height: 14%;
   h4 {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     margin-left: 5px;
     line-height: 19px;
@@ -171,7 +178,7 @@ const Title = styled.div`
   position: relative;
   width: 100%;
   height: 4%;
-  left: 16px;
+  left: 15px;
   top: 20px;
   font-family: "Apple SD Gothic Neo";
   font-style: normal;

@@ -38,10 +38,11 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
   const [searchPlace, setSearchPlace] = useState("");
   const [polyLineArr, setPolyLineArr] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [linkModalOpen, setLinkModalOpen] = useState(false);
+  const [linkModalOpen, setLinkModalOpen] = useState(true);
   const [changingKeyword, setChangingKeyword] = useState("");
   const [marker, setMarker] = useState();
   const [hidden, setHidden] = useState(false);
+  const [copyText, setCopyText] = useState(false);
   const [latlng, setLatlng] = useState({
     lat: 37.5,
     lng: 127,
@@ -145,6 +146,7 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
   const copyLink = () => {
     const url = window.location.href;
     navigator.clipboard.writeText(url);
+    setCopyText(true);
     setModalOpen(false);
   };
 
@@ -329,13 +331,14 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
               <img
                 src={cancel}
                 onClick={() => {
+                  setCopyText(false);
                   setLinkModalOpen(false);
                 }}
               />
             </Canceldiv>
             <InviteTextdiv>
               <h4>친구 초대하기</h4>
-              <span>초대는 최대 5인까지 가능합니다.</span>
+              <span>친구와 같이 여행계획을 실시간으로 세워보세요!</span>
             </InviteTextdiv>
             <InviteContentDiv>
               <input
@@ -344,12 +347,21 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
               ></input>
               <ModalBtn onClick={copyLink}>복사</ModalBtn>
             </InviteContentDiv>
+            {copyText ? (
+              <CopyConfirmtext>복사되었습니다.</CopyConfirmtext>
+            ) : null}
           </ModalContent>
         }
       ></Modalroompass>
     </Container>
   );
 };
+
+const CopyConfirmtext = styled.span`
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.mainGreen};
+  margin-top: 5px;
+`;
 
 const HideBtn = styled.button`
   background-color: ${({ theme }) => theme.colors.mainGreen};
@@ -371,7 +383,7 @@ const PlaceList = styled.div`
   z-index: 5;
   scroll-behavior: auto;
   position: absolute;
-  bottom: 100px;
+  bottom: 105px;
   padding-left: 30px;
   visibility: ${(props) => (props.hidden ? "hidden" : null)};
 `;
@@ -417,9 +429,10 @@ const HeadLineDiv = styled.div`
   }
   span {
     font-size: 20px;
-    margin-top: -7px;
+    margin-top: -10px;
   }
   small {
+    margin-bottom: 5px;
     color: ${({ theme }) => theme.colors.text3};
   }
 `;
@@ -436,6 +449,8 @@ const TimeModal = styled.div`
       select {
         width: 40%;
         font-size: 20px;
+        border-radius: 5px;
+        border-color: ${({ theme }) => theme.colors.borderColor};
       }
     }
     &:last-child {
@@ -448,6 +463,8 @@ const TimeModal = styled.div`
         padding: 10px 20px;
         border-radius: 10px;
         font-size: 20px;
+        background-color: ${({ theme }) => theme.colors.mainGreen};
+        color: white;
       }
     }
   }
@@ -491,6 +508,7 @@ const InviteTextdiv = styled.div`
   margin-top: -10px;
   h4 {
     font-size: 20px;
+    margin-bottom: 5px;
   }
   span {
     font-size: 15px;
@@ -501,8 +519,8 @@ const InviteTextdiv = styled.div`
 
 const Canceldiv = styled.div`
   position: absolute;
-  top: -5px;
-  left: 5px;
+  top: -15px;
+  left: -3px;
 `;
 
 const ModalBtn = styled.button`

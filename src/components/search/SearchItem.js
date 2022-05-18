@@ -60,10 +60,10 @@ const SearchItem = ({
         <RightBottomdiv>
           <span>{user?.nickName}</span>
           <div>
-            <img src={wish} />
+            <ImgWish src={wish} />
             <small>{likeCnt}</small>
 
-            <img src={review} />
+            <ImgReview src={review} />
             <small>{reviewCnt}</small>
           </div>
         </RightBottomdiv>
@@ -76,6 +76,7 @@ const RightBottomdiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 5px;
   span {
     font-size: 14px;
     color: ${({ theme }) => theme.colors.text2};
@@ -96,6 +97,7 @@ const RigthMiddlediv = styled.div`
   h3 {
     font-size: 16px;
     margin: 5px 0px;
+    color: #363636;
   }
 `;
 
@@ -148,8 +150,18 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 10px;
+  padding: 15px 10px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
+`;
+
+const ImgWish = styled.img`
+  width: 9.92px;
+  height: 10.98px;
+`;
+
+const ImgReview = styled.img`
+  width: 11.25px;
+  height: 9.92px;
 `;
 
 export default SearchItem;

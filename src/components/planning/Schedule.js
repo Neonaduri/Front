@@ -15,6 +15,7 @@ import styled from "styled-components";
 import ModalfixTime from "../common/ModalfixTime";
 import { useSelector } from "react-redux";
 import hamburger from "../../static/images/icon/hamburger.png";
+import cancel from "../../static/images/icon/cancel.png";
 
 const Schedule = (props) => {
   const postId = useParams().postId;
@@ -129,9 +130,9 @@ const Schedule = (props) => {
   if (latlngArr.length === 0) {
     return (
       <Container>
-        <TitieDiv>
+        <TitleDiv>
           <span>여행 계획표</span>
-        </TitieDiv>
+        </TitleDiv>
         <DayBtndiv>
           {dateCntArr.map((date, idx) => {
             return (
@@ -165,9 +166,9 @@ const Schedule = (props) => {
 
   return (
     <Container>
-      <TitieDiv>
+      <TitleDiv>
         <span>여행 계획표</span>
-      </TitieDiv>
+      </TitleDiv>
       <DayBtndiv>
         {dateCntArr.map((date, idx) => {
           return (
@@ -490,13 +491,19 @@ const PlaceCard = styled.div`
   margin: auto;
 `;
 
-const TitieDiv = styled.div`
+const TitleDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 5px;
+  position: relative;
   span {
     font-size: 20px;
+  }
+  div {
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
   }
 `;
 

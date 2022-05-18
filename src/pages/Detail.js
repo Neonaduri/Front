@@ -82,8 +82,6 @@ const Detail = () => {
         </div>
       </ContentDiv>
 
-      <Line></Line>
-
       {/* 리뷰페이지입니다 */}
       <ReviewBox>
         <h2>
@@ -149,6 +147,7 @@ const HeadDiv = styled.div`
   justify-content: space-between;
   padding: 0px 18px;
   margin-top: 5px;
+
   img {
     margin-bottom: -7px;
   }
@@ -158,37 +157,21 @@ const Container = styled.div`
   position: relative;
 `;
 
-const Line = styled.div`
-  width: 100%;
-  height: 10px;
-  background: ${({ theme }) => theme.colors.borderColor};
-  margin: 20px 0;
-`;
-
-const ReviewPage = styled.div`
-  justify-content: center;
-  align-items: center;
-`;
+const ReviewPage = styled.div``;
 
 const ReviewBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 26px;
-  margin-top: 20px;
+  padding: 0px 20px;
+  margin-top: 10px;
   width: 100%;
   height: 18px;
-
-  display: flex;
   h2 {
     font-weight: 700;
     font-size: 18px;
     line-height: 18px;
     color: ${({ theme }) => theme.colors.text1};
-
-    span {
-      margin-left: 4px;
-    }
   }
 `;
 

@@ -186,7 +186,8 @@ const StyledSlide2 = styled(Slider)`
 const Section = styled.section`
   justify-content: center;
   align-content: center;
-  background-color: #f5f5f5; ;
+  background-color: ${({ theme }) => theme.colors.borderColor};
+  height: 92%;
 `;
 
 const Name = styled.div`
