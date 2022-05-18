@@ -41,8 +41,10 @@ const ContentDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   span {
     width: 25%;
+    padding: 2px;
     background-color: ${({ theme }) => theme.colors.borderColor};
     color: ${({ theme }) => theme.colors.text2};
     font-size: 10px;
@@ -73,9 +75,9 @@ const Content = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
-  width: 75%;
+  /* width: 75%; */
   margin-top: 5px;
-  margin-left: 6px;
+  /* margin-left: 6px; */
   font-size: 15px;
   line-height: 17px;
   color: ${({ theme }) => theme.colors.text1};
