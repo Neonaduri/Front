@@ -64,58 +64,54 @@ const MainPage = ({ history }) => {
   }, []);
 
   return (
-    <>
-      <Section>
-        <Banner />
-        <MakePlan />
+    <Section>
+      <Banner />
+      <MakePlan />
+      {/* 인기여행 */}
+      <Wrapper>
+        <Container>
+          <Name>
+            <Title>인기 여행</Title>
+          </Name>
+          <StyledSlide1 {...settings1}>
+            {bestList &&
+              bestList.map((item, id) => {
+                return <Popular key={id} {...item} />;
+              })}
+          </StyledSlide1>
+        </Container>
+        {/* 인기 여행 */}
 
-        {/* 인기여행 */}
-        <Wrapper>
-          <Container>
-            <Name>
-              <Title>인기 여행</Title>
-            </Name>
-            <StyledSlide1 {...settings1}>
-              {bestList &&
-                bestList.map((item, id) => {
-                  return <Popular key={id} {...item} />;
-                })}
-            </StyledSlide1>
-          </Container>
-          {/* 인기 여행 */}
-
-          {/* 지역별 여행 */}
-          <Container>
-            <LoName>
-              <LoTitle>지역별 여행 계획표</LoTitle>
-              <Plus
-                onClick={(e) => {
-                  console.log(keyword);
-                  dispatch(getKeywordPostDB(keyword));
-                  history.push("/search");
-                }}
-              >
-                더보기
-              </Plus>
-            </LoName>
-            <ButtonArea />
-
-            <ImgWrap>
-              <StyledSlide2 {...settings2}>
-                {locationList &&
-                  locationList.map((item, id) => {
-                    return <Location key={id} {...item} />;
-                  })}
-              </StyledSlide2>
-            </ImgWrap>
-          </Container>
-        </Wrapper>
         {/* 지역별 여행 */}
+        <Container>
+          <LoName>
+            <LoTitle>지역별 여행 계획표</LoTitle>
+            <Plus
+              onClick={(e) => {
+                console.log(keyword);
+                dispatch(getKeywordPostDB(keyword));
+                history.push("/search");
+              }}
+            >
+              더보기
+            </Plus>
+          </LoName>
+          <ButtonArea />
 
-        <Footer />
-      </Section>
+          <ImgWrap>
+            <StyledSlide2 {...settings2}>
+              {locationList &&
+                locationList.map((item, id) => {
+                  return <Location key={id} {...item} />;
+                })}
+            </StyledSlide2>
+          </ImgWrap>
+        </Container>
+      </Wrapper>
+      {/* 지역별 여행 */}
+      <Footer />
       {/* {isLoading ? <Splash /> : null} */}
-    </>
+    </Section>
   );
 };
 

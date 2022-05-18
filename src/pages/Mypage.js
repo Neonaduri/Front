@@ -28,7 +28,7 @@ const Mypage = () => {
   }
 
   return (
-    <div>
+    <Container>
       <HeaderDiv>
         <div></div>
         <Titleline title={"마이페이지"} />
@@ -67,9 +67,12 @@ const Mypage = () => {
         <span onClick={logoutClick}>로그아웃</span>
       </RestDiv>
       <Footer />
-    </div>
+    </Container>
   );
 };
+const Container = styled.div`
+  height: 92%;
+`;
 
 const RestDiv = styled.div`
   width: 100vw;
