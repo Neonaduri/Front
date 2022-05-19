@@ -9,9 +9,11 @@ const EMAILCHECK = "emailCheck";
 const SIGNUP = "signup";
 const ISLOGIN = "isLogin";
 const GETLIKEDPOST = "getLikedPost";
+const GETLIKEDNEXTPOST = "getLikedNextPost";
 const GETMYREVIEW = "getMyReview";
 const CLICKWISHINMYSCRAP = "clickWishInMyscrap";
 const DELETE_COMMENT_MYPAGE = "DELETE_COMMENT_MYPAGE";
+const LOADING = "loading";
 
 //init
 const init = {
@@ -20,6 +22,8 @@ const init = {
   isLogin: false,
   iLikedPost: null,
   myReview: null,
+  paging: {},
+  isLoading: false,
 };
 
 //action creators
@@ -27,6 +31,7 @@ const emailCheck = createAction(EMAILCHECK, (result) => ({ result }));
 const signUp = createAction(SIGNUP, (result) => ({ result }));
 const isLogin = createAction(ISLOGIN, (user) => ({ user }));
 const getLikedPost = createAction(GETLIKEDPOST, (posts) => ({ posts }));
+const getLikedNextPost = createAction(GETLIKEDNEXTPOST, (posts) => ({ posts }));
 const getMyReview = createAction(GETMYREVIEW, (reviews) => ({ reviews }));
 const clickWishInMyscrap = createAction(CLICKWISHINMYSCRAP, (result) => ({
   result,
@@ -34,6 +39,7 @@ const clickWishInMyscrap = createAction(CLICKWISHINMYSCRAP, (result) => ({
 const deleteCommentMypage = createAction(DELETE_COMMENT_MYPAGE, (reviewId) => ({
   reviewId,
 }));
+const loading = createAction(LOADING, (result) => ({ result }));
 
 //middlewares
 const emailCheckDB = (username) => {
@@ -190,13 +196,31 @@ const googleLoginDB = (code) => {
   };
 };
 
-const getMyLikePostDB = () => {
+const getMyLikePostDB = (pageno) => {
   return async function (dispatch, getState, { history }) {
+    dispatch(loading(true));
+    let page;
+    if (pageno === undefined) {
+      page = 1;
+    } else {
+      page = pageno;
+    }
     try {
-      const response = await apis.axiosInstance.get("/user/plans/like/1");
+      const response = await apis.axiosInstance.get(`/user/plans/like/${page}`);
       // const response = RESP.MYPAGELIKEGET;
+      console.log(response);
+      let paging = {
+        start: page + 1,
+        lastPage: response.data.islastPage,
+      };
       if (response.status === 200) {
-        dispatch(getLikedPost(response.data.postList));
+        if (page === 1) {
+          dispatch(getLikedPost({ postList: response.data.postList, paging }));
+        } else {
+          dispatch(
+            getLikedNextPost({ postList: response.data.postList, paging })
+          );
+        }
       }
     } catch (err) {
       Sentry.captureException(err);
@@ -273,6 +297,10 @@ export const deleteCommentInMypageDB = (reviewId) => {
 //reducer
 export default handleActions(
   {
+    [LOADING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.isLoading = action.payload.result;
+      }),
     [EMAILCHECK]: (state, action) =>
       produce(state, (draft) => {
         draft.emailCheck = action.payload.result;
@@ -284,7 +312,15 @@ export default handleActions(
       }),
     [GETLIKEDPOST]: (state, action) =>
       produce(state, (draft) => {
-        draft.iLikedPost = action.payload.posts;
+        draft.iLikedPost = action.payload.posts.postList;
+        draft.paging = action.payload.posts.paging;
+        draft.isLoading = false;
+      }),
+    [GETLIKEDNEXTPOST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.iLikedPost.push(...action.payload.posts.postList);
+        draft.paging = action.payload.posts.paging;
+        draft.isLoading = false;
       }),
     [GETMYREVIEW]: (state, action) =>
       produce(state, (draft) => {

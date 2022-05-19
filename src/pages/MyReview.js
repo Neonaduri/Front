@@ -104,6 +104,11 @@ const FooterDiv = styled.div`
 const BodyDiv = styled.div`
   height: 84%;
   overflow-y: scroll;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+  }
 `;
 
 const Container = styled.div`

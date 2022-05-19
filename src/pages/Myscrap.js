@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import back from "../static/images/icon/back.png";
 import Titleline from "../components/elements/Titleline";
@@ -7,11 +7,17 @@ import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import wish from "../static/images/icon/wish2x.png";
 import wishgreen from "../static/images/icon/wishGreen.png";
+import Footer from "../components/common/Footer";
+import InfinityScroll from "../shared/InfinityScroll";
 
 const Myscrap = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const myWishList = useSelector((state) => state.user.iLikedPost);
+  const paging = useSelector((state) => state.user.paging);
+  const lastPage = paging.lastPage;
+  const isLoading = useSelector((state) => state.user.isLoading);
+  const BodydivRef = useRef();
 
   const clickWishBtn = (e) => {
     const postId = e.target.id;
@@ -23,7 +29,7 @@ const Myscrap = () => {
   }, []);
 
   return (
-    <div>
+    <Container>
       <HeaderDiv>
         <img
           src={back}
@@ -34,45 +40,73 @@ const Myscrap = () => {
         <Titleline title={"스크랩 보기"} />
         <div></div>
       </HeaderDiv>
-      {myWishList?.map((plan, idx) => {
-        return (
-          <CardContainer key={idx}>
-            <ImgDiv>
-              <img src={plan.postImgUrl} />
-            </ImgDiv>
-            <ContentDiv onClick={() => history.push(`/detail/${plan.postId}`)}>
-              <SmallBtndiv>
-                <span>{plan.location}</span>
-                <span>{plan.theme}</span>
-              </SmallBtndiv>
-              <TitleDiv>
-                <h3>{plan.postTitle}</h3>
-              </TitleDiv>
-              <Datediv>
-                {plan.startDate} ~ {plan.endDate}
-              </Datediv>
-            </ContentDiv>
-            <div>
-              {plan.islike ? (
-                <img
-                  src={wishgreen}
-                  onClick={(e) => clickWishBtn(e)}
-                  id={plan.postId}
-                />
-              ) : (
-                <img
-                  src={wish}
-                  onClick={(e) => clickWishBtn(e)}
-                  id={plan.postId}
-                />
-              )}
-            </div>
-          </CardContainer>
-        );
-      })}
-    </div>
+      <Bodydiv ref={BodydivRef}>
+        <InfinityScroll
+          callNext={() => {
+            console.log("무한스크롤 실행!");
+            dispatch(userAction.getMyLikePostDB(paging.start));
+          }}
+          is_next={lastPage ? false : true}
+          loading={isLoading}
+          ref={BodydivRef}
+        >
+          {myWishList?.map((plan, idx) => {
+            return (
+              <CardContainer key={idx}>
+                <ImgDiv>
+                  <img src={plan.postImgUrl} />
+                </ImgDiv>
+                <ContentDiv
+                  onClick={() => history.push(`/detail/${plan.postId}`)}
+                >
+                  <SmallBtndiv>
+                    <span>{plan.location}</span>
+                    <span>{plan.theme}</span>
+                  </SmallBtndiv>
+                  <TitleDiv>
+                    <h3>{plan.postTitle}</h3>
+                  </TitleDiv>
+                  <Datediv>
+                    {plan.startDate} ~ {plan.endDate}
+                  </Datediv>
+                </ContentDiv>
+                <div>
+                  {plan.islike ? (
+                    <img
+                      src={wishgreen}
+                      onClick={(e) => clickWishBtn(e)}
+                      id={plan.postId}
+                    />
+                  ) : (
+                    <img
+                      src={wish}
+                      onClick={(e) => clickWishBtn(e)}
+                      id={plan.postId}
+                    />
+                  )}
+                </div>
+              </CardContainer>
+            );
+          })}
+        </InfinityScroll>
+      </Bodydiv>
+      <Footer />
+    </Container>
   );
 };
+
+const Bodydiv = styled.div`
+  height: 85%;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+  }
+`;
+const Container = styled.div`
+  height: 100%;
+`;
 
 const Datediv = styled.div`
   font-size: 12px;
@@ -127,6 +161,7 @@ const HeaderDiv = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0px 15px;
+  height: 7%;
   img {
     margin-top: 6px;
   }

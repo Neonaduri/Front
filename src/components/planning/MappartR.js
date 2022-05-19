@@ -49,6 +49,10 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
   });
 
   useEffect(() => {
+    dispatch(planAction.getRoomDB(postId));
+  }, []);
+
+  useEffect(() => {
     const db = getDatabase();
     const fixedLatLngRef = query(
       ref(db, `${postId}/allPlan/day${dayNow}`),
@@ -62,15 +66,6 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
       });
       setPolyLineArr(arr);
     });
-    return () =>
-      onValue(fixedLatLngRef, (snapshot) => {
-        let arr = [];
-        snapshot.forEach((child) => {
-          let val = child.val();
-          arr.push({ lat: val.lat, lng: val.lng });
-        });
-        setPolyLineArr(arr);
-      });
   }, [dayNow]);
 
   const inputPlanTime = (marker) => {
@@ -156,7 +151,7 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
 
   const textCut = (text) => {
     let value;
-    if (text.length > 15) {
+    if (text?.length > 15) {
       value = `${text.substring(0, 15)}...`;
     } else {
       value = text;

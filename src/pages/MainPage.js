@@ -46,15 +46,15 @@ const MainPage = ({ history }) => {
     dots: true,
     infinite: true,
     autoplay: true,
-    autoplaySpeed: 2000,
-    speed: 3000,
+    autoplaySpeed: 5000,
+    speed: 500,
     slidesToShow: 2,
-    slidesToScroll: 2,
+    slidesToScroll: 1,
   };
 
-  // if (!token) {
-  //   history.push("/login");
-  // }
+  if (!token) {
+    history.push("/login");
+  }
 
   const initLocation = "서울";
 

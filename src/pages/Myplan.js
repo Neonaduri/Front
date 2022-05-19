@@ -273,6 +273,11 @@ const Middlediv = styled.div`
   height: 65%;
   overflow: scroll;
   background-color: ${({ theme }) => theme.colors.borderColor};
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+  }
 `;
 
 export default Myplan;

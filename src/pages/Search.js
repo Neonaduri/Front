@@ -100,6 +100,11 @@ const ContentDiv = styled.div`
   margin-top: 20px;
   height: 80%;
   overflow-y: scroll;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+  }
 `;
 
 const Div = styled.div`
