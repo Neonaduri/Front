@@ -270,7 +270,7 @@ const Middlediv = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 10px;
-  height: 65%;
+  height: 70%;
   overflow: scroll;
   background-color: ${({ theme }) => theme.colors.borderColor};
   -ms-overflow-style: none;

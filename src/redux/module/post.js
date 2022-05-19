@@ -59,7 +59,7 @@ export const getBestPostDB = () => {
   return async function (dispatch, getState, { history }) {
     try {
       const token = localStorage.getItem("token");
-      const response = await apis.axiosInstance.get(`/plans/best`, {
+      const response = await apis.axiosInstance.get(`/best`, {
         headers: {
           Authorization: `${token}`,
         },
@@ -80,8 +80,14 @@ export const getBestPostDB = () => {
 export const getLocationPostDB = (location) => {
   return async function (dispatch, getState, { history }) {
     try {
+      const token = localStorage.getItem("token");
       const response = await apis.axiosInstance.get(
-        `/plans/location/${location}/1`
+        `/plans/location/${location}/1`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
       );
       if (response.status === 200) {
         dispatch(getLocationPost(response.data.planList));

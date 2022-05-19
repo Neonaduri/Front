@@ -187,7 +187,7 @@ const googleLoginDB = (code) => {
       }
       if (localStorage.getItem("token")) {
         dispatch(isLoginDB());
-        history.replace("/");
+        window.location.replace("/");
       }
     } catch (err) {
       Sentry.captureException(err);

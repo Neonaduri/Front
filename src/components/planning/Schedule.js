@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Map, Polyline, MapMarker } from "react-kakao-maps-sdk";
 import RTdatabase from "../../firebase";
 import {
@@ -10,12 +16,12 @@ import {
   orderByChild,
   runTransaction,
 } from "firebase/database";
+import _ from "lodash";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import ModalfixTime from "../common/ModalfixTime";
 import { useSelector } from "react-redux";
 import hamburger from "../../static/images/icon/hamburger.png";
-import cancel from "../../static/images/icon/cancel.png";
 
 const Schedule = (props) => {
   const postId = useParams().postId;
@@ -31,6 +37,7 @@ const Schedule = (props) => {
   const [hamburgerNum, setHamburgerNum] = useState(null);
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
   const [deleteIndex, setDeleteIdx] = useState();
+  const [inputValue, setInputValue] = useState("");
 
   let latlngArr = [];
   if (place !== undefined) {
@@ -126,6 +133,8 @@ const Schedule = (props) => {
       return memoInput;
     });
   };
+
+  const throttlefunc = useCallback(_.throttle(changeMemoInput, 1000), []);
 
   if (latlngArr.length === 0) {
     return (

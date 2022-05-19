@@ -11,9 +11,9 @@ const Splash = () => {
 };
 
 const Outter = styled.div`
-  background-color: #41b67e;
-  width: 100vw;
-  height: 100vh;
+  background-color: white;
+  width: 100%;
+  height: 100%;
   position: fixed;
   top: 0;
   left: 0;

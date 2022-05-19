@@ -102,7 +102,8 @@ const CustomSheet = styled(Sheet)`
     /* custom styles */
   }
   .react-modal-sheet-container {
-    /* custom styles */
+    max-width: 375px;
+    margin-left: 580px;
   }
   .react-modal-sheet-header {
   }

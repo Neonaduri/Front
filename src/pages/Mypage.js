@@ -32,7 +32,8 @@ const Mypage = () => {
       <HeaderDiv>
         <div></div>
         <Titleline title={"마이페이지"} />
-        <img src={alarm} />
+        <img />
+        {/* <img src={alarm} /> */}
       </HeaderDiv>
       <UserinfoDiv>
         <div>
@@ -127,7 +128,7 @@ const HeaderDiv = styled.div`
     margin-top: 6px;
   }
   div {
-    padding-left: 30px;
+    padding-left: 20px;
   }
 `;
 

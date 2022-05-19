@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://ohyeryung.shop",
+  baseURL: process.env.REACT_APP_AXIOS_INSTANCE_BASEURL,
 });
 
 // const axiosOVInstance = axios.create({
