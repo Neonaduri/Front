@@ -7,24 +7,36 @@ import { BrowserTracing } from "@sentry/tracing";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "./redux/store";
-// import * as serviceWorkerRegistration from "../public/serviceWorkerRegistration";
-// serviceWorkerRegistration.register(); //웹 페이지를 열었을 때 설치 버튼이 생성되게 만들어준다.
-
-Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_REACT_DSN,
-  integrations: [new BrowserTracing()],
-
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
-});
+// -- serviceWorker --
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+// import ReactPWAInstallProvider from "react-pwa-install";
 
 ReactDOM.render(
+  // <ReactPWAInstallProvider enableLogging>
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <App />
     </ConnectedRouter>
   </Provider>,
+  // </ReactPWAInstallProvider>,
   document.getElementById("root")
 );
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/public/service-worker.js")
+      .then((registration) => {
+        console.log("SW registered", registration);
+        registration.pushManager.subscribe({ userVisibleOnly: true });
+        Notification.requestPermission().then((p) => {
+          console.log(p);
+        });
+      })
+      .catch((e) => {
+        console.log("SW registration failed: ", e);
+      });
+  });
+}
+
+serviceWorkerRegistration.register(); //웹 페이지를 열었을 때 설치 버튼이 생성되게 만들어준다.

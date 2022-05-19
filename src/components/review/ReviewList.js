@@ -71,6 +71,10 @@ const Text = styled.div`
   font-size: 14px;
   line-height: 17px;
   text-overflow: ellipsis;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
   overflow: hidden;
   font-family: "Apple SD Gothic Neo";
 `;

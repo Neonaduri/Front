@@ -24,8 +24,11 @@ import theme from "./assets/styles/theme";
 import MyEdit from "./pages/MyEdit";
 import Myscrap from "./pages/Myscrap";
 import MyReview from "./pages/MyReview";
+// import { useReactPWAInstall } from "react-pwa-install";
 
 function App(props) {
+  // const { pwaInstall, supported, isInstalled } = useReactPWAInstall();
+
   const dispatch = useDispatch();
   const is_session = localStorage.getItem("token") ? true : false;
 
