@@ -125,7 +125,7 @@ const TriggerBtn = styled.button`
   background-color: white;
   width: 100%;
   border: none;
-  height: 12%;
+  height: 93px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -141,7 +141,7 @@ const TriggerBtn = styled.button`
     background-color: ${({ theme }) => theme.colors.mainGreen};
     border-radius: 50%;
     border: 3px solid white;
-    bottom: 60px;
+    bottom: 70px;
     z-index: 9999;
     img {
       margin-top: 6px;

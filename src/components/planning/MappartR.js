@@ -359,11 +359,11 @@ const CopyConfirmtext = styled.span`
 `;
 
 const HideBtn = styled.button`
-  background-color: ${({ theme }) => theme.colors.mainGreen};
-  border: none;
+  background-color: white;
+  border: 1px solid ${({ theme }) => theme.colors.mainGreen};
   position: absolute;
   z-index: 9999;
-  bottom: 128px;
+  bottom: 140px;
   left: 5px;
   border-radius: 5px;
   height: 50px;
@@ -378,7 +378,7 @@ const PlaceList = styled.div`
   z-index: 5;
   scroll-behavior: auto;
   position: absolute;
-  bottom: 105px;
+  bottom: 115px;
   padding-left: 30px;
   visibility: ${(props) => (props.hidden ? "hidden" : null)};
 `;
