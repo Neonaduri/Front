@@ -92,6 +92,7 @@
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.17.10",
     "@babel/node": "^7.17.10",
-    "@babel/preset-env": "^7.17.10"
+    "@babel/preset-env": "^7.17.10",
+    "workbox-webpack-plugin": "^6.5.3"
   }
 }
