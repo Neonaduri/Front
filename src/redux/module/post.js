@@ -59,7 +59,7 @@ export const getBestPostDB = () => {
   return async function (dispatch, getState, { history }) {
     try {
       const token = localStorage.getItem("token");
-      const response = await apis.axiosInstance.get(`/plans/best`, {
+      const response = await apis.axiosInstance.get(`/best`, {
         headers: {
           Authorization: `${token}`,
         },

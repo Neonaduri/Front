@@ -392,11 +392,7 @@ const ContainerInput = styled.div`
 `;
 
 const Middlediv = styled.div`
-  height: 90%;
-  display: flex;
-  flex-direction: column;
-  padding: 20px 0px;
-  overflow: scroll;
+  margin-top: 70px;
 `;
 
 const Button = styled.button`
@@ -424,6 +420,7 @@ const Container = styled.div`
   margin-top: 20px;
   width: 100%;
   margin-bottom: 190px;
+  background-color: white;
 `;
 
 const ReviewBox = styled.div`

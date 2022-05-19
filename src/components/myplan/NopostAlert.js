@@ -36,7 +36,7 @@ const NopostAlert = () => {
 };
 
 const ContentDiv = styled.div`
-  margin-bottom: 40%;
+  /* margin-bottom: 60%; */
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -61,7 +61,7 @@ const NopostContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 `;
 
 const Img = styled.img`
@@ -82,6 +82,8 @@ const ButtonDiv = styled.div`
   }
 `;
 
-const TitleDiv = styled.div``;
+const TitleDiv = styled.div`
+  margin-bottom: 20px;
+`;
 
 export default NopostAlert;
