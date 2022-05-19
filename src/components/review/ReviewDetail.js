@@ -290,7 +290,6 @@ const ReviewDetail = () => {
           id="chooseFile"
           accept="image/*"
           onChange={onImgChange}
-          // onClick={onImgFile}
         ></FileName>
       </ContainerInput>
     </>
