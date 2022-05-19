@@ -105,6 +105,7 @@ const BodyDiv = styled.div`
   height: 84%;
   overflow-y: scroll;
   -ms-overflow-style: none;
+  color: #363636;
   &::-webkit-scrollbar {
     display: none;
     width: 0 !important;

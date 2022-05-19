@@ -106,6 +106,7 @@ const Bodydiv = styled.div`
 `;
 const Container = styled.div`
   height: 100%;
+  margin-bottom: 20px;
 `;
 
 const Datediv = styled.div`
@@ -115,9 +116,10 @@ const Datediv = styled.div`
 `;
 
 const TitleDiv = styled.div`
-  margin: 5px 0px;
+  margin: 10px 0px;
   h3 {
     font-size: 16px;
+    color: #363636;
   }
 `;
 
@@ -152,7 +154,7 @@ const CardContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 7px 13px;
+  padding: 10px 13px;
 `;
 
 const HeaderDiv = styled.div`
@@ -161,6 +163,7 @@ const HeaderDiv = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0px 15px;
+  margin-bottom: 20px;
   height: 7%;
   img {
     margin-top: 6px;

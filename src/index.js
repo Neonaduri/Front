@@ -7,9 +7,19 @@ import { BrowserTracing } from "@sentry/tracing";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "./redux/store";
+
 // -- serviceWorker --
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-// import ReactPWAInstallProvider from "react-pwa-install";
+
+Sentry.init({
+  dsn: process.env.REACT_APP_SENTRY_REACT_DSN,
+  integrations: [new BrowserTracing()],
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_REACT_DSN,
@@ -22,13 +32,12 @@ Sentry.init({
 });
 
 ReactDOM.render(
-  // <ReactPWAInstallProvider enableLogging>
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <App />
     </ConnectedRouter>
   </Provider>,
-  // </ReactPWAInstallProvider>,
+
   document.getElementById("root")
 );
 

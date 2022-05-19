@@ -85,6 +85,12 @@ const RightBottomdiv = styled.div`
   div {
     display: flex;
     align-items: center;
+
+    small {
+      color: #8d8d8d;
+      font-weight: lighter;
+    }
+
     img {
       margin-left: 10px;
       margin-right: 4px;
@@ -124,7 +130,7 @@ const RightHeaderDiv = styled.div`
 const RightDiv = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 5px;
+  padding-left: 10px;
   margin-top: -3px;
   width: 240px;
 `;

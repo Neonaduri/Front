@@ -75,19 +75,17 @@ const Content = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
-  /* width: 75%; */
-  margin-top: 5px;
-  /* margin-left: 6px; */
-  font-size: 15px;
+  margin-left: 6px;
+  font-size: 12px;
   line-height: 17px;
   color: ${({ theme }) => theme.colors.text1};
-  text-overflow: ellipsis;
   overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
+  width: 120px;
 `;
 
 const Like = styled.div`
-  /* margin-left: 10px; */
   display: flex;
   justify-content: left;
   align-items: center;
