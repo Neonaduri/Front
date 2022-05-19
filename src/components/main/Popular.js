@@ -42,10 +42,10 @@ const Popular = ({
             <ImgIconWish src={wish} />
             <Cnt>{likeCnt}</Cnt>
           </Like>
-          <Like>
+          <LikeReview>
             <ImgIcon src={review} />
             <Cnt>{reviewCnt}</Cnt>
-          </Like>
+          </LikeReview>
         </SectionBox>
       </Box>
     </Wrap>
@@ -64,23 +64,21 @@ const SocialWishDiv = styled.div`
 `;
 
 const ImgIcon = styled.img`
-  position: absolute;
-  right: 105px;
   width: 11.25px;
   height: 9.92px;
 `;
 
 const ImgIconWish = styled.img`
-  position: absolute;
-  right: 135px;
+  margin-left: 5px;
   width: 9.92px;
   height: 10.98px;
 `;
 
 const SectionBox = styled.div`
   display: flex;
+  justify-content: left;
+  align-items: center;
   margin-top: 5px;
-  position: relative;
 `;
 
 const Wrap = styled.div`
@@ -92,16 +90,23 @@ const Wrap = styled.div`
 
 const Like = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
 `;
 
+const LikeReview = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin-left: 5px; */
+`;
+
 const Cnt = styled.div`
-  /* margin-left: 3px; */
+  margin-left: 3px;
   color: #8d8d8d;
   font-weight: 500;
   font-size: 12px;
   line-height: 12px;
-  margin-left: 18px;
 `;
 
 const Content = styled.div`

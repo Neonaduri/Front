@@ -79,11 +79,11 @@ const ScheduleDetail = ({ dayNow }) => {
                   disabled={true}
                 ></textarea>
               ) : (
-                <textarea
+                <Textarea
                   id={idx}
                   defaultValue="메모 내용은 작성자만 볼 수 있습니다."
                   disabled={true}
-                ></textarea>
+                ></Textarea>
               )}
             </Contentdiv>
           </PlaceCard>
@@ -137,6 +137,7 @@ const NoPlanContainer = styled.div`
 `;
 
 const UrlConnectSpan = styled.span`
+  margin-bottom: 10px;
   a {
     text-decoration: none;
     color: ${({ theme }) => theme.colors.text2};
@@ -149,6 +150,12 @@ const NumColumnBar = styled.span`
   background-color: ${({ theme }) => theme.colors.borderColor};
   position: absolute;
   top: 20px;
+`;
+
+const Textarea = styled.textarea`
+  padding: 5px 5px;
+  resize: none;
+  color: #363636;
 `;
 
 const Contentdiv = styled.div`

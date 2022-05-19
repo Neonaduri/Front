@@ -61,6 +61,6 @@ const theme = [
   "기타",
 ];
 
-const keywordSuggestList = ["강릉", "제주도", "워터파크", "힐링", "가족여행"];
+const keywordSuggestList = ["여름", "당일치기", "워터파크", "자연", "나홀로"];
 
 export { area, theme1, theme2, keywordSuggestList, theme };

@@ -136,6 +136,7 @@ export default ReviewItem;
 
 const Card = styled.div`
   margin: 20px 0;
+  background-color: white;
 `;
 
 const Btns = styled.div``;
