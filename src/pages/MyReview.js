@@ -9,28 +9,28 @@ import goRight from "../static/images/icon/goRight.png";
 import { deleteCommentInMypageDB } from "../redux/module/user";
 import Footer from "../components/common/Footer";
 
-const displayedAt = (createdAt) => {
-  const milliSeconds = new Date() - createdAt;
-  const seconds = milliSeconds / 1000;
-  if (seconds < 60) return `방금 전`;
-  const minutes = seconds / 60;
-  if (minutes < 60) return `${Math.floor(minutes)}분 전`;
-  const hours = minutes / 60;
-  if (hours < 24) return `${Math.floor(hours)}시간 전`;
-  const days = hours / 24;
-  if (days < 7) return `${Math.floor(days)}일 전`;
-  const weeks = days / 7;
-  if (weeks < 5) return `${Math.floor(weeks)}주 전`;
-  const months = days / 30;
-  if (months < 12) return `${Math.floor(months)}개월 전`;
-  const years = days / 365;
-  return `${Math.floor(years)}년 전`;
-};
-
 const MyReview = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const myReview = useSelector((state) => state.user.myReview);
+
+  const displayedAt = (createdAt) => {
+    const milliSeconds = new Date() - createdAt;
+    const seconds = milliSeconds / 1000;
+    if (seconds < 60) return `방금 전`;
+    const minutes = seconds / 60;
+    if (minutes < 60) return `${Math.floor(minutes)}분 전`;
+    const hours = minutes / 60;
+    if (hours < 24) return `${Math.floor(hours)}시간 전`;
+    const days = hours / 24;
+    if (days < 7) return `${Math.floor(days)}일 전`;
+    const weeks = days / 7;
+    if (weeks < 5) return `${Math.floor(weeks)}주 전`;
+    const months = days / 30;
+    if (months < 12) return `${Math.floor(months)}개월 전`;
+    const years = days / 365;
+    return `${Math.floor(years)}년 전`;
+  };
 
   const deleteBtnClick = (e) => {
     const reviewId = e.target.id;
@@ -55,9 +55,8 @@ const MyReview = () => {
       </HeaderDiv>
       <BodyDiv>
         {myReview?.map((review, idx) => {
-          const writeDate = review.modifiedAt;
-          const dateStr = writeDate.substring(0, 16);
-          const [date, time] = dateStr.split("T");
+          const date = new Date(review.modifiedAt);
+          const dateMillisecond = date.getTime() + 3600000 * 9;
           let content;
           if (review.reviewContents.length > 90) {
             content = `${review.reviewContents.substring(0, 90)} ...`;
@@ -67,9 +66,7 @@ const MyReview = () => {
           return (
             <CardContainer key={idx}>
               <CardHeadDiv>
-                <small>
-                  {date} / {time}
-                </small>
+                <small>{displayedAt(dateMillisecond)}</small>
                 <span onClick={(e) => deleteBtnClick(e)} id={review.reviewId}>
                   삭제
                 </span>
@@ -107,6 +104,11 @@ const FooterDiv = styled.div`
 const BodyDiv = styled.div`
   height: 84%;
   overflow-y: scroll;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+  }
 `;
 
 const Container = styled.div`
@@ -149,6 +151,7 @@ const CardHeadDiv = styled.div`
   margin-bottom: 3px;
   small {
     color: ${({ theme }) => theme.colors.text3};
+    font-family: "apple1";
   }
   span {
     background-color: ${({ theme }) => theme.colors.borderColor};
@@ -157,6 +160,7 @@ const CardHeadDiv = styled.div`
     border-radius: 2px;
     font-size: 12px;
     color: ${({ theme }) => theme.colors.text2};
+    font-family: "apple1";
   }
 `;
 

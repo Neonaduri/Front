@@ -46,15 +46,15 @@ const MainPage = ({ history }) => {
     dots: true,
     infinite: true,
     autoplay: true,
-    autoplaySpeed: 2000,
-    speed: 3000,
+    autoplaySpeed: 5000,
+    speed: 500,
     slidesToShow: 2,
-    slidesToScroll: 2,
+    slidesToScroll: 1,
   };
 
-  // if (!token) {
-  //   history.push("/login");
-  // }
+  if (!token) {
+    history.push("/login");
+  }
 
   const initLocation = "서울";
 
@@ -183,7 +183,7 @@ const Section = styled.section`
   justify-content: center;
   align-content: center;
   background-color: ${({ theme }) => theme.colors.borderColor};
-  height: 92%;
+  height: 97%;
 `;
 
 const Name = styled.div`

@@ -49,6 +49,10 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
   });
 
   useEffect(() => {
+    dispatch(planAction.getRoomDB(postId));
+  }, []);
+
+  useEffect(() => {
     const db = getDatabase();
     const fixedLatLngRef = query(
       ref(db, `${postId}/allPlan/day${dayNow}`),
@@ -62,15 +66,6 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
       });
       setPolyLineArr(arr);
     });
-    return () =>
-      onValue(fixedLatLngRef, (snapshot) => {
-        let arr = [];
-        snapshot.forEach((child) => {
-          let val = child.val();
-          arr.push({ lat: val.lat, lng: val.lng });
-        });
-        setPolyLineArr(arr);
-      });
   }, [dayNow]);
 
   const inputPlanTime = (marker) => {
@@ -156,7 +151,7 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
 
   const textCut = (text) => {
     let value;
-    if (text.length > 15) {
+    if (text?.length > 15) {
       value = `${text.substring(0, 15)}...`;
     } else {
       value = text;
@@ -364,11 +359,11 @@ const CopyConfirmtext = styled.span`
 `;
 
 const HideBtn = styled.button`
-  background-color: ${({ theme }) => theme.colors.mainGreen};
-  border: none;
+  background-color: white;
+  border: 1px solid ${({ theme }) => theme.colors.mainGreen};
   position: absolute;
   z-index: 9999;
-  bottom: 128px;
+  bottom: 140px;
   left: 5px;
   border-radius: 5px;
   height: 50px;
@@ -383,7 +378,7 @@ const PlaceList = styled.div`
   z-index: 5;
   scroll-behavior: auto;
   position: absolute;
-  bottom: 105px;
+  bottom: 115px;
   padding-left: 30px;
   visibility: ${(props) => (props.hidden ? "hidden" : null)};
 `;
@@ -408,6 +403,9 @@ const InviteContentDiv = styled.div`
   display: flex;
   align-items: center;
   width: 85%;
+  input {
+    font-family: "apple1";
+  }
 `;
 
 const HeadLineDiv = styled.div`
@@ -425,6 +423,7 @@ const HeadLineDiv = styled.div`
     justify-content: space-between;
     span {
       margin-right: 12px;
+      font-family: "apple3";
     }
   }
   span {
@@ -434,6 +433,7 @@ const HeadLineDiv = styled.div`
   small {
     margin-bottom: 5px;
     color: ${({ theme }) => theme.colors.text3};
+    font-family: "apple1";
   }
 `;
 
@@ -487,6 +487,7 @@ const PlaceInput = styled.input`
   font-size: 16px;
   padding: 3px 5px;
   height: 35px;
+  font-family: "apple1";
 `;
 const PlaceBtn = styled.div`
   background-color: white;
@@ -514,6 +515,7 @@ const InviteTextdiv = styled.div`
     font-size: 15px;
     color: ${({ theme }) => theme.colors.text2};
     margin-top: 5px;
+    font-family: "apple1";
   }
 `;
 

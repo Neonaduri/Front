@@ -17,6 +17,9 @@ const Titlepart = styled.div`
   justify-content: center;
   font-size: 18px;
   margin-top: 10px;
+  span {
+    font-family: "apple3";
+  }
 `;
 
 export default Titleline;

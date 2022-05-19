@@ -252,6 +252,12 @@ const Datediv = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: -30px;
+  span {
+    &:first-child {
+      font-family: "apple1";
+    }
+  }
+
   div {
     border: 1px solid ${({ theme }) => theme.colors.borderColor};
     border-radius: 5px;
@@ -266,6 +272,9 @@ const Themediv = styled.div`
   display: flex;
   flex-direction: column;
   width: 45%;
+  label {
+    font-family: "apple1";
+  }
   div {
     display: flex;
     align-items: center;
@@ -283,6 +292,9 @@ const Locationdiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 45%;
+  label {
+    font-family: "apple1";
+  }
   div {
     display: flex;
     align-items: center;
@@ -299,6 +311,9 @@ const Locationdiv = styled.div`
 const PostTitlediv = styled.div`
   display: flex;
   flex-direction: column;
+  label {
+    font-family: "apple1";
+  }
   input {
     width: 100%;
     margin: auto;

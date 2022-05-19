@@ -16,6 +16,14 @@ const Slide = ({ sliders, dayNow, callback }) => {
   const postId = params.postId;
   const [latlng, setLatlng] = useState();
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 400,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+  };
+
   const inputPlanTime = (place) => {
     setMarker(place);
     setModalOpen(true);
@@ -52,6 +60,7 @@ const Slide = ({ sliders, dayNow, callback }) => {
   useEffect(() => {
     callback(latlng);
   }, [latlng]);
+
   return (
     <Container>
       <StyledSlider {...settings}>
@@ -167,18 +176,6 @@ const TimeModal = styled.div`
   }
 `;
 
-const settings = {
-  dots: false,
-  infinite: true,
-  speed: 1500,
-  autoplay: false,
-  autoplaySpeed: 5000,
-  slidesToShow: 4,
-  slidesToScroll: 1,
-  centerMode: true,
-  centerPadding: "0px",
-};
-
 const Container = styled.div`
   margin-right: 25px;
 `;
@@ -215,10 +212,12 @@ const PlaceListCard = styled.div`
       display: flex;
       flex-direction: column;
       small {
-        color: #8d8d8d;
+        color: ${({ theme }) => theme.colors.text2};
+        font-family: "apple1";
       }
       span {
         font-size: 14px;
+        font-family: "apple1";
       }
     }
     &:nth-child(2) {
@@ -231,13 +230,15 @@ const PlaceListCard = styled.div`
         height: 40px;
         border: none;
         padding: 5px 2px;
+        font-size: 14px;
         &:first-child {
           background-color: white;
-          color: #56be91;
+          color: ${({ theme }) => theme.colors.mainGreen};
           border-bottom-left-radius: 5px;
           a {
             text-decoration: none;
-            color: #56be91;
+            color: ${({ theme }) => theme.colors.mainGreen};
+            font-size: 14px;
           }
         }
         &:last-child {

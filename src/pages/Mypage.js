@@ -111,6 +111,7 @@ const UserinfoDiv = styled.div`
       span {
         font-size: 14px;
         color: ${({ theme }) => theme.colors.text2};
+        font-family: "apple1";
       }
     }
   }
