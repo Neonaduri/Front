@@ -131,7 +131,7 @@ const getMyPlanPage1DB = () => {
         lastPage: response.data.islastPage,
       };
       if (response.status === 200) {
-        dispatch(getMyPlanPage1(response.data.myplanList, paging));
+        dispatch(getMyPlanPage1(response.data.planList, paging));
       }
     } catch (err) {
       Sentry.captureException(err);
@@ -149,7 +149,7 @@ const getMyPlanNextPageDB = (page) => {
         lastPage: response.data.islastPage,
       };
       if (response.status === 200) {
-        dispatch(getMyPlanNextPage(response.data.myplanList, paging));
+        dispatch(getMyPlanNextPage(response.data.planList, paging));
       }
     } catch (err) {
       Sentry.captureException(err);

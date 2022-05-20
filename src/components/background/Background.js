@@ -14,12 +14,12 @@ const Background = () => {
       <ContainerTop>
         <Img src={profile}></Img>
         <Text>너나들이에서 준비한 이벤트!</Text>
-      </ContainerTop>
 
-      <Container>
-        <div>참여기간</div>
-        <span>2022.05.21(토) ~ 2022.06.04(토)</span>
-      </Container>
+        <Container>
+          <div>참여기간</div>
+          <span>2022.05.21(토) ~ 2022.06.04(토)</span>
+        </Container>
+      </ContainerTop>
 
       <Event>
         <h3>🎉 이벤트 참여방법 🎉</h3>
@@ -83,8 +83,8 @@ const ContainerTop = styled.div`
   align-items: center;
   width: 480px;
   position: absolute;
-  top: 365px;
-  left: 150px;
+  top: 270px;
+  left: 300px;
 `;
 
 const LotteImg = styled.img`
@@ -97,8 +97,8 @@ const BoxContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  left: 150px;
-  top: 480px;
+  left: 300px;
+  top: 370px;
 `;
 
 const BoxProductContainer = styled.div`
@@ -106,14 +106,14 @@ const BoxProductContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  left: 150px;
-  top: 710px;
+  left: 300px;
+  top: 610px;
 `;
 
 const Box = styled.div`
   margin: 20px;
-  width: 240px;
-  height: 175px;
+  width: 225px;
+  height: 170px;
   text-align: center;
   background: #ffffff;
   box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.25);
@@ -147,7 +147,7 @@ const Box = styled.div`
 
 const BoxProduct = styled.div`
   margin: 20px;
-  width: 240px;
+  width: 225px;
   height: 170px;
   text-align: center;
   background: #ffffff;
@@ -186,8 +186,8 @@ const Event = styled.div`
 
   h3 {
     position: absolute;
-    left: 150px;
-    top: 460px;
+    left: 300px;
+    top: 350px;
     font-weight: 700;
     font-size: 17px;
     color: #363636;
@@ -201,8 +201,8 @@ const EventProduct = styled.div`
 
   h3 {
     position: absolute;
-    left: 150px;
-    top: 690px;
+    left: 300px;
+    top: 590px;
     font-weight: 700;
     font-size: 17px;
     color: #363636;
@@ -215,8 +215,8 @@ const Container = styled.div`
   align-items: center;
   width: 480px;
   position: absolute;
-  top: 415px;
-  left: 150px;
+  left: 440px;
+  bottom: 13px;
 
   div {
     font-weight: 800;
