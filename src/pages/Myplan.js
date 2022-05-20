@@ -85,7 +85,11 @@ const Myplan = () => {
             return (
               <PostCard key={idx}>
                 <UpperCarddiv>
-                  <div>
+                  <div
+                    onClick={() => {
+                      history.push(`/detail/${plan.postId}`);
+                    }}
+                  >
                     <span>{textCut(plan.postTitle)}</span>
                     <span>{plan.theme}</span>
                   </div>
@@ -94,11 +98,7 @@ const Myplan = () => {
                   </button>
                 </UpperCarddiv>
                 <BottomCarddiv>
-                  <div
-                    onClick={() => {
-                      history.push(`/detail/${plan.postId}`);
-                    }}
-                  >
+                  <div>
                     <div>
                       <img src={mapSmall} />
                       <span>{plan.location}</span>
@@ -108,7 +108,13 @@ const Myplan = () => {
                     </small>
                   </div>
                   <div>
-                    <button>여행 후기 남기기</button>
+                    <button
+                      onClick={() => {
+                        history.push(`/detail/${plan.postId}`);
+                      }}
+                    >
+                      여행 후기 남기기
+                    </button>
                   </div>
                 </BottomCarddiv>
                 <ModalfixTime
@@ -198,6 +204,7 @@ const BottomCarddiv = styled.div`
         border: none;
         font-size: 16px;
         color: ${({ theme }) => theme.colors.mainGreen};
+        cursor: pointer;
       }
     }
   }
@@ -209,15 +216,16 @@ const UpperCarddiv = styled.div`
   justify-content: space-between;
   padding: 7px 10px;
   height: 40px;
-
   button {
+    width: 10px;
     background-color: inherit;
     border: none;
     margin-right: 5px;
     color: black;
     img {
-      height: 17px;
+      width: 20px;
       color: black;
+      cursor: pointer;
     }
   }
   div {
@@ -227,6 +235,7 @@ const UpperCarddiv = styled.div`
       &:first-child {
         font-size: 18px;
         font-family: "apple3";
+        cursor: pointer;
       }
       &:nth-child(2) {
         background-color: ${({ theme }) => theme.colors.borderColor};
@@ -235,6 +244,7 @@ const UpperCarddiv = styled.div`
         border-radius: 2px;
         font-size: 12px;
         color: ${({ theme }) => theme.colors.text2};
+        cursor: pointer;
       }
     }
   }
@@ -255,6 +265,7 @@ const Plusdiv = styled.div`
     border-radius: 8px;
     color: white;
     font-size: 15px;
+    cursor: pointer;
   }
 `;
 
@@ -270,7 +281,7 @@ const Middlediv = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 10px;
-  height: 65%;
+  height: 70%;
   overflow: scroll;
   background-color: ${({ theme }) => theme.colors.borderColor};
   -ms-overflow-style: none;

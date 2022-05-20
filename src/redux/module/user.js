@@ -1,6 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { RESP } from "../../shared/response";
 import apis from "../../shared/request";
 import * as Sentry from "@sentry/react";
 
@@ -88,6 +87,7 @@ const logInDB = (username, password) => {
         userName: username,
         password,
       });
+      console.log(response);
       // const response = RESP.LOGINPOST;
       if (response.status === 200) {
         const token = response.headers.authorization;
@@ -187,7 +187,7 @@ const googleLoginDB = (code) => {
       }
       if (localStorage.getItem("token")) {
         dispatch(isLoginDB());
-        history.replace("/");
+        window.location.replace("/");
       }
     } catch (err) {
       Sentry.captureException(err);
@@ -251,7 +251,7 @@ const editProfileDB = (formdata, config) => {
       );
       if (response.status === 201) {
         alert("프로필이 수정되었습니다.");
-        window.location.replace("/");
+        window.location.replace("/mypage");
       }
     } catch (err) {
       Sentry.captureException(err);

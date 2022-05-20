@@ -33,7 +33,10 @@ const SearchItem = ({
   return (
     <Container>
       <LeftDiv>
-        <PostImg src={postImgUrl} />
+        <PostImg
+          src={postImgUrl}
+          onClick={() => history.push(`/detail/${postId}`)}
+        />
         <div onClick={(e) => clickWishPost(e)}>
           {islike ? (
             <img src={clickedWish} id={postId} />
@@ -57,7 +60,7 @@ const SearchItem = ({
           <h3>{postTitle}</h3>
         </RigthMiddlediv>
 
-        <RightBottomdiv>
+        <RightBottomdiv onClick={() => history.push(`/detail/${postId}`)}>
           <span>{user?.nickName}</span>
           <div>
             <ImgWish src={wish} />
@@ -78,6 +81,7 @@ const RightBottomdiv = styled.div`
   justify-content: space-between;
   padding: 5px;
   font-family: "apple1";
+  cursor: pointer;
   span {
     font-size: 14px;
     color: ${({ theme }) => theme.colors.text2};
@@ -100,7 +104,7 @@ const RightBottomdiv = styled.div`
 
 const RigthMiddlediv = styled.div`
   height: 53px;
-
+  cursor: pointer;
   h3 {
     font-size: 16px;
     margin: 5px 0px;
@@ -112,6 +116,7 @@ const RightHeaderDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
   p {
     font-size: 12px;
     color: ${({ theme }) => theme.colors.text3};
@@ -149,6 +154,7 @@ const LeftDiv = styled.div`
     bottom: 8px;
     img {
       width: 22px;
+      cursor: pointer;
     }
   }
 `;

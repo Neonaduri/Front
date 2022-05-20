@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Map, Polyline, MapMarker } from "react-kakao-maps-sdk";
 import RTdatabase from "../../firebase";
 import {
@@ -9,13 +15,14 @@ import {
   query,
   orderByChild,
   runTransaction,
+  update,
 } from "firebase/database";
+import _ from "lodash";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import ModalfixTime from "../common/ModalfixTime";
 import { useSelector } from "react-redux";
 import hamburger from "../../static/images/icon/hamburger.png";
-import cancel from "../../static/images/icon/cancel.png";
 
 const Schedule = (props) => {
   const postId = useParams().postId;
@@ -50,7 +57,7 @@ const Schedule = (props) => {
       ref(db, `${postId}/allPlan/day${dayNow}`),
       orderByChild("planTime")
     );
-    onValue(fixedPlaceRef, (snapshot) => {
+    const onvalue = onValue(fixedPlaceRef, (snapshot) => {
       let fixedPlace = [];
       let fixedPlaceKey = [];
       snapshot.forEach((child) => {
@@ -60,17 +67,7 @@ const Schedule = (props) => {
       setPlace(fixedPlace);
       setPlaceKey(fixedPlaceKey);
     });
-    return () =>
-      onValue(fixedPlaceRef, (snapshot) => {
-        let fixedPlace = [];
-        let fixedPlaceKey = [];
-        snapshot.forEach((child) => {
-          fixedPlace.push(child.val());
-          fixedPlaceKey.push(child.key);
-        });
-        setPlace(fixedPlace);
-        setPlaceKey(fixedPlaceKey);
-      });
+    return () => onvalue();
   }, [dayNow]);
 
   const deletePlaceClick = (e) => {
@@ -117,11 +114,14 @@ const Schedule = (props) => {
   };
 
   const changeMemoInput = (e) => {
+    const myRealDay = e.target.attributes.isitwork.nodeValue;
     const memoInput = e.target.value;
     const memoIdx = e.target.id;
     const key = placeKey[memoIdx];
-    const placeRef = ref(db, `${postId}/allPlan/day${dayNow}/${key}/placeMemo`);
-    // update(placeRef, { placeMemo: memoInput });
+    const placeRef = ref(
+      db,
+      `${postId}/allPlan/day${myRealDay}/${key}/placeMemo`
+    );
     runTransaction(placeRef, (currentMemo) => {
       return memoInput;
     });
@@ -272,12 +272,13 @@ const Schedule = (props) => {
                   자세히 보기
                 </a>
               </span>
-              <Textarea
+              <textarea
                 id={idx}
+                isitwork={dayNow}
                 value={p.placeMemo}
                 placeholder="남기고 싶은 메모를 입력하세요."
                 onChange={(e) => changeMemoInput(e)}
-              ></Textarea>
+              ></textarea>
               {hamburgerNum === idx ? (
                 <ToggleBox>
                   <div
@@ -377,11 +378,6 @@ const MapContainer = styled.div`
   padding: 5px 10px;
 `;
 
-const Textarea = styled.textarea`
-  resize: none;
-  padding: 10px;
-`;
-
 const DayBtn = styled.button`
   border: none;
   background-color: inherit;
@@ -389,6 +385,7 @@ const DayBtn = styled.button`
   border-bottom: ${(props) =>
     props.idx + 1 === props.daynow ? `3px solid #56BE91` : null};
   color: ${(props) => (props.idx + 1 === props.daynow ? "black" : null)};
+  cursor: pointer;
 `;
 
 const DeleteClickedDiv = styled.div`
@@ -470,6 +467,7 @@ const Contentdiv = styled.div`
       height: 20px;
       margin-top: 4px;
       margin-right: 10px;
+      cursor: pointer;
     }
     h4 {
       font-size: 17px;
@@ -482,12 +480,17 @@ const Contentdiv = styled.div`
     border: 1px solid ${({ theme }) => theme.colors.text3};
     border-radius: 5px;
     font-size: 15px;
+    resize: none;
+    padding: 3px 7px;
   }
   span {
     color: ${({ theme }) => theme.colors.text2};
     font-size: 13px;
     margin: 3px 0px;
     font-family: "apple1";
+    a {
+      cursor: pointer;
+    }
   }
 `;
 

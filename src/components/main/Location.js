@@ -37,11 +37,25 @@ const Location = ({
 
 export default Location;
 
+const Content = styled.div`
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-left: 8px;
+  font-size: 12px;
+  line-height: 17px;
+  color: ${({ theme }) => theme.colors.text1};
+  overflow: hidden;
+  width: 60%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
+
 const ContentDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  width: 100%;
   span {
     width: 25%;
     padding: 2px;
@@ -71,20 +85,6 @@ const Wrap = styled.div`
   position: "relative";
 `;
 
-const Content = styled.div`
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  margin-left: 6px;
-  font-size: 12px;
-  line-height: 17px;
-  color: ${({ theme }) => theme.colors.text1};
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 120px;
-`;
-
 const Like = styled.div`
   display: flex;
   justify-content: left;
@@ -104,5 +104,5 @@ const SectionBox = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
-  margin-top: 5px;
+  margin-top: 0px;
 `;

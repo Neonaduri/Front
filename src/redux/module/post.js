@@ -20,7 +20,7 @@ const initialState = {
   locationList: [],
   searchList: [],
   paging: { start: null, isLastPage: false },
-  keyword: "서울",
+  keyword: "",
   isLoading: false,
   paging: {},
 };
@@ -80,8 +80,14 @@ export const getBestPostDB = () => {
 export const getLocationPostDB = (location) => {
   return async function (dispatch, getState, { history }) {
     try {
+      const token = localStorage.getItem("token");
       const response = await apis.axiosInstance.get(
-        `/plans/location/${location}/1`
+        `/plans/location/${location}/1`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
       );
       if (response.status === 200) {
         dispatch(getLocationPost(response.data.planList));
@@ -102,6 +108,9 @@ export const getKeywordPostDB = (keyword, pageno) => {
       page = 1;
     } else {
       page = pageno;
+    }
+    if (keyword === "") {
+      keyword = "서울";
     }
     try {
       const response = await apis.axiosInstance.get(
@@ -215,6 +224,12 @@ export default handleActions(
       }),
     [GET_SEARCH_POST]: (state, action) =>
       produce(state, (draft) => {
+        if (action.payload.searchList.planList.length === 0) {
+          draft.searchList = action.payload.searchList.planList;
+          draft.paging = { start: 2, islastPage: true };
+          draft.isLoading = false;
+          return;
+        }
         draft.searchList = action.payload.searchList.planList;
         draft.paging = action.payload.searchList.paging;
         draft.isLoading = false;

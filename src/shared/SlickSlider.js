@@ -19,7 +19,7 @@ const Slide = ({ sliders, dayNow, callback }) => {
   const settings = {
     dots: false,
     infinite: true,
-    speed: 400,
+    speed: 300,
     slidesToShow: 4,
     slidesToScroll: 1,
   };
@@ -231,6 +231,7 @@ const PlaceListCard = styled.div`
         border: none;
         padding: 5px 2px;
         font-size: 14px;
+        cursor: pointer;
         &:first-child {
           background-color: white;
           color: ${({ theme }) => theme.colors.mainGreen};

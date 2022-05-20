@@ -17,6 +17,7 @@ const Container = styled.div`
   justify-content: space-between;
   padding: 15px 10px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
+  cursor: pointer;
   span {
     font-size: 16px;
   }

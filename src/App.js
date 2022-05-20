@@ -92,7 +92,7 @@ const Wrap = styled.div`
   width: 100vw;
   height: 100vh;
   .MobileFramePage {
-    z-index: 99999;
+    z-index: 9999;
   }
 `;
 

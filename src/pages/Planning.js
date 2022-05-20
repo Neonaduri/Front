@@ -76,7 +76,7 @@ const Planning = (props) => {
         rootId="root"
         isOpen={isOpen}
         onClose={close}
-        snapPoints={[730, 500, 100, 0]}
+        snapPoints={[0.9, 500, 100, 0]}
         disableDrag={true}
       >
         <Sheet.Container>
@@ -101,7 +101,6 @@ const CustomSheet = styled(Sheet)`
   max-width: 375px;
   margin: auto;
   .react-modal-sheet-backdrop {
-    /* custom styles */
   }
 
   .react-modal-sheet-container {
@@ -109,7 +108,6 @@ const CustomSheet = styled(Sheet)`
   .react-modal-sheet-header {
   }
   .react-modal-sheet-drag-indicator {
-    /* custom styles */
   }
   .react-modal-sheet-content {
     display: flex;
@@ -145,6 +143,7 @@ const TriggerBtn = styled.button`
     border: 3px solid white;
     bottom: 70px;
     z-index: 9999;
+    cursor: pointer;
     img {
       margin-top: 6px;
       width: 20px;
@@ -173,6 +172,7 @@ const DayBtn = styled.button`
   border-bottom: ${(props) =>
     props.idx + 1 === props.daynow ? `3px solid #56BE91` : null};
   color: ${(props) => (props.idx + 1 === props.daynow ? "black" : null)};
+  cursor: pointer;
 `;
 
 export default Planning;

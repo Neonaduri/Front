@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import Footer from "../components/common/Footer";
 import search from "../static/images/icon/search.png";
@@ -35,6 +35,9 @@ const Search = () => {
       setSearching(true);
     }
   };
+  useEffect(() => {
+    dispatch(getKeywordPostDB(keyWord, pageno));
+  }, []);
 
   if (lastPage === undefined) {
     lastPage = true;
@@ -110,6 +113,9 @@ const Div = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  button {
+    cursor: pointer;
+  }
 `;
 
 const HeaderDiv = styled.div`

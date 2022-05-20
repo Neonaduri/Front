@@ -90,8 +90,12 @@ const ScheduleDetail = ({ dayNow }) => {
         );
       })}
       <ReviewBox>
-        <h2>
-          리뷰 <span>({totalCnt})</span>
+        <h2
+          onClick={() => {
+            history.push(`${postId}/write`);
+          }}
+        >
+          리뷰({totalCnt})
         </h2>
         <img
           src={addMore}
@@ -126,6 +130,10 @@ const ReviewBox = styled.div`
     font-size: 18px;
     line-height: 18px;
     color: ${({ theme }) => theme.colors.text1};
+    cursor: pointer;
+  }
+  img {
+    cursor: pointer;
   }
 `;
 
@@ -155,7 +163,8 @@ const NumColumnBar = styled.span`
 const Textarea = styled.textarea`
   padding: 5px 5px;
   resize: none;
-  color: #363636;
+  color: ${({ theme }) => theme.colors.text3};
+  resize: none;
 `;
 
 const Contentdiv = styled.div`
@@ -185,6 +194,7 @@ const Contentdiv = styled.div`
     border: 1px solid ${({ theme }) => theme.colors.text3};
     border-radius: 5px;
     font-size: 14px;
+    resize: none;
   }
   span {
     color: ${({ theme }) => theme.colors.text2};

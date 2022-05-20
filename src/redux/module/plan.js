@@ -130,6 +130,7 @@ const getMyPlanPage1DB = () => {
         start: 2,
         lastPage: response.data.islastPage,
       };
+      console.log(response);
       if (response.status === 200) {
         dispatch(getMyPlanPage1(response.data.planList, paging));
       }
@@ -250,6 +251,7 @@ export default handleActions(
     [CLICKWISHINDETAIL]: (state, action) =>
       produce(state, (draft) => {
         draft.detailPlan.islike = action.payload.result;
+        console.log(state);
       }),
   },
   init
