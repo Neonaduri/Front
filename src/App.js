@@ -98,13 +98,11 @@ const Wrap = styled.div`
 
 const Fullscreen = styled.div`
   background-image: url(${PC});
-  object-fit: cover;
   background-size: cover;
-  position: fixed;
-  /* overflow: hidden; */
+  /* position: fixed; */
+  background-repeat: no-repeat;
   margin: 0;
   display: flex;
-  overflow: scroll;
   ::-webkit-scrollbar {
     display: none;
   }

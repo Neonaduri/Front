@@ -98,11 +98,13 @@ const Planning = (props) => {
   );
 };
 const CustomSheet = styled(Sheet)`
+  max-width: 375px;
+  margin: auto;
   .react-modal-sheet-backdrop {
     /* custom styles */
   }
+
   .react-modal-sheet-container {
-    /* custom styles */
   }
   .react-modal-sheet-header {
   }
