@@ -7,24 +7,24 @@ import Footer from "../common/Footer";
 import Button from "../elements/Button";
 import pencil from "../../static/images/icon/whitePencil.png";
 
-const NopostAlert = () => {
+const NopostAlert = ({ mainContent, btnContent, pushUrl, titleContent }) => {
   const history = useHistory();
 
   return (
     <Container>
       <NopostContainer>
         <TitleDiv>
-          <Titleline title={"계획"} />
+          <Titleline title={titleContent} />
         </TitleDiv>
         <ContentDiv>
-          <span>등록된 계획표가 없습니다!</span>
+          <span>{mainContent}</span>
           <Img src={imgLogin} />
           <ButtonDiv>
             <img src={pencil} />
             <Button
-              content={"계획하러 가기!"}
+              content={btnContent}
               onClick={() => {
-                history.push("/planning");
+                history.push(pushUrl);
               }}
             ></Button>
           </ButtonDiv>
@@ -61,7 +61,8 @@ const NopostContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: space-between; */
+  justify-content: center;
+  padding-bottom: 100px;
 `;
 
 const Img = styled.img`

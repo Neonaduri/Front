@@ -93,10 +93,12 @@ const getRoomDB = (postId) => {
           Authorization: localStorage.getItem("token"),
         },
       });
+      console.log(response);
       if (response.status === 200) {
         dispatch(createRoom(response.data));
       }
     } catch (err) {
+      console.log(err.response);
       Sentry.captureException(err);
     }
   };
@@ -177,6 +179,7 @@ const exitBrowserOnPlanDB = (postId) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.delete(`/plans/${postId}`);
+      console.log(response);
     } catch (err) {
       Sentry.captureException(err);
     }

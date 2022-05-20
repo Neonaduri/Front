@@ -126,12 +126,11 @@ const HeadDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 18px;
-  margin-top: 5px;
-
+  padding: 0px 15px;
   img {
     width: 22px;
     margin-top: 8px;
+    cursor: pointer;
   }
 `;
 

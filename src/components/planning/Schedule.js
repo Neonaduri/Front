@@ -268,7 +268,7 @@ const Schedule = (props) => {
               </div>
               <span>{p.roadAddress}</span>
               <span>
-                <a href={p.placeinfoUrl} target="_blank">
+                <a href={p.placeInfoUrl} target="_blank">
                   자세히 보기
                 </a>
               </span>
@@ -489,6 +489,9 @@ const Contentdiv = styled.div`
     margin: 3px 0px;
     font-family: "apple1";
     a {
+      font-family: "apple1";
+      color: ${({ theme }) => theme.colors.text2};
+      text-decoration: none;
       cursor: pointer;
     }
   }

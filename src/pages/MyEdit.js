@@ -155,6 +155,7 @@ const MyEdit = () => {
 
 const ProfileDeleteBtn = styled.div`
   position: relative;
+  cursor: pointer;
   img {
     bottom: 57px;
     right: -48px;
@@ -182,6 +183,10 @@ const EditDiv = styled.div`
       border: 1px solid ${({ theme }) => theme.colors.borderColor};
       border-radius: 5px;
       font-size: 14px;
+      &:focus {
+        outline: none;
+        border: 1px solid ${({ theme }) => theme.colors.mainGreen};
+      }
     }
   }
 `;
@@ -228,6 +233,9 @@ const UserinfoDiv = styled.div`
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     border: 0;
+    &:focus {
+      outline: none;
+    }
   }
 `;
 
@@ -240,6 +248,7 @@ const HeaderDiv = styled.div`
   img {
     width: 22px;
     margin-top: 8px;
+    cursor: pointer;
   }
   div {
     padding-left: 30px;
