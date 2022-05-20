@@ -272,12 +272,12 @@ const Schedule = (props) => {
                   자세히 보기
                 </a>
               </span>
-              <textarea
+              <Textarea
                 id={idx}
                 value={p.placeMemo}
                 placeholder="남기고 싶은 메모를 입력하세요."
                 onChange={(e) => changeMemoInput(e)}
-              ></textarea>
+              ></Textarea>
               {hamburgerNum === idx ? (
                 <ToggleBox>
                   <div
@@ -375,6 +375,11 @@ const FixedTime = styled.span`
 
 const MapContainer = styled.div`
   padding: 5px 10px;
+`;
+
+const Textarea = styled.textarea`
+  resize: none;
+  padding: 10px;
 `;
 
 const DayBtn = styled.button`

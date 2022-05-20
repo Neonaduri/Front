@@ -25,6 +25,8 @@ import MyEdit from "./pages/MyEdit";
 import Myscrap from "./pages/Myscrap";
 import MyReview from "./pages/MyReview";
 import PC from "./static/images/PC.png";
+import Title from "./static/images/Title.png";
+import Background from "./components/background/Background";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -50,7 +52,9 @@ function App(props) {
           content="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuWMdv%2FbtrCxGqdv8X%2FhZa6JjCDY8iJHGd685Lr9K%2Fimg.png"
         />
       </Helmet>
+
       <Fullscreen>
+        <Background />
         <Wrap>
           <MobileFrame className="MobileFramePage">
             <Route path="/" exact component={MainPage} />
@@ -93,15 +97,14 @@ const Wrap = styled.div`
 `;
 
 const Fullscreen = styled.div`
-  width: 100%;
-  height: 1200px;
-  position: fixed;
-  overflow: hidden;
   background-image: url(${PC});
+  object-fit: cover;
+  background-size: cover;
+  position: fixed;
+  /* overflow: hidden; */
   margin: 0;
   display: flex;
   overflow: scroll;
-  z-index: 0;
   ::-webkit-scrollbar {
     display: none;
   }
