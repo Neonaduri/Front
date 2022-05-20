@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
 import { Map, MapMarker, Polyline } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import {
@@ -54,12 +54,13 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
   }, []);
 
   useEffect(() => {
+    console.log(dayNow);
     const db = getDatabase();
     const fixedLatLngRef = query(
       ref(db, `${postId}/allPlan/day${dayNow}`),
       orderByChild("planTime")
     );
-    onValue(fixedLatLngRef, (snapshot) => {
+    const value = onValue(fixedLatLngRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((child) => {
         let val = child.val();
@@ -67,6 +68,7 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
       });
       setPolyLineArr(arr);
     });
+    return () => value();
   }, [dayNow]);
 
   const inputPlanTime = (marker) => {

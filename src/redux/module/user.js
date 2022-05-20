@@ -87,6 +87,7 @@ const logInDB = (username, password) => {
         userName: username,
         password,
       });
+      console.log(response);
       // const response = RESP.LOGINPOST;
       if (response.status === 200) {
         const token = response.headers.authorization;

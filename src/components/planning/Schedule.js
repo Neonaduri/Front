@@ -115,12 +115,14 @@ const Schedule = (props) => {
   };
 
   const changeMemoInput = (e) => {
+    const myRealDay = e.target.attributes.isitwork.value;
     const memoInput = e.target.value;
     const memoIdx = e.target.id;
     const key = placeKey[memoIdx];
-    // const placeRef = ref(db, `${postId}/allPlan/day${dayNow}/${key}`);
-    // update(placeRef, { placeMemo: memoInput });
-    const placeRef = ref(db, `${postId}/allPlan/day${dayNow}/${key}/placeMemo`);
+    const placeRef = ref(
+      db,
+      `${postId}/allPlan/day${myRealDay}/${key}/placeMemo`
+    );
     runTransaction(placeRef, (currentMemo) => {
       return memoInput;
     });
@@ -273,6 +275,7 @@ const Schedule = (props) => {
               </span>
               <textarea
                 id={idx}
+                isitwork={dayNow}
                 value={p.placeMemo}
                 placeholder="남기고 싶은 메모를 입력하세요."
                 onChange={(e) => changeMemoInput(e)}
