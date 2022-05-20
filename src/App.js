@@ -99,7 +99,7 @@ const Wrap = styled.div`
 const Fullscreen = styled.div`
   background-image: url(${PC});
   background-size: cover;
-  position: fixed;
+  /* position: fixed; */
   background-repeat: no-repeat;
   margin: 0;
   display: flex;
