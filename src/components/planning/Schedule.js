@@ -15,6 +15,7 @@ import {
   query,
   orderByChild,
   runTransaction,
+  update,
 } from "firebase/database";
 import _ from "lodash";
 import { useParams } from "react-router";
@@ -57,7 +58,7 @@ const Schedule = (props) => {
       ref(db, `${postId}/allPlan/day${dayNow}`),
       orderByChild("planTime")
     );
-    onValue(fixedPlaceRef, (snapshot) => {
+    const onvalue = onValue(fixedPlaceRef, (snapshot) => {
       let fixedPlace = [];
       let fixedPlaceKey = [];
       snapshot.forEach((child) => {
@@ -67,17 +68,7 @@ const Schedule = (props) => {
       setPlace(fixedPlace);
       setPlaceKey(fixedPlaceKey);
     });
-    return () =>
-      onValue(fixedPlaceRef, (snapshot) => {
-        let fixedPlace = [];
-        let fixedPlaceKey = [];
-        snapshot.forEach((child) => {
-          fixedPlace.push(child.val());
-          fixedPlaceKey.push(child.key);
-        });
-        setPlace(fixedPlace);
-        setPlaceKey(fixedPlaceKey);
-      });
+    return () => onvalue();
   }, [dayNow]);
 
   const deletePlaceClick = (e) => {
@@ -127,14 +118,13 @@ const Schedule = (props) => {
     const memoInput = e.target.value;
     const memoIdx = e.target.id;
     const key = placeKey[memoIdx];
-    const placeRef = ref(db, `${postId}/allPlan/day${dayNow}/${key}/placeMemo`);
+    // const placeRef = ref(db, `${postId}/allPlan/day${dayNow}/${key}`);
     // update(placeRef, { placeMemo: memoInput });
+    const placeRef = ref(db, `${postId}/allPlan/day${dayNow}/${key}/placeMemo`);
     runTransaction(placeRef, (currentMemo) => {
       return memoInput;
     });
   };
-
-  const throttlefunc = useCallback(_.throttle(changeMemoInput, 1000), []);
 
   if (latlngArr.length === 0) {
     return (
@@ -393,6 +383,7 @@ const DayBtn = styled.button`
   border-bottom: ${(props) =>
     props.idx + 1 === props.daynow ? `3px solid #56BE91` : null};
   color: ${(props) => (props.idx + 1 === props.daynow ? "black" : null)};
+  cursor: pointer;
 `;
 
 const DeleteClickedDiv = styled.div`
@@ -474,6 +465,7 @@ const Contentdiv = styled.div`
       height: 20px;
       margin-top: 4px;
       margin-right: 10px;
+      cursor: pointer;
     }
     h4 {
       font-size: 17px;
@@ -486,12 +478,16 @@ const Contentdiv = styled.div`
     border: 1px solid ${({ theme }) => theme.colors.text3};
     border-radius: 5px;
     font-size: 15px;
+    resize: none;
   }
   span {
     color: ${({ theme }) => theme.colors.text2};
     font-size: 13px;
     margin: 3px 0px;
     font-family: "apple1";
+    a {
+      cursor: pointer;
+    }
   }
 `;
 

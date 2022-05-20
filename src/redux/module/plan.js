@@ -130,8 +130,9 @@ const getMyPlanPage1DB = () => {
         start: 2,
         lastPage: response.data.islastPage,
       };
+      console.log(response);
       if (response.status === 200) {
-        dispatch(getMyPlanPage1(response.data.myplanList, paging));
+        dispatch(getMyPlanPage1(response.data.planList, paging));
       }
     } catch (err) {
       Sentry.captureException(err);
@@ -149,7 +150,7 @@ const getMyPlanNextPageDB = (page) => {
         lastPage: response.data.islastPage,
       };
       if (response.status === 200) {
-        dispatch(getMyPlanNextPage(response.data.myplanList, paging));
+        dispatch(getMyPlanNextPage(response.data.planList, paging));
       }
     } catch (err) {
       Sentry.captureException(err);
@@ -250,6 +251,7 @@ export default handleActions(
     [CLICKWISHINDETAIL]: (state, action) =>
       produce(state, (draft) => {
         draft.detailPlan.islike = action.payload.result;
+        console.log(state);
       }),
   },
   init

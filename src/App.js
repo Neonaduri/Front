@@ -88,14 +88,14 @@ const Wrap = styled.div`
   width: 100vw;
   height: 100vh;
   .MobileFramePage {
-    z-index: 99999;
+    z-index: 9999;
   }
 `;
 
 const Fullscreen = styled.div`
   width: 100%;
-  height: 1200px;
-  position: fixed;
+  height: 100%;
+  /* position: fixed; */
   overflow: hidden;
   background-image: url(${PC});
   margin: 0;

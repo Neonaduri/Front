@@ -9,17 +9,7 @@ import { ConnectedRouter } from "connected-react-router";
 import { history } from "./redux/store";
 
 // -- serviceWorker --
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-
-Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_REACT_DSN,
-  integrations: [new BrowserTracing()],
-
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
-});
+// import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_REACT_DSN,
@@ -41,4 +31,4 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-serviceWorkerRegistration.register(); //웹 페이지를 열었을 때 설치 버튼이 생성되게 만들어준다.
+// serviceWorkerRegistration.register(); //웹 페이지를 열었을 때 설치 버튼이 생성되게 만들어준다.

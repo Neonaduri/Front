@@ -32,6 +32,7 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
   const params = useParams();
   const postId = params.postId;
   const thisPlan = useSelector((state) => state.plan.list);
+  const isLogin = useSelector((state) => state.user.isLogin);
   const [info, setInfo] = useState();
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();
@@ -191,9 +192,11 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
         ref={keywordRef}
         value={changingKeyword}
       ></PlaceInput>
-      <PlaceBtn onClick={copyLinkBtnClick}>
-        <img src={sharebtn} />
-      </PlaceBtn>
+      {isLogin ? (
+        <PlaceBtn onClick={copyLinkBtnClick}>
+          <img src={sharebtn} />
+        </PlaceBtn>
+      ) : null}
 
       <Map
         center={
@@ -318,7 +321,7 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
         }
       ></ModalfixTime>
       <Modalroompass
-        open={linkModalOpen}
+        open={isLogin ? linkModalOpen : false}
         close={closeModal}
         header={
           <ModalContent>
@@ -367,6 +370,11 @@ const HideBtn = styled.button`
   left: 5px;
   border-radius: 5px;
   height: 50px;
+  cursor: pointer;
+  img {
+    width: 22px;
+    margin-top: 2px;
+  }
 `;
 
 const PlaceList = styled.div`
@@ -424,6 +432,10 @@ const HeadLineDiv = styled.div`
     span {
       margin-right: 12px;
       font-family: "apple3";
+    }
+    img {
+      width: 22px;
+      cursor: pointer;
     }
   }
   span {
@@ -501,6 +513,7 @@ const PlaceBtn = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 `;
 const InviteTextdiv = styled.div`
   display: flex;
@@ -523,6 +536,7 @@ const Canceldiv = styled.div`
   position: absolute;
   top: -15px;
   left: -3px;
+  cursor: pointer;
 `;
 
 const ModalBtn = styled.button`

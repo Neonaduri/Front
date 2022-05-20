@@ -44,7 +44,7 @@ const Detail = () => {
         <img
           src={back}
           onClick={() => {
-            window.location.replace("/");
+            history.goBack();
           }}
         />
         <Titleline title={detailPlan.postTitle} />
@@ -81,26 +81,6 @@ const Detail = () => {
           <ScheduleDetail dayNow={dayNow} />
         </div>
       </ContentDiv>
-
-      {/* 리뷰페이지입니다 */}
-      <ReviewBox>
-        <h2>
-          리뷰<span>({totalCnt})</span>
-        </h2>
-        <img
-          src={addMore}
-          onClick={() => {
-            history.push(`${postId}/write`);
-          }}
-        ></img>
-      </ReviewBox>
-
-      <ReviewPage>
-        {arr &&
-          arr.map((item, id) => {
-            return <ReviewList key={id} {...item} totalCnt={totalCnt} />;
-          })}
-      </ReviewPage>
     </Container>
   );
 };
@@ -122,6 +102,7 @@ const DayBtn = styled.button`
   border-bottom: ${(props) =>
     props.idx + 1 === props.daynow ? `3px solid #56BE91` : null};
   color: ${(props) => (props.idx + 1 === props.daynow ? "black" : null)};
+  cursor: pointer;
 `;
 
 const ContentDiv = styled.div`
@@ -149,7 +130,8 @@ const HeadDiv = styled.div`
   margin-top: 5px;
 
   img {
-    margin-bottom: -7px;
+    width: 22px;
+    margin-top: 8px;
   }
 `;
 
@@ -172,6 +154,9 @@ const ReviewBox = styled.div`
     font-size: 18px;
     line-height: 18px;
     color: ${({ theme }) => theme.colors.text1};
+  }
+  img {
+    cursor: pointer;
   }
 `;
 

@@ -231,6 +231,7 @@ const PlaceListCard = styled.div`
         border: none;
         padding: 5px 2px;
         font-size: 14px;
+        cursor: pointer;
         &:first-child {
           background-color: white;
           color: ${({ theme }) => theme.colors.mainGreen};

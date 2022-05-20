@@ -1,6 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { RESP } from "../../shared/response";
 import apis from "../../shared/request";
 import * as Sentry from "@sentry/react";
 
@@ -251,7 +250,7 @@ const editProfileDB = (formdata, config) => {
       );
       if (response.status === 201) {
         alert("프로필이 수정되었습니다.");
-        window.location.replace("/");
+        window.location.replace("/mypage");
       }
     } catch (err) {
       Sentry.captureException(err);

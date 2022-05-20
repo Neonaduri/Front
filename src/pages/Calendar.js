@@ -257,7 +257,6 @@ const Datediv = styled.div`
       font-family: "apple1";
     }
   }
-
   div {
     border: 1px solid ${({ theme }) => theme.colors.borderColor};
     border-radius: 5px;
@@ -265,6 +264,7 @@ const Datediv = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 3px 5px;
+    cursor: pointer;
   }
 `;
 
@@ -282,6 +282,7 @@ const Themediv = styled.div`
     padding: 6px 4px;
     border: 1px solid ${({ theme }) => theme.colors.text3};
     border-radius: 8px;
+    cursor: pointer;
     img {
       width: 12px;
     }
@@ -302,6 +303,7 @@ const Locationdiv = styled.div`
     padding: 6px 4px;
     border: 1px solid ${({ theme }) => theme.colors.text3};
     border-radius: 8px;
+    cursor: pointer;
     img {
       width: 12px;
     }
@@ -346,6 +348,10 @@ const Titlediv = styled.div`
     margin: auto;
     padding-left: 10px;
   }
+  img {
+    width: 22px;
+    margin-top: 8px;
+  }
 `;
 
 const FixdateBtn = styled.button`
@@ -356,6 +362,7 @@ const FixdateBtn = styled.button`
   border: none;
   border-radius: 7px;
   color: white;
+  cursor: pointer;
 `;
 
 const CustomSheet = styled(Sheet)`

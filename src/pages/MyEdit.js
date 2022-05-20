@@ -238,7 +238,8 @@ const HeaderDiv = styled.div`
   justify-content: space-between;
   padding: 0px 15px;
   img {
-    margin-top: 6px;
+    width: 22px;
+    margin-top: 8px;
   }
   div {
     padding-left: 30px;

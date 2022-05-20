@@ -166,7 +166,8 @@ const HeaderDiv = styled.div`
   margin-bottom: 20px;
   height: 7%;
   img {
-    margin-top: 6px;
+    width: 22px;
+    margin-top: 8px;
   }
   div {
     padding-left: 30px;

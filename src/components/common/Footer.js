@@ -10,10 +10,13 @@ import activeSearch from "../../static/images/icon/activeSearch.png";
 import activePlan from "../../static/images/icon/activePlan.png";
 import activeMypage from "../../static/images/icon/activeMypage.png";
 import underBar from "../../static/images/underBar.png";
+import { keywordDB } from "../../redux/module/post";
+import { useDispatch } from "react-redux";
 
 const Footer = (props) => {
   const history = useHistory();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const getSrc = (path, defaultSrc, activeSrc) => {
     if (path === location.pathname) {
@@ -52,6 +55,7 @@ const Footer = (props) => {
           <NavItem
             key={idx}
             onClick={() => {
+              dispatch(keywordDB(null));
               history.push(path);
             }}
           >

@@ -10,11 +10,12 @@ import BookedPostcard from "../components/mypage/BookedPostcard";
 import MyReviewCard from "../components/mypage/MyReviewCard";
 import alarm from "../static/images/icon/alarm.png";
 import MypageBtn from "../components/mypage/MypageBtn";
+import NotLoginUser from "../shared/NotLoginUser";
 
 const Mypage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const isLogin = useSelector((state) => state.user.isLogin);
+  const isLogin = useSelector((state) => state?.user?.isLogin);
   const loginUser = useSelector((state) => state.user.list);
   const [cardList, setCardList] = useState(true);
 
@@ -22,9 +23,10 @@ const Mypage = () => {
     localStorage.removeItem("token");
     history.replace("/login");
   };
+  console.log(!isLogin);
 
   if (!isLogin) {
-    history.replace("/login");
+    return <NotLoginUser />;
   }
 
   return (
@@ -83,6 +85,7 @@ const RestDiv = styled.div`
   span {
     color: ${({ theme }) => theme.colors.mainRed};
     padding: 0px 10px;
+    cursor: pointer;
   }
 `;
 
