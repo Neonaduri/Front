@@ -38,7 +38,6 @@ const Schedule = (props) => {
   const [hamburgerNum, setHamburgerNum] = useState(null);
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
   const [deleteIndex, setDeleteIdx] = useState();
-  const [inputValue, setInputValue] = useState("");
 
   let latlngArr = [];
   if (place !== undefined) {
@@ -115,7 +114,7 @@ const Schedule = (props) => {
   };
 
   const changeMemoInput = (e) => {
-    const myRealDay = e.target.attributes.isitwork.value;
+    const myRealDay = e.target.attributes.isitwork.nodeValue;
     const memoInput = e.target.value;
     const memoIdx = e.target.id;
     const key = placeKey[memoIdx];
@@ -273,13 +272,13 @@ const Schedule = (props) => {
                   자세히 보기
                 </a>
               </span>
-              <Textarea
+              <textarea
                 id={idx}
                 isitwork={dayNow}
                 value={p.placeMemo}
                 placeholder="남기고 싶은 메모를 입력하세요."
                 onChange={(e) => changeMemoInput(e)}
-              ></Textarea>
+              ></textarea>
               {hamburgerNum === idx ? (
                 <ToggleBox>
                   <div
@@ -377,11 +376,6 @@ const FixedTime = styled.span`
 
 const MapContainer = styled.div`
   padding: 5px 10px;
-`;
-
-const Textarea = styled.textarea`
-  resize: none;
-  padding: 10px;
 `;
 
 const DayBtn = styled.button`
@@ -487,6 +481,7 @@ const Contentdiv = styled.div`
     border-radius: 5px;
     font-size: 15px;
     resize: none;
+    padding: 3px 7px;
   }
   span {
     color: ${({ theme }) => theme.colors.text2};

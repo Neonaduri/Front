@@ -19,7 +19,7 @@ const Slide = ({ sliders, dayNow, callback }) => {
   const settings = {
     dots: false,
     infinite: true,
-    speed: 400,
+    speed: 300,
     slidesToShow: 4,
     slidesToScroll: 1,
   };
