@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import post1 from "../../static/images/bannerPost/post1.png";
 import post2 from "../../static/images/bannerPost/post2.png";
+import post3 from "../../static/images/bannerPost/post3.png";
+import post4 from "../../static/images/bannerPost/post4.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -26,6 +28,27 @@ const Banner = () => {
             <div>
               <Img src={post1} />
               <Button>
+                <Link href="http://www.seamudexpo.or.kr/" target="_blank">
+                  행사보러가기
+                </Link>
+              </Button>
+            </div>
+
+            <div>
+              <Img src={post2}></Img>
+              <Button>
+                <Link
+                  href="https://xn--o39aw54a7jcg1kemaw8w.kr/"
+                  target="_blank"
+                >
+                  행사보러가기
+                </Link>
+              </Button>
+            </div>
+
+            <div>
+              <Img src={post3}></Img>
+              <Button>
                 <Link
                   href="https://www.ktourmap.com/spotDetails.jsp?contentId=2818498"
                   target="_blank"
@@ -36,7 +59,7 @@ const Banner = () => {
             </div>
 
             <div>
-              <Img src={post2}></Img>
+              <Img src={post4}></Img>
               <Button>
                 <Link href="https://hansanmosi.kr/home" target="_blank">
                   행사보러가기
@@ -70,7 +93,7 @@ const Img = styled.img`
 
 const Button = styled.button`
   position: relative;
-  bottom: 180px;
+  bottom: 170px;
   left: 20px;
   width: 112px;
   height: 32px;

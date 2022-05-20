@@ -63,7 +63,7 @@ const Footer = (props) => {
           </NavItem>
         ))}
       </Container>
-      {/* <Bar src={underBar}></Bar> */}
+      <Bar src={underBar}></Bar>
     </NavWrapper>
   );
 };
@@ -92,6 +92,7 @@ const NavItem = styled.button`
 
 const Bar = styled.img`
   margin-left: 120px;
+  margin-bottom: 5px;
 `;
 
 const Container = styled.div`

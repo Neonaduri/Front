@@ -102,6 +102,7 @@ const CustomSheet = styled(Sheet)`
   margin: auto;
   .react-modal-sheet-backdrop {
   }
+
   .react-modal-sheet-container {
   }
   .react-modal-sheet-header {
