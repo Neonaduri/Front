@@ -7,6 +7,7 @@ import { BrowserTracing } from "@sentry/tracing";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "./redux/store";
+import { HelmetProvider } from "react-helmet-async";
 
 // -- serviceWorker --
 // import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
@@ -24,7 +25,9 @@ Sentry.init({
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </ConnectedRouter>
   </Provider>,
 

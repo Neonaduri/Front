@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, onDisconnect } from "firebase/database";
 import { useDispatch, useSelector } from "react-redux";
 import { planAction } from "../../redux/module/plan";
 
