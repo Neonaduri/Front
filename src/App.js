@@ -24,9 +24,7 @@ import theme from "./assets/styles/theme";
 import MyEdit from "./pages/MyEdit";
 import Myscrap from "./pages/Myscrap";
 import MyReview from "./pages/MyReview";
-import PC from "./static/images/PC.png";
-import Title from "./static/images/Title.png";
-import Background from "./components/background/Background";
+import PC from "./static/images/PCfull.png";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -54,7 +52,6 @@ function App(props) {
       </Helmet>
 
       <Fullscreen>
-        <Background />
         <Wrap>
           <MobileFrame className="MobileFramePage">
             <Route path="/" exact component={MainPage} />
@@ -64,7 +61,6 @@ function App(props) {
             <Route path="/emailcheck" exact component={Emailcheck} />
             <Route path="/signup" exact component={Signup} />
             <Route path="/search" exact component={Search} />
-            {/* <Route path="/search/location" exact component={SearchByLoca} /> */}
             <Route path="/user/kakao/callback" component={KakaoRedirect} />
             <Route path="/user/google/callback" component={GoogleRedirect} />
             <Route path="/uploadcomplete" component={UploadComplete} />
@@ -91,17 +87,14 @@ export default App;
 const Wrap = styled.div`
   width: 100vw;
   height: 100vh;
-  .MobileFramePage {
-    z-index: 9999;
-  }
 `;
 
 const Fullscreen = styled.div`
   background-image: url(${PC});
+  background-position: center;
   background-size: cover;
-  /* position: fixed; */
   background-repeat: no-repeat;
-  margin: 0;
+  margin: auto;
   display: flex;
   ::-webkit-scrollbar {
     display: none;

@@ -71,7 +71,7 @@ const MapDetail = ({ dayNow }) => {
           center={latlngArr[0]}
           style={{
             width: "100%",
-            height: "176px",
+            height: "210px",
             borderRadius: "10px",
           }}
           level={9}
@@ -81,8 +81,8 @@ const MapDetail = ({ dayNow }) => {
               key={idx}
               position={positions.latlng}
               image={{
-                src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FefFX6q%2FbtrCjFZ6mey%2Fr7CE69eKkBTJBkQJRc6n4k%2Fimg.png",
-                size: { width: 16, height: 16 },
+                src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdOqcy4%2FbtrCMX5F90p%2FqX2VdKGqVuJckRq04mq0FK%2Fimg.png",
+                size: { width: 20, height: 28 },
                 options: {
                   offset: {
                     x: 10,
@@ -121,14 +121,12 @@ const InfoWindow = styled.div`
   position: relative;
 
   div {
-    padding: 0px 6px;
-    border-radius: 50%;
-    background-color: ${({ theme }) => theme.colors.mainRed};
+    background-color: #f96343;
     color: white;
-    font-size: 13px;
+    font-size: 18px;
     position: absolute;
-    left: 64px;
-    top: 30px;
+    left: 70px;
+    top: 29px;
   }
 `;
 

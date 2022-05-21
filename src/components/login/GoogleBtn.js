@@ -18,6 +18,6 @@ const GoogleBtn = ({ onSocial }) => {
   );
 };
 const Img = styled.img`
-  height: 50px;
+  height: 45px;
 `;
 export default GoogleBtn;

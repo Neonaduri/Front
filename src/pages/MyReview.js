@@ -74,7 +74,12 @@ const MyReview = () => {
               <CardBodyDiv>
                 <p>{content}</p>
                 {review.reviewImgUrl === null ? null : (
-                  <img src={review.reviewImgUrl} />
+                  <img
+                    src={review.reviewImgUrl}
+                    onClick={() => {
+                      history.push(`/detail/${review.postId}`);
+                    }}
+                  />
                 )}
               </CardBodyDiv>
               <CardFooterDiv>
@@ -123,9 +128,11 @@ const CardFooterDiv = styled.div`
   justify-content: flex-end;
   span {
     font-size: 12px;
+    cursor: pointer;
   }
   img {
     width: 12px;
+    cursor: pointer;
   }
 `;
 
@@ -139,6 +146,7 @@ const CardBodyDiv = styled.div`
     height: 72px;
     border-radius: 5px;
     object-fit: cover;
+    cursor: pointer;
   }
   p {
     font-size: 16px;
@@ -162,6 +170,7 @@ const CardHeadDiv = styled.div`
     font-size: 12px;
     color: ${({ theme }) => theme.colors.text2};
     font-family: "apple1";
+    cursor: pointer;
   }
 `;
 
@@ -180,6 +189,7 @@ const HeaderDiv = styled.div`
   img {
     width: 22px;
     margin-top: 8px;
+    cursor: pointer;
   }
   div {
     padding-left: 30px;

@@ -1,6 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, remove } from "firebase/database";
 import apis from "../../shared/request";
 import * as Sentry from "@sentry/react";
 
@@ -93,10 +93,12 @@ const getRoomDB = (postId) => {
           Authorization: localStorage.getItem("token"),
         },
       });
+      console.log(response);
       if (response.status === 200) {
         dispatch(createRoom(response.data));
       }
     } catch (err) {
+      console.log(err.response);
       Sentry.captureException(err);
     }
   };
@@ -177,6 +179,11 @@ const exitBrowserOnPlanDB = (postId) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.delete(`/plans/${postId}`);
+      console.log(response);
+
+      const db = getDatabase();
+      const clearPlanRef = ref(db, `${postId}`);
+      remove(clearPlanRef);
     } catch (err) {
       Sentry.captureException(err);
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -12,6 +12,8 @@ import moment from "moment";
 import Sheet from "react-modal-sheet";
 import Footer from "../components/common/Footer";
 import Logo from "../static/images/logo/Logo.png";
+import { getDatabase, ref, onValue } from "firebase/database";
+import NopostAlert from "../components/myplan/NopostAlert";
 
 const Planning = (props) => {
   const dispatch = useDispatch();
@@ -20,15 +22,26 @@ const Planning = (props) => {
   const dateCnt = useSelector((state) => state.plan.list.dateCnt);
   const planInfo = useSelector((state) => state.plan.list);
   const [dayNow, setDayNow] = useState(1);
+  const [closeRoom, setCloseRoom] = useState(false);
   const days = ["일", "월", "화", "수", "목", "금", "토"];
+  const db = getDatabase();
 
   let dateCntArr = [];
   for (let i = 1; i <= dateCnt; i++) {
     dateCntArr.push(i);
   }
 
+  //방 폭파 기능
   useEffect(() => {
     dispatch(planAction.getRoomDB(postId));
+    const fixedPlanRef = ref(db, `${postId}`);
+    const value = onValue(fixedPlanRef, (snapshot) => {
+      let fixedPlan = snapshot.val();
+      if (fixedPlan === null) {
+        setCloseRoom(true);
+      }
+    });
+    return () => value();
   }, []);
 
   const startDaynum = moment(planInfo.startDate).day();
@@ -40,6 +53,16 @@ const Planning = (props) => {
 
   const open = () => setOpen(true);
   const close = () => setOpen(false);
+
+  if (closeRoom) {
+    return (
+      <NopostAlert
+        mainContent={"이미 완성되었거나, 존재하지 않는 방입니다! 🤗"}
+        btnContent={"너나들이 하기"}
+        pushUrl={"/"}
+      />
+    );
+  }
 
   return (
     <Container>

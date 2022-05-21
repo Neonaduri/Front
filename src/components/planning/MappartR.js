@@ -19,7 +19,6 @@ import Slide from "../../shared/SlickSlider";
 import Modalroompass from "../common/Modalroompass";
 import cancel from "../../static/images/icon/cancel.png";
 import back from "../../static/images/icon/back.png";
-import goright from "../../static/images/icon/goRight.png";
 
 const { kakao } = window;
 
@@ -221,6 +220,17 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
           <MapMarker
             key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
             position={marker.position}
+            image={{
+              src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fvqh0w%2FbtrCKW6TD8U%2F3ykjDNaAVvMxJKmpWUpVWk%2Fimg.png",
+              size: { width: 24, height: 34 },
+              options: {
+                offset: {
+                  x: 10,
+                  y: 10,
+                },
+              },
+            }}
+            clickable={true}
             onClick={() => setInfo(marker)}
           >
             {info && info.content === marker.content && (
@@ -260,7 +270,9 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
             setHidden(true);
           }}
         >
-          <img src={back} />
+          List
+          <br />
+          접기
         </HideBtn>
       ) : (
         <HideBtn
@@ -268,7 +280,9 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
             setHidden(false);
           }}
         >
-          <img src={goright} />
+          List
+          <br />
+          열기
         </HideBtn>
       )}
 
@@ -372,11 +386,8 @@ const HideBtn = styled.button`
   left: 5px;
   border-radius: 5px;
   height: 50px;
+  font-size: 13px;
   cursor: pointer;
-  img {
-    width: 22px;
-    margin-top: 2px;
-  }
 `;
 
 const PlaceList = styled.div`

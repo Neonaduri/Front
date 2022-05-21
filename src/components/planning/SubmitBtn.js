@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, remove } from "firebase/database";
 import { useDispatch, useSelector } from "react-redux";
 import { planAction } from "../../redux/module/plan";
 
@@ -14,7 +14,7 @@ const SubmitBtn = ({ dateCnt }) => {
 
   useEffect(() => {
     const fixedPlanRef = ref(db, `${postId}`);
-    onValue(fixedPlanRef, (snapshot) => {
+    const value = onValue(fixedPlanRef, (snapshot) => {
       let fixedPlan = snapshot.val();
       if (fixedPlan !== null) {
         setFixedPlan(fixedPlan);
@@ -22,15 +22,7 @@ const SubmitBtn = ({ dateCnt }) => {
         return;
       }
     });
-    return () =>
-      onValue(fixedPlanRef, (snapshot) => {
-        let fixedPlan = snapshot.val();
-        if (fixedPlan !== null) {
-          setFixedPlan(fixedPlan);
-        } else {
-          return;
-        }
-      });
+    return () => value();
   }, []);
 
   const submitPlanPublic = () => {
@@ -65,8 +57,10 @@ const SubmitBtn = ({ dateCnt }) => {
         ispublic: true,
         days: allPlan,
       };
-      // console.log(data);
       dispatch(planAction.completePlanDB(data));
+
+      const clearPlanRef = ref(db, `${postId}`);
+      remove(clearPlanRef);
     }
   };
   const submitPlanPrivate = () => {

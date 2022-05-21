@@ -182,7 +182,7 @@ const ReviewDetail = () => {
   };
 
   return (
-    <>
+    <Wrap>
       <ReviewBox>
         <img
           src={Back}
@@ -198,6 +198,7 @@ const ReviewDetail = () => {
       <Middlediv ref={middledivRef}>
         <InfinityScroll
           callNext={() => {
+            console.log("실행됨");
             dispatch(getNextCommentDB(postId, paging.start));
           }}
           is_next={lastPage ? false : true}
@@ -292,11 +293,15 @@ const ReviewDetail = () => {
           onChange={onImgChange}
         ></FileName>
       </ContainerInput>
-    </>
+    </Wrap>
   );
 };
 
 export default ReviewDetail;
+
+const Wrap = styled.div`
+  height: 100%;
+`;
 
 const ReviewInputBox = styled.div`
   display: flex;
@@ -391,7 +396,15 @@ const ContainerInput = styled.div`
 `;
 
 const Middlediv = styled.div`
-  margin-top: 70px;
+  height: 90%;
+  position: fixed;
+  top: 5%;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+  }
 `;
 
 const Button = styled.button`
@@ -402,6 +415,7 @@ const Button = styled.button`
   border-radius: 5px;
   border: 0;
   color: white;
+  cursor: pointer;
 `;
 
 const Icon = styled.img`
@@ -429,7 +443,11 @@ const ReviewBox = styled.div`
   width: 100%;
   padding: 18px 15px;
   position: fixed;
-  background-color: white;
+  height: 7%;
+  z-index: 99;
+  img {
+    cursor: pointer;
+  }
   h2 {
     font-weight: 700;
     font-size: 18px;

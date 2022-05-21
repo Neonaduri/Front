@@ -105,7 +105,7 @@ const Bodydiv = styled.div`
   }
 `;
 const Container = styled.div`
-  height: 100%;
+  height: 97%;
   margin-bottom: 20px;
 `;
 
@@ -119,7 +119,7 @@ const TitleDiv = styled.div`
   margin: 10px 0px;
   h3 {
     font-size: 16px;
-    color: #363636;
+    color: ${({ theme }) => theme.colors.text1};
   }
 `;
 
@@ -168,6 +168,7 @@ const HeaderDiv = styled.div`
   img {
     width: 22px;
     margin-top: 8px;
+    cursor: pointer;
   }
   div {
     padding-left: 30px;

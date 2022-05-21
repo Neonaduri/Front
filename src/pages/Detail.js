@@ -112,7 +112,7 @@ const ContentDiv = styled.div`
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   position: absolute;
-  top: 215px;
+  top: 190px;
 `;
 
 const ImageDiv = styled.div`
@@ -126,12 +126,11 @@ const HeadDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 18px;
-  margin-top: 5px;
-
+  padding: 0px 15px;
   img {
     width: 22px;
     margin-top: 8px;
+    cursor: pointer;
   }
 `;
 

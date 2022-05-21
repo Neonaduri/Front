@@ -10,7 +10,7 @@ import coffee from "../../static/images/coffee.png";
 
 const Background = () => {
   return (
-    <>
+    <WrapContainer>
       <ContainerTop>
         <Img src={profile}></Img>
         <Text>너나들이에서 준비한 이벤트!</Text>
@@ -72,19 +72,24 @@ const Background = () => {
           </BoxProduct>
         </BoxProductContainer>
       </EventProduct>
-    </>
+    </WrapContainer>
   );
 };
 
 export default Background;
 
+const WrapContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+`;
+
 const ContainerTop = styled.div`
   display: flex;
   align-items: center;
   width: 480px;
-  position: absolute;
-  top: 270px;
-  left: 300px;
 `;
 
 const LotteImg = styled.img`
@@ -93,33 +98,24 @@ const LotteImg = styled.img`
 `;
 
 const BoxContainer = styled.div`
-  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
-  left: 300px;
-  top: 370px;
 `;
 
 const BoxProductContainer = styled.div`
-  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
-  left: 300px;
-  top: 610px;
 `;
 
 const Box = styled.div`
-  margin: 20px;
   width: 225px;
   height: 170px;
   text-align: center;
-  background: #ffffff;
   box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
   padding: 15px 25px;
-
   div {
     font-weight: 900;
     font-size: 18px;
@@ -185,9 +181,6 @@ const Event = styled.div`
   align-items: center;
 
   h3 {
-    position: absolute;
-    left: 300px;
-    top: 350px;
     font-weight: 700;
     font-size: 17px;
     color: #363636;
@@ -198,11 +191,7 @@ const Event = styled.div`
 const EventProduct = styled.div`
   display: flex;
   align-items: center;
-
   h3 {
-    position: absolute;
-    left: 300px;
-    top: 590px;
     font-weight: 700;
     font-size: 17px;
     color: #363636;
@@ -214,10 +203,6 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   width: 480px;
-  position: absolute;
-  left: 440px;
-  bottom: 13px;
-
   div {
     font-weight: 800;
     font-size: 20px;
@@ -246,7 +231,6 @@ const Text = styled.div`
   font-weight: 800;
   font-size: 25px;
   line-height: 38px;
-
   color: #00c871;
 `;
 
