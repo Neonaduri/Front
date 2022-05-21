@@ -168,6 +168,7 @@ const EditModal = styled.div`
     height: 40px;
     font-size: 20px;
     margin-bottom: 5px;
+    cursor: pointer;
   }
 `;
 

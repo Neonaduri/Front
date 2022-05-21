@@ -183,9 +183,12 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
         onKeyDown={(e) => {
           if (e.code === "Enter") {
             setSearchPlace(changingKeyword);
-            // e.target.value = "";
             setLatlng(undefined);
           }
+        }}
+        onBlur={() => {
+          setSearchPlace(changingKeyword);
+          setLatlng(undefined);
         }}
         onChange={(e) => {
           changeKeyword(e);

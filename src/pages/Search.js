@@ -35,6 +35,12 @@ const Search = () => {
       setSearching(true);
     }
   };
+  const searchMobileComplete = (e) => {
+    dispatch(getKeywordPostDB(e.target.value));
+    dispatch(keywordDB(e.target.value));
+    setSearching(true);
+  };
+
   useEffect(() => {
     dispatch(getKeywordPostDB(keyWord, pageno));
   }, []);
@@ -48,6 +54,7 @@ const Search = () => {
         <Input
           placeholder="어떤 여행 계획표를 찾으시나요?"
           onKeyPress={(e) => searchEnter(e)}
+          onBlur={(e) => searchMobileComplete(e)}
         />
         <Img
           src={back}

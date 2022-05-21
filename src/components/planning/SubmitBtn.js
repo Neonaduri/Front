@@ -9,7 +9,8 @@ const SubmitBtn = ({ dateCnt }) => {
   const dispatch = useDispatch();
   const postId = useParams().postId;
   const db = getDatabase();
-  const isLogin = useSelector((state) => state.user.isLogin);
+  const loginUser = useSelector((state) => state.user.list);
+  const roomOwner = useSelector((state) => state.plan.list.user);
   const [fixedPlan, setFixedPlan] = useState();
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const SubmitBtn = ({ dateCnt }) => {
       }
 
       const data = {
-        postId: fixedPlan.postId,
+        postUUID: fixedPlan.postId,
         startDate: fixedPlan.startDate,
         endDate: fixedPlan.endDate,
         dateCnt: fixedPlan.dateCnt,
@@ -57,6 +58,8 @@ const SubmitBtn = ({ dateCnt }) => {
         ispublic: true,
         days: allPlan,
       };
+
+      console.log(data);
       dispatch(planAction.completePlanDB(data));
 
       const clearPlanRef = ref(db, `${postId}`);
@@ -76,7 +79,7 @@ const SubmitBtn = ({ dateCnt }) => {
         allPlan.push({ places: value });
       }
       const data = {
-        postId: fixedPlan.postId,
+        postUUID: fixedPlan.postId,
         startDate: fixedPlan.startDate,
         endDate: fixedPlan.endDate,
         dateCnt: fixedPlan.dateCnt,
@@ -87,11 +90,14 @@ const SubmitBtn = ({ dateCnt }) => {
         ispublic: false,
         days: allPlan,
       };
+      console.log(data);
       dispatch(planAction.completePlanDB(data));
+      const clearPlanRef = ref(db, `${postId}`);
+      remove(clearPlanRef);
     }
   };
 
-  if (!isLogin) {
+  if (roomOwner.userName !== loginUser.userName) {
     return null;
   }
   return (

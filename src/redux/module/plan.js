@@ -64,10 +64,11 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
           },
         }
       );
+      console.log(response);
       if (response.status === 201) {
         const db = getDatabase();
-        set(ref(db, `${response.data.postId}`), {
-          postId: response.data.postId,
+        set(ref(db, `${response.data.postUUID}`), {
+          postId: response.data.postUUID,
           startDate: response.data.startDate,
           endDate: response.data.endDate,
           dateCnt: response.data.dateCnt,
@@ -77,7 +78,7 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
           islike: false,
         });
         dispatch(createRoom(response.data));
-        history.push(`/planning/${response.data.postId}`);
+        history.push(`/planning/${response.data.postUUID}`);
       }
     } catch (err) {
       Sentry.captureException(err);
@@ -106,11 +107,13 @@ const getRoomDB = (postId) => {
 const completePlanDB = (data) => {
   return async function (dispatch, getState, { history }) {
     try {
+      console.log(data);
       const response = await apis.axiosInstance.put("/plans/save", data, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
       });
+      console.log(response);
       // const response = RESP.SAVEPLANPUT;
       if (response.status === 201) {
         history.replace("/uploadcomplete");
