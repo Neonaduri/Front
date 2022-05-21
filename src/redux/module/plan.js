@@ -1,6 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, remove } from "firebase/database";
 import apis from "../../shared/request";
 import * as Sentry from "@sentry/react";
 
@@ -180,6 +180,10 @@ const exitBrowserOnPlanDB = (postId) => {
     try {
       const response = await apis.axiosInstance.delete(`/plans/${postId}`);
       console.log(response);
+
+      const db = getDatabase();
+      const clearPlanRef = ref(db, `${postId}`);
+      remove(clearPlanRef);
     } catch (err) {
       Sentry.captureException(err);
     }

@@ -112,7 +112,7 @@ const ContentDiv = styled.div`
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   position: absolute;
-  top: 215px;
+  top: 190px;
 `;
 
 const ImageDiv = styled.div`
