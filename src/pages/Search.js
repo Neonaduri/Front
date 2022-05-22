@@ -46,15 +46,15 @@ const Search = () => {
     <Container>
       <HeaderDiv>
         <Wrap>
-          <div>
-            <Img
-              src={back}
-              onClick={() => {
-                history.push("/");
-              }}
-            ></Img>
+          <Img
+            src={back}
+            onClick={() => {
+              history.push("/");
+            }}
+          ></Img>
+          <Icon>
             <I src={search}></I>
-          </div>
+          </Icon>
           <Input
             placeholder="어떤 여행 계획표를 찾으시나요?"
             onKeyPress={(e) => searchEnter(e)}
@@ -176,14 +176,14 @@ const I = styled.img`
   /* left: 45px;
   top: 6px; */
   margin: 0 auto;
+  margin-left: 10px;
 `;
 
 const Img = styled.img`
-  /* position: absolute; */
-  /* left: 10px;
-  top: 6px; */
+  position: absolute;
+  left: 15px;
+  top: 30px;
   width: 20px;
-  margin: 0 auto;
 `;
 
 const Container = styled.div`
@@ -210,4 +210,8 @@ const Wrap = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
+`;
+
+const Icon = styled.div`
+  margin-right: 10px;
 `;
