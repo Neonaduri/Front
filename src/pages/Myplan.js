@@ -45,7 +45,14 @@ const Myplan = () => {
   }
 
   if (myAllPlan.length === 0) {
-    return <NopostAlert />;
+    return (
+      <NopostAlert
+        mainContent={"등록된 계획표가 없습니다!"}
+        btnContent={"계획하러 가기!"}
+        titleContent={"계획"}
+        pushUrl={"/planning"}
+      />
+    );
   }
   const textCut = (text) => {
     let value;
@@ -283,7 +290,7 @@ const Middlediv = styled.div`
   padding: 0px 10px;
   height: 70%;
   overflow: scroll;
-  background-color: ${({ theme }) => theme.colors.borderColor};
+  background-color: ${({ theme }) => theme.colors.text4};
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;

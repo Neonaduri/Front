@@ -74,12 +74,12 @@ const Mypage = () => {
   );
 };
 const Container = styled.div`
-  height: 92%;
+  height: 100%;
 `;
 
 const RestDiv = styled.div`
-  width: 100vw;
-  height: 50vh;
+  width: 100%;
+  height: 60%;
   background-color: ${({ theme }) => theme.colors.text4};
   padding: 10px 0px;
   span {

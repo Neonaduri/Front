@@ -142,7 +142,8 @@ export const StyleSlider = styled(Slider)`
 const BtnArea = styled.button`
   background: ${(props) =>
     props.selectVal === props.item ? "#56be91" : "#fff"};
-  border: 1px solid #cacaca;
+  border: ${(props) =>
+    props.selectVal === props.item ? "none" : "1px solid #cacaca"};
   color: ${(props) => (props.selectVal === props.item ? "white" : "#cacaca")};
   border-radius: 20px;
   margin-top: 10px;

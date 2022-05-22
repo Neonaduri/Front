@@ -19,7 +19,6 @@ const KakaoBtn = () => {
 
 const Img = styled.img`
   height: 45px;
-  border-radius: 10px;
 `;
 
 export default KakaoBtn;

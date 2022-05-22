@@ -7,6 +7,7 @@ const NotFound = () => {
     <Msg>
       <div>
         <Img src={Error}></Img>
+
         <p>앗, 관련 계획표가 없어요.</p>
         <p>다른 검색어를 입력해주세요.</p>
       </div>
@@ -30,4 +31,7 @@ const Msg = styled.div`
 
 const Img = styled.img`
   margin-bottom: 20px;
+  margin-top: 20px;
+  width: 160px;
+  height: 100%;
 `;

@@ -20,7 +20,7 @@ const Slide = ({ sliders, dayNow, callback }) => {
     dots: false,
     infinite: true,
     speed: 300,
-    slidesToShow: 4,
+    slidesToShow: 1,
     slidesToScroll: 1,
   };
 
@@ -182,7 +182,7 @@ const Container = styled.div`
 
 const StyledSlider = styled(Slider)`
   .slick-list {
-    width: 1200px;
+    width: 300px;
     margin: 0 auto;
   }
   .slick-slide div {
@@ -195,6 +195,10 @@ const StyledSlider = styled(Slider)`
   }
   .slick-track {
     /* overflow-x: hidden; */
+  }
+  .slick-next:before {
+    color: green !important;
+    opacity: 1;
   }
 `;
 
@@ -243,7 +247,7 @@ const PlaceListCard = styled.div`
           }
         }
         &:last-child {
-          background-color: #56be91;
+          background-color: ${({ theme }) => theme.colors.mainGreen};
           color: white;
           border-bottom-right-radius: 5px;
           position: absolute;
