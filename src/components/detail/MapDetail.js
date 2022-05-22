@@ -23,7 +23,6 @@ const MapDetail = ({ dayNow }) => {
     setShowTraffic(!showTraffic);
   };
 
-  console.log(planByDay);
   const dayPlanPlaces = planByDay[dayNow - 1]?.places;
   if (!dayPlanPlaces) {
     return null;

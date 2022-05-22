@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 const BookedPostcard = () => {
   const postList = useSelector((state) => state.user?.iLikedPost);
-  console.log(postList);
 
   if (postList === null) {
     return <div>??</div>;

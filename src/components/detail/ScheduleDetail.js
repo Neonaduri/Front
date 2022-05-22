@@ -20,6 +20,8 @@ const ScheduleDetail = ({ dayNow }) => {
     return null;
   }
 
+  console.log(planByDay);
+
   const dayPlanPlaces = planByDay[dayNow - 1]?.places;
   if (dayPlanPlaces.length === 0) {
     return (
@@ -154,7 +156,7 @@ const UrlConnectSpan = styled.span`
 
 const NumColumnBar = styled.span`
   width: 2px;
-  height: 100px;
+  height: 120px;
   background-color: ${({ theme }) => theme.colors.borderColor};
   position: absolute;
   top: 20px;

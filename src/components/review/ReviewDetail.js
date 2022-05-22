@@ -198,7 +198,6 @@ const ReviewDetail = () => {
       <Middlediv ref={middledivRef}>
         <InfinityScroll
           callNext={() => {
-            console.log("실행됨");
             dispatch(getNextCommentDB(postId, paging.start));
           }}
           is_next={lastPage ? false : true}

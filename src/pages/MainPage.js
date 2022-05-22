@@ -26,7 +26,6 @@ const MainPage = ({ history }) => {
   const locationList = useSelector((state) => state.post.locationList);
 
   const keyword = useSelector((state) => state.post.keyword);
-
   const isLoading = useSelector((state) => state.post.isLoading);
 
   const settings1 = {

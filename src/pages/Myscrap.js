@@ -43,7 +43,6 @@ const Myscrap = () => {
       <Bodydiv ref={BodydivRef}>
         <InfinityScroll
           callNext={() => {
-            console.log("무한스크롤 실행!");
             dispatch(userAction.getMyLikePostDB(paging.start));
           }}
           is_next={lastPage ? false : true}

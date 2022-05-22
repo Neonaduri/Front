@@ -53,7 +53,6 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
   }, []);
 
   useEffect(() => {
-    console.log(dayNow);
     const db = getDatabase();
     const fixedLatLngRef = query(
       ref(db, `${postId}/allPlan/day${dayNow}`),

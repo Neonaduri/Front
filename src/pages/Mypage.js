@@ -20,10 +20,8 @@ const Mypage = () => {
   const [cardList, setCardList] = useState(true);
 
   const logoutClick = () => {
-    localStorage.removeItem("token");
-    history.replace("/login");
+    dispatch(userAction.logOutDB());
   };
-  console.log(!isLogin);
 
   if (!isLogin) {
     return <NotLoginUser />;

@@ -55,7 +55,6 @@ export const addCommentDB = (postId, formdata, config) => {
 
       if (response.status === 201) {
         window.location.reload();
-        console.log(response.data);
         dispatch(addComment(response.data));
         window.alert("후기가 등록되었습니다!");
       }
@@ -105,7 +104,6 @@ export const getNextCommentDB = (postId, pageno) => {
       };
 
       if (response.status === 200) {
-        console.log(response.data);
         dispatch(getNextComment(response.data.reviewList, paging));
       }
     } catch (err) {
@@ -123,8 +121,6 @@ export const getOneCommentDB = (reviewId) => {
       );
 
       if (response.status === 201) {
-        console.log("리뷰조회 성공!");
-        console.log(response.data);
         dispatch(getOneComment(response.data));
       }
     } catch (err) {
@@ -146,7 +142,6 @@ export const editCommentDB = (reviewId, formdata, config) => {
 
       if (response.status === 201) {
         window.location.reload();
-        console.log("후기수정", response.data);
         dispatch(editComment(response.data));
         window.alert("수정이 완료되었어요!");
       }
@@ -163,9 +158,7 @@ export const deleteCommentDB = (reviewId) => {
       const response = await apis.axiosInstance.delete(
         `/detail/reviews/${reviewId}`
       );
-      console.log("후기삭제 성공!");
       if (response.status === 200) {
-        console.log("후기삭제 성공!");
         dispatch(deleteComment(reviewId));
         window.alert("삭제가 완료되었어요!");
       }

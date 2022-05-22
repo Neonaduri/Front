@@ -32,7 +32,6 @@ const SubmitBtn = ({ dateCnt }) => {
       nullObj[`day${i}`] = {};
     }
     const finalObj = Object.assign(nullObj, fixedPlan.allPlan);
-    // console.log(finalObj);
 
     if (fixedPlan.allPlan === undefined) {
       alert("저장된 플랜이 없습니다.");
@@ -58,8 +57,6 @@ const SubmitBtn = ({ dateCnt }) => {
         ispublic: true,
         days: allPlan,
       };
-
-      console.log(data);
       dispatch(planAction.completePlanDB(data));
 
       const clearPlanRef = ref(db, `${postId}`);
@@ -90,7 +87,6 @@ const SubmitBtn = ({ dateCnt }) => {
         ispublic: false,
         days: allPlan,
       };
-      console.log(data);
       dispatch(planAction.completePlanDB(data));
       const clearPlanRef = ref(db, `${postId}`);
       remove(clearPlanRef);

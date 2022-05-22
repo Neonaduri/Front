@@ -64,7 +64,6 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
           },
         }
       );
-      console.log(response);
       if (response.status === 201) {
         const db = getDatabase();
         set(ref(db, `${response.data.postUUID}`), {
@@ -94,7 +93,6 @@ const getRoomDB = (postId) => {
           Authorization: localStorage.getItem("token"),
         },
       });
-      console.log(response);
       if (response.status === 200) {
         dispatch(createRoom(response.data));
       }
@@ -107,13 +105,11 @@ const getRoomDB = (postId) => {
 const completePlanDB = (data) => {
   return async function (dispatch, getState, { history }) {
     try {
-      console.log(data);
       const response = await apis.axiosInstance.put("/plans/save", data, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
       });
-      console.log(response);
       // const response = RESP.SAVEPLANPUT;
       if (response.status === 201) {
         history.replace("/uploadcomplete");
@@ -135,7 +131,6 @@ const getMyPlanPage1DB = () => {
         start: 2,
         lastPage: response.data.islastPage,
       };
-      console.log(response);
       if (response.status === 200) {
         dispatch(getMyPlanPage1(response.data.planList, paging));
       }
@@ -182,8 +177,6 @@ const exitBrowserOnPlanDB = (postId) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.delete(`/plans/${postId}`);
-      console.log(response);
-
       const db = getDatabase();
       const clearPlanRef = ref(db, `${postId}`);
       remove(clearPlanRef);
@@ -198,7 +191,6 @@ const getDetailPlanDB = (postId) => {
     try {
       const response = await apis.axiosInstance.get(`/plans/detail/${postId}`);
       // const response = RESP.DETAILPOSTIDGET;
-      console.log(response);
       if (response.status === 200) {
         dispatch(getDetailPlan(response.data));
       }
@@ -261,7 +253,6 @@ export default handleActions(
     [CLICKWISHINDETAIL]: (state, action) =>
       produce(state, (draft) => {
         draft.detailPlan.islike = action.payload.result;
-        console.log(state);
       }),
   },
   init
