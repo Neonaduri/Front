@@ -113,7 +113,6 @@ const Myplan = () => {
                   </button>
                   {hamburgerNum === idx ? (
                     <ToggleBox>
-                      <div id={idx}>수정하기</div>
                       <div
                         id={plan.postId}
                         onClick={(e) => {
@@ -342,15 +341,9 @@ const ToggleBox = styled.div`
   top: 15px;
   div {
     padding: 8px;
-    font-size: 15px;
+    font-size: 16px;
     cursor: pointer;
-    &:first-child {
-      border-bottom: 1px solid black;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    justify-content: center;
   }
 `;
 export default Myplan;

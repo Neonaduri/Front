@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Titleline from "../components/elements/Titleline";
@@ -6,9 +6,6 @@ import { useDispatch } from "react-redux";
 import { userAction } from "../redux/module/user";
 import { useHistory } from "react-router";
 import Footer from "../components/common/Footer";
-import BookedPostcard from "../components/mypage/BookedPostcard";
-import MyReviewCard from "../components/mypage/MyReviewCard";
-import alarm from "../static/images/icon/alarm.png";
 import MypageBtn from "../components/mypage/MypageBtn";
 import NotLoginUser from "../shared/NotLoginUser";
 
@@ -17,7 +14,6 @@ const Mypage = () => {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state?.user?.isLogin);
   const loginUser = useSelector((state) => state.user.list);
-  const [cardList, setCardList] = useState(true);
 
   const logoutClick = () => {
     dispatch(userAction.logOutDB());
@@ -33,7 +29,6 @@ const Mypage = () => {
         <div></div>
         <Titleline title={"마이페이지"} />
         <img />
-        {/* <img src={alarm} /> */}
       </HeaderDiv>
       <UserinfoDiv>
         <div>
@@ -63,39 +58,40 @@ const Mypage = () => {
             history.push("/mypage/review");
           }}
         />
+        <LogoutBtn onClick={logoutClick}>로그아웃</LogoutBtn>
       </PageBtnDiv>
-      <RestDiv>
-        <span onClick={logoutClick}>로그아웃</span>
-      </RestDiv>
+
       <Footer />
     </Container>
   );
 };
+
+const LogoutBtn = styled.button`
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.mainRed};
+  border: none;
+  background-color: ${({ theme }) => theme.colors.text4};
+  margin-top: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+`;
 const Container = styled.div`
   height: 100%;
-`;
-
-const RestDiv = styled.div`
-  width: 100%;
-  height: 60%;
   background-color: ${({ theme }) => theme.colors.text4};
-  padding: 10px 0px;
-  span {
-    color: ${({ theme }) => theme.colors.mainRed};
-    padding: 0px 10px;
-    cursor: pointer;
-  }
 `;
 
 const PageBtnDiv = styled.div`
   border-top: 10px solid ${({ theme }) => theme.colors.borderColor};
+  height: 21%;
+  background-color: white;
 `;
 
 const UserinfoDiv = styled.div`
   display: flex;
   align-items: center;
-  padding: 10px 15px;
-  margin-top: 20px;
+  padding: 0px 15px;
+  height: 15%;
+  background-color: white;
   div {
     &:first-child {
       img {
@@ -124,13 +120,8 @@ const HeaderDiv = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 15px;
-  img {
-    margin-top: 6px;
-  }
-  div {
-    padding-left: 20px;
-  }
+  height: 7%;
+  background-color: white;
 `;
 
 export default Mypage;

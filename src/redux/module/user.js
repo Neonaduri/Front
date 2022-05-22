@@ -99,7 +99,6 @@ const logInDB = (username, password) => {
         window.location.replace("/");
       }
     } catch (err) {
-      console.log(err.response);
       Sentry.captureException(err);
       window.alert(err.response.data.exception);
     }
@@ -146,7 +145,7 @@ const isLoginDB = () => {
       }
     } catch (err) {
       console.log("로그인 확인 실패", err.response);
-      localStorage.removeItem("token");
+      // localStorage.removeItem("token");
       dispatch(logOut());
       window.location.replace("/login");
       Sentry.captureException(err);

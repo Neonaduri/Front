@@ -10,6 +10,7 @@ import { getKeywordPostDB, keywordDB } from "../redux/module/post";
 import SearchItem from "../components/search/SearchItem";
 import NotFound from "../shared/NotFound";
 import InfinityScroll from "../shared/InfinityScroll";
+import InstallPWA from "../shared/InstallPWA";
 
 const Search = () => {
   const dispatch = useDispatch();

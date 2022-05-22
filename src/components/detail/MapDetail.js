@@ -19,10 +19,6 @@ const MapDetail = ({ dayNow }) => {
     return null;
   }
 
-  const clickTraffic = () => {
-    setShowTraffic(!showTraffic);
-  };
-
   const dayPlanPlaces = planByDay[dayNow - 1]?.places;
   if (!dayPlanPlaces) {
     return null;
@@ -59,9 +55,6 @@ const MapDetail = ({ dayNow }) => {
     );
   }
 
-  // {
-  /* <button onClick={clickTraffic}>교통정보 보기</button> */
-  // }
   return (
     <div>
       <MapContainer>

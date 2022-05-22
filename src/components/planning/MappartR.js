@@ -27,7 +27,6 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
   const history = useHistory();
   const timeRef = useRef();
   const minuteRef = useRef();
-  const keywordRef = useRef();
   const params = useParams();
   const postId = params.postId;
   const thisPlan = useSelector((state) => state.plan.list);
@@ -107,27 +106,30 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
     if (!map) return;
     const ps = new kakao.maps.services.Places();
 
-    ps.keywordSearch(searchPlace, (data, status, _pagination) => {
-      if (status === kakao.maps.services.Status.OK) {
-        const bounds = new kakao.maps.LatLngBounds();
-        let markers = [];
-        for (let i = 0; i < data.length; i++) {
-          markers.push({
-            position: {
-              lat: data[i].y,
-              lng: data[i].x,
-            },
-            content: data[i].place_name,
-            infomation: data[i],
-          });
-          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+    const search = ps.keywordSearch(
+      searchPlace,
+      (data, status, _pagination) => {
+        if (status === kakao.maps.services.Status.OK) {
+          const bounds = new kakao.maps.LatLngBounds();
+          let markers = [];
+          for (let i = 0; i < data.length; i++) {
+            markers.push({
+              position: {
+                lat: data[i].y,
+                lng: data[i].x,
+              },
+              content: data[i].place_name,
+              infomation: data[i],
+            });
+            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+          }
+          setMarkers(markers);
+          map.setBounds(bounds);
+          setChangingKeyword("");
         }
-        setMarkers(markers);
-        map.setBounds(bounds);
-        setChangingKeyword("");
       }
-    });
-  }, [map, searchPlace]);
+    );
+  }, [searchPlace]);
 
   const findLatLng = (latlng) => {
     setLatlng(latlng);
@@ -192,7 +194,6 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
         onChange={(e) => {
           changeKeyword(e);
         }}
-        ref={keywordRef}
         value={changingKeyword}
       ></PlaceInput>
       {isLogin ? (
