@@ -7,7 +7,7 @@ import ModalfixTime from "../components/common/ModalfixTime";
 import { getDatabase, push, ref, set } from "firebase/database";
 import { useParams } from "react-router";
 
-const Slide = ({ sliders, dayNow, callback }) => {
+const Slide = ({ sliders, dayNow, callback, setInfo, info }) => {
   const timeRef = useRef();
   const minuteRef = useRef();
   const [marker, setMarker] = useState();
@@ -16,13 +16,26 @@ const Slide = ({ sliders, dayNow, callback }) => {
   const postId = params.postId;
   const [latlng, setLatlng] = useState();
 
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 300,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+  let settings;
+  if (sliders.length === 1) {
+    settings = {
+      dots: false,
+      infinite: true,
+      speed: 300,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+    };
+  } else {
+    settings = {
+      dots: false,
+      infinite: true,
+      speed: 300,
+      slidesToShow: 2,
+      slidesToScroll: 1,
+      arrows: false,
+    };
+  }
 
   const inputPlanTime = (place) => {
     setMarker(place);
@@ -61,12 +74,30 @@ const Slide = ({ sliders, dayNow, callback }) => {
     callback(latlng);
   }, [latlng]);
 
+  let tmp = sliders.filter((item, idx) => {
+    if (item?.content === info?.content) {
+      return item;
+    }
+  });
+  const target = tmp[0];
+  const targetIndex = sliders.indexOf(target);
+  if (targetIndex > 0) {
+    sliders.splice(targetIndex, 1);
+    sliders.unshift(target);
+  }
+
   return (
     <Container>
-      <StyledSlider {...settings}>
+      <StyledSlider {...settings} listCount={sliders.length}>
         {sliders.map((place, idx) => {
           return (
-            <PlaceListCard key={idx} onClick={() => setLatlng(place.position)}>
+            <PlaceListCard
+              key={idx}
+              onClick={() => {
+                setLatlng(place.position);
+                setInfo(place);
+              }}
+            >
               <div>
                 <h4>{place.infomation.place_name}</h4>
                 <small>{place.infomation.category_name}</small>
@@ -182,8 +213,9 @@ const Container = styled.div`
 
 const StyledSlider = styled(Slider)`
   .slick-list {
-    width: 300px;
-    margin: 0 auto;
+    width: ${(props) => (props.listCount === 1 ? "300px" : "600px")};
+    /* margin: 0 auto; */
+    margin-left: -25px;
   }
   .slick-slide div {
     /* cursor: pointer; */
@@ -196,10 +228,6 @@ const StyledSlider = styled(Slider)`
   .slick-track {
     /* overflow-x: hidden; */
   }
-  .slick-next:before {
-    color: green !important;
-    opacity: 1;
-  }
 `;
 
 const PlaceListCard = styled.div`
@@ -210,6 +238,7 @@ const PlaceListCard = styled.div`
   border: none;
   margin: 0px 5px;
   border-radius: 5px;
+  width: 100%;
   div {
     &:first-child {
       padding: 2px 10px;

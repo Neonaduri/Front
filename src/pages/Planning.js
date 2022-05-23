@@ -24,7 +24,6 @@ const Planning = (props) => {
   const [dayNow, setDayNow] = useState(1);
   const [closeRoom, setCloseRoom] = useState(false);
   const days = ["일", "월", "화", "수", "목", "금", "토"];
-  const [ani, setAni] = useState(false);
   const db = getDatabase();
 
   let dateCntArr = [];
@@ -49,7 +48,7 @@ const Planning = (props) => {
   const startDay = days[startDaynum];
   const endDaynum = moment(planInfo.endDate).day();
   const endDay = days[endDaynum];
-
+  const [clickable, setClickable] = useState(false);
   const [isOpen, setOpen] = React.useState(false);
 
   const open = () => setOpen(true);
@@ -95,7 +94,12 @@ const Planning = (props) => {
           );
         })}
       </DayBtnDiv>
-      <MappartR dayNow={dayNow} startDay={startDay} endDay={endDay} />
+      <MappartR
+        dayNow={dayNow}
+        startDay={startDay}
+        endDay={endDay}
+        clickable={clickable}
+      />
       <CustomSheet
         rootId="root"
         isOpen={isOpen}
@@ -112,11 +116,14 @@ const Planning = (props) => {
         </Sheet.Container>
         <Sheet.Backdrop />
       </CustomSheet>
-      <TriggerBtn onClick={open}>
-        <div>Click!</div>
-        <Alertdiv ani={ani}>
-          <span>일정이 추가되었습니다✈️</span>
-        </Alertdiv>
+      <TriggerBtn onClick={open} clickable={clickable}>
+        <div
+          onClick={() => {
+            setClickable(true);
+          }}
+        >
+          Click!
+        </div>
       </TriggerBtn>
       {/* <Footer /> */}
     </Container>
@@ -141,31 +148,6 @@ const CustomSheet = styled(Sheet)`
   }
 `;
 
-const move = keyframes`
-  0%{
-    opacity: 0;
-  }
-  25%{
-    opacity: 1;
-  }
-  50%{
-    opacity: 0;
-  }
-  75%{
-    opacity: 1;
-  }
-  100%{
-    opacity: 0;
-  }
-`;
-
-const Alertdiv = styled.div`
-  animation: ${move} 2s 2 forwards;
-  span {
-    font-size: 20px;
-  }
-`;
-
 const Container = styled.div`
   position: relative;
   height: 100%;
@@ -175,7 +157,7 @@ const TriggerBtn = styled.button`
   background-color: white;
   width: 100%;
   border: none;
-  height: 93px;
+  height: ${(props) => (props.clickable ? "63px" : "93px")};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -192,7 +174,7 @@ const TriggerBtn = styled.button`
       background-color: ${({ theme }) => theme.colors.mainGreen};
       border-radius: 20px;
       border: 3px solid white;
-      bottom: 70px;
+      bottom: ${(props) => (props.clickable ? "40px" : "70px")};
       z-index: 9999;
       cursor: pointer;
       color: white;

@@ -6,6 +6,7 @@ import * as Sentry from "@sentry/react";
 //action
 const EMAILCHECK = "emailCheck";
 const SIGNUP = "signup";
+const LOGIN = "login";
 const ISLOGIN = "isLogin";
 const GETLIKEDPOST = "getLikedPost";
 const GETLIKEDNEXTPOST = "getLikedNextPost";
@@ -30,6 +31,7 @@ const init = {
 const emailCheck = createAction(EMAILCHECK, (result) => ({ result }));
 const signUp = createAction(SIGNUP, (result) => ({ result }));
 const isLogin = createAction(ISLOGIN, (user) => ({ user }));
+const login = createAction(LOGIN, (result) => ({ result }));
 const getLikedPost = createAction(GETLIKEDPOST, (posts) => ({ posts }));
 const getLikedNextPost = createAction(GETLIKEDNEXTPOST, (posts) => ({ posts }));
 const getMyReview = createAction(GETMYREVIEW, (reviews) => ({ reviews }));
@@ -91,8 +93,8 @@ const logInDB = (username, password) => {
       // const response = RESP.LOGINPOST;
       if (response.status === 200) {
         const token = response.headers.authorization;
-        // const token = response.token;
         localStorage.setItem("token", token);
+        dispatch(login(true));
       }
       if (localStorage.getItem("token")) {
         dispatch(isLoginDB());
@@ -114,6 +116,7 @@ const isLoginDB = () => {
       });
 
       // const response = RESP.ISLOGINGET;
+      console.log("isLogin까지 실행", response);
       if (response.status === 200) {
         const targetUserName = response.data.userName;
         const targetProfileImg = response.data.profileImgUrl;
@@ -352,6 +355,10 @@ export default handleActions(
         draft.myReview = draft.myReview.filter((review) => {
           return review.reviewId !== parseInt(action.payload.reviewId);
         });
+      }),
+    [LOGIN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.isLogin = true;
       }),
     [LOGOUT]: (state, action) =>
       produce(state, (draft) => {

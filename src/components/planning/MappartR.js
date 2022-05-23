@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef, memo } from "react";
-import { Map, MapMarker, Polyline } from "react-kakao-maps-sdk";
-import styled from "styled-components";
+import {
+  Map,
+  MapMarker,
+  Polyline,
+  CustomOverlayMap,
+} from "react-kakao-maps-sdk";
+import styled, { keyframes } from "styled-components";
 import {
   getDatabase,
   push,
@@ -22,7 +27,7 @@ import back from "../../static/images/icon/back.png";
 
 const { kakao } = window;
 
-const MappartR = ({ dayNow, startDay, endDay }) => {
+const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const timeRef = useRef();
@@ -167,6 +172,7 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
     }
     return value;
   };
+
   return (
     <Container>
       <HeadLineDiv>
@@ -242,19 +248,22 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
               },
             }}
             clickable={true}
-            onClick={() => setInfo(marker)}
+            onClick={() => {
+              setInfo(marker);
+            }}
           >
             {info && info.content === marker.content && (
               <Infowindow>
                 <div>
                   <h4>{marker.content}</h4>
                 </div>
-                <span>
-                  <a href={marker.infomation.place_url} target="_blank">
-                    {marker.infomation.place_name} 바로가기
-                  </a>
-                </span>
+                <span>{marker.infomation.road_address_name}</span>
                 <div>
+                  <button>
+                    <a href={marker.infomation.place_url} target="_blank">
+                      자세히 보기
+                    </a>
+                  </button>
                   <button
                     onClick={() => {
                       inputPlanTime(marker);
@@ -275,30 +284,34 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
           strokeStyle={"solid"} // 선의 스타일입니다
         />
       </Map>
-      {hidden === false ? (
+      {/* {hidden === false ? (
         <HideBtn
+          clickable={clickable}
           onClick={() => {
             setHidden(true);
           }}
         >
-          List
-          <br />
-          접기
+          📂
         </HideBtn>
       ) : (
         <HideBtn
+          clickable={clickable}
           onClick={() => {
             setHidden(false);
           }}
         >
-          List
-          <br />
-          열기
+          📁
         </HideBtn>
-      )}
+      )} */}
 
-      <PlaceList hidden={hidden}>
-        <Slide sliders={markers} dayNow={dayNow} callback={findLatLng} />
+      <PlaceList hidden={hidden} clickable={clickable}>
+        <Slide
+          sliders={markers}
+          dayNow={dayNow}
+          callback={findLatLng}
+          setInfo={setInfo}
+          info={info}
+        />
       </PlaceList>
       <ModalfixTime
         open={modalOpen}
@@ -378,9 +391,43 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
           </ModalContent>
         }
       ></Modalroompass>
+      {clickable ? null : (
+        <Alertdiv>
+          <span>이곳에서 확정된 일정을 확인하세요✈️</span>
+        </Alertdiv>
+      )}
     </Container>
   );
 };
+
+const move = keyframes`
+  0%{
+    opacity: 1;
+  }
+  25%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 1;
+  }
+  75%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+`;
+const Alertdiv = styled.div`
+  z-index: 999999;
+  position: fixed;
+  bottom: 30px;
+  width: 100%;
+  text-align: center;
+  animation: ${move} 2s 3 forwards;
+  span {
+    font-size: 20px;
+  }
+`;
 
 const CopyConfirmtext = styled.span`
   font-size: 14px;
@@ -390,14 +437,16 @@ const CopyConfirmtext = styled.span`
 
 const HideBtn = styled.button`
   background-color: white;
-  border: 1px solid ${({ theme }) => theme.colors.mainGreen};
+  /* border: 1px solid ${({ theme }) => theme.colors.mainGreen}; */
+  border: none;
   position: absolute;
   z-index: 9999;
-  bottom: 140px;
+  bottom: ${(props) => (props.clickable ? "110px" : "140px")};
   left: 5px;
   border-radius: 5px;
   height: 50px;
-  font-size: 13px;
+  width: 28px;
+  font-size: 17px;
   cursor: pointer;
 `;
 
@@ -410,24 +459,54 @@ const PlaceList = styled.div`
   z-index: 5;
   scroll-behavior: auto;
   position: absolute;
-  bottom: 115px;
+  bottom: ${(props) => (props.clickable ? "85px" : "115px")};
   padding-left: 30px;
   visibility: ${(props) => (props.hidden ? "hidden" : null)};
 `;
 
 const Infowindow = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background-color: inherit;
+
+  div {
+    background-color: white;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    &:first-child {
+    }
+  }
   span {
     font-size: 14px;
+    background-color: white;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    padding: 5px 0px;
+    font-family: "apple1";
   }
   button {
-    background-color: ${({ theme }) => theme.colors.mainGreen};
-    color: white;
-    border: none;
-    padding: 3px 10px;
-    border-radius: 4px;
+    &:first-child {
+      background-color: white;
+      width: 50%;
+      border: none;
+    }
+    &:last-child {
+      background-color: ${({ theme }) => theme.colors.mainGreen};
+      color: white;
+      font-size: 14px;
+      border: none;
+      padding: 7px 0px;
+      width: 50%;
+      border-radius: 4px;
+    }
+  }
+  a {
+    text-decoration: none;
+    color: ${({ theme }) => theme.colors.mainGreen};
+    font-family: "apple2";
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 

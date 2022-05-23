@@ -41,53 +41,55 @@ const Myscrap = () => {
         <div></div>
       </HeaderDiv>
       <Bodydiv ref={BodydivRef}>
-        <InfinityScroll
-          callNext={() => {
-            dispatch(userAction.getMyLikePostDB(paging.start));
-          }}
-          is_next={lastPage ? false : true}
-          loading={isLoading}
-          ref={BodydivRef}
-        >
-          {myWishList?.map((plan, idx) => {
-            return (
-              <CardContainer key={idx}>
-                <ImgDiv>
-                  <img src={plan.postImgUrl} />
-                </ImgDiv>
-                <ContentDiv
-                  onClick={() => history.push(`/detail/${plan.postId}`)}
-                >
-                  <SmallBtndiv>
-                    <span>{plan.location}</span>
-                    <span>{plan.theme}</span>
-                  </SmallBtndiv>
-                  <TitleDiv>
-                    <h3>{plan.postTitle}</h3>
-                  </TitleDiv>
-                  <Datediv>
-                    {plan.startDate} ~ {plan.endDate}
-                  </Datediv>
-                </ContentDiv>
-                <div>
-                  {plan.islike ? (
-                    <img
-                      src={wishgreen}
-                      onClick={(e) => clickWishBtn(e)}
-                      id={plan.postId}
-                    />
-                  ) : (
-                    <img
-                      src={wish}
-                      onClick={(e) => clickWishBtn(e)}
-                      id={plan.postId}
-                    />
-                  )}
-                </div>
-              </CardContainer>
-            );
-          })}
-        </InfinityScroll>
+        {myWishList?.length !== 0 ? (
+          <InfinityScroll
+            callNext={() => {
+              dispatch(userAction.getMyLikePostDB(paging.start));
+            }}
+            is_next={lastPage ? false : true}
+            loading={isLoading}
+            ref={BodydivRef}
+          >
+            {myWishList?.map((plan, idx) => {
+              return (
+                <CardContainer key={idx}>
+                  <ImgDiv>
+                    <img src={plan.postImgUrl} />
+                  </ImgDiv>
+                  <ContentDiv
+                    onClick={() => history.push(`/detail/${plan.postId}`)}
+                  >
+                    <SmallBtndiv>
+                      <span>{plan.location}</span>
+                      <span>{plan.theme}</span>
+                    </SmallBtndiv>
+                    <TitleDiv>
+                      <h3>{plan.postTitle}</h3>
+                    </TitleDiv>
+                    <Datediv>
+                      {plan.startDate} ~ {plan.endDate}
+                    </Datediv>
+                  </ContentDiv>
+                  <div>
+                    {plan.islike ? (
+                      <img
+                        src={wishgreen}
+                        onClick={(e) => clickWishBtn(e)}
+                        id={plan.postId}
+                      />
+                    ) : (
+                      <img
+                        src={wish}
+                        onClick={(e) => clickWishBtn(e)}
+                        id={plan.postId}
+                      />
+                    )}
+                  </div>
+                </CardContainer>
+              );
+            })}
+          </InfinityScroll>
+        ) : null}
       </Bodydiv>
       <Footer />
     </Container>
