@@ -233,4 +233,5 @@ const AdImg = styled.img`
   height: 101px;
   background-size: cover;
   margin: 35px 0;
+  cursor: pointer;
 `;
