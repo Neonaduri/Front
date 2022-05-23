@@ -59,7 +59,7 @@ const Footer = (props) => {
               history.push(path);
             }}
           >
-            <Logo src={getSrc(path, defaultSrc, activeSrc)} />
+            <Logo src={getSrc(path, defaultSrc, activeSrc)} alt="button" />
           </NavItem>
         ))}
       </Container>

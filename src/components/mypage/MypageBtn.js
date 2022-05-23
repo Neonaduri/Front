@@ -2,16 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import goRight from "../../static/images/icon/goRight.png";
 
-const MypageBtn = ({ content, onClick }) => {
+const MypageBtn = ({ content, onClick, textcolor }) => {
   return (
     <Container onClick={onClick}>
-      <span>{content}</span>
+      <span color={textcolor}>{content}</span>
       <img src={goRight} />
     </Container>
   );
 };
 
 const Container = styled.div`
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;

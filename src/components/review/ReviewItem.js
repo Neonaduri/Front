@@ -52,7 +52,6 @@ const ReviewItem = ({
       reviewId,
       preview,
     });
-    console.log(typeof reviewImgUrl);
   };
 
   function displayedAt(createdAt) {

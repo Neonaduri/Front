@@ -112,11 +112,9 @@ const Planning = (props) => {
         <Sheet.Backdrop />
       </CustomSheet>
       <TriggerBtn onClick={open}>
-        <div>
-          <img src={Logo} />
-        </div>
+        <div>Click!</div>
       </TriggerBtn>
-      <Footer />
+      {/* <Footer /> */}
     </Container>
   );
 };
@@ -152,26 +150,26 @@ const TriggerBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
   position: absolute;
   bottom: 0px;
   z-index: 10;
   div {
     position: absolute;
-    width: 38px;
+    width: 80px;
     height: 38px;
     background-color: ${({ theme }) => theme.colors.mainGreen};
-    border-radius: 50%;
+    border-radius: 20px;
     border: 3px solid white;
     bottom: 70px;
     z-index: 9999;
     cursor: pointer;
-    img {
-      margin-top: 6px;
-      width: 20px;
-      height: 20px;
-    }
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
   }
 `;
 

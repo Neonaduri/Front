@@ -21,14 +21,16 @@ const Myplan = () => {
   const isLoading = useSelector((state) => state.plan.isLoading);
   const [modalOpen, setModalOpen] = useState(false);
   const [clickedId, setClickedId] = useState();
+  const [hamburgerNum, setHamburgerNum] = useState(null);
   const middledivRef = useRef();
-
+  console.log(myAllPlan);
   const moreBtnClick = (e) => {
     setModalOpen(true);
     setClickedId(e.target.id);
   };
 
   const deleteBtnClick = () => {
+    setHamburgerNum(null);
     dispatch(planAction.deleteMyPlanDB(clickedId));
     setModalOpen(false);
   };
@@ -100,9 +102,27 @@ const Myplan = () => {
                     <span>{textCut(plan.postTitle)}</span>
                     <span>{plan.theme}</span>
                   </div>
-                  <button onClick={(e) => moreBtnClick(e)}>
+                  <button
+                    onClick={() => {
+                      hamburgerNum === null
+                        ? setHamburgerNum(idx)
+                        : setHamburgerNum(null);
+                    }}
+                  >
                     <img src={hamburger} id={plan.postId} />
                   </button>
+                  {hamburgerNum === idx ? (
+                    <ToggleBox>
+                      <div
+                        id={plan.postId}
+                        onClick={(e) => {
+                          moreBtnClick(e);
+                        }}
+                      >
+                        삭제하기
+                      </div>
+                    </ToggleBox>
+                  ) : null}
                 </UpperCarddiv>
                 <BottomCarddiv>
                   <div>
@@ -129,10 +149,10 @@ const Myplan = () => {
                   close={closeModal}
                   header={
                     <EditModal>
-                      <div>수정하기</div>
-                      <div id={plan.postId} onClick={deleteBtnClick}>
+                      <div>정말 삭제하시겠습니까?</div>
+                      <button id={plan.postId} onClick={deleteBtnClick}>
                         삭제하기
-                      </div>
+                      </button>
                     </EditModal>
                   }
                 ></ModalfixTime>
@@ -167,7 +187,16 @@ const EditModal = styled.div`
     align-items: center;
     height: 40px;
     font-size: 20px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
+    cursor: pointer;
+  }
+  button {
+    background-color: ${({ theme }) => theme.colors.mainRed};
+    color: white;
+    padding: 10px 45px;
+    border-radius: 10px;
+    font-size: 18px;
+    margin-bottom: -20px;
   }
 `;
 
@@ -223,6 +252,7 @@ const UpperCarddiv = styled.div`
   justify-content: space-between;
   padding: 7px 10px;
   height: 40px;
+  position: relative;
   button {
     width: 10px;
     background-color: inherit;
@@ -298,4 +328,22 @@ const Middlediv = styled.div`
   }
 `;
 
+const ToggleBox = styled.div`
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  border-radius: 15px;
+  border-top-right-radius: 0px;
+  position: absolute;
+  background-color: white;
+  right: 20px;
+  top: 15px;
+  div {
+    padding: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    justify-content: center;
+  }
+`;
 export default Myplan;

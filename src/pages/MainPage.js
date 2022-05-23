@@ -15,10 +15,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import ButtonArea from "../components/main/ButtonArea";
 import Slider from "react-slick";
-import Splash from "../shared/Splash";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import ScrollTop from "../components/common/ScrollTop";
 
 const MainPage = ({ history }) => {
   const token = localStorage.getItem("token");
@@ -27,8 +25,6 @@ const MainPage = ({ history }) => {
   const locationList = useSelector((state) => state.post.locationList);
 
   const keyword = useSelector((state) => state.post.keyword);
-
-  const isLoading = useSelector((state) => state.post.isLoading);
 
   const settings1 = {
     slidesToShow: 2,
@@ -68,6 +64,7 @@ const MainPage = ({ history }) => {
     <Section>
       <Banner />
       <MakePlan />
+
       {/* 인기여행 */}
       <Wrapper>
         <Container>

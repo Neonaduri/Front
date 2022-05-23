@@ -65,7 +65,6 @@ export const getBestPostDB = () => {
         },
       });
       // if (response.status === 200) {
-      console.log(response);
       dispatch(getBestPost(response.data));
       // }
     } catch (err) {
@@ -120,7 +119,6 @@ export const getKeywordPostDB = (keyword, pageno) => {
         start: page + 1,
         lastpage: response.data.islastPage,
       };
-      console.log("getKeyword", response);
       if (response.status === 200) {
         if (page === 1) {
           dispatch(getSearchPost({ planList: response.data.planList, paging }));
@@ -151,7 +149,6 @@ export const getThemePostDB = (theme, pageno) => {
       const response = await apis.axiosInstance.get(
         `/plans/theme/${theme}/${page}`
       );
-      console.log("getTheme", response);
       let paging = {
         start: page + 1,
         lastpage: response.data.islastPage,
@@ -192,7 +189,6 @@ export const clickWishSearchPostDB = (postId) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.post(`/plans/like/${postId}`);
-      console.log(response);
       if (response.status === 201) {
         dispatch(
           clickWishInSearch({ postId: postId, bool: response.data.like })
