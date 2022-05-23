@@ -81,12 +81,7 @@ const ReviewItem = ({
       <Card>
         <UpperContents>
           <Profile>
-            <ProfileImg
-              src={profileImgUrl}
-              onClick={() => {
-                history.push("/mypage");
-              }}
-            ></ProfileImg>
+            <ProfileImg src={profileImgUrl}></ProfileImg>
             <div>
               <p>{nickName}</p>
               <small>{displayedAt(dateMillisecond)}</small>
@@ -137,6 +132,7 @@ export default ReviewItem;
 const Card = styled.div`
   margin: 20px 0;
   background-color: white;
+  /* background-color: tomato; */
 `;
 
 const Btns = styled.div``;

@@ -26,7 +26,7 @@ const Popular = ({
   };
 
   return (
-    <Wrap>
+    <Wrap onClick={() => history.push(`/detail/${postId}`)}>
       <ImagePop src={postImgUrl} />
       <SocialWishDiv onClick={(e) => clickWishPost(e)}>
         {islike ? (
@@ -35,7 +35,7 @@ const Popular = ({
           <img src={unClickedWish} id={postId} />
         )}
       </SocialWishDiv>
-      <Box onClick={() => history.push(`/detail/${postId}`)}>
+      <Box>
         <Content>{postTitle}</Content>
         <SectionBox>
           <Like>

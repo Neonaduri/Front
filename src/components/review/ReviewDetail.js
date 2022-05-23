@@ -391,7 +391,6 @@ const ContainerInput = styled.div`
   position: fixed;
   background-color: white;
   bottom: 0;
-  padding: 0 10px;
   border-top: 1px solid ${({ theme }) => theme.colors.borderColor};
 `;
 
@@ -399,9 +398,9 @@ const Middlediv = styled.div`
   height: 90%;
   display: flex;
   flex-direction: column;
-  padding: 20px 0px;
+  /* padding: 20px 0px; */
   overflow: scroll;
-  margin-top: 70px;
+  /* margin-bottom: 50px; */
 `;
 
 const Button = styled.button`
@@ -427,10 +426,11 @@ const Icon = styled.img`
 const Container = styled.div`
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   width: 100%;
-  margin-bottom: 190px;
+  /* margin-bottom: 50px; */
   background-color: white;
+  /* background-color: tomato; */
 `;
 
 const ReviewBox = styled.div`
@@ -438,17 +438,18 @@ const ReviewBox = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 18px 15px;
-  position: fixed;
-  height: 7%;
-  z-index: 99;
+  padding: 5px 20px;
+  margin-top: 20px;
+  /* position: fixed; */
+  /* height: 7%; */
+  /* z-index: 99; */
   img {
     cursor: pointer;
   }
   h2 {
     font-weight: 700;
     font-size: 18px;
-    line-height: 18px;
+    /* line-height: 18px; */
     color: ${({ theme }) => theme.colors.text1};
     span {
       margin-left: 4px;
