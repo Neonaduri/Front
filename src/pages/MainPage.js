@@ -80,8 +80,11 @@ const MainPage = ({ history }) => {
         </Container>
         {/* 인기 여행 */}
 
-        <AdImg src={ad}></AdImg>
+        <a href="https://forms.gle/B8pWhmu3pDFNwsMe9" target="_blank">
+          <AdImg src={ad}></AdImg>
 
+          <Link></Link>
+        </a>
         {/* 지역별 여행 */}
         <Container>
           <LoName>
@@ -232,6 +235,12 @@ const AdImg = styled.img`
   /* width: 100%; */
   height: 101px;
   background-size: cover;
-  margin: 35px 0;
+  /* margin: 30px 0; */
+  margin-top: 40px;
   cursor: pointer;
+`;
+
+const Link = styled.a`
+  text-decoration: none;
+  color: white;
 `;
