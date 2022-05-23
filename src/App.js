@@ -6,7 +6,8 @@ import Calendar from "./pages/Calendar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Emailcheck from "./pages/Emailcheck";
-import Helmet from "react-helmet";
+// import Helmet from "react-helmet";
+import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { userAction } from "./redux/module/user";
@@ -38,18 +39,20 @@ function App(props) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Helmet>
-        <title>너나들이 | 함께만든 우리만의 여행</title>
-        <meta property="og:title" content="함께만든 우리만의 여행, 너나들이" />
-        <meta
-          property="og:description"
-          content="너나들이 첫번째 베타테스트 오픈!"
-        />
-        <meta
-          property="og:image"
-          content="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuWMdv%2FbtrCxGqdv8X%2FhZa6JjCDY8iJHGd685Lr9K%2Fimg.png"
-        />
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>너나들이 | 함께만든 우리만의 여행</title>
+          <meta
+            property="og:title"
+            content="함께만든 우리만의 여행, 너나들이"
+          />
+          <meta
+            property="og:description"
+            content="너나들이 첫번째 베타테스트 오픈!"
+          />
+          <meta property="og:image" content="./static/images/og.png" />
+        </Helmet>
+      </HelmetProvider>
 
       <Fullscreen>
         <Wrap>
@@ -91,10 +94,12 @@ const Wrap = styled.div`
 
 const Fullscreen = styled.div`
   background-image: url(${PC});
-  background-position: center;
+  background-position: contain;
+  /* cover => containㅂㅏ꿈(머리잘리는거 방지...) */
   background-size: cover;
   background-repeat: no-repeat;
   margin: auto;
+  /* margin-bottom: 30px; */
   display: flex;
   ::-webkit-scrollbar {
     display: none;
