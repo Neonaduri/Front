@@ -25,7 +25,7 @@ import theme from "./assets/styles/theme";
 import MyEdit from "./pages/MyEdit";
 import Myscrap from "./pages/Myscrap";
 import MyReview from "./pages/MyReview";
-import PC from "./static/images/PCfull.png";
+import PC from "./static/images/PC.png";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -55,6 +55,7 @@ function App(props) {
       </HelmetProvider>
 
       <Fullscreen>
+        <Btn></Btn>
         <Wrap>
           <MobileFrame className="MobileFramePage">
             <Route path="/" exact component={MainPage} />
@@ -112,4 +113,14 @@ const Fullscreen = styled.div`
   }
   @media (min-width: 1580px) {
   }
+`;
+
+const Btn = styled.button`
+  background-color: tomato;
+  position: absolute;
+  width: 200px;
+  height: 50px;
+  border: 0;
+  left: 990px;
+  top: 530px;
 `;
