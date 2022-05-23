@@ -44,7 +44,7 @@ const SubmitBtn = ({ dateCnt }) => {
         const value = Object.values(allPlanValues[i]);
         allPlan.push({ places: value });
       }
-      console.log(allPlan);
+
       const data = {
         postUUID: fixedPlan.postId,
         startDate: fixedPlan.startDate,

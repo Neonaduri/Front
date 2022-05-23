@@ -52,7 +52,6 @@ const MainPage = ({ history }) => {
   };
 
   if (!token) {
-    console.log("토큰이 없어요");
     history.push("/login");
   }
 

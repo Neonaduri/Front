@@ -225,7 +225,7 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
           width: "100%",
           height: "86.5vh",
         }}
-        level={latlng === undefined ? 7 : 3}
+        level={7}
         onCreate={setMap}
         onClick={() => setInfo("")}
       >
@@ -476,10 +476,12 @@ const Infowindow = styled.div`
     font-size: 14px;
     background-color: white;
     width: 200px;
-    display: flex;
+    display: inline-block;
     justify-content: center;
     padding: 5px 0px;
     font-family: "apple1";
+    white-space: normal;
+    word-break: break-all;
   }
   button {
     &:first-child {

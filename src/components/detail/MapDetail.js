@@ -54,8 +54,7 @@ const MapDetail = ({ dayNow }) => {
       </>
     );
   }
-  console.log(latlngArr);
-  console.log(markerArr);
+
   return (
     <div>
       <MapContainer>

@@ -37,7 +37,6 @@ const Detail = () => {
     dispatch(planAction.getDetailPlanDB(postId));
     // dispatch(getCommentDB(postId));
   }, []);
-
   return (
     <Container>
       <HeadDiv>
@@ -47,7 +46,12 @@ const Detail = () => {
             history.goBack();
           }}
         />
-        <Titleline title={detailPlan.postTitle} />
+        <div>
+          <Titleline title={detailPlan.postTitle} />
+          <Datespan>
+            {detailPlan.startDate} ~ {detailPlan.endDate}
+          </Datespan>
+        </div>
         {detailPlan.islike ? (
           <img src={wishgreen} onClick={clickWishBtn} />
         ) : (
@@ -122,6 +126,15 @@ const ImageDiv = styled.div`
   }
 `;
 
+const Datespan = styled.span`
+  color: ${({ theme }) => theme.colors.text2};
+  font-size: 14px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: -20px;
+`;
+
 const HeadDiv = styled.div`
   display: flex;
   align-items: center;
@@ -131,6 +144,13 @@ const HeadDiv = styled.div`
     width: 22px;
     margin-top: 8px;
     cursor: pointer;
+  }
+  div {
+    position: relative;
+    width: 100%;
+    span {
+      margin-bottom: 10px;
+    }
   }
 `;
 

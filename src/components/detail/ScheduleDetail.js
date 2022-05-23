@@ -148,7 +148,10 @@ const UrlConnectSpan = styled.span`
   margin-bottom: 10px;
   a {
     text-decoration: none;
-    color: ${({ theme }) => theme.colors.text2};
+    color: "#3d75cc";
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 
