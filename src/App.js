@@ -55,6 +55,10 @@ function App(props) {
       </HelmetProvider>
 
       <Fullscreen>
+        <a href="https://forms.gle/B8pWhmu3pDFNwsMe9" target="_blank">
+          <Button></Button>
+        </a>
+        {/* <Button ></Button> */}
         <Wrap>
           <MobileFrame className="MobileFramePage">
             <Route path="/" exact component={MainPage} />
@@ -94,8 +98,9 @@ const Wrap = styled.div`
 
 const Fullscreen = styled.div`
   background-image: url(${PC});
-  background-position: contain;
-  /* cover => containㅂㅏ꿈(머리잘리는거 방지...) */
+  width: 1920px;
+  height: 760px;
+  position: fixed;
   background-size: cover;
   background-repeat: no-repeat;
   margin: auto;
@@ -112,4 +117,15 @@ const Fullscreen = styled.div`
   }
   @media (min-width: 1580px) {
   }
+`;
+
+const Button = styled.button`
+  position: absolute;
+  width: 200px;
+  height: 45px;
+  top: 465px;
+  left: 852px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
 `;
