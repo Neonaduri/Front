@@ -26,8 +26,11 @@ const Popular = ({
   };
 
   return (
-    <Wrap onClick={() => history.push(`/detail/${postId}`)}>
-      <ImagePop src={postImgUrl} />
+    <Wrap>
+      <ImagePop
+        src={postImgUrl}
+        onClick={() => history.push(`/detail/${postId}`)}
+      />
       <SocialWishDiv onClick={(e) => clickWishPost(e)}>
         {islike ? (
           <img src={clickedWish} id={postId} />
@@ -58,6 +61,7 @@ const SocialWishDiv = styled.div`
   position: absolute;
   right: 10px;
   bottom: 70px;
+  cursor: pointer;
   img {
     width: 24px;
   }

@@ -35,8 +35,12 @@ const MyEdit = () => {
   };
 
   const editBtnClick = () => {
-    if (nickName.length < 2) {
+    if (nickName?.length < 2) {
       alert("닉네임은 2자리 이상 입력해 주세요.");
+      return;
+    }
+    if (nickName?.length > 12) {
+      alert("닉네임은 12자리 이하로 입력해 주세요.");
       return;
     }
     if (preview !== null && preview !== "delete") {
@@ -135,6 +139,7 @@ const MyEdit = () => {
           <input
             defaultValue={loginUser.nickName}
             onChange={(e) => changeNick(e)}
+            maxLength="12"
           ></input>
         </div>
         <BtnDiv>

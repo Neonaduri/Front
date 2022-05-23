@@ -19,6 +19,7 @@ const KakaoBtn = () => {
 
 const Img = styled.img`
   height: 45px;
+  cursor: pointer;
 `;
 
 export default KakaoBtn;

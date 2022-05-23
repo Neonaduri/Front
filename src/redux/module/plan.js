@@ -134,7 +134,6 @@ const getMyPlanPage1DB = () => {
         start: 2,
         lastPage: response.data.islastPage,
       };
-      console.log(response.data);
       if (response.status === 200) {
         dispatch(getMyPlanPage1(response.data.planList, paging));
       }

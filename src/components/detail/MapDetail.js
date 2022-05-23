@@ -54,13 +54,14 @@ const MapDetail = ({ dayNow }) => {
       </>
     );
   }
-
+  console.log(latlngArr);
+  console.log(markerArr);
   return (
     <div>
       <MapContainer>
         <Map
           onClick={() => setIsOpen(false)}
-          center={latlngArr[0]}
+          center={markerArr[0].latlng}
           style={{
             width: "100%",
             height: "210px",
@@ -78,7 +79,7 @@ const MapDetail = ({ dayNow }) => {
                 options: {
                   offset: {
                     x: 10,
-                    y: 10,
+                    y: 15,
                   },
                 },
               }}

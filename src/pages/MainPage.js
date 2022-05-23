@@ -23,6 +23,7 @@ const MainPage = ({ history }) => {
   const dispatch = useDispatch();
   const bestList = useSelector((state) => state.post.bestList);
   const locationList = useSelector((state) => state.post.locationList);
+  const isLogin = useSelector((state) => state?.user?.isLogin);
 
   const keyword = useSelector((state) => state.post.keyword);
 
@@ -50,6 +51,7 @@ const MainPage = ({ history }) => {
   };
 
   if (!token) {
+    console.log("토큰이 없어요");
     history.push("/login");
   }
 

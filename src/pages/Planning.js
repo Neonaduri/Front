@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
@@ -48,7 +48,7 @@ const Planning = (props) => {
   const startDay = days[startDaynum];
   const endDaynum = moment(planInfo.endDate).day();
   const endDay = days[endDaynum];
-
+  const [clickable, setClickable] = useState(false);
   const [isOpen, setOpen] = React.useState(false);
 
   const open = () => setOpen(true);
@@ -94,7 +94,12 @@ const Planning = (props) => {
           );
         })}
       </DayBtnDiv>
-      <MappartR dayNow={dayNow} startDay={startDay} endDay={endDay} />
+      <MappartR
+        dayNow={dayNow}
+        startDay={startDay}
+        endDay={endDay}
+        clickable={clickable}
+      />
       <CustomSheet
         rootId="root"
         isOpen={isOpen}
@@ -111,8 +116,14 @@ const Planning = (props) => {
         </Sheet.Container>
         <Sheet.Backdrop />
       </CustomSheet>
-      <TriggerBtn onClick={open}>
-        <div>Click!</div>
+      <TriggerBtn onClick={open} clickable={clickable}>
+        <div
+          onClick={() => {
+            setClickable(true);
+          }}
+        >
+          Click!
+        </div>
       </TriggerBtn>
       {/* <Footer /> */}
     </Container>
@@ -146,7 +157,7 @@ const TriggerBtn = styled.button`
   background-color: white;
   width: 100%;
   border: none;
-  height: 93px;
+  height: ${(props) => (props.clickable ? "63px" : "93px")};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -156,20 +167,26 @@ const TriggerBtn = styled.button`
   bottom: 0px;
   z-index: 10;
   div {
-    position: absolute;
-    width: 80px;
-    height: 38px;
-    background-color: ${({ theme }) => theme.colors.mainGreen};
-    border-radius: 20px;
-    border: 3px solid white;
-    bottom: 70px;
-    z-index: 9999;
-    cursor: pointer;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
+    &:first-child {
+      position: absolute;
+      width: 80px;
+      height: 38px;
+      background-color: ${({ theme }) => theme.colors.mainGreen};
+      border-radius: 20px;
+      border: 3px solid white;
+      bottom: ${(props) => (props.clickable ? "40px" : "70px")};
+      z-index: 9999;
+      cursor: pointer;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    &:last-child {
+      display: flex;
+      flex-direction: column;
+    }
   }
 `;
 
