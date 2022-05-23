@@ -55,7 +55,6 @@ function App(props) {
       </HelmetProvider>
 
       <Fullscreen>
-        <Btn></Btn>
         <Wrap>
           <MobileFrame className="MobileFramePage">
             <Route path="/" exact component={MainPage} />
@@ -95,8 +94,9 @@ const Wrap = styled.div`
 
 const Fullscreen = styled.div`
   background-image: url(${PC});
-  background-position: contain;
-  /* cover => containㅂㅏ꿈(머리잘리는거 방지...) */
+  width: 1920px;
+  height: 760px;
+  position: fixed;
   background-size: cover;
   background-repeat: no-repeat;
   margin: auto;
@@ -113,14 +113,4 @@ const Fullscreen = styled.div`
   }
   @media (min-width: 1580px) {
   }
-`;
-
-const Btn = styled.button`
-  background-color: tomato;
-  position: absolute;
-  width: 200px;
-  height: 50px;
-  border: 0;
-  left: 990px;
-  top: 530px;
 `;
