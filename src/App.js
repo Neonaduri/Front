@@ -6,7 +6,6 @@ import Calendar from "./pages/Calendar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Emailcheck from "./pages/Emailcheck";
-// import Helmet from "react-helmet";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -26,6 +25,13 @@ import MyEdit from "./pages/MyEdit";
 import Myscrap from "./pages/Myscrap";
 import MyReview from "./pages/MyReview";
 import PC from "./static/images/PC.png";
+import step1 from "./static/images/step1.png";
+import step2 from "./static/images/step2.png";
+import step3 from "./static/images/step3.png";
+import prize1 from "./static/images/prize1.png";
+import prize2 from "./static/images/prize2.png";
+import prize3 from "./static/images/prize3.png";
+import termtext from "./static/images/termtext.png";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -55,7 +61,24 @@ function App(props) {
       </HelmetProvider>
 
       <Fullscreen>
-        <Btn></Btn>
+        <Textdiv>
+          <img src={termtext} />
+        </Textdiv>
+        <Imgdiv1>
+          <img src={step1} />
+          <img src={step2} />
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSf0kLKK-rQzy0jgcxsIXGRzv659r0iTUlpjWCtYouuBaCzXaw/viewform"
+            target="_black"
+          >
+            <img src={step3} />
+          </a>
+        </Imgdiv1>
+        <Imgdiv2>
+          <img src={prize1} />
+          <img src={prize2} />
+          <img src={prize3} />
+        </Imgdiv2>
         <Wrap>
           <MobileFrame className="MobileFramePage">
             <Route path="/" exact component={MainPage} />
@@ -87,6 +110,32 @@ function App(props) {
 }
 
 export default App;
+
+const Textdiv = styled.div`
+  position: absolute;
+  top: 29.5%;
+  left: 37%;
+  img {
+    width: 53%;
+  }
+`;
+
+const Imgdiv1 = styled.div`
+  position: absolute;
+  top: 38%;
+  left: 15%;
+  img {
+    width: 17%;
+  }
+`;
+const Imgdiv2 = styled.div`
+  position: absolute;
+  top: 68%;
+  left: 15%;
+  img {
+    width: 17%;
+  }
+`;
 
 const Wrap = styled.div`
   width: 100vw;
