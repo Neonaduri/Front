@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/common/Footer";
 import Banner from "../components/main/Banner";
@@ -25,6 +25,7 @@ const MainPage = ({ history }) => {
   const locationList = useSelector((state) => state.post.locationList);
 
   const keyword = useSelector((state) => state.post.keyword);
+  const [key, setKey] = useState("서울");
 
   const settings1 = {
     slidesToShow: 2,
@@ -82,8 +83,6 @@ const MainPage = ({ history }) => {
 
         <a href="https://forms.gle/B8pWhmu3pDFNwsMe9" target="_blank">
           <AdImg src={ad}></AdImg>
-
-          <Link></Link>
         </a>
         {/* 지역별 여행 */}
         <Container>
@@ -92,6 +91,7 @@ const MainPage = ({ history }) => {
             <Plus
               onClick={(e) => {
                 dispatch(getKeywordPostDB(keyword));
+                dispatch(getKeywordPostDB(key));
                 history.push("/search");
               }}
             >
@@ -238,9 +238,4 @@ const AdImg = styled.img`
   /* margin: 30px 0; */
   margin-top: 40px;
   cursor: pointer;
-`;
-
-const Link = styled.a`
-  text-decoration: none;
-  color: white;
 `;

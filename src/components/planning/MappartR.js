@@ -247,20 +247,6 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
             clickable={true}
             onClick={() => setInfo(marker)}
           >
-            <MapMarker
-              position={locationHere}
-              image={{
-                src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FqE5Vf%2FbtrCVRyUzwM%2FisGiooUJDFuNWUqEX7ZOf0%2Fimg.png",
-                size: { width: 30, height: 40 },
-                options: {
-                  offset: {
-                    x: 10,
-                    y: 10,
-                  },
-                },
-              }}
-            />
-
             {info && info.content === marker.content && (
               <Infowindow>
                 <div>
