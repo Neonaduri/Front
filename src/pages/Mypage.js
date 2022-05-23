@@ -83,7 +83,6 @@ const Container = styled.div`
 const PageBtnDiv = styled.div`
   border-top: 10px solid ${({ theme }) => theme.colors.borderColor};
   height: 21%;
-  background-color: white;
 `;
 
 const UserinfoDiv = styled.div`
