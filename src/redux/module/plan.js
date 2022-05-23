@@ -13,6 +13,7 @@ const GETMYPLANNEXT = "getMyPlanNextPage";
 const GETDETAILPLAN = "getDetailPlan";
 const DELETEMYPLAN = "deleteMyPlan";
 const LOADING = "loading";
+const LOCATION = "location";
 const CLICKWISHINDETAIL = "clickWishInDetail";
 
 //init
@@ -21,6 +22,7 @@ const init = {
   myPlanList: [],
   detailPlan: [],
   paging: { start: null, lastPage: false },
+  location: { lat: 37.4674137335801, lng: 126.434614441118 },
   isLoading: false,
 };
 
@@ -39,6 +41,7 @@ const getDetailPlan = createAction(GETDETAILPLAN, (detailPlan) => ({
   detailPlan,
 }));
 const loading = createAction(LOADING, (isLoading) => ({ isLoading }));
+export const location = createAction(LOCATION, (location) => ({ location }));
 const deleteMyPlan = createAction(DELETEMYPLAN, (postId) => ({ postId }));
 const clickWishInDetail = createAction(CLICKWISHINDETAIL, (result) => ({
   result,
@@ -244,6 +247,10 @@ export default handleActions(
     [LOADING]: (state, action) =>
       produce(state, (draft) => {
         draft.isLoading = action.payload.isLoading;
+      }),
+    [LOCATION]: (state, action) =>
+      produce(state, (draft) => {
+        draft.location = action.payload.location;
       }),
     [DELETEMYPLAN]: (state, action) =>
       produce(state, (draft) => {

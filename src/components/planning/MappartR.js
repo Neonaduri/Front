@@ -23,6 +23,8 @@ import back from "../../static/images/icon/back.png";
 const { kakao } = window;
 
 const MappartR = ({ dayNow, startDay, endDay }) => {
+  const locationHere = useSelector((state) => state.plan.location);
+
   const dispatch = useDispatch();
   const history = useHistory();
   const timeRef = useRef();
@@ -217,7 +219,7 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
                 lat: 37.5,
                 lng: 127,
               }
-            : latlng
+            : latlng && locationHere
         }
         style={{
           width: "100%",
@@ -233,6 +235,7 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
             position={marker.position}
             image={{
               src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fvqh0w%2FbtrCKW6TD8U%2F3ykjDNaAVvMxJKmpWUpVWk%2Fimg.png",
+
               size: { width: 24, height: 34 },
               options: {
                 offset: {
@@ -244,6 +247,20 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
             clickable={true}
             onClick={() => setInfo(marker)}
           >
+            <MapMarker
+              position={locationHere}
+              image={{
+                src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FqE5Vf%2FbtrCVRyUzwM%2FisGiooUJDFuNWUqEX7ZOf0%2Fimg.png",
+                size: { width: 30, height: 40 },
+                options: {
+                  offset: {
+                    x: 10,
+                    y: 10,
+                  },
+                },
+              }}
+            />
+
             {info && info.content === marker.content && (
               <Infowindow>
                 <div>

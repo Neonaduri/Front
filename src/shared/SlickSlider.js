@@ -6,8 +6,11 @@ import "slick-carousel/slick/slick-theme.css";
 import ModalfixTime from "../components/common/ModalfixTime";
 import { getDatabase, push, ref, set } from "firebase/database";
 import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { location } from "../redux/module/plan";
 
 const Slide = ({ sliders, dayNow, callback }) => {
+  const dispatch = useDispatch();
   const timeRef = useRef();
   const minuteRef = useRef();
   const [marker, setMarker] = useState();
@@ -17,7 +20,7 @@ const Slide = ({ sliders, dayNow, callback }) => {
   const [latlng, setLatlng] = useState();
 
   const settings = {
-    dots: false,
+    arrows: false,
     infinite: true,
     speed: 300,
     slidesToShow: 1,
@@ -59,8 +62,10 @@ const Slide = ({ sliders, dayNow, callback }) => {
 
   useEffect(() => {
     callback(latlng);
+    dispatch(location(latlng));
   }, [latlng]);
 
+  // console.log(latlng);
   return (
     <Container>
       <StyledSlider {...settings}>
@@ -197,8 +202,6 @@ const StyledSlider = styled(Slider)`
     /* overflow-x: hidden; */
   }
   .slick-next:before {
-    color: green !important;
-    opacity: 1;
   }
 `;
 
