@@ -23,9 +23,9 @@ const InstallPWA = () => {
     }
     promptInstall.prompt();
   };
-  //   if (!supportsPWA) {
-  //     return null;
-  //   }
+  // if (!supportsPWA) {
+  //   return null;
+  // }
   return (
     <div>
       <span>너나들이를 더욱 편하게 즐기는 방법!</span>

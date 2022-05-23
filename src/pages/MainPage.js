@@ -16,6 +16,7 @@ import ButtonArea from "../components/main/ButtonArea";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import InstallPWA from "../shared/InstallPWA";
 
 const MainPage = ({ history }) => {
   const token = localStorage.getItem("token");
@@ -63,6 +64,7 @@ const MainPage = ({ history }) => {
     <Section>
       <Banner />
       <MakePlan />
+      <InstallPWA />
       {/* 인기여행 */}
       <Wrapper>
         <Container>
