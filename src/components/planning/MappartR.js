@@ -217,14 +217,10 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
       ) : null}
 
       <Map
-        center={
-          latlng === undefined
-            ? {
-                lat: 37.5,
-                lng: 127,
-              }
-            : latlng
-        }
+        center={{
+          lat: 37.5,
+          lng: 127,
+        }}
         style={{
           width: "100%",
           height: "86.5vh",
@@ -239,6 +235,7 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
             position={marker.position}
             image={{
               src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fvqh0w%2FbtrCKW6TD8U%2F3ykjDNaAVvMxJKmpWUpVWk%2Fimg.png",
+
               size: { width: 24, height: 34 },
               options: {
                 offset: {
@@ -252,6 +249,20 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
               setInfo(marker);
             }}
           >
+            {/* <MapMarker
+              position={locationHere}
+              image={{
+                src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FqE5Vf%2FbtrCVRyUzwM%2FisGiooUJDFuNWUqEX7ZOf0%2Fimg.png",
+                size: { width: 30, height: 40 },
+                options: {
+                  offset: {
+                    x: 10,
+                    y: 10,
+                  },
+                },
+              }}
+            /> */}
+
             {info && info.content === marker.content && (
               <Infowindow>
                 <div>

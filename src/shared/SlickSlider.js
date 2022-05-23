@@ -6,6 +6,8 @@ import "slick-carousel/slick/slick-theme.css";
 import ModalfixTime from "../components/common/ModalfixTime";
 import { getDatabase, push, ref, set } from "firebase/database";
 import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { location } from "../redux/module/plan";
 
 const Slide = ({ sliders, dayNow, callback, setInfo, info }) => {
   const timeRef = useRef();
