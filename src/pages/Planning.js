@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
@@ -24,6 +24,7 @@ const Planning = (props) => {
   const [dayNow, setDayNow] = useState(1);
   const [closeRoom, setCloseRoom] = useState(false);
   const days = ["일", "월", "화", "수", "목", "금", "토"];
+  const [ani, setAni] = useState(false);
   const db = getDatabase();
 
   let dateCntArr = [];
@@ -113,6 +114,9 @@ const Planning = (props) => {
       </CustomSheet>
       <TriggerBtn onClick={open}>
         <div>Click!</div>
+        <Alertdiv ani={ani}>
+          <span>일정이 추가되었습니다✈️</span>
+        </Alertdiv>
       </TriggerBtn>
       {/* <Footer /> */}
     </Container>
@@ -137,6 +141,31 @@ const CustomSheet = styled(Sheet)`
   }
 `;
 
+const move = keyframes`
+  0%{
+    opacity: 0;
+  }
+  25%{
+    opacity: 1;
+  }
+  50%{
+    opacity: 0;
+  }
+  75%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+`;
+
+const Alertdiv = styled.div`
+  animation: ${move} 2s 2 forwards;
+  span {
+    font-size: 20px;
+  }
+`;
+
 const Container = styled.div`
   position: relative;
   height: 100%;
@@ -156,20 +185,26 @@ const TriggerBtn = styled.button`
   bottom: 0px;
   z-index: 10;
   div {
-    position: absolute;
-    width: 80px;
-    height: 38px;
-    background-color: ${({ theme }) => theme.colors.mainGreen};
-    border-radius: 20px;
-    border: 3px solid white;
-    bottom: 70px;
-    z-index: 9999;
-    cursor: pointer;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
+    &:first-child {
+      position: absolute;
+      width: 80px;
+      height: 38px;
+      background-color: ${({ theme }) => theme.colors.mainGreen};
+      border-radius: 20px;
+      border: 3px solid white;
+      bottom: 70px;
+      z-index: 9999;
+      cursor: pointer;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    &:last-child {
+      display: flex;
+      flex-direction: column;
+    }
   }
 `;
 

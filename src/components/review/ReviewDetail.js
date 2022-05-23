@@ -180,7 +180,6 @@ const ReviewDetail = () => {
     });
     setFiles(undefined);
   };
-  console.log(reviewList);
 
   return (
     <Wrap>
