@@ -94,10 +94,12 @@ const Wrap = styled.div`
 
 const Fullscreen = styled.div`
   background-image: url(${PC});
-  background-position: center;
+  background-position: contain;
+  /* cover => containㅂㅏ꿈(머리잘리는거 방지...) */
   background-size: cover;
   background-repeat: no-repeat;
   margin: auto;
+  /* margin-bottom: 30px; */
   display: flex;
   ::-webkit-scrollbar {
     display: none;
