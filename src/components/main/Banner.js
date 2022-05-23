@@ -12,12 +12,15 @@ const Banner = () => {
   const settings = {
     slidesToShow: 1,
     slidesToScroll: 1,
-    centerMode: false,
+    centerMode: true,
     centerPadding: "0px",
     fade: false,
     infinite: true,
     autoplay: true,
     speed: 2000,
+    dots: true,
+    arrows: true,
+    color: "#ffffff",
   };
 
   return (
@@ -109,12 +112,49 @@ const Button = styled.button`
 const StyledSlide = styled(Slider)`
   width: 100%;
 
+  .slick-dots {
+    display: flex;
+    justify-content: center;
+    margin: 60px 0;
+    padding: 1rem 0;
+  }
+
   .slick-track {
     display: flex;
     height: 100%;
   }
 
+  .slick-dots li {
+    margin: 0 0.25rem;
+  }
+
+  .slick-dots button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255);
+    text-indent: -9999px;
+    cursor: pointer;
+    opacity: 80%;
+  }
+
+  .slick-dots li.slick-active button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 16px;
+    height: 6px;
+    border-radius: 52px;
+  }
+
   .slick-dots {
-    display: none !important;
+    /* display: none !important; */
+    margin-bottom: 80px;
   }
 `;

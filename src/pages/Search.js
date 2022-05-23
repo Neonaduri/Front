@@ -119,6 +119,7 @@ const Div = styled.div`
   align-items: center;
   button {
     cursor: pointer;
+    font-size: 12px;
   }
 `;
 
@@ -136,7 +137,7 @@ const Suggest = styled.div`
     font-size: 14px;
     font-weight: 500;
     margin-left: 5px;
-    line-height: 19px;
+    /* line-height: 19px; */
     color: #363636;
   }
   div {
@@ -182,14 +183,14 @@ const I = styled.img`
 const Img = styled.img`
   position: absolute;
   left: 15px;
-  top: 30px;
+  top: 25px;
   width: 20px;
 `;
 
 const Container = styled.div`
   /* position: relative; */
   padding-bottom: 90px;
-  height: 97%;
+  /* height: 97%; */
 `;
 
 const Title = styled.div`
@@ -202,8 +203,8 @@ const Title = styled.div`
   font-size: 18px;
   /* line-height: 22px; */
   color: ${({ theme }) => theme.colors.text1};
-  /* margin-top: 40px;
-  margin-left: 20px; */
+  /* margin-top: 40px; */
+  /* margin-left: 20px;  */
 `;
 
 const Wrap = styled.div`

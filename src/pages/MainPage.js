@@ -53,9 +53,9 @@ const MainPage = ({ history }) => {
     slidesToScroll: 1,
   };
 
-  if (!token) {
-    history.push("/login");
-  }
+  // if (!token) {
+  //   history.push("/login");
+  // }
 
   const initLocation = "서울";
 
@@ -235,4 +235,5 @@ const AdImg = styled.img`
   /* width: 100%; */
   height: 101px;
   background-size: cover;
+  margin: 35px 0;
 `;

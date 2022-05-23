@@ -4,7 +4,7 @@ import axios from "axios";
 //   baseURL: process.env.REACT_APP_AXIOS_INSTANCE_BASEURL,
 // });
 const axiosInstance = axios.create({
-  baseURL: "https://ohyeryung.shop",
+  baseURL: "http://3.39.234.250:8080",
 });
 
 // const axiosOVInstance = axios.create({
