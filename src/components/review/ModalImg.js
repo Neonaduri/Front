@@ -37,7 +37,7 @@ const ImgBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  /* margin-top: 30px; */
 `;
 
 const Button = styled.button`
