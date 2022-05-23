@@ -152,6 +152,12 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
     setChangingKeyword(e.target.value);
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setSearchPlace(changingKeyword);
+    setLatlng(undefined);
+  };
+
   const textCut = (text) => {
     let value;
     if (text?.length > 15) {
@@ -179,23 +185,25 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
           {thisPlan.startDate}({startDay}) ~ {thisPlan.endDate}({endDay})
         </small>
       </HeadLineDiv>
-      <PlaceInput
-        placeholder="검색어를 입력해주세요."
-        onKeyDown={(e) => {
-          if (e.code === "Enter") {
-            setSearchPlace(changingKeyword);
-            setLatlng(undefined);
-          }
-        }}
-        onBlur={() => {
-          setSearchPlace(changingKeyword);
-          setLatlng(undefined);
-        }}
-        onChange={(e) => {
-          changeKeyword(e);
-        }}
-        value={changingKeyword}
-      ></PlaceInput>
+      <form onSubmit={onSubmit}>
+        <PlaceInput
+          placeholder="검색어를 입력해주세요."
+          // onKeyDown={(e) => {
+          //   if (e.code === "Enter") {
+          //     setSearchPlace(changingKeyword);
+          //     setLatlng(undefined);
+          //   }
+          // }}
+          // onBlur={() => {
+          //   setSearchPlace(changingKeyword);
+          //   setLatlng(undefined);
+          // }}
+          onChange={(e) => {
+            changeKeyword(e);
+          }}
+          value={changingKeyword}
+        ></PlaceInput>
+      </form>
       {isLogin ? (
         <PlaceBtn onClick={copyLinkBtnClick}>
           <img src={sharebtn} />

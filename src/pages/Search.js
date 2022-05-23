@@ -52,18 +52,21 @@ const Search = () => {
   return (
     <Container>
       <HeaderDiv>
-        <Input
-          placeholder="어떤 여행 계획표를 찾으시나요?"
-          onKeyPress={(e) => searchEnter(e)}
-          onBlur={(e) => searchMobileComplete(e)}
-        />
-        <Img
-          src={back}
-          onClick={() => {
-            history.push("/");
-          }}
-        ></Img>
-        <I src={search}></I>
+        <Wrap>
+          <Img
+            src={back}
+            onClick={() => {
+              history.push("/");
+            }}
+          ></Img>
+          <Icon>
+            <I src={search}></I>
+          </Icon>
+          <Input
+            placeholder="어떤 여행 계획표를 찾으시나요?"
+            onKeyPress={(e) => searchEnter(e)}
+          />
+        </Wrap>
       </HeaderDiv>
       {/* 추천키워드 */}
       <Suggest>
@@ -123,12 +126,15 @@ const Div = styled.div`
   align-items: center;
   button {
     cursor: pointer;
+    font-size: 12px;
   }
 `;
 
 const HeaderDiv = styled.div`
-  height: 5%;
-  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 `;
 
 const Suggest = styled.div`
@@ -138,7 +144,7 @@ const Suggest = styled.div`
     font-size: 14px;
     font-weight: 500;
     margin-left: 5px;
-    line-height: 19px;
+    /* line-height: 19px; */
     color: #363636;
   }
   div {
@@ -159,13 +165,13 @@ const Suggest = styled.div`
 `;
 
 const Input = styled.input`
-  width: 78%;
+  width: 280px;
   display: flex;
   margin: auto;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   border: none;
   border-bottom: 1px solid black;
-  padding: 5px 30px;
+  padding: 5px;
   font-size: 16px;
   &:focus {
     outline: none;
@@ -174,33 +180,46 @@ const Input = styled.input`
 `;
 
 const I = styled.img`
-  position: absolute;
-  left: 45px;
-  top: 6px;
+  /* position: absolute; */
+  /* left: 45px;
+  top: 6px; */
+  margin: 0 auto;
+  margin-left: 10px;
 `;
 
 const Img = styled.img`
   position: absolute;
-  left: 10px;
-  top: 6px;
+  left: 15px;
+  top: 25px;
   width: 20px;
 `;
 
 const Container = styled.div`
-  position: relative;
+  /* position: relative; */
   padding-bottom: 90px;
-  height: 97%;
+  /* height: 97%; */
 `;
 
 const Title = styled.div`
-  position: relative;
   width: 100%;
   height: 4%;
-  left: 15px;
+  margin-left: 20px;
   font-family: "Apple SD Gothic Neo";
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
-  line-height: 22px;
+  /* line-height: 22px; */
   color: ${({ theme }) => theme.colors.text1};
+  /* margin-top: 40px; */
+  /* margin-left: 20px;  */
+`;
+
+const Wrap = styled.div`
+  display: flex;
+  justify-content: left;
+  align-items: center;
+`;
+
+const Icon = styled.div`
+  margin-right: 10px;
 `;

@@ -5,6 +5,7 @@ import Banner from "../components/main/Banner";
 import Location from "../components/main/Location";
 import MakePlan from "../components/main/MakePlan";
 import Popular from "../components/main/Popular";
+import ad from "../static/images/bannerPost/ad.png";
 import {
   getBestPostDB,
   getKeywordPostDB,
@@ -79,6 +80,9 @@ const MainPage = ({ history }) => {
           </StyledSlide1>
         </Container>
         {/* 인기 여행 */}
+
+        <AdImg src={ad}></AdImg>
+
         {/* 지역별 여행 */}
         <Container>
           <LoName>
@@ -179,7 +183,6 @@ const Section = styled.section`
   justify-content: center;
   align-content: center;
   background-color: ${({ theme }) => theme.colors.borderColor};
-  height: 97%;
 `;
 
 const Name = styled.div`
@@ -224,4 +227,11 @@ const Plus = styled.div`
   color: #363636;
   cursor: pointer;
   padding: 20px 0;
+`;
+
+const AdImg = styled.img`
+  /* width: 100%; */
+  height: 101px;
+  background-size: cover;
+  margin: 35px 0;
 `;

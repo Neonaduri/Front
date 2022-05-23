@@ -396,14 +396,11 @@ const ContainerInput = styled.div`
 
 const Middlediv = styled.div`
   height: 90%;
-  position: fixed;
-  top: 5%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0px;
   overflow: scroll;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    display: none;
-    width: 0 !important;
-  }
+  margin-top: 70px;
 `;
 
 const Button = styled.button`
