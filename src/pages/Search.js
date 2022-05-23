@@ -10,6 +10,7 @@ import { getKeywordPostDB, keywordDB } from "../redux/module/post";
 import SearchItem from "../components/search/SearchItem";
 import NotFound from "../shared/NotFound";
 import InfinityScroll from "../shared/InfinityScroll";
+import InstallPWA from "../shared/InstallPWA";
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,12 @@ const Search = () => {
       setSearching(true);
     }
   };
+  const searchMobileComplete = (e) => {
+    dispatch(getKeywordPostDB(e.target.value));
+    dispatch(keywordDB(e.target.value));
+    setSearching(true);
+  };
+
   useEffect(() => {
     dispatch(getKeywordPostDB(keyWord, pageno));
   }, []);

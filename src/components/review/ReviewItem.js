@@ -52,7 +52,6 @@ const ReviewItem = ({
       reviewId,
       preview,
     });
-    console.log(typeof reviewImgUrl);
   };
 
   function displayedAt(createdAt) {
@@ -81,12 +80,7 @@ const ReviewItem = ({
       <Card>
         <UpperContents>
           <Profile>
-            <ProfileImg
-              src={profileImgUrl}
-              onClick={() => {
-                history.push("/mypage");
-              }}
-            ></ProfileImg>
+            <ProfileImg src={profileImgUrl}></ProfileImg>
             <div>
               <p>{nickName}</p>
               <small>{displayedAt(dateMillisecond)}</small>

@@ -66,8 +66,8 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
       );
       if (response.status === 201) {
         const db = getDatabase();
-        set(ref(db, `${response.data.postId}`), {
-          postId: response.data.postId,
+        set(ref(db, `${response.data.postUUID}`), {
+          postId: response.data.postUUID,
           startDate: response.data.startDate,
           endDate: response.data.endDate,
           dateCnt: response.data.dateCnt,
@@ -77,7 +77,7 @@ const createRoomDB = (title, location, theme, startDate, endDate, dateCnt) => {
           islike: false,
         });
         dispatch(createRoom(response.data));
-        history.push(`/planning/${response.data.postId}`);
+        history.push(`/planning/${response.data.postUUID}`);
       }
     } catch (err) {
       Sentry.captureException(err);
@@ -93,7 +93,6 @@ const getRoomDB = (postId) => {
           Authorization: localStorage.getItem("token"),
         },
       });
-      console.log(response);
       if (response.status === 200) {
         dispatch(createRoom(response.data));
       }
@@ -132,7 +131,7 @@ const getMyPlanPage1DB = () => {
         start: 2,
         lastPage: response.data.islastPage,
       };
-      console.log(response);
+      console.log(response.data);
       if (response.status === 200) {
         dispatch(getMyPlanPage1(response.data.planList, paging));
       }
@@ -179,8 +178,6 @@ const exitBrowserOnPlanDB = (postId) => {
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.delete(`/plans/${postId}`);
-      console.log(response);
-
       const db = getDatabase();
       const clearPlanRef = ref(db, `${postId}`);
       remove(clearPlanRef);
@@ -258,7 +255,6 @@ export default handleActions(
     [CLICKWISHINDETAIL]: (state, action) =>
       produce(state, (draft) => {
         draft.detailPlan.islike = action.payload.result;
-        console.log(state);
       }),
   },
   init

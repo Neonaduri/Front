@@ -13,6 +13,7 @@ const GETMYREVIEW = "getMyReview";
 const CLICKWISHINMYSCRAP = "clickWishInMyscrap";
 const DELETE_COMMENT_MYPAGE = "DELETE_COMMENT_MYPAGE";
 const LOADING = "loading";
+const LOGOUT = "logout";
 
 //init
 const init = {
@@ -39,6 +40,7 @@ const deleteCommentMypage = createAction(DELETE_COMMENT_MYPAGE, (reviewId) => ({
   reviewId,
 }));
 const loading = createAction(LOADING, (result) => ({ result }));
+const logOut = createAction(LOGOUT, (result) => ({ result }));
 
 //middlewares
 const emailCheckDB = (username) => {
@@ -48,7 +50,6 @@ const emailCheckDB = (username) => {
         userName: username,
       });
       // const response = RESP.IDCHECKPOST;
-      console.log(response);
       if (response.status === 201) {
         dispatch(emailCheck(true));
       }
@@ -87,7 +88,6 @@ const logInDB = (username, password) => {
         userName: username,
         password,
       });
-      console.log(response);
       // const response = RESP.LOGINPOST;
       if (response.status === 200) {
         const token = response.headers.authorization;
@@ -99,7 +99,6 @@ const logInDB = (username, password) => {
         window.location.replace("/");
       }
     } catch (err) {
-      console.log(err.response);
       Sentry.captureException(err);
       window.alert(err.response.data.exception);
     }
@@ -143,17 +142,18 @@ const isLoginDB = () => {
           };
         }
         dispatch(isLogin(data));
-        // 목데이터 교체할때 이거도 교체할 것!!
-        // dispatch(isLogin(response));
       }
     } catch (err) {
+      console.log("로그인 확인 실패", err.response);
+      // localStorage.removeItem("token");
+      dispatch(logOut());
+      window.location.replace("/login");
       Sentry.captureException(err);
     }
   };
 };
 const kakaoLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
-    console.log(code);
     try {
       const response = await apis.axiosInstance.get(
         `/user/kakao/callback?code=${code}`
@@ -173,13 +173,11 @@ const kakaoLoginDB = (code) => {
 };
 
 const googleLoginDB = (code) => {
-  console.log(code);
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.get(
         `user/google/callback?code=${code}`
       );
-      console.log(response);
 
       if (response.status === 200) {
         const token = response.headers.authorization;
@@ -208,7 +206,6 @@ const getMyLikePostDB = (pageno) => {
     try {
       const response = await apis.axiosInstance.get(`/user/plans/like/${page}`);
       // const response = RESP.MYPAGELIKEGET;
-      console.log(response);
       let paging = {
         start: page + 1,
         lastPage: response.data.islastPage,
@@ -294,6 +291,14 @@ export const deleteCommentInMypageDB = (reviewId) => {
   };
 };
 
+const logOutDB = () => {
+  return async function (dispatch, getState, { history }) {
+    localStorage.removeItem("token");
+    dispatch(logOut());
+    window.location.replace("/login");
+  };
+};
+
 //reducer
 export default handleActions(
   {
@@ -348,6 +353,10 @@ export default handleActions(
           return review.reviewId !== parseInt(action.payload.reviewId);
         });
       }),
+    [LOGOUT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.isLogin = false;
+      }),
   },
   init
 );
@@ -365,6 +374,7 @@ const userAction = {
   getMyReviewDB,
   editProfileDB,
   clickWishMyScrapDB,
+  logOutDB,
 };
 
 export { userAction };

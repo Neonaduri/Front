@@ -9,7 +9,8 @@ const SubmitBtn = ({ dateCnt }) => {
   const dispatch = useDispatch();
   const postId = useParams().postId;
   const db = getDatabase();
-  const isLogin = useSelector((state) => state.user.isLogin);
+  const loginUser = useSelector((state) => state.user.list);
+  const roomOwner = useSelector((state) => state.plan.list.user);
   const [fixedPlan, setFixedPlan] = useState();
 
   useEffect(() => {
@@ -31,7 +32,6 @@ const SubmitBtn = ({ dateCnt }) => {
       nullObj[`day${i}`] = {};
     }
     const finalObj = Object.assign(nullObj, fixedPlan.allPlan);
-    // console.log(finalObj);
 
     if (fixedPlan.allPlan === undefined) {
       alert("저장된 플랜이 없습니다.");
@@ -44,9 +44,9 @@ const SubmitBtn = ({ dateCnt }) => {
         const value = Object.values(allPlanValues[i]);
         allPlan.push({ places: value });
       }
-
+      console.log(allPlan);
       const data = {
-        postId: fixedPlan.postId,
+        postUUID: fixedPlan.postId,
         startDate: fixedPlan.startDate,
         endDate: fixedPlan.endDate,
         dateCnt: fixedPlan.dateCnt,
@@ -76,7 +76,7 @@ const SubmitBtn = ({ dateCnt }) => {
         allPlan.push({ places: value });
       }
       const data = {
-        postId: fixedPlan.postId,
+        postUUID: fixedPlan.postId,
         startDate: fixedPlan.startDate,
         endDate: fixedPlan.endDate,
         dateCnt: fixedPlan.dateCnt,
@@ -88,10 +88,12 @@ const SubmitBtn = ({ dateCnt }) => {
         days: allPlan,
       };
       dispatch(planAction.completePlanDB(data));
+      const clearPlanRef = ref(db, `${postId}`);
+      remove(clearPlanRef);
     }
   };
 
-  if (!isLogin) {
+  if (roomOwner.userName !== loginUser.userName) {
     return null;
   }
   return (

@@ -276,7 +276,7 @@ const Schedule = (props) => {
                 id={idx}
                 isitwork={dayNow}
                 value={p.placeMemo}
-                placeholder="남기고 싶은 메모를 입력하세요."
+                placeholder="친구에게 메모가 실시간으로 공유됩니다!"
                 onChange={(e) => changeMemoInput(e)}
               ></textarea>
               {hamburgerNum === idx ? (
