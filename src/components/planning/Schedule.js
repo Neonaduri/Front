@@ -269,7 +269,7 @@ const Schedule = (props) => {
               <span>{p.roadAddress}</span>
               <span>
                 <a href={p.placeInfoUrl} target="_blank">
-                  자세히 보기
+                  {p.placeName} 바로가기
                 </a>
               </span>
               <textarea
@@ -489,10 +489,13 @@ const Contentdiv = styled.div`
     margin: 3px 0px;
     font-family: "apple1";
     a {
-      font-family: "apple1";
-      color: ${({ theme }) => theme.colors.text2};
+      font-family: "apple2";
+      color: #3d75cc;
       text-decoration: none;
       cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 `;

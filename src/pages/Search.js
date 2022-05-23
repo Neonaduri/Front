@@ -44,7 +44,6 @@ const Search = () => {
 
   useEffect(() => {
     dispatch(getKeywordPostDB(keyWord, pageno));
-    dispatch(keywordDB(keyWord));
   }, []);
 
   if (lastPage === undefined) {

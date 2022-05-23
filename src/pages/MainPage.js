@@ -23,6 +23,7 @@ const MainPage = ({ history }) => {
   const dispatch = useDispatch();
   const bestList = useSelector((state) => state.post.bestList);
   const locationList = useSelector((state) => state.post.locationList);
+  const isLogin = useSelector((state) => state?.user?.isLogin);
 
   const keyword = useSelector((state) => state.post.keyword);
   const [key, setKey] = useState("서울");
@@ -51,6 +52,7 @@ const MainPage = ({ history }) => {
   };
 
   if (!token) {
+    console.log("토큰이 없어요");
     history.push("/login");
   }
 
@@ -58,6 +60,7 @@ const MainPage = ({ history }) => {
 
   useEffect(() => {
     dispatch(getBestPostDB());
+    dispatch(keywordDB("서울"));
     dispatch(getLocationPostDB(initLocation)); //디폴트 지역설정
   }, []);
 
@@ -91,7 +94,7 @@ const MainPage = ({ history }) => {
             <Plus
               onClick={(e) => {
                 dispatch(getKeywordPostDB(keyword));
-                dispatch(getKeywordPostDB(key));
+
                 history.push("/search");
               }}
             >

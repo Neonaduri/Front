@@ -19,5 +19,6 @@ const GoogleBtn = ({ onSocial }) => {
 };
 const Img = styled.img`
   height: 45px;
+  cursor: pointer;
 `;
 export default GoogleBtn;

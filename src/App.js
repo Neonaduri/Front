@@ -55,7 +55,6 @@ function App(props) {
       </HelmetProvider>
 
       <Fullscreen>
-        <Btn></Btn>
         <Wrap>
           <MobileFrame className="MobileFramePage">
             <Route path="/" exact component={MainPage} />
@@ -113,14 +112,4 @@ const Fullscreen = styled.div`
   }
   @media (min-width: 1580px) {
   }
-`;
-
-const Btn = styled.button`
-  background-color: tomato;
-  position: absolute;
-  width: 200px;
-  height: 50px;
-  border: 0;
-  left: 990px;
-  top: 530px;
 `;
