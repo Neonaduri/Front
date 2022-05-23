@@ -45,6 +45,7 @@ const loading = createAction(LOADING, (isLoading) => ({ isLoading }));
 
 //리뷰등록
 export const addCommentDB = (postId, formdata, config) => {
+  console.log(postId, formdata, config);
   return async function (dispatch, getState, { history }) {
     try {
       const response = await apis.axiosInstance.post(

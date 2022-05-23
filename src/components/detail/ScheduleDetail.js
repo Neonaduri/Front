@@ -20,8 +20,6 @@ const ScheduleDetail = ({ dayNow }) => {
     return null;
   }
 
-  console.log(planByDay);
-
   const dayPlanPlaces = planByDay[dayNow - 1]?.places;
   if (dayPlanPlaces.length === 0) {
     return (
@@ -77,13 +75,13 @@ const ScheduleDetail = ({ dayNow }) => {
               {userByDay.userName === loginUser.userName ? (
                 <textarea
                   id={idx}
-                  defaultValue={p.placeMemo}
+                  value={p.placeMemo}
                   disabled={true}
                 ></textarea>
               ) : (
                 <Textarea
                   id={idx}
-                  defaultValue="메모 내용은 작성자만 볼 수 있습니다."
+                  value="메모 내용은 작성자만 볼 수 있습니다."
                   disabled={true}
                 ></Textarea>
               )}

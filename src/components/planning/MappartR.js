@@ -194,10 +194,10 @@ const MappartR = ({ dayNow, startDay, endDay }) => {
           //     setLatlng(undefined);
           //   }
           // }}
-          // onBlur={() => {
-          //   setSearchPlace(changingKeyword);
-          //   setLatlng(undefined);
-          // }}
+          onBlur={() => {
+            setSearchPlace(changingKeyword);
+            setLatlng(undefined);
+          }}
           onChange={(e) => {
             changeKeyword(e);
           }}

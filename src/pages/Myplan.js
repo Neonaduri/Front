@@ -23,7 +23,7 @@ const Myplan = () => {
   const [clickedId, setClickedId] = useState();
   const [hamburgerNum, setHamburgerNum] = useState(null);
   const middledivRef = useRef();
-
+  console.log(myAllPlan);
   const moreBtnClick = (e) => {
     setModalOpen(true);
     setClickedId(e.target.id);

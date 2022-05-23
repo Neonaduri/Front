@@ -131,6 +131,7 @@ const getMyPlanPage1DB = () => {
         start: 2,
         lastPage: response.data.islastPage,
       };
+      console.log(response.data);
       if (response.status === 200) {
         dispatch(getMyPlanPage1(response.data.planList, paging));
       }
@@ -191,6 +192,7 @@ const getDetailPlanDB = (postId) => {
     try {
       const response = await apis.axiosInstance.get(`/plans/detail/${postId}`);
       // const response = RESP.DETAILPOSTIDGET;
+      console.log(response);
       if (response.status === 200) {
         dispatch(getDetailPlan(response.data));
       }
