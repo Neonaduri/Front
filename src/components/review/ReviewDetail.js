@@ -197,29 +197,31 @@ const ReviewDetail = () => {
         <div> </div>
       </ReviewBox>
       <Middlediv ref={middledivRef}>
-        <InfinityScroll
-          callNext={() => {
-            dispatch(getNextCommentDB(postId, paging.start));
-          }}
-          is_next={lastPage ? false : true}
-          loading={isLoading}
-          ref={middledivRef}
-        >
-          <Container>
-            {reviewList &&
-              reviewList.map((item, id) => {
-                return (
-                  <ReviewItem
-                    setReviewItemData={setReviewItemData}
-                    cancelEdit={cancelEdit}
-                    handleEdit={handleEdit}
-                    key={id}
-                    {...item}
-                  />
-                );
-              })}
-          </Container>
-        </InfinityScroll>
+        {reviewList.length !== 0 && (
+          <InfinityScroll
+            callNext={() => {
+              dispatch(getNextCommentDB(postId, paging.start));
+            }}
+            is_next={lastPage ? false : true}
+            loading={isLoading}
+            ref={middledivRef}
+          >
+            <Container>
+              {reviewList &&
+                reviewList.map((item, id) => {
+                  return (
+                    <ReviewItem
+                      setReviewItemData={setReviewItemData}
+                      cancelEdit={cancelEdit}
+                      handleEdit={handleEdit}
+                      key={id}
+                      {...item}
+                    />
+                  );
+                })}
+            </Container>
+          </InfinityScroll>
+        )}
       </Middlediv>
 
       <ContainerInput>
