@@ -49,6 +49,7 @@ const Search = () => {
   if (lastPage === undefined) {
     lastPage = true;
   }
+
   return (
     <Container>
       <HeaderDiv>
@@ -111,6 +112,7 @@ const Search = () => {
 export default Search;
 
 const ContentDiv = styled.div`
+  margin-top: 20px;
   height: 80%;
   overflow-y: scroll;
   -ms-overflow-style: none;

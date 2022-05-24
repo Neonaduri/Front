@@ -133,7 +133,8 @@ const Imgdiv2 = styled.div`
 const Wrap = styled.div`
   width: 100%;
   height: auto;
-  max-height: 100vh;
+  max-height: 100%;
+  -webkit-overflow-scrolling: touch;
 `;
 
 const Fullscreen = styled.div`
@@ -159,14 +160,4 @@ const Fullscreen = styled.div`
   @media (min-width: 1580px) {
     overflow: hidden auto;
   }
-`;
-
-const Btn = styled.button`
-  background-color: tomato;
-  position: absolute;
-  width: 200px;
-  height: 50px;
-  border: 0;
-  left: 990px;
-  top: 530px;
 `;
