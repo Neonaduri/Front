@@ -17,6 +17,7 @@ const Slide = ({ sliders, dayNow, callback, setInfo, info }) => {
   const params = useParams();
   const postId = params.postId;
   const [latlng, setLatlng] = useState();
+  const carouselRef = useRef(null);
 
   let settings;
   if (sliders.length === 1) {
@@ -27,6 +28,7 @@ const Slide = ({ sliders, dayNow, callback, setInfo, info }) => {
       slidesToShow: 1,
       slidesToScroll: 1,
       arrows: false,
+      initialSlide: 0,
     };
   } else {
     settings = {
@@ -36,6 +38,7 @@ const Slide = ({ sliders, dayNow, callback, setInfo, info }) => {
       slidesToShow: 2,
       slidesToScroll: 1,
       arrows: false,
+      initialSlide: 0,
     };
   }
 
@@ -76,21 +79,22 @@ const Slide = ({ sliders, dayNow, callback, setInfo, info }) => {
     callback(latlng);
   }, [latlng]);
 
-  let tmp = sliders.filter((item, idx) => {
+  useEffect(() => {
+    if (carouselRef.current?.slickGoTo)
+      carouselRef.current.slickGoTo(targetIndex);
+  }, [info]);
+
+  let tmp = sliders.filter((item) => {
     if (item?.content === info?.content) {
       return item;
     }
   });
   const target = tmp[0];
   const targetIndex = sliders.indexOf(target);
-  if (targetIndex > 0) {
-    sliders.splice(targetIndex, 1);
-    sliders.unshift(target);
-  }
 
   return (
     <Container>
-      <StyledSlider {...settings} listCount={sliders.length}>
+      <StyledSlider {...settings} listCount={sliders.length} ref={carouselRef}>
         {sliders.map((place, idx) => {
           return (
             <PlaceListCard

@@ -55,6 +55,7 @@ const MyReview = () => {
       </HeaderDiv>
       <BodyDiv>
         {myReview?.map((review, idx) => {
+          console.log(review.reviewImgUrl);
           const date = new Date(review.modifiedAt);
           const dateMillisecond = date.getTime() + 3600000 * 9;
           let content;
@@ -73,7 +74,8 @@ const MyReview = () => {
               </CardHeadDiv>
               <CardBodyDiv>
                 <p>{content}</p>
-                {review.reviewImgUrl === null ? null : (
+                {review.reviewImgUrl === null ||
+                review.reviewImgUrl === "" ? null : (
                   <img
                     src={review.reviewImgUrl}
                     onClick={() => {

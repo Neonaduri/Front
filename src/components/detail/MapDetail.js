@@ -54,8 +54,7 @@ const MapDetail = ({ dayNow }) => {
       </>
     );
   }
-  console.log(latlngArr);
-  console.log(markerArr);
+
   return (
     <div>
       <MapContainer>
@@ -88,8 +87,10 @@ const MapDetail = ({ dayNow }) => {
             >
               {isOpen && (
                 <InfoWindow>
-                  <div>{idx + 1}</div>
-                  {positions.title}
+                  <span>
+                    <span>{idx + 1}</span>
+                    {positions.title}
+                  </span>
                 </InfoWindow>
               )}
             </MapMarker>
@@ -111,15 +112,18 @@ const MapDetail = ({ dayNow }) => {
 };
 const InfoWindow = styled.div`
   display: flex;
-  position: relative;
-
-  div {
-    background-color: #f96343;
-    color: white;
-    font-size: 18px;
-    position: absolute;
-    left: 70px;
-    top: 29px;
+  text-align: center;
+  span {
+    background-color: white;
+    width: 150px;
+    border: 1px solid black;
+    span {
+      border-radius: 50%;
+      background-color: ${({ theme }) => theme.colors.mainRed};
+      border: none;
+      color: white;
+      padding: 0px 5px;
+    }
   }
 `;
 

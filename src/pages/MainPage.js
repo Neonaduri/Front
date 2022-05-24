@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 import Footer from "../components/common/Footer";
 import Banner from "../components/main/Banner";
 import Location from "../components/main/Location";
@@ -51,17 +52,18 @@ const MainPage = ({ history }) => {
     slidesToScroll: 1,
   };
 
-  // if (!token) {
-  //   console.log("토큰이 없어요");
-  //   history.push("/login");
-  // }
+  if (!token) {
+    history.push("/login");
+  }
 
   const initLocation = "서울";
 
   useEffect(() => {
-    dispatch(getBestPostDB());
-    dispatch(keywordDB("서울"));
-    dispatch(getLocationPostDB(initLocation)); //디폴트 지역설정
+    if (token) {
+      dispatch(getBestPostDB());
+      dispatch(keywordDB("서울"));
+      dispatch(getLocationPostDB(initLocation)); //디폴트 지역설정
+    }
   }, []);
 
   return (

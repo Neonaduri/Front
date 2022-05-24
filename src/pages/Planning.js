@@ -68,15 +68,6 @@ const Planning = (props) => {
     <Container>
       <Helmet>
         <title>너나들이 | 계획세우기</title>
-        <meta property="og:title" content="너나들이 베타테스트 체험 이벤트!" />
-        <meta
-          property="og:description"
-          content="친구와 함께 실시간으로 여행계획을 세우고 공유해보세요!"
-        />
-        <meta
-          property="og:image"
-          content="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuWMdv%2FbtrCxGqdv8X%2FhZa6JjCDY8iJHGd685Lr9K%2Fimg.png"
-        />
       </Helmet>
       <DayBtnDiv>
         {dateCntArr.map((date, idx) => {

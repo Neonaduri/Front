@@ -116,7 +116,6 @@ const isLoginDB = () => {
       });
 
       // const response = RESP.ISLOGINGET;
-      console.log("isLogin까지 실행", response);
       if (response.status === 200) {
         const targetUserName = response.data.userName;
         const targetProfileImg = response.data.profileImgUrl;
