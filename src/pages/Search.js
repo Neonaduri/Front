@@ -188,7 +188,7 @@ const I = styled.img`
 `;
 
 const Img = styled.img`
-  position: absolute;
+  /* position: absolute; */
   left: 15px;
   top: 25px;
   width: 20px;
@@ -203,7 +203,7 @@ const Container = styled.div`
 const Title = styled.div`
   width: 100%;
   height: 4%;
-  margin-left: 20px;
+  margin-left: 15px;
   font-family: "Apple SD Gothic Neo";
   font-style: normal;
   font-weight: 600;

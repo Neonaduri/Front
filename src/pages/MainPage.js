@@ -51,10 +51,10 @@ const MainPage = ({ history }) => {
     slidesToScroll: 1,
   };
 
-  if (!token) {
-    console.log("토큰이 없어요");
-    history.push("/login");
-  }
+  // if (!token) {
+  //   console.log("토큰이 없어요");
+  //   history.push("/login");
+  // }
 
   const initLocation = "서울";
 
