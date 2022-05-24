@@ -32,6 +32,7 @@ import prize1 from "./static/images/prize1.png";
 import prize2 from "./static/images/prize2.png";
 import prize3 from "./static/images/prize3.png";
 import termtext from "./static/images/termtext.png";
+import favicon from "./static/images/icon/favicon.png";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -48,15 +49,7 @@ function App(props) {
       <HelmetProvider>
         <Helmet>
           <title>너나들이 | 함께만든 우리만의 여행</title>
-          <meta
-            property="og:title"
-            content="함께만든 우리만의 여행, 너나들이"
-          />
-          <meta
-            property="og:description"
-            content="너나들이 첫번째 베타테스트 오픈!"
-          />
-          <meta property="og:image" content="./static/images/og.png" />
+          <link rel="icon" href={favicon} />
         </Helmet>
       </HelmetProvider>
 
@@ -138,8 +131,9 @@ const Imgdiv2 = styled.div`
 `;
 
 const Wrap = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: auto;
+  max-height: 100vh;
 `;
 
 const Fullscreen = styled.div`
@@ -156,11 +150,14 @@ const Fullscreen = styled.div`
   }
   @media (max-width: 540px) {
     justify-content: center;
+    overflow: hidden auto;
   }
   @media (max-width: 1579px) and (min-width: 541px) {
     justify-content: flex-end;
+    overflow: hidden auto;
   }
   @media (min-width: 1580px) {
+    overflow: hidden auto;
   }
 `;
 

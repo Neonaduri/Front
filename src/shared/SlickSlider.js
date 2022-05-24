@@ -80,7 +80,8 @@ const Slide = ({ sliders, dayNow, callback, setInfo, info }) => {
   }, [latlng]);
 
   useEffect(() => {
-    if (carouselRef.current?.slickGoTo) carouselRef.current.slickGoTo(0);
+    if (carouselRef.current?.slickGoTo)
+      carouselRef.current.slickGoTo(targetIndex);
   }, [info]);
 
   let tmp = sliders.filter((item) => {
@@ -90,10 +91,6 @@ const Slide = ({ sliders, dayNow, callback, setInfo, info }) => {
   });
   const target = tmp[0];
   const targetIndex = sliders.indexOf(target);
-  if (targetIndex > 0) {
-    sliders.splice(targetIndex, 1);
-    sliders.unshift(target);
-  }
 
   return (
     <Container>

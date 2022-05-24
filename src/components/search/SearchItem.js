@@ -144,6 +144,7 @@ const PostImg = styled.img`
   width: 128px;
   height: 95px;
   border-radius: 5px;
+  object-fit: cover;
 `;
 const LeftDiv = styled.div`
   position: relative;
