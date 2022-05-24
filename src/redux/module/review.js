@@ -104,6 +104,7 @@ export const getNextCommentDB = (postId, pageno) => {
       };
 
       if (response.status === 200) {
+        console.log("성공");
         dispatch(getNextComment(response.data.reviewList, paging));
       }
     } catch (err) {
@@ -159,6 +160,7 @@ export const deleteCommentDB = (reviewId) => {
         `/detail/reviews/${reviewId}`
       );
       if (response.status === 200) {
+        window.location.reload();
         dispatch(deleteComment(reviewId));
         window.alert("삭제가 완료되었어요!");
       }

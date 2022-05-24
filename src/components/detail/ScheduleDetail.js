@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import ReviewList from "../../components/review/ReviewList";
+import { getCommentDB } from "../../redux/module/review";
 import addMore from "../../static/images/button/addMore.png";
 
 const ScheduleDetail = ({ dayNow }) => {
@@ -15,6 +16,12 @@ const ScheduleDetail = ({ dayNow }) => {
   const params = useParams();
   const postId = params.id;
   const arr = reviewList.slice(0, 3);
+  const dispatch = useDispatch();
+
+  console.log(totalCnt);
+  useEffect(() => {
+    dispatch(getCommentDB(postId));
+  }, []);
 
   if (!planByDay || !userByDay) {
     return null;
