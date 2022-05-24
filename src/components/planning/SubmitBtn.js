@@ -64,17 +64,24 @@ const SubmitBtn = ({ dateCnt }) => {
     }
   };
   const submitPlanPrivate = () => {
+    let nullObj = {};
+    for (let i = 1; i <= dateCnt; i++) {
+      nullObj[`day${i}`] = {};
+    }
+    const finalObj = Object.assign(nullObj, fixedPlan.allPlan);
+
     if (fixedPlan.allPlan === undefined) {
       alert("저장된 플랜이 없습니다.");
       return;
     } else if (fixedPlan.allPlan !== undefined) {
-      const allPlanValues = Object.values(fixedPlan.allPlan);
+      const allPlanValues = Object.values(finalObj);
 
       let allPlan = [];
       for (let i = 0; i < allPlanValues.length; i++) {
         const value = Object.values(allPlanValues[i]);
         allPlan.push({ places: value });
       }
+
       const data = {
         postUUID: fixedPlan.postId,
         startDate: fixedPlan.startDate,
@@ -88,13 +95,18 @@ const SubmitBtn = ({ dateCnt }) => {
         days: allPlan,
       };
       dispatch(planAction.completePlanDB(data));
+
       const clearPlanRef = ref(db, `${postId}`);
       remove(clearPlanRef);
     }
   };
 
   if (roomOwner.userName !== loginUser.userName) {
-    return null;
+    return (
+      <Container>
+        <span>계획 저장은 방장만 가능합니다.</span>
+      </Container>
+    );
   }
   return (
     <Container>

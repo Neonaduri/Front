@@ -97,7 +97,6 @@ const logInDB = (username, password) => {
         dispatch(login(true));
       }
       if (localStorage.getItem("token")) {
-        dispatch(isLoginDB());
         window.location.replace("/");
       }
     } catch (err) {
@@ -115,7 +114,6 @@ const isLoginDB = () => {
         },
       });
 
-      // const response = RESP.ISLOGINGET;
       if (response.status === 200) {
         const targetUserName = response.data.userName;
         const targetProfileImg = response.data.profileImgUrl;
@@ -147,7 +145,7 @@ const isLoginDB = () => {
       }
     } catch (err) {
       console.log("로그인 확인 실패", err.response);
-      // localStorage.removeItem("token");
+      localStorage.removeItem("token");
       dispatch(logOut());
       window.location.replace("/login");
       Sentry.captureException(err);
@@ -165,7 +163,6 @@ const kakaoLoginDB = (code) => {
         localStorage.setItem("token", token);
       }
       if (localStorage.getItem("token")) {
-        dispatch(isLoginDB());
         window.location.replace("/");
       }
     } catch (err) {
@@ -186,7 +183,6 @@ const googleLoginDB = (code) => {
         localStorage.setItem("token", token);
       }
       if (localStorage.getItem("token")) {
-        dispatch(isLoginDB());
         window.location.replace("/");
       }
     } catch (err) {

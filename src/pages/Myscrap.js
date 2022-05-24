@@ -147,6 +147,7 @@ const ImgDiv = styled.div`
     width: 153px;
     height: 95px;
     border-radius: 5px;
+    object-fit: cover;
   }
 `;
 

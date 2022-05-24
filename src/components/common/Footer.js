@@ -75,7 +75,7 @@ const NavWrapper = styled.footer`
   left: 0;
   right: 0;
   width: 100%;
-  height: 8%;
+  height: calc(var(--vh, 1vh) * 8);
   background-color: white;
   border-top: 1px solid #cacaca;
   z-index: 9999;

@@ -104,7 +104,6 @@ export const getNextCommentDB = (postId, pageno) => {
       };
 
       if (response.status === 200) {
-        console.log("성공");
         dispatch(getNextComment(response.data.reviewList, paging));
       }
     } catch (err) {
