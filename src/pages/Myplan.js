@@ -81,7 +81,7 @@ const Myplan = () => {
       <MyplanTextdiv>
         <span>나의 계획표</span>
       </MyplanTextdiv>
-      <Middlediv ref={middledivRef} id="container">
+      <Middlediv ref={middledivRef}>
         <InfinityScroll
           callNext={() => {
             dispatch(planAction.getMyPlanNextPageDB(paging.start));

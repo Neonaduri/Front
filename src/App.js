@@ -38,10 +38,16 @@ function App(props) {
   const dispatch = useDispatch();
   const is_session = localStorage.getItem("token") ? true : false;
 
+  function setScreenSize() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
+
   useEffect(() => {
     if (is_session) {
       dispatch(userAction.isLoginDB());
     }
+    setScreenSize();
   }, []);
 
   return (
@@ -133,7 +139,7 @@ const Imgdiv2 = styled.div`
 const Wrap = styled.div`
   width: 100%;
   height: auto;
-  max-height: 100vh;
+  max-height: 100%;
 `;
 
 const Fullscreen = styled.div`
@@ -159,14 +165,4 @@ const Fullscreen = styled.div`
   @media (min-width: 1580px) {
     overflow: hidden auto;
   }
-`;
-
-const Btn = styled.button`
-  background-color: tomato;
-  position: absolute;
-  width: 200px;
-  height: 50px;
-  border: 0;
-  left: 990px;
-  top: 530px;
 `;

@@ -366,6 +366,8 @@ const FixdateBtn = styled.button`
 `;
 
 const CustomSheet = styled(Sheet)`
+  max-width: 375px;
+  margin: auto;
   .react-modal-sheet-backdrop {
   }
   .react-modal-sheet-container {

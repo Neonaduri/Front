@@ -9,6 +9,7 @@ const InfinityScroll = forwardRef((props, ref) => {
   useEffect(() => {
     container = ref.current;
   }, [callNext]);
+  console.log(container);
 
   const _handleScroll = _.throttle(() => {
     if (loading) {
@@ -18,8 +19,9 @@ const InfinityScroll = forwardRef((props, ref) => {
     const clientHeight = container.clientHeight;
     const scrollTop = container.scrollTop;
     const scrollHeight = container.scrollHeight;
+    console.log(scrollHeight - clientHeight - scrollTop);
 
-    if (scrollHeight - clientHeight - scrollTop < 100) {
+    if (scrollHeight - clientHeight - scrollTop < 150) {
       callNext();
     }
 

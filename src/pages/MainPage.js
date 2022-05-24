@@ -6,6 +6,7 @@ import Banner from "../components/main/Banner";
 import Location from "../components/main/Location";
 import MakePlan from "../components/main/MakePlan";
 import Popular from "../components/main/Popular";
+import Login from "./Login";
 import ad from "../static/images/bannerPost/ad.png";
 import {
   getBestPostDB,
@@ -24,7 +25,6 @@ const MainPage = ({ history }) => {
   const dispatch = useDispatch();
   const bestList = useSelector((state) => state.post.bestList);
   const locationList = useSelector((state) => state.post.locationList);
-  const isLogin = useSelector((state) => state?.user?.isLogin);
 
   const keyword = useSelector((state) => state.post.keyword);
   const [key, setKey] = useState("서울");
@@ -52,10 +52,6 @@ const MainPage = ({ history }) => {
     slidesToScroll: 1,
   };
 
-  if (!token) {
-    history.push("/login");
-  }
-
   const initLocation = "서울";
 
   useEffect(() => {
@@ -66,6 +62,9 @@ const MainPage = ({ history }) => {
     }
   }, []);
 
+  if (!token) {
+    return <Login />;
+  }
   return (
     <Section>
       <Banner />
