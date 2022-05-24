@@ -39,7 +39,9 @@ const Popular = ({
         )}
       </SocialWishDiv>
       <Box>
-        <Content>{postTitle}</Content>
+        <Content onClick={() => history.push(`/detail/${postId}`)}>
+          {postTitle}
+        </Content>
         <SectionBox>
           <Like>
             <ImgIconWish src={wish} />
@@ -114,6 +116,7 @@ const Cnt = styled.div`
 `;
 
 const Content = styled.div`
+  cursor: pointer;
   display: flex;
   justify-content: left;
   align-items: center;
@@ -139,6 +142,7 @@ const Box = styled.div`
 `;
 
 const ImagePop = styled.img`
+  cursor: pointer;
   border-radius: 10px;
   width: 158px;
   height: 236px;
