@@ -109,7 +109,6 @@ const ReviewDetail = () => {
   const editCompleteBtn = () => {
     //이미지없이 텍스트수정
     if (reviewItemData.reviewImgUrl === null && files) {
-      console.log("기존이미지가 없는경우 ");
       const formdata = new FormData();
       formdata.append("reviewImgUrl", "");
       formdata.append("reviewImgFile", files[0]); //이미지변경

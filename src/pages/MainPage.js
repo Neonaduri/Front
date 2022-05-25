@@ -27,7 +27,6 @@ const MainPage = ({ history }) => {
   const locationList = useSelector((state) => state.post.locationList);
 
   const keyword = useSelector((state) => state.post.keyword);
-  const [key, setKey] = useState("서울");
 
   const settings1 = {
     slidesToShow: 2,
@@ -52,9 +51,9 @@ const MainPage = ({ history }) => {
     slidesToScroll: 1,
   };
 
-  // if (!token) {
-  //   history.push("/login");
-  // }
+  if (!token) {
+    history.push("/login");
+  }
 
   const initLocation = "서울";
 
@@ -66,9 +65,9 @@ const MainPage = ({ history }) => {
     }
   }, []);
 
-  // if (!token) {
-  //   return <Login />;
-  // }
+  if (!token) {
+    return <Login />;
+  }
   return (
     <Section>
       <Banner />
