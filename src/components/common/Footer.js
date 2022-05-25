@@ -9,7 +9,6 @@ import beforeHome from "../../static/images/icon/beforeHome.png";
 import activeSearch from "../../static/images/icon/activeSearch.png";
 import activePlan from "../../static/images/icon/activePlan.png";
 import activeMypage from "../../static/images/icon/activeMypage.png";
-import underBar from "../../static/images/underBar.png";
 import { keywordDB } from "../../redux/module/post";
 import { useDispatch } from "react-redux";
 
@@ -32,10 +31,11 @@ const Footer = (props) => {
       activeSrc: home,
     },
     {
-      path: "/search",
+      path: "/recommand",
       defaultSrc: searchIcon,
       activeSrc: activeSearch,
     },
+
     {
       path: "/myplan",
       defaultSrc: plan,
@@ -73,7 +73,7 @@ const NavWrapper = styled.footer`
   position: fixed;
   bottom: 0;
   /* mobile viewport bug fix */
-  height: -webkit-fill-available;
+  /* height: -webkit-fill-available; */
   overflow: hidden;
   bottom: 0;
   width: 100%;

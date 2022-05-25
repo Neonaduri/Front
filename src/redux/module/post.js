@@ -162,7 +162,7 @@ export const getThemePostDB = (theme, pageno) => {
             getSearchNextPost({ planList: response.data.planList, paging })
           );
         }
-        history.push("/search");
+        history.push("/theme");
       }
     } catch (err) {
       Sentry.captureException(err);

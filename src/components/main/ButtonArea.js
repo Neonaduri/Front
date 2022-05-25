@@ -24,17 +24,6 @@ const ButtonArea = () => {
   };
 
   const settings = {
-    // slidesToShow: 5,
-    // slidesToScroll: 2,
-    // centerMode: true,
-    // centerPadding: "0px",
-    // arrows: true,
-    // dots: true,
-    // fade: false,
-    // infinite: true,
-    // pauseOnFocus: true,
-    // pauseOnHover: true,
-    // autoplaySpeed: 2000,
     dots: true,
     infinite: true,
     speed: 500,
@@ -90,52 +79,6 @@ const StyledSlide = styled(Slider)`
 
   .slick-dots {
     display: none !important;
-  }
-`;
-
-export const StyleSlider = styled(Slider)`
-  width: 100%;
-  position: relative;
-  .slick-list {
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 0 -10px;
-  }
-  .slick-slide {
-    padding: 0 10px;
-  }
-  .slick-prev {
-    &:before {
-      color: #212121;
-    }
-    left: 15px !important;
-    z-index: 1;
-  }
-  .slick-next {
-    right: 15px !important;
-    &:before {
-      color: #212121;
-    }
-  }
-  .slick-initialized .slick-slide {
-    & > div {
-      display: flex;
-    }
-  }
-  .slick-dots {
-    display: flex !important;
-    justify-content: center;
-    bottom: auto;
-    li {
-      border: none !important;
-    }
-    li button {
-      margin: 0;
-      padding: 0;
-      &:before {
-        color: #fff;
-      }
-    }
   }
 `;
 
