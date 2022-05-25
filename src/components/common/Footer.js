@@ -77,7 +77,7 @@ const NavWrapper = styled.footer`
   overflow: hidden;
   bottom: 0;
   width: 100%;
-  height: 8vh;
+  height: calc(var(--vh, 1vh) * 8);
   background-color: white;
   z-index: 9999;
   border-top: 2px solid ${({ theme }) => theme.colors.borderColor};

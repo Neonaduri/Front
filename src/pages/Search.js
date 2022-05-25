@@ -10,7 +10,6 @@ import { getKeywordPostDB, keywordDB } from "../redux/module/post";
 import SearchItem from "../components/search/SearchItem";
 import NotFound from "../shared/NotFound";
 import InfinityScroll from "../shared/InfinityScroll";
-import InstallPWA from "../shared/InstallPWA";
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -35,11 +34,6 @@ const Search = () => {
       dispatch(keywordDB(e.target.value));
       setSearching(true);
     }
-  };
-  const searchMobileComplete = (e) => {
-    dispatch(getKeywordPostDB(e.target.value));
-    dispatch(keywordDB(e.target.value));
-    setSearching(true);
   };
 
   useEffect(() => {
@@ -90,16 +84,16 @@ const Search = () => {
         <ContentDiv ref={contentDivRef}>
           <InfinityScroll
             callNext={() => {
+              console.log("왜?");
               dispatch(getKeywordPostDB(keyWord, nextPage));
             }}
             is_next={lastPage ? false : true}
             loading={isLoading}
             ref={contentDivRef}
           >
-            {searchList &&
-              searchList?.map((item, idx) => {
-                return <SearchItem key={idx} {...item} />;
-              })}
+            {searchList?.map((item, idx) => {
+              return <SearchItem key={idx} {...item} />;
+            })}
           </InfinityScroll>
         </ContentDiv>
       )}
@@ -141,12 +135,11 @@ const HeaderDiv = styled.div`
 
 const Suggest = styled.div`
   padding: 25px 15px;
-  height: 14%;
+  height: 100px;
   h4 {
     font-size: 14px;
     font-weight: 500;
     margin-left: 5px;
-    /* line-height: 19px; */
     color: #363636;
   }
   div {
@@ -170,7 +163,6 @@ const Input = styled.input`
   width: 280px;
   display: flex;
   margin: auto;
-  /* margin-top: 20px; */
   border: none;
   border-bottom: 1px solid black;
   padding: 5px;
@@ -182,38 +174,30 @@ const Input = styled.input`
 `;
 
 const I = styled.img`
-  /* position: absolute; */
-  /* left: 45px;
-  top: 6px; */
   margin: 0 auto;
   margin-left: 10px;
 `;
 
 const Img = styled.img`
-  /* position: absolute; */
   left: 15px;
   top: 25px;
   width: 20px;
 `;
 
 const Container = styled.div`
-  /* position: relative; */
   padding-bottom: 90px;
-  /* height: 97%; */
+  height: 97%;
 `;
 
 const Title = styled.div`
   width: 100%;
-  height: 4%;
+  height: 30px;
   margin-left: 15px;
   font-family: "Apple SD Gothic Neo";
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
-  /* line-height: 22px; */
   color: ${({ theme }) => theme.colors.text1};
-  /* margin-top: 40px; */
-  /* margin-left: 20px;  */
 `;
 
 const Wrap = styled.div`

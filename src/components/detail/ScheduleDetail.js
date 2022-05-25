@@ -18,7 +18,6 @@ const ScheduleDetail = ({ dayNow }) => {
   const arr = reviewList.slice(0, 3);
   const dispatch = useDispatch();
 
-  console.log(totalCnt);
   useEffect(() => {
     dispatch(getCommentDB(postId));
   }, []);

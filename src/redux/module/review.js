@@ -80,6 +80,7 @@ export const getCommentDB = (postId, pageno) => {
       };
 
       if (response.status === 200) {
+        console.log("조회", response);
         dispatch(getComment(response.data.reviewList, paging));
         dispatch(totalElements(response.data.totalElements));
       }
@@ -104,7 +105,6 @@ export const getNextCommentDB = (postId, pageno) => {
       };
 
       if (response.status === 200) {
-        console.log("성공");
         dispatch(getNextComment(response.data.reviewList, paging));
       }
     } catch (err) {
@@ -142,6 +142,7 @@ export const editCommentDB = (reviewId, formdata, config) => {
       );
 
       if (response.status === 201) {
+        console.log(response);
         window.location.reload();
         dispatch(editComment(response.data));
         window.alert("수정이 완료되었어요!");

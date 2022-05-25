@@ -108,7 +108,19 @@ const ReviewDetail = () => {
   //수정완료버튼
   const editCompleteBtn = () => {
     //이미지없이 텍스트수정
-    if (reviewItemData.reviewImgUrl === null) {
+    if (reviewItemData.reviewImgUrl === null && files) {
+      console.log("기존이미지가 없는경우 ");
+      const formdata = new FormData();
+      formdata.append("reviewImgUrl", "");
+      formdata.append("reviewImgFile", files[0]); //이미지변경
+      formdata.append("reviewContents", reviewItemData.reviewContents);
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
+    } else if (reviewItemData.reviewImgUrl === null && files === undefined) {
       const formdata = new FormData();
       formdata.append("reviewImgUrl", "");
       formdata.append(

@@ -38,10 +38,16 @@ function App(props) {
   const dispatch = useDispatch();
   const is_session = localStorage.getItem("token") ? true : false;
 
+  function setScreenSize() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
+
   useEffect(() => {
     if (is_session) {
       dispatch(userAction.isLoginDB());
     }
+    setScreenSize();
   }, []);
 
   return (
