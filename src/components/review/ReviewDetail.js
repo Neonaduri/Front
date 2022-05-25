@@ -48,6 +48,15 @@ const ReviewDetail = () => {
 
   const cancelEdit = () => {
     setIsEdit(false);
+    setReviewItemData({
+      reviewId: null,
+      nickName: "",
+      reviewContents: "",
+      reviewImgUrl: "",
+      createdAt: "",
+      modifiedAt: "",
+    });
+    setPreview(null);
   };
 
   //이미지 미리보기
@@ -103,6 +112,15 @@ const ReviewDetail = () => {
       };
       dispatch(addCommentDB(postId, formdata, config));
     }
+    setReviewItemData({
+      reviewId: null,
+      nickName: "",
+      reviewContents: "",
+      reviewImgUrl: "",
+      createdAt: "",
+      modifiedAt: "",
+    });
+    setPreview(null);
   };
 
   //수정완료버튼
@@ -177,6 +195,17 @@ const ReviewDetail = () => {
       };
       dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
     }
+
+    setReviewItemData({
+      reviewId: null,
+      nickName: "",
+      reviewContents: "",
+      reviewImgUrl: "",
+      createdAt: "",
+      modifiedAt: "",
+    });
+    setPreview(null);
+    setIsEdit(false);
   };
 
   const deleteImg = () => {
@@ -207,7 +236,7 @@ const ReviewDetail = () => {
         <div> </div>
       </ReviewBox>
       <Middlediv ref={middledivRef}>
-        {reviewList.length !== 0 && (
+        {reviewList.length > 6 ? (
           <InfinityScroll
             callNext={() => {
               dispatch(getNextCommentDB(postId, paging.start));
@@ -224,6 +253,7 @@ const ReviewDetail = () => {
                       setReviewItemData={setReviewItemData}
                       cancelEdit={cancelEdit}
                       handleEdit={handleEdit}
+                      isEdit={isEdit}
                       key={id}
                       {...item}
                     />
@@ -231,6 +261,22 @@ const ReviewDetail = () => {
                 })}
             </Container>
           </InfinityScroll>
+        ) : (
+          <Container>
+            {reviewList &&
+              reviewList.map((item, id) => {
+                return (
+                  <ReviewItem
+                    setReviewItemData={setReviewItemData}
+                    cancelEdit={cancelEdit}
+                    handleEdit={handleEdit}
+                    isEdit={isEdit}
+                    key={id}
+                    {...item}
+                  />
+                );
+              })}
+          </Container>
         )}
       </Middlediv>
 
@@ -380,13 +426,6 @@ const WriteBox = styled.div`
   padding: 5px;
 `;
 
-// const Bar = styled.img`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin-left: 120px;
-// `;
-
 const FileName = styled.input`
   visibility: hidden;
 `;
@@ -410,9 +449,10 @@ const Middlediv = styled.div`
   height: 90%;
   display: flex;
   flex-direction: column;
-  /* padding: 20px 0px; */
   overflow: scroll;
-  /* margin-bottom: 50px; */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Button = styled.button`

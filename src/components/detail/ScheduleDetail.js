@@ -84,13 +84,7 @@ const ScheduleDetail = ({ dayNow }) => {
                   value={p.placeMemo}
                   disabled={true}
                 ></textarea>
-              ) : (
-                <Textarea
-                  id={idx}
-                  value="메모 내용은 작성자만 볼 수 있습니다."
-                  disabled={true}
-                ></Textarea>
-              )}
+              ) : null}
             </Contentdiv>
           </PlaceCard>
         );

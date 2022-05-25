@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { area, theme } from "../components/elements/ArrValue";
 import { DateRange } from "react-date-range";
-import { addDays } from "date-fns";
+import { addDays, isToday } from "date-fns";
 import { ko } from "date-fns/esm/locale";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -211,6 +211,7 @@ const Calendar = () => {
                   locale={ko}
                   editableDateInputs={true}
                   onChange={(item) => setState([item.selection])}
+                  minDate={new Date()}
                   moveRangeOnFirstSelection={false}
                   ranges={state}
                   months={1}

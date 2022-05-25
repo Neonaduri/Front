@@ -51,10 +51,6 @@ const MainPage = ({ history }) => {
     slidesToScroll: 1,
   };
 
-  if (!token) {
-    history.push("/login");
-  }
-
   const initLocation = "서울";
 
   useEffect(() => {
