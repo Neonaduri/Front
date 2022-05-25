@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
@@ -8,11 +8,17 @@ import back from "../static/images/icon/back.png";
 import goRight from "../static/images/icon/goRight.png";
 import { deleteCommentInMypageDB } from "../redux/module/user";
 import Footer from "../components/common/Footer";
+import ModalfixTime from "../components/common/ModalfixTime";
 
 const MyReview = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const myReview = useSelector((state) => state.user.myReview);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [delTargetId, setDelTargetId] = useState();
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const displayedAt = (createdAt) => {
     const milliSeconds = new Date() - createdAt;
@@ -33,8 +39,8 @@ const MyReview = () => {
   };
 
   const deleteBtnClick = (e) => {
-    const reviewId = e.target.id;
-    dispatch(deleteCommentInMypageDB(reviewId));
+    dispatch(deleteCommentInMypageDB(delTargetId));
+    setModalOpen(false);
   };
 
   useEffect(() => {
@@ -67,7 +73,13 @@ const MyReview = () => {
             <CardContainer key={idx}>
               <CardHeadDiv>
                 <small>{displayedAt(dateMillisecond)}</small>
-                <span onClick={(e) => deleteBtnClick(e)} id={review.reviewId}>
+                <span
+                  onClick={() => {
+                    setModalOpen(true);
+                    setDelTargetId(review.reviewId);
+                  }}
+                  id={review.reviewId}
+                >
                   삭제
                 </span>
               </CardHeadDiv>
@@ -96,6 +108,16 @@ const MyReview = () => {
             </CardContainer>
           );
         })}
+        <ModalfixTime
+          open={modalOpen}
+          close={closeModal}
+          header={
+            <EditModal>
+              <div>정말 삭제하시겠습니까?</div>
+              <button onClick={deleteBtnClick}>삭제하기</button>
+            </EditModal>
+          }
+        ></ModalfixTime>
       </BodyDiv>
       <FooterDiv>
         <Footer />
@@ -194,6 +216,30 @@ const HeaderDiv = styled.div`
   }
   div {
     padding-left: 30px;
+  }
+`;
+
+const EditModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-size: 20px;
+    margin-bottom: 15px;
+    cursor: pointer;
+  }
+  button {
+    background-color: ${({ theme }) => theme.colors.mainRed};
+    color: white;
+    padding: 10px 45px;
+    border-radius: 10px;
+    font-size: 18px;
+    margin-bottom: -20px;
   }
 `;
 

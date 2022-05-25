@@ -33,6 +33,7 @@ import prize2 from "./static/images/prize2.png";
 import prize3 from "./static/images/prize3.png";
 import termtext from "./static/images/termtext.png";
 import favicon from "./static/images/icon/favicon.png";
+import Withdrawal from "./pages/Withdrawal";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -93,6 +94,11 @@ function App(props) {
             <Route path="/myplan" component={Myplan} />
             <Route path="/mypage" component={Mypage} exact />
             <Route path="/mypage/edit" component={MyEdit} exact />
+            <Route
+              path="/mypage/edit/withdrawal"
+              component={Withdrawal}
+              exact
+            />
             <Route path="/mypage/scrap" component={Myscrap} exact />
             <Route path="/mypage/review" component={MyReview} exact />
             <Route path="/detail/:id" exact component={Detail} />

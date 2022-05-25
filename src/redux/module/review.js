@@ -52,7 +52,6 @@ export const addCommentDB = (postId, formdata, config) => {
         formdata,
         config
       );
-      console.log(response);
       /////여기 수정(백엔드에서 데이터 다시받기)
       if (response.status === 201) {
         dispatch(addComment(response.data));
@@ -78,6 +77,7 @@ export const getCommentDB = (postId, pageno) => {
         start: 2,
         lastPage: response.data.islastPage,
       };
+      console.log(response);
       if (response.status === 200) {
         dispatch(getComment(response.data.reviewList, paging));
         dispatch(totalElements(response.data.totalElements));
@@ -138,8 +138,6 @@ export const editCommentDB = (reviewId, formdata, config) => {
         formdata,
         config
       );
-      //여기도 수정(백엔드에서 데이터 다시받기)
-      console.log(response);
       if (response.status === 201) {
         dispatch(editComment(response.data));
       }
@@ -214,8 +212,6 @@ export default handleActions(
     [EDIT_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         draft.reviewList.map((list) => {
-          console.log(list.reviewId);
-          console.log(action.payload.reviewContents);
           if (list.reviewId === action.payload.reviewContents.reveiwId) {
             list.modifiedAt = action.payload.reviewContents.modifiedAt;
             list.reviewContents = action.payload.reviewContents.reviewContents;

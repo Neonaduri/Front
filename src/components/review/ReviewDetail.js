@@ -28,6 +28,7 @@ const ReviewDetail = () => {
   const reviewRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
   const [preview, setPreview] = useState(null);
+  const [editing, setEditing] = useState(false);
   const [reviewItemData, setReviewItemData] = useState({
     reviewId: null,
     nickName: "",
@@ -89,6 +90,9 @@ const ReviewDetail = () => {
   //후기등록 로직
   const ReviewBtnClick = () => {
     if (files === undefined) {
+      if (reviewItemData.reviewContents === "") {
+        return;
+      }
       const formdata = new FormData();
       formdata.append(
         "reviewImgFile",
@@ -121,12 +125,16 @@ const ReviewDetail = () => {
       modifiedAt: "",
     });
     setPreview(null);
+    setFiles();
   };
 
   //수정완료버튼
   const editCompleteBtn = () => {
     //이미지없이 텍스트수정
     if (reviewItemData.reviewImgUrl === null && files) {
+      if (reviewItemData.reviewContents === "") {
+        return;
+      }
       const formdata = new FormData();
       formdata.append("reviewImgUrl", "");
       formdata.append("reviewImgFile", files[0]); //이미지변경
@@ -138,6 +146,9 @@ const ReviewDetail = () => {
       };
       dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
     } else if (reviewItemData.reviewImgUrl === null && files === undefined) {
+      if (reviewItemData.reviewContents === "") {
+        return;
+      }
       const formdata = new FormData();
       formdata.append("reviewImgUrl", "");
       formdata.append(
@@ -166,6 +177,9 @@ const ReviewDetail = () => {
       };
       dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
     } else if (reviewItemData.reviewImgUrl === "" && files === undefined) {
+      if (reviewItemData.reviewContents === "") {
+        return;
+      }
       const formdata = new FormData();
       formdata.append("reviewImgUrl", ""); //기존이미지
       formdata.append(
@@ -206,6 +220,7 @@ const ReviewDetail = () => {
     });
     setPreview(null);
     setIsEdit(false);
+    setFiles();
   };
 
   const deleteImg = () => {
@@ -231,7 +246,7 @@ const ReviewDetail = () => {
           }}
         ></img>
         <h2>
-          리뷰<span>({totalCnt})</span>
+          댓글<span>({totalCnt})</span>
         </h2>
         <div> </div>
       </ReviewBox>
@@ -314,7 +329,7 @@ const ReviewDetail = () => {
                 autoFocus
                 name="reviewContents"
                 type="text"
-                placeholder="리뷰를 작성해주세요"
+                placeholder="댓글을 작성해주세요."
                 onChange={onChangeFormValue}
                 value={reviewItemData.reviewContents}
                 ref={reviewRef}

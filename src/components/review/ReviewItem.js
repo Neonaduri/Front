@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import { deleteCommentDB } from "../../redux/module/review";
 import ModalImg from "./ModalImg";
+import moment from "moment";
 import ModalfixTime from "../common/ModalfixTime";
 
 const ReviewItem = ({
@@ -17,7 +18,6 @@ const ReviewItem = ({
   preview,
   cancelEdit,
   modifiedAt,
-  isEdit,
 }) => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -25,6 +25,7 @@ const ReviewItem = ({
   const postId = params.productId;
   const profilUrl = useSelector((state) => state.user.list.profileImg);
   const loginUserNick = useSelector((state) => state.user.list.nickName);
+  const [editing, setEditing] = useState(false);
   const [imgModal, setImgModal] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const closeModal = () => {
@@ -43,11 +44,13 @@ const ReviewItem = ({
 
   //수정 취소버튼
   const cancleBtn = () => {
+    setEditing(false);
     cancelEdit(false);
   };
 
   //수정버튼
   const getEditBtn = () => {
+    setEditing(true);
     handleEdit({
       reviewImgUrl,
       reviewContents,
@@ -78,6 +81,10 @@ const ReviewItem = ({
   const date = new Date(modifiedAt);
   const dateMillisecond = date.getTime() + 3600000 * 9;
 
+  useEffect(() => {
+    setEditing(false);
+  }, [modifiedAt, reviewContents, preview]);
+
   return (
     <>
       <Card>
@@ -91,7 +98,7 @@ const ReviewItem = ({
           </Profile>
           {nickName === loginUserNick ? (
             <>
-              {isEdit ? (
+              {editing ? (
                 <div>
                   <Button onClick={cancleBtn}>취소하기</Button>
                 </div>
@@ -148,6 +155,30 @@ const ReviewItem = ({
 };
 
 export default ReviewItem;
+
+const EditModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-size: 20px;
+    margin-bottom: 15px;
+    cursor: pointer;
+  }
+  button {
+    background-color: ${({ theme }) => theme.colors.mainRed};
+    color: white;
+    padding: 10px 45px;
+    border-radius: 10px;
+    font-size: 18px;
+    margin-bottom: -20px;
+  }
+`;
 
 const Card = styled.div`
   margin: 20px 0;
@@ -225,29 +256,5 @@ const Content = styled.div`
   margin: auto;
   p {
     margin-top: 5px;
-  }
-`;
-
-const EditModal = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  div {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    font-size: 20px;
-    margin-bottom: 15px;
-    cursor: pointer;
-  }
-  button {
-    background-color: ${({ theme }) => theme.colors.mainRed};
-    color: white;
-    padding: 10px 45px;
-    border-radius: 10px;
-    font-size: 18px;
-    margin-bottom: -20px;
   }
 `;

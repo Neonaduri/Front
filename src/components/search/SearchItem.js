@@ -61,7 +61,7 @@ const SearchItem = ({
         </RigthMiddlediv>
 
         <RightBottomdiv onClick={() => history.push(`/detail/${postId}`)}>
-          <span>{user?.nickName}</span>
+          {user ? <span>{user?.nickName}</span> : <span>너나들이</span>}
           <div>
             <ImgWish src={wish} />
             <small>{likeCnt}</small>

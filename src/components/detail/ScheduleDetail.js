@@ -22,7 +22,7 @@ const ScheduleDetail = ({ dayNow }) => {
     dispatch(getCommentDB(postId));
   }, []);
 
-  if (!planByDay || !userByDay) {
+  if (!planByDay) {
     return null;
   }
 
@@ -78,7 +78,7 @@ const ScheduleDetail = ({ dayNow }) => {
                   이 장소 자세히 보기
                 </a>
               </UrlConnectSpan>
-              {userByDay.userName === loginUser.userName ? (
+              {userByDay && userByDay.userName === loginUser.userName ? (
                 <textarea
                   id={idx}
                   value={p.placeMemo}
@@ -89,20 +89,13 @@ const ScheduleDetail = ({ dayNow }) => {
           </PlaceCard>
         );
       })}
-      <ReviewBox>
-        <h2
-          onClick={() => {
-            history.push(`${postId}/write`);
-          }}
-        >
-          리뷰({totalCnt})
-        </h2>
-        <img
-          src={addMore}
-          onClick={() => {
-            history.push(`${postId}/write`);
-          }}
-        ></img>
+      <ReviewBox
+        onClick={() => {
+          history.push(`${postId}/write`);
+        }}
+      >
+        <h2>댓글({totalCnt})</h2>
+        <img src={addMore}></img>
       </ReviewBox>
 
       <ReviewPage>
@@ -125,6 +118,7 @@ const ReviewBox = styled.div`
   width: 100%;
   height: 18px;
   border-top: 10px solid ${({ theme }) => theme.colors.borderColor};
+  cursor: pointer;
   h2 {
     font-weight: 700;
     font-size: 18px;
@@ -157,17 +151,10 @@ const UrlConnectSpan = styled.span`
 
 const NumColumnBar = styled.span`
   width: 2px;
-  height: 120px;
+  height: 85px;
   background-color: ${({ theme }) => theme.colors.borderColor};
   position: absolute;
   top: 20px;
-`;
-
-const Textarea = styled.textarea`
-  padding: 5px 5px;
-  resize: none;
-  color: ${({ theme }) => theme.colors.text3};
-  resize: none;
 `;
 
 const Contentdiv = styled.div`

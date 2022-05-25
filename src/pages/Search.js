@@ -188,6 +188,7 @@ const Img = styled.img`
   left: 15px;
   top: 25px;
   width: 20px;
+  cursor: pointer;
 `;
 
 const Container = styled.div`

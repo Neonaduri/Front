@@ -140,7 +140,7 @@ const Myplan = () => {
                         history.push(`/detail/${plan.postId}`);
                       }}
                     >
-                      여행 후기 남기기
+                      여행 리뷰 남기기
                     </button>
                   </div>
                 </BottomCarddiv>
