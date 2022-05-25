@@ -11,7 +11,7 @@
 }
 
 .MobileFullFrame {
-  position: absolute;
+  position: fixed;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -19,11 +19,12 @@
   /* top: 50%; */
   /* left: 100px; */
   /* transform: translate(-50%, -50%); */
+  bottom: 0;
   width: 375px;
   height: 100%;
   margin: 0 auto;
   background-color: white;
-  z-index: 999;
+  z-index: 9999;
 }
 
 @media screen and (max-width: 500px) {
