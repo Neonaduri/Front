@@ -5,6 +5,13 @@
   font-family: "apple2";
 }
 
+body {
+  min-height: 100vh;
+  @supports (-webkit-touch-callout: none) {
+      min-height: -webkit-fill-available;
+    }
+}
+
 @font-face {
   font-family: "apple1";
   src: url("../src/static/font/AppleSDGothicNeoL.ttf");

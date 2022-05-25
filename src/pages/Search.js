@@ -30,6 +30,13 @@ const Search = () => {
 
   const searchEnter = (e) => {
     if (e.key === "Enter") {
+      let targetText = e.target.value;
+      if (targetText === "") {
+        return;
+      }
+      if (targetText.indexOf("/") !== -1) {
+        return;
+      }
       dispatch(getKeywordPostDB(e.target.value));
       dispatch(keywordDB(e.target.value));
       setSearching(true);
@@ -83,7 +90,6 @@ const Search = () => {
         <ContentDiv ref={contentDivRef}>
           <InfinityScroll
             callNext={() => {
-              console.log("왜?");
               dispatch(getKeywordPostDB(keyWord, nextPage));
             }}
             is_next={lastPage ? false : true}
