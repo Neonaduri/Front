@@ -140,6 +140,7 @@ const Wrap = styled.div`
   width: 100%;
   height: auto;
   max-height: 100%;
+  -webkit-overflow-scrolling: touch;
 `;
 
 const Fullscreen = styled.div`
