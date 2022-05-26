@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import ButtonArea from "../components/main/ButtonArea";
-import Search from "./Search";
 
 import styled from "styled-components";
-import { useHistory } from "react-router";
 import HeaderDiv from "../components/search/HeaderDiv";
 import { useDispatch, useSelector } from "react-redux";
 import { getKeywordPostDB, getLocationPostDB } from "../redux/module/post";
@@ -19,7 +17,6 @@ const LocationSearch = (props) => {
   let lastPage = useSelector((state) => state.post.paging?.lastpage);
   const nextPage = useSelector((state) => state.post.paging?.start);
 
-  const [serching, setSearching] = useState(false);
   const contentDivRef = useRef();
 
   const keyWord = "지역별 여행계획표";
@@ -55,9 +52,8 @@ const LocationSearch = (props) => {
 
 export default LocationSearch;
 const ContentDiv = styled.div`
-  /* background-color: tomato; */
   margin-top: 20px;
-  height: 80%;
+  height: 90%;
   overflow-y: scroll;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {

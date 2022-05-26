@@ -103,7 +103,6 @@ const LikeReview = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin-left: 5px; */
 `;
 
 const Cnt = styled.div`

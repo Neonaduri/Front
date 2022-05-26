@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getKeywordPostDB,
   getLocationPostDB,
-  getSearchPost,
   keywordDB,
 } from "../../redux/module/post";
 import { area } from "../elements/ArrValue";
@@ -21,6 +20,7 @@ const ButtonArea = () => {
     const location = e.target.value;
     setSelectVal(selectVal);
     dispatch(getKeywordPostDB(location));
+    dispatch(getLocationPostDB(location));
     dispatch(keywordDB(location));
   };
 

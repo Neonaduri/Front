@@ -4,7 +4,6 @@ import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import { deleteCommentDB } from "../../redux/module/review";
 import ModalImg from "./ModalImg";
-import moment from "moment";
 import ModalfixTime from "../common/ModalfixTime";
 
 const ReviewItem = ({
@@ -183,7 +182,6 @@ const EditModal = styled.div`
 const Card = styled.div`
   margin: 20px 0;
   background-color: white;
-  /* background-color: tomato; */
 `;
 
 const Btns = styled.div``;
