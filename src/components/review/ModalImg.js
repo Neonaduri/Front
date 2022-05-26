@@ -3,7 +3,6 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 
 const ModalImg = ({ reviewImgUrl, setImgModal }) => {
-  const history = useHistory();
   return (
     <Container>
       <Button
@@ -37,7 +36,6 @@ const ImgBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin-top: 30px; */
 `;
 
 const Button = styled.button`

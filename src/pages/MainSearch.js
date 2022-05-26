@@ -24,7 +24,7 @@ export default MainSearch;
 const Title = styled.div`
   width: 100%;
   margin-left: 15px;
-  margin: 20px 15px;
+  margin: 10px 15px;
   margin-top: 25px;
   font-family: "Apple SD Gothic Neo";
   font-style: normal;
@@ -34,6 +34,5 @@ const Title = styled.div`
 `;
 
 const Wrap = styled.div`
-  /* padding-bottom: 90px; */
   height: 100%;
 `;

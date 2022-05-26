@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Helmet } from "react-helmet";
 import Footer from "../components/common/Footer";
 import Banner from "../components/main/Banner";
 import Location from "../components/main/Location";
@@ -69,7 +68,6 @@ const MainPage = ({ history }) => {
       <Banner />
       <MakePlan />
 
-      {/* 인기여행 */}
       <Wrapper>
         <Container>
           <Name>
@@ -82,12 +80,11 @@ const MainPage = ({ history }) => {
               })}
           </StyledSlide1>
         </Container>
-        {/* 인기 여행 */}
 
         <a href="https://forms.gle/B8pWhmu3pDFNwsMe9" target="_blank">
           <AdImg src={ad} alt="location"></AdImg>
         </a>
-        {/* 지역별 여행 */}
+
         <Container>
           <LoName>
             <LoTitle>지역별 여행 계획표</LoTitle>
@@ -113,9 +110,8 @@ const MainPage = ({ history }) => {
           </ImgWrap>
         </Container>
       </Wrapper>
-      {/* 지역별 여행 */}
+
       <Footer />
-      {/* {isLoading ? <Splash /> : null} */}
     </Section>
   );
 };

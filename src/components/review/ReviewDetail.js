@@ -383,13 +383,11 @@ const ReviewInputBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 18px; */
 `;
 
 const Photo = styled.div`
   display: block;
   justify-content: center;
-  /* padding: 10px; */
 `;
 
 const ButtonDiv = styled.div`
@@ -397,7 +395,7 @@ const ButtonDiv = styled.div`
   align-items: baseline;
   flex-direction: column;
   justify-content: flex-end;
-  /* background-color: tomato; */
+
   padding: 5px;
   z-index: 999;
 `;
@@ -433,14 +431,13 @@ const Test = styled.img`
 `;
 
 const WriteBox = styled.div`
-  /* display: flex; */
   width: 90%;
   justify-content: center;
   align-items: center;
   background-color: white;
   border: 1px solid #cacaca;
   border-radius: 5px;
-  /* margin-right: 5px; */
+
   padding: 5px;
 `;
 
@@ -496,11 +493,8 @@ const Icon = styled.img`
 const Container = styled.div`
   justify-content: center;
   align-items: center;
-  /* margin-top: 20px; */
   width: 100%;
-  /* margin-bottom: 50px; */
   background-color: white;
-  /* background-color: tomato; */
 `;
 
 const ReviewBox = styled.div`
@@ -510,16 +504,12 @@ const ReviewBox = styled.div`
   width: 100%;
   padding: 5px 20px;
   margin-top: 20px;
-  /* position: fixed; */
-  /* height: 7%; */
-  /* z-index: 99; */
   img {
     cursor: pointer;
   }
   h2 {
     font-weight: 700;
     font-size: 18px;
-    /* line-height: 18px; */
     color: ${({ theme }) => theme.colors.text1};
     span {
       margin-left: 4px;
