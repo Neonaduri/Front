@@ -55,7 +55,6 @@ const MyReview = () => {
       </HeaderDiv>
       <BodyDiv>
         {myReview?.map((review, idx) => {
-          console.log(review.reviewImgUrl);
           const date = new Date(review.modifiedAt);
           const dateMillisecond = date.getTime() + 3600000 * 9;
           let content;

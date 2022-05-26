@@ -6,7 +6,7 @@ import Search from "./Search";
 
 const ThemeSearch = (props) => {
   const keyWord = useSelector((state) => state.post.keyword);
-  console.log(keyWord);
+
   return (
     <Container>
       <Wrap>

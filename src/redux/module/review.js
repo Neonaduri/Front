@@ -56,7 +56,7 @@ export const addCommentDB = (postId, formdata, config) => {
       if (response.status === 201) {
         window.location.reload();
         dispatch(addComment(response.data));
-        window.alert("후기가 등록되었습니다!");
+        window.alert("댓글이 등록되었습니다!");
       }
     } catch (err) {
       Sentry.captureException(err);

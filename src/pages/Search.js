@@ -23,7 +23,6 @@ const Search = () => {
   let lastPage = useSelector((state) => state.post.paging?.lastpage);
 
   useEffect(() => {
-    console.log(keyWord, pageno);
     dispatch(getKeywordPostDB(keyWord, pageno));
   }, []);
 
@@ -39,7 +38,6 @@ const Search = () => {
         <ContentDiv ref={contentDivRef}>
           <InfinityScroll
             callNext={() => {
-              console.log(keyWord, pageno);
               dispatch(getKeywordPostDB(keyWord, nextPage));
             }}
             is_next={lastPage ? false : true}

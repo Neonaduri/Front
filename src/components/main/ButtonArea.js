@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getKeywordPostDB,
   getLocationPostDB,
@@ -15,10 +15,12 @@ import { area } from "../elements/ArrValue";
 const ButtonArea = () => {
   const dispatch = useDispatch();
   const [selectVal, setSelectVal] = useState("서울");
+  const key = useSelector((state) => state.post.keyword);
+  console.log(key);
 
   const onClick = (e) => {
     const location = e.target.value;
-    setSelectVal(e.target.value);
+    setSelectVal(selectVal);
     dispatch(getKeywordPostDB(location));
     dispatch(keywordDB(location));
   };
@@ -37,7 +39,7 @@ const ButtonArea = () => {
         {area.map((item, idx) => {
           return (
             <BtnArea
-              selectVal={selectVal}
+              selectVal={key}
               item={item}
               onClick={onClick}
               value={item}

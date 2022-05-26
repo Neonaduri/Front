@@ -36,7 +36,6 @@ const LocationSearch = (props) => {
         <ContentDiv ref={contentDivRef}>
           <InfinityScroll
             callNext={() => {
-              console.log(keyword, nextPage);
               dispatch(getKeywordPostDB(keyword, nextPage));
             }}
             is_next={lastPage ? false : true}

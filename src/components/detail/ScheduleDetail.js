@@ -101,7 +101,7 @@ const ScheduleDetail = ({ dayNow }) => {
             history.push(`${postId}/write`);
           }}
         >
-          리뷰({totalCnt})
+          댓글({totalCnt})
         </h2>
         <img
           src={addMore}
