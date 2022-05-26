@@ -33,6 +33,10 @@ import prize2 from "./static/images/prize2.png";
 import prize3 from "./static/images/prize3.png";
 import termtext from "./static/images/termtext.png";
 import favicon from "./static/images/icon/favicon.png";
+import LocationSearch from "./pages/LocationSearch";
+import ThemeSearch from "./pages/ThemeSearch";
+import MainSearch from "./pages/MainSearch";
+import RecommandPage from "./pages/RecommandPage";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -86,7 +90,10 @@ function App(props) {
             <Route path="/login" exact component={Login} />
             <Route path="/emailcheck" exact component={Emailcheck} />
             <Route path="/signup" exact component={Signup} />
-            <Route path="/search" exact component={Search} />
+            <Route path="/search" exact component={MainSearch} />
+            <Route path="/recommand" exact component={RecommandPage} />
+            <Route path="/location" exact component={LocationSearch} />
+            <Route path="/theme" exact component={ThemeSearch} />
             <Route path="/user/kakao/callback" component={KakaoRedirect} />
             <Route path="/user/google/callback" component={GoogleRedirect} />
             <Route path="/uploadcomplete" component={UploadComplete} />

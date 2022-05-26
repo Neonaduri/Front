@@ -202,7 +202,7 @@ const ReviewDetail = () => {
           }}
         ></img>
         <h2>
-          리뷰<span>({totalCnt})</span>
+          댓글<span>({totalCnt})</span>
         </h2>
         <div> </div>
       </ReviewBox>

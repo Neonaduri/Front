@@ -51,10 +51,6 @@ const MainPage = ({ history }) => {
     slidesToScroll: 1,
   };
 
-  if (!token) {
-    history.push("/login");
-  }
-
   const initLocation = "서울";
 
   useEffect(() => {
@@ -99,7 +95,7 @@ const MainPage = ({ history }) => {
               onClick={(e) => {
                 dispatch(getKeywordPostDB(keyword));
 
-                history.push("/search");
+                history.push("/location");
               }}
             >
               더보기
