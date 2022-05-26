@@ -73,7 +73,7 @@ const NavWrapper = styled.footer`
   position: fixed;
   bottom: 0;
   /* mobile viewport bug fix */
-  /* height: -webkit-fill-available; */
+  height: -webkit-fill-available;
   overflow: hidden;
   bottom: 0;
   width: 100%;
