@@ -16,14 +16,13 @@ const LocationSearch = (props) => {
   const isLoading = useSelector((state) => state.post.isLoading);
   let lastPage = useSelector((state) => state.post.paging?.lastpage);
   const nextPage = useSelector((state) => state.post.paging?.start);
-
   const contentDivRef = useRef();
-
   const keyWord = "지역별 여행계획표";
 
   useEffect(() => {
     dispatch(getLocationPostDB(keyword));
   }, [keyword]);
+
   return (
     <>
       <Wrap>

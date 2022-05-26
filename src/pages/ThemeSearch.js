@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import Footer from "../components/common/Footer";
 import HeaderDiv from "../components/search/HeaderDiv";
 import Search from "./Search";
 import Footer from "../components/common/Footer";
