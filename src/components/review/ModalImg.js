@@ -14,7 +14,7 @@ const ModalImg = ({ reviewImgUrl, setImgModal }) => {
         x
       </Button>
       <ImgBox>
-        <Img src={reviewImgUrl}></Img>
+        <Img src={reviewImgUrl} alt="reviewimg"></Img>
       </ImgBox>
     </Container>
   );

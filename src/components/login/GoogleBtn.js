@@ -9,6 +9,7 @@ const GoogleBtn = ({ onSocial }) => {
   return (
     <div>
       <Img
+        alt="googlebtn"
         src={Googlebtn}
         onClick={() => {
           window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${callBack}&response_type=code&scope=email%20profile%20openid&access_type=offline`;

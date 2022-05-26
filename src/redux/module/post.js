@@ -120,7 +120,6 @@ export const getKeywordPostDB = (keyword, pageno) => {
         start: page + 1,
         lastpage: response.data.islastPage,
       };
-      console.log(response);
       if (response.status === 200) {
         if (page === 1) {
           dispatch(getSearchPost({ planList: response.data.planList, paging }));

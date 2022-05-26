@@ -91,6 +91,7 @@ const Signup = (props) => {
 
         {visuable ? (
           <PassEyeImg
+            alt="show"
             src={openeye}
             onClick={() => {
               setVisuable(false);
@@ -98,6 +99,7 @@ const Signup = (props) => {
           />
         ) : (
           <PassEyeImg
+            alt="show"
             src={closeeye}
             onClick={() => {
               setVisuable(true);
@@ -126,6 +128,7 @@ const Signup = (props) => {
         ) : null}
         {visuable2 ? (
           <PassEyeImg2
+            alt="show"
             src={openeye}
             onClick={() => {
               setVisuable2(false);
@@ -133,6 +136,7 @@ const Signup = (props) => {
           />
         ) : (
           <PassEyeImg2
+            alt="show"
             src={closeeye}
             onClick={() => {
               setVisuable2(true);

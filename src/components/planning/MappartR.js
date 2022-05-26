@@ -178,6 +178,7 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
       <HeadLineDiv>
         <div>
           <img
+            alt="back"
             src={back}
             onClick={() => {
               dispatch(planAction.exitBrowserOnPlanDB(postId));
@@ -212,7 +213,7 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
       </form>
       {isLogin ? (
         <PlaceBtn onClick={copyLinkBtnClick}>
-          <img src={sharebtn} />
+          <img src={sharebtn} alt="share" />
         </PlaceBtn>
       ) : null}
 
@@ -364,6 +365,7 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
           <ModalContent>
             <Canceldiv>
               <img
+                alt="cancel"
                 src={cancel}
                 onClick={() => {
                   setCopyText(false);

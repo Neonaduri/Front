@@ -10,7 +10,7 @@ const UploadComplete = () => {
     <>
       <NopostContainer>
         <div>
-          <img src={imgLogin} />
+          <img src={imgLogin} alt="character" />
           <span>여행이 성공적으로 등록되었습니다!</span>
           <button
             onClick={() => {

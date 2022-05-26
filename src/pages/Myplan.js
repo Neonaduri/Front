@@ -109,7 +109,7 @@ const Myplan = () => {
                         : setHamburgerNum(null);
                     }}
                   >
-                    <img src={hamburger} id={plan.postId} />
+                    <img src={hamburger} id={plan.postId} alt="menu" />
                   </button>
                   {hamburgerNum === idx ? (
                     <ToggleBox>
@@ -127,7 +127,7 @@ const Myplan = () => {
                 <BottomCarddiv>
                   <div>
                     <div>
-                      <img src={mapSmall} />
+                      <img src={mapSmall} alt="map" />
                       <span>{plan.location}</span>
                     </div>
                     <small>
@@ -140,7 +140,7 @@ const Myplan = () => {
                         history.push(`/detail/${plan.postId}`);
                       }}
                     >
-                      여행댓글 남기기
+                      여행 리뷰 남기기
                     </button>
                   </div>
                 </BottomCarddiv>

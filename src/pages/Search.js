@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { getKeywordPostDB, keywordDB } from "../redux/module/post";
 import SearchItem from "../components/search/SearchItem";
-import NotFound from "../shared/NotFound";
 import InfinityScroll from "../shared/InfinityScroll";
+import NotFoundSearchList from "../shared/NotFoundSearchList";
 import SearchInput from "../components/search/SearchInput";
 
 const Search = () => {
@@ -33,7 +33,7 @@ const Search = () => {
   return (
     <Container>
       {searchList.length === 0 && serching === true ? (
-        <NotFound />
+        <NotFoundSearchList />
       ) : (
         <ContentDiv ref={contentDivRef}>
           <InfinityScroll

@@ -34,14 +34,15 @@ const SearchItem = ({
     <Container>
       <LeftDiv>
         <PostImg
+          alt="post"
           src={postImgUrl}
           onClick={() => history.push(`/detail/${postId}`)}
         />
         <div onClick={(e) => clickWishPost(e)}>
           {islike ? (
-            <img src={clickedWish} id={postId} />
+            <img src={clickedWish} id={postId} alt="wish" />
           ) : (
-            <img src={unClickedWish} id={postId} />
+            <img src={unClickedWish} id={postId} alt="wish" />
           )}
         </div>
       </LeftDiv>
@@ -61,12 +62,12 @@ const SearchItem = ({
         </RigthMiddlediv>
 
         <RightBottomdiv onClick={() => history.push(`/detail/${postId}`)}>
-          <span>{user?.nickName}</span>
+          {user ? <span>{user?.nickName}</span> : <span>너나들이</span>}
           <div>
-            <ImgWish src={wish} />
+            <ImgWish src={wish} alt="icon" />
             <small>{likeCnt}</small>
 
-            <ImgReview src={review} />
+            <ImgReview src={review} alt="icon" />
             <small>{reviewCnt}</small>
           </div>
         </RightBottomdiv>

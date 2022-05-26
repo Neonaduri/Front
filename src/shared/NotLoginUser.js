@@ -9,7 +9,7 @@ const NotLoginUser = () => {
     <div>
       <NopostContainer>
         <div>
-          <img src={imgLogin} />
+          <img src={imgLogin} alt="character" />
           <span>회원전용 페이지입니다.</span>
           <button
             onClick={() => {
@@ -49,6 +49,7 @@ const NopostContainer = styled.div`
       border-radius: 10px;
       font-size: 18px;
       color: white;
+      cursor: pointer;
     }
   }
 `;

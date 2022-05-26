@@ -18,9 +18,9 @@ const NopostAlert = ({ mainContent, btnContent, pushUrl, titleContent }) => {
         </TitleDiv>
         <ContentDiv>
           <span>{mainContent}</span>
-          <Img src={imgLogin} />
+          <Img src={imgLogin} alt="character" />
           <ButtonDiv>
-            <img src={pencil} />
+            <img src={pencil} alt="img" />
             <Button
               content={btnContent}
               onClick={() => {

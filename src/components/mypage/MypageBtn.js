@@ -6,7 +6,7 @@ const MypageBtn = ({ content, onClick, textcolor }) => {
   return (
     <Container onClick={onClick}>
       <span color={textcolor}>{content}</span>
-      <img src={goRight} />
+      <img src={goRight} alt="go" />
     </Container>
   );
 };
@@ -21,6 +21,9 @@ const Container = styled.div`
   cursor: pointer;
   span {
     font-size: 16px;
+  }
+  img {
+    width: 28px;
   }
 `;
 

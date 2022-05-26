@@ -72,17 +72,15 @@ export default Footer;
 const NavWrapper = styled.footer`
   position: fixed;
   bottom: 0;
-  /* mobile viewport bug fix */
-  height: -webkit-fill-available;
-  overflow: hidden;
-  bottom: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   height: calc(var(--vh, 1vh) * 8);
   background-color: white;
+  border-top: 1px solid #cacaca;
   z-index: 9999;
   border-top: 2px solid ${({ theme }) => theme.colors.borderColor};
-  margin: 0;
-  text-align: center;
+  background-color: white;
 `;
 
 const NavItem = styled.button`
@@ -96,8 +94,6 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 5px 30px;
-  height: -webkit-fill-available;
-  min-height: -webkit-fill-available;
 `;
 
 const Logo = styled.img`

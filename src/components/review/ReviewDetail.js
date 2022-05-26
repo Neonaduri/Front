@@ -28,6 +28,7 @@ const ReviewDetail = () => {
   const reviewRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
   const [preview, setPreview] = useState(null);
+  const [editing, setEditing] = useState(false);
   const [reviewItemData, setReviewItemData] = useState({
     reviewId: null,
     nickName: "",
@@ -48,6 +49,15 @@ const ReviewDetail = () => {
 
   const cancelEdit = () => {
     setIsEdit(false);
+    setReviewItemData({
+      reviewId: null,
+      nickName: "",
+      reviewContents: "",
+      reviewImgUrl: "",
+      createdAt: "",
+      modifiedAt: "",
+    });
+    setPreview(null);
   };
 
   //이미지 미리보기
@@ -80,6 +90,9 @@ const ReviewDetail = () => {
   //후기등록 로직
   const ReviewBtnClick = () => {
     if (files === undefined) {
+      if (reviewItemData.reviewContents === "") {
+        return;
+      }
       const formdata = new FormData();
       formdata.append(
         "reviewImgFile",
@@ -103,12 +116,25 @@ const ReviewDetail = () => {
       };
       dispatch(addCommentDB(postId, formdata, config));
     }
+    setReviewItemData({
+      reviewId: null,
+      nickName: "",
+      reviewContents: "",
+      reviewImgUrl: "",
+      createdAt: "",
+      modifiedAt: "",
+    });
+    setPreview(null);
+    setFiles();
   };
 
   //수정완료버튼
   const editCompleteBtn = () => {
     //이미지없이 텍스트수정
     if (reviewItemData.reviewImgUrl === null && files) {
+      if (reviewItemData.reviewContents === "") {
+        return;
+      }
       const formdata = new FormData();
       formdata.append("reviewImgUrl", "");
       formdata.append("reviewImgFile", files[0]); //이미지변경
@@ -120,6 +146,9 @@ const ReviewDetail = () => {
       };
       dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
     } else if (reviewItemData.reviewImgUrl === null && files === undefined) {
+      if (reviewItemData.reviewContents === "") {
+        return;
+      }
       const formdata = new FormData();
       formdata.append("reviewImgUrl", "");
       formdata.append(
@@ -148,6 +177,9 @@ const ReviewDetail = () => {
       };
       dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
     } else if (reviewItemData.reviewImgUrl === "" && files === undefined) {
+      if (reviewItemData.reviewContents === "") {
+        return;
+      }
       const formdata = new FormData();
       formdata.append("reviewImgUrl", ""); //기존이미지
       formdata.append(
@@ -177,6 +209,18 @@ const ReviewDetail = () => {
       };
       dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
     }
+
+    setReviewItemData({
+      reviewId: null,
+      nickName: "",
+      reviewContents: "",
+      reviewImgUrl: "",
+      createdAt: "",
+      modifiedAt: "",
+    });
+    setPreview(null);
+    setIsEdit(false);
+    setFiles();
   };
 
   const deleteImg = () => {
@@ -196,6 +240,7 @@ const ReviewDetail = () => {
     <Wrap>
       <ReviewBox>
         <img
+          alt="back"
           src={Back}
           onClick={() => {
             history.goBack();
@@ -207,7 +252,7 @@ const ReviewDetail = () => {
         <div> </div>
       </ReviewBox>
       <Middlediv ref={middledivRef}>
-        {reviewList.length !== 0 && (
+        {reviewList.length > 6 ? (
           <InfinityScroll
             callNext={() => {
               dispatch(getNextCommentDB(postId, paging.start));
@@ -224,6 +269,7 @@ const ReviewDetail = () => {
                       setReviewItemData={setReviewItemData}
                       cancelEdit={cancelEdit}
                       handleEdit={handleEdit}
+                      isEdit={isEdit}
                       key={id}
                       {...item}
                     />
@@ -231,6 +277,22 @@ const ReviewDetail = () => {
                 })}
             </Container>
           </InfinityScroll>
+        ) : (
+          <Container>
+            {reviewList &&
+              reviewList.map((item, id) => {
+                return (
+                  <ReviewItem
+                    setReviewItemData={setReviewItemData}
+                    cancelEdit={cancelEdit}
+                    handleEdit={handleEdit}
+                    isEdit={isEdit}
+                    key={id}
+                    {...item}
+                  />
+                );
+              })}
+          </Container>
         )}
       </Middlediv>
 
@@ -243,20 +305,22 @@ const ReviewDetail = () => {
                   {isEdit ? (
                     <Preview>
                       <Test
+                        alt="preview"
                         src={
                           (preview || reviewItemData.reviewImgUrl) &&
                           (preview || reviewItemData.reviewImgUrl)
                         }
                       ></Test>
                       <X
+                        alt="x"
                         onClick={deleteEditImg}
                         src={(preview || reviewItemData.reviewImgUrl) && x}
                       ></X>
                     </Preview>
                   ) : (
                     <Preview>
-                      <Test src={preview}></Test>
-                      <X onClick={deleteImg} src={preview && x}></X>
+                      <Test src={preview} alt="preview"></Test>
+                      <X onClick={deleteImg} src={preview && x} alt="x"></X>
                     </Preview>
                   )}
                 </div>
@@ -268,7 +332,7 @@ const ReviewDetail = () => {
                 autoFocus
                 name="reviewContents"
                 type="text"
-                placeholder="리뷰를 작성해주세요"
+                placeholder="댓글을 작성해주세요."
                 onChange={onChangeFormValue}
                 value={reviewItemData.reviewContents}
                 ref={reviewRef}
@@ -284,7 +348,7 @@ const ReviewDetail = () => {
                 }}
               ></TextareaAutosize>
               <Label htmlFor="chooseFile">
-                <Icon src={Camera}></Icon>
+                <Icon src={Camera} alt="camera"></Icon>
               </Label>
             </Memo>
           </WriteBox>
@@ -380,13 +444,6 @@ const WriteBox = styled.div`
   padding: 5px;
 `;
 
-// const Bar = styled.img`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin-left: 120px;
-// `;
-
 const FileName = styled.input`
   visibility: hidden;
 `;
@@ -410,9 +467,10 @@ const Middlediv = styled.div`
   height: 90%;
   display: flex;
   flex-direction: column;
-  /* padding: 20px 0px; */
   overflow: scroll;
-  /* margin-bottom: 50px; */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Button = styled.button`

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import { deleteCommentDB } from "../../redux/module/review";
 import ModalImg from "./ModalImg";
 import moment from "moment";
+import ModalfixTime from "../common/ModalfixTime";
 
 const ReviewItem = ({
   profileImgUrl,
@@ -26,6 +27,10 @@ const ReviewItem = ({
   const loginUserNick = useSelector((state) => state.user.list.nickName);
   const [editing, setEditing] = useState(false);
   const [imgModal, setImgModal] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const onClick = () => {
     setImgModal(true);
@@ -34,6 +39,7 @@ const ReviewItem = ({
   //삭제버튼
   const deleteBtn = () => {
     dispatch(deleteCommentDB(reviewId));
+    setModalOpen(false);
   };
 
   //수정 취소버튼
@@ -75,12 +81,16 @@ const ReviewItem = ({
   const date = new Date(modifiedAt);
   const dateMillisecond = date.getTime() + 3600000 * 9;
 
+  useEffect(() => {
+    setEditing(false);
+  }, [modifiedAt, reviewContents, preview]);
+
   return (
     <>
       <Card>
         <UpperContents>
           <Profile>
-            <ProfileImg src={profileImgUrl}></ProfileImg>
+            <ProfileImg src={profileImgUrl} alt="profile"></ProfileImg>
             <div>
               <p>{nickName}</p>
               <small>{displayedAt(dateMillisecond)}</small>
@@ -94,7 +104,13 @@ const ReviewItem = ({
                 </div>
               ) : (
                 <Btns>
-                  <Button onClick={deleteBtn}>삭제</Button>
+                  <Button
+                    onClick={() => {
+                      setModalOpen(true);
+                    }}
+                  >
+                    삭제
+                  </Button>
                   <Button onClick={getEditBtn}>수정</Button>
                 </Btns>
               )}
@@ -104,7 +120,7 @@ const ReviewItem = ({
 
         {reviewImgUrl ? (
           <Image onClick={onClick}>
-            <ImagePop src={reviewImgUrl}></ImagePop>
+            <ImagePop src={reviewImgUrl} alt="review"></ImagePop>
           </Image>
         ) : (
           ""
@@ -114,6 +130,18 @@ const ReviewItem = ({
           <p>{reviewContents}</p>
         </Content>
       </Card>
+      <ModalfixTime
+        open={modalOpen}
+        close={closeModal}
+        header={
+          <EditModal>
+            <div>정말 삭제하시겠습니까?</div>
+            <button id={reviewId} onClick={deleteBtn}>
+              삭제하기
+            </button>
+          </EditModal>
+        }
+      ></ModalfixTime>
 
       {imgModal && (
         <ModalImg
@@ -127,6 +155,30 @@ const ReviewItem = ({
 };
 
 export default ReviewItem;
+
+const EditModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-size: 20px;
+    margin-bottom: 15px;
+    cursor: pointer;
+  }
+  button {
+    background-color: ${({ theme }) => theme.colors.mainRed};
+    color: white;
+    padding: 10px 45px;
+    border-radius: 10px;
+    font-size: 18px;
+    margin-bottom: -20px;
+  }
+`;
 
 const Card = styled.div`
   margin: 20px 0;

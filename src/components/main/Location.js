@@ -13,7 +13,7 @@ const Location = ({
   const history = useHistory();
   return (
     <Wrap onClick={() => history.push(`/detail/${postId}`)}>
-      <ImagePop src={postImgUrl} />
+      <ImagePop src={postImgUrl} alt="locaImg" />
       <div>
         <ContentDiv>
           <Content>{postTitle}</Content>

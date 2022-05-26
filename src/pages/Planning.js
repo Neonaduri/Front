@@ -96,7 +96,7 @@ const Planning = (props) => {
         isOpen={isOpen}
         onClose={close}
         snapPoints={[0.9, 500, 100, 0]}
-        disableDrag={true}
+        disableDrag={false}
       >
         <Sheet.Container>
           <Sheet.Header onClick={close} />

@@ -88,9 +88,10 @@ const MyEdit = () => {
   };
 
   return (
-    <div>
+    <Container>
       <HeaderDiv>
         <img
+          alt="back"
           src={back}
           onClick={() => {
             history.goBack();
@@ -104,9 +105,9 @@ const MyEdit = () => {
           {preview !== "delete" ? (
             <>
               {preview === null ? (
-                <img src={loginUser.profileImg} />
+                <img src={loginUser.profileImg} alt="profile" />
               ) : (
-                <img src={preview} />
+                <img src={preview} alt="preview" />
               )}
             </>
           ) : null}
@@ -117,7 +118,7 @@ const MyEdit = () => {
               setPreview("delete");
             }}
           >
-            <img src={x} />
+            <img src={x} alt="cancel" />
           </ProfileDeleteBtn>
         )}
 
@@ -130,33 +131,82 @@ const MyEdit = () => {
         ></input>
       </UserinfoDiv>
       <EditDiv>
-        <div>
+        <EmailDiv>
           <label htmlFor="email">이메일</label>
           <input defaultValue={loginUser.userName} disabled={true}></input>
-        </div>
+        </EmailDiv>
         <div>
           <label htmlFor="nick">닉네임</label>
-          <input
-            defaultValue={loginUser.nickName}
-            onChange={(e) => changeNick(e)}
-            maxLength="12"
-          ></input>
+          <NickinputDiv>
+            <input
+              defaultValue={loginUser.nickName}
+              onChange={(e) => changeNick(e)}
+              maxLength="12"
+            ></input>
+            <Button
+              content={"편집"}
+              id="nick"
+              width={"100%"}
+              height={"slim"}
+              onClick={editBtnClick}
+            ></Button>
+          </NickinputDiv>
         </div>
-        <BtnDiv>
-          <Button
-            content={"편집"}
-            id="nick"
-            width={"100%"}
-            height={"slim"}
-            onClick={editBtnClick}
-          ></Button>
-        </BtnDiv>
       </EditDiv>
-
+      <LastDiv>
+        <span>탈퇴하기</span>
+      </LastDiv>
       <Footer />
-    </div>
+    </Container>
   );
 };
+
+const LastDiv = styled.div`
+  padding: 10px 20px;
+  span {
+    font-size: 14px;
+    color: ${({ theme }) => theme.colors.text2};
+    text-decoration: underline;
+    cursor: pointer;
+  }
+`;
+
+const EmailDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  input {
+    height: 35px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid ${({ theme }) => theme.colors.text3};
+  }
+`;
+
+const NickinputDiv = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  input {
+    margin-top: 5px;
+    width: 248px;
+    height: 35px;
+    font-size: 16px;
+    margin-bottom: 4px;
+    border-radius: 5px;
+    border: 1px solid ${({ theme }) => theme.colors.text3};
+  }
+  button {
+    width: 85px;
+    font-size: 16px;
+  }
+`;
+
+const Container = styled.div`
+  background-color: ${({ theme }) => theme.colors.text4};
+  height: 100%;
+`;
 
 const ProfileDeleteBtn = styled.div`
   position: relative;
@@ -168,31 +218,15 @@ const ProfileDeleteBtn = styled.div`
     width: 26px;
   }
 `;
-const BtnDiv = styled.div`
-  margin-top: 30px;
-`;
 
 const EditDiv = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px 60px;
+  padding: 10px 20px 15px 20px;
+  background-color: white;
   label {
     margin-top: 20px;
     margin-bottom: 3px;
-  }
-  div {
-    display: flex;
-    flex-direction: column;
-    input {
-      height: 35px;
-      border: 1px solid ${({ theme }) => theme.colors.borderColor};
-      border-radius: 5px;
-      font-size: 14px;
-      &:focus {
-        outline: none;
-        border: 1px solid ${({ theme }) => theme.colors.mainGreen};
-      }
-    }
   }
 `;
 
@@ -200,10 +234,10 @@ const UserinfoDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
   justify-content: center;
-  padding: 10px 15px;
+  padding: 30px 15px 10px 15px;
   border-bottom: 10px solid ${({ theme }) => theme.colors.borderColor};
+  background-color: white;
   div {
     &:first-child {
       position: relative;
@@ -250,6 +284,7 @@ const HeaderDiv = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0px 15px;
+  background-color: white;
   img {
     width: 22px;
     margin-top: 8px;

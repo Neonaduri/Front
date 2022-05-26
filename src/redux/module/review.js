@@ -52,11 +52,10 @@ export const addCommentDB = (postId, formdata, config) => {
         formdata,
         config
       );
-
+      /////여기 수정(백엔드에서 데이터 다시받기)
       if (response.status === 201) {
-        window.location.reload();
         dispatch(addComment(response.data));
-        window.alert("댓글이 등록되었습니다!");
+        // window.location.reload();
       }
     } catch (err) {
       Sentry.captureException(err);
@@ -78,7 +77,6 @@ export const getCommentDB = (postId, pageno) => {
         start: 2,
         lastPage: response.data.islastPage,
       };
-
       if (response.status === 200) {
         dispatch(getComment(response.data.reviewList, paging));
         dispatch(totalElements(response.data.totalElements));
@@ -139,11 +137,8 @@ export const editCommentDB = (reviewId, formdata, config) => {
         formdata,
         config
       );
-
       if (response.status === 201) {
-        window.location.reload();
         dispatch(editComment(response.data));
-        window.alert("수정이 완료되었어요!");
       }
     } catch (err) {
       console.log("에러발생", err);
@@ -159,9 +154,7 @@ export const deleteCommentDB = (reviewId) => {
         `/detail/reviews/${reviewId}`
       );
       if (response.status === 200) {
-        window.location.reload();
         dispatch(deleteComment(reviewId));
-        window.alert("삭제가 완료되었어요!");
       }
     } catch (err) {
       Sentry.captureException(err);
@@ -203,14 +196,27 @@ export default handleActions(
       }),
     [ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        draft.reviewList.unshift(action.payload.reviewList);
+        const data = {
+          createdAt: Date.now(),
+          modifiedAt: Date.now(),
+          nickName: action.payload.reviewList.user.nickName,
+          profileImgUrl: action.payload.reviewList.user.profileImgUrl,
+          reviewContents: action.payload.reviewList.reviewContents,
+          reviewImgUrl: action.payload.reviewList.reviewImgUrl,
+          reviewId: action.payload.reviewList.reveiwId,
+        };
+        draft.reviewList.unshift(data);
+        draft.totalElements += 1;
       }),
     [EDIT_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        const newReview = draft.reviewList.filter(
-          (item) => item.reviewId !== action.payload.reviewId
-        );
-        draft.reviewList = newReview;
+        draft.reviewList.map((list) => {
+          if (list.reviewId === action.payload.reviewContents.reveiwId) {
+            list.modifiedAt = action.payload.reviewContents.modifiedAt;
+            list.reviewContents = action.payload.reviewContents.reviewContents;
+            list.reviewImgUrl = action.payload.reviewContents.reviewImgUrl;
+          }
+        });
       }),
     [DELETE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
@@ -218,6 +224,7 @@ export default handleActions(
           (item) => item.reviewId !== action.payload.reviewId
         );
         draft.reviewList = newReview;
+        draft.totalElements -= 1;
       }),
     [ONE_COMMENT]: (state, action) =>
       produce(state, (draft) => {

@@ -27,7 +27,7 @@ const MakePlan = () => {
                     }}
                   >
                     <IconBox>
-                      <Icon src={item.src}></Icon>
+                      <Icon src={item.src} alt="theme"></Icon>
                     </IconBox>
                     <ImgTitle>{item.value}</ImgTitle>
                   </ImgContainer>
@@ -49,7 +49,7 @@ const MakePlan = () => {
                     }}
                   >
                     <IconBox>
-                      <Icon src={item.src}></Icon>
+                      <Icon src={item.src} alt="img"></Icon>
                     </IconBox>
                     <ImgTitle>{item.value}</ImgTitle>
                   </ImgContainer>

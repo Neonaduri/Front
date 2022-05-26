@@ -28,14 +28,15 @@ const Popular = ({
   return (
     <Wrap>
       <ImagePop
+        alt="postimg"
         src={postImgUrl}
         onClick={() => history.push(`/detail/${postId}`)}
       />
       <SocialWishDiv onClick={(e) => clickWishPost(e)}>
         {islike ? (
-          <img src={clickedWish} id={postId} />
+          <img src={clickedWish} id={postId} alt="wish" />
         ) : (
-          <img src={unClickedWish} id={postId} />
+          <img src={unClickedWish} id={postId} alt="wish" />
         )}
       </SocialWishDiv>
       <Box>
@@ -44,11 +45,11 @@ const Popular = ({
         </Content>
         <SectionBox>
           <Like>
-            <ImgIconWish src={wish} />
+            <ImgIconWish src={wish} alt="icon" />
             <Cnt>{likeCnt}</Cnt>
           </Like>
           <LikeReview>
-            <ImgIcon src={review} />
+            <ImgIcon src={review} alt="icon" />
             <Cnt>{reviewCnt}</Cnt>
           </LikeReview>
         </SectionBox>
