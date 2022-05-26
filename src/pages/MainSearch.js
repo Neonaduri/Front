@@ -8,12 +8,14 @@ import Search from "./Search";
 const MainSearch = () => {
   const keyWord = useSelector((state) => state.post.keyword);
   return (
-    <div>
+    <>
       <SearchInput />
       <Title>{keyWord} 여행계획표 </Title>
-      <Search />
+      <Wrap>
+        <Search />
+      </Wrap>
       <Footer />
-    </div>
+    </>
   );
 };
 
@@ -29,4 +31,9 @@ const Title = styled.div`
   font-weight: 600;
   font-size: 18px;
   color: ${({ theme }) => theme.colors.text1};
+`;
+
+const Wrap = styled.div`
+  /* padding-bottom: 90px; */
+  height: 100%;
 `;

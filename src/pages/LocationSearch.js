@@ -14,7 +14,7 @@ import Footer from "../components/common/Footer";
 const LocationSearch = (props) => {
   const dispatch = useDispatch();
   const keyword = useSelector((state) => state.post.keyword);
-  const locationList = useSelector((state) => state.post.locationList);
+  const locationList = useSelector((state) => state.post.searchList);
   const isLoading = useSelector((state) => state.post.isLoading);
   let lastPage = useSelector((state) => state.post.paging?.lastpage);
   const nextPage = useSelector((state) => state.post.paging?.start);
@@ -29,23 +29,26 @@ const LocationSearch = (props) => {
   }, [keyword]);
   return (
     <>
-      <HeaderDiv keyWord={keyWord} />
-      <ButtonArea />
+      <Wrap>
+        <HeaderDiv keyWord={keyWord} />
+        <ButtonArea />
 
-      <ContentDiv ref={contentDivRef}>
-        <InfinityScroll
-          callNext={() => {
-            dispatch(getKeywordPostDB(keyWord, nextPage));
-          }}
-          is_next={lastPage ? false : true}
-          loading={isLoading}
-          ref={contentDivRef}
-        >
-          {locationList?.map((item, idx) => {
-            return <SearchItem key={idx} {...item} />;
-          })}
-        </InfinityScroll>
-      </ContentDiv>
+        <ContentDiv ref={contentDivRef}>
+          <InfinityScroll
+            callNext={() => {
+              console.log(keyword, nextPage);
+              dispatch(getKeywordPostDB(keyword, nextPage));
+            }}
+            is_next={lastPage ? false : true}
+            loading={isLoading}
+            ref={contentDivRef}
+          >
+            {locationList?.map((item, idx) => {
+              return <SearchItem key={idx} {...item} />;
+            })}
+          </InfinityScroll>
+        </ContentDiv>
+      </Wrap>
       <Footer />
     </>
   );
@@ -53,12 +56,18 @@ const LocationSearch = (props) => {
 
 export default LocationSearch;
 const ContentDiv = styled.div`
+  background-color: tomato;
   margin-top: 20px;
-  height: 97%;
+  height: 80%;
   overflow-y: scroll;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
     width: 0 !important;
   }
+`;
+
+const Wrap = styled.div`
+  padding-bottom: 90px;
+  height: 100%;
 `;

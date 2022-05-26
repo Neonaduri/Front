@@ -31,8 +31,8 @@ const getBestPost = createAction(GET_BEST_POST, (bestList) => ({
 }));
 const loading = createAction(LOADING, (isLoading) => ({ isLoading }));
 
-const getLocationPost = createAction(GET_LOCATION_POST, (locationList) => ({
-  locationList,
+const getLocationPost = createAction(GET_LOCATION_POST, (planList) => ({
+  planList,
 }));
 
 export const getSearchPost = createAction(GET_SEARCH_POST, (searchList) => ({
@@ -76,6 +76,7 @@ export const getBestPostDB = () => {
 
 //지역별 여행플랜[메인]
 //서울 기본값, 버튼 누를때마다 location 넘겨주기
+
 export const getLocationPostDB = (location) => {
   return async function (dispatch, getState, { history }) {
     try {
@@ -216,7 +217,7 @@ export default handleActions(
       }),
     [GET_LOCATION_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.locationList = action.payload.locationList;
+        draft.locationList = action.payload.planList;
         draft.isLoading = false;
       }),
     [GET_SEARCH_POST]: (state, action) =>

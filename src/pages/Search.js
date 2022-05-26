@@ -69,60 +69,7 @@ const ContentDiv = styled.div`
   }
 `;
 
-// const HeaderDiv = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin-top: 20px;
-// `;
-
-// const Input = styled.input`
-//   width: 280px;
-//   display: flex;
-//   margin: auto;
-//   border: none;
-//   border-bottom: 1px solid black;
-//   padding: 5px;
-//   font-size: 16px;
-//   &:focus {
-//     outline: none;
-//     border-bottom: 1px solid #41b67e;
-//   }
-// `;
-
-// const I = styled.img`
-//   margin: 0 auto;
-//   margin-left: 10px;
-// `;
-
-// const Img = styled.img`
-//   left: 15px;
-//   top: 25px;
-//   width: 20px;
-// `;
-
 const Container = styled.div`
   /* padding-bottom: 90px; */
   height: 97%;
 `;
-
-const Title = styled.div`
-  width: 100%;
-  height: 30px;
-  margin-left: 15px;
-  font-family: "Apple SD Gothic Neo";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  color: ${({ theme }) => theme.colors.text1};
-`;
-
-// const Wrap = styled.div`
-//   display: flex;
-//   justify-content: left;
-//   align-items: center;
-// `;
-
-// const Icon = styled.div`
-//   margin-right: 10px;
-// `;
