@@ -56,7 +56,7 @@ const LocationSearch = (props) => {
 
 export default LocationSearch;
 const ContentDiv = styled.div`
-  background-color: tomato;
+  /* background-color: tomato; */
   margin-top: 20px;
   height: 80%;
   overflow-y: scroll;

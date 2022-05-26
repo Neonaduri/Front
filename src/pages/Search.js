@@ -23,6 +23,7 @@ const Search = () => {
   let lastPage = useSelector((state) => state.post.paging?.lastpage);
 
   useEffect(() => {
+    console.log(keyWord, pageno);
     dispatch(getKeywordPostDB(keyWord, pageno));
   }, []);
 
@@ -38,6 +39,7 @@ const Search = () => {
         <ContentDiv ref={contentDivRef}>
           <InfinityScroll
             callNext={() => {
+              console.log(keyWord, pageno);
               dispatch(getKeywordPostDB(keyWord, nextPage));
             }}
             is_next={lastPage ? false : true}
@@ -59,7 +61,7 @@ const Search = () => {
 export default Search;
 
 const ContentDiv = styled.div`
-  /* margin-top: 20px; */
+  margin-top: 20px;
   height: 80%;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -70,6 +72,5 @@ const ContentDiv = styled.div`
 `;
 
 const Container = styled.div`
-  /* padding-bottom: 90px; */
   height: 97%;
 `;
