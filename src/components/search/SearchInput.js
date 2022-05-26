@@ -26,12 +26,14 @@ const SearchInput = () => {
       <HeaderDiv>
         <Wrap>
           <ImgBack
+            alt="back"
             src={back}
             onClick={() => {
-              history.push("/");
+              history.goBack();
             }}
           ></ImgBack>
           <Img
+            alt="search"
             src={search}
             onClick={() => {
               history.push("/");
@@ -85,6 +87,7 @@ const Img = styled.img`
 
 const ImgBack = styled.img`
   width: 20px;
+  cursor: pointer;
 `;
 
 const Wrap = styled.div`

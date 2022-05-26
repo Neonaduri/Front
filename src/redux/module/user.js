@@ -144,7 +144,7 @@ const isLoginDB = () => {
         dispatch(isLogin(data));
       }
     } catch (err) {
-      console.log("로그인 확인 실패", err.response);
+      console.log("에러", err.response);
       localStorage.removeItem("token");
       dispatch(logOut());
       window.location.replace("/login");

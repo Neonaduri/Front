@@ -6,7 +6,7 @@ import GoogleBtn from "../components/login/GoogleBtn";
 import KakaoBtn from "../components/login/KakaoBtn";
 import { userAction } from "../redux/module/user";
 import Splash from "../shared/Splash";
-import loginBGimg from "../static/images/bgImage/loginbackground.png";
+import loginBGimg from "../static/images/bgImage/loginbackground.webp";
 import Button from "../components/elements/Button";
 
 const Login = ({ history }) => {

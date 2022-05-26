@@ -378,10 +378,7 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
               <span>친구와 같이 여행계획을 실시간으로 세워보세요!</span>
             </InviteTextdiv>
             <InviteContentDiv>
-              <input
-                defaultValue={window.location.href}
-                disabled={true}
-              ></input>
+              <input value={window.location.href} disabled={true}></input>
               <ModalBtn onClick={copyLink}>복사</ModalBtn>
             </InviteContentDiv>
             {copyText ? (

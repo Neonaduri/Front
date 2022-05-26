@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import splash from "../static/images/bgImage/splash.png";
+import splash from "../static/images/bgImage/splash.webp";
 
 const Splash = () => {
   return (

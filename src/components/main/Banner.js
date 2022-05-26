@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import post1 from "../../static/images/bannerPost/post1.png";
-import post2 from "../../static/images/bannerPost/post2.png";
-import post3 from "../../static/images/bannerPost/post3.png";
-import post4 from "../../static/images/bannerPost/post4.png";
+import post1 from "../../static/images/bannerPost/post1.webp";
+import post2 from "../../static/images/bannerPost/post2.webp";
+import post3 from "../../static/images/bannerPost/post3.webp";
+import post4 from "../../static/images/bannerPost/post4.webp";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -17,7 +17,7 @@ const Banner = () => {
     fade: false,
     infinite: true,
     autoplay: true,
-    speed: 2000,
+    speed: 800,
     dots: true,
     arrows: true,
     color: "#ffffff",

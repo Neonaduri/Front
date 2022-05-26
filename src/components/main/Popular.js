@@ -71,14 +71,12 @@ const SocialWishDiv = styled.div`
 `;
 
 const ImgIcon = styled.img`
-  width: 11.25px;
-  height: 9.92px;
+  width: 16px;
 `;
 
 const ImgIconWish = styled.img`
   margin-left: 5px;
-  width: 9.92px;
-  height: 10.98px;
+  width: 16px;
 `;
 
 const SectionBox = styled.div`

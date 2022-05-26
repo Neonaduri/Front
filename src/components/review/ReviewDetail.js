@@ -3,6 +3,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
+import imageCompression from "browser-image-compression";
 import styled from "styled-components";
 import {
   addCommentDB,
@@ -15,11 +16,15 @@ import ReviewItem from "./ReviewItem";
 import Camera from "../../static/images/icon/camera.png";
 import InfinityScroll from "../../shared/InfinityScroll";
 import x from "../../static/images/icon/x.png";
+import { set } from "lodash";
+import Spinner from "../../shared/Spinner";
 
 const ReviewDetail = () => {
   const params = useParams();
   const postId = params.productId;
   const [files, setFiles] = useState();
+  const [compressedFiles, setCompressedFiles] = useState();
+  const [imageReady, setImageReady] = useState(true);
   const reviewList = useSelector((state) => state.review.reviewList);
   const totalCnt = useSelector((state) => state.review.totalElements);
   const paging = useSelector((state) => state.review.paging);
@@ -28,7 +33,6 @@ const ReviewDetail = () => {
   const reviewRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
   const [preview, setPreview] = useState(null);
-  const [editing, setEditing] = useState(false);
   const [reviewItemData, setReviewItemData] = useState({
     reviewId: null,
     nickName: "",
@@ -60,19 +64,6 @@ const ReviewDetail = () => {
     setPreview(null);
   };
 
-  //이미지 미리보기
-  const onImgChange = (e) => {
-    const file = e.target.files;
-    setFiles(file);
-
-    const reader = new FileReader();
-    const imgFile = file[0];
-    reader.readAsDataURL(imgFile);
-    reader.onloadend = () => {
-      setPreview(reader.result);
-    };
-  };
-
   //리뷰조회
   useEffect(() => {
     dispatch(getCommentDB(postId));
@@ -86,6 +77,60 @@ const ReviewDetail = () => {
       [name]: value,
     });
   };
+
+  //이미지 미리보기
+  const onImgChange = async (e) => {
+    if (e.target.files.length === 0) {
+      return;
+    }
+    const file = e.target.files;
+    setFiles(file);
+    const reader = new FileReader();
+    const imgFile = file[0];
+    reader.readAsDataURL(imgFile);
+    reader.onloadend = () => {
+      setPreview(reader.result);
+    };
+  };
+  const handlingDataForm = async (dataURI) => {
+    const byteString = atob(dataURI.split(",")[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([ia], {
+      type: "image/*",
+    });
+    const file = new File([blob], "image.jpg");
+    setCompressedFiles(file);
+    setImageReady(true);
+  };
+
+  const actionImgCompress = async (fileSrc) => {
+    const options = {
+      maxSizeMB: 0.3,
+      maxWidthOrHeight: 750,
+    };
+    try {
+      const compressedFile = await imageCompression(fileSrc, options);
+      const reader = new FileReader();
+      reader.readAsDataURL(compressedFile);
+      reader.onloadend = () => {
+        const base64data = reader.result;
+        handlingDataForm(base64data);
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    if (files !== undefined) {
+      setImageReady(false);
+      actionImgCompress(files[0]);
+    }
+  }, [files]);
 
   //후기등록 로직
   const ReviewBtnClick = () => {
@@ -107,7 +152,7 @@ const ReviewDetail = () => {
       dispatch(addCommentDB(postId, formdata, config));
     } else {
       const formdata = new FormData();
-      formdata.append("reviewImgFile", files[0]);
+      formdata.append("reviewImgFile", compressedFiles);
       formdata.append("reviewContents", reviewItemData.reviewContents);
       const config = {
         headers: {
@@ -126,6 +171,7 @@ const ReviewDetail = () => {
     });
     setPreview(null);
     setFiles();
+    setCompressedFiles();
   };
 
   //수정완료버튼
@@ -137,7 +183,7 @@ const ReviewDetail = () => {
       }
       const formdata = new FormData();
       formdata.append("reviewImgUrl", "");
-      formdata.append("reviewImgFile", files[0]); //이미지변경
+      formdata.append("reviewImgFile", compressedFiles); //이미지변경
       formdata.append("reviewContents", reviewItemData.reviewContents);
       const config = {
         headers: {
@@ -198,7 +244,7 @@ const ReviewDetail = () => {
     } else {
       const formdata = new FormData();
       formdata.append("reviewImgUrl", reviewItemData.reviewImgUrl); //기존이미지
-      formdata.append("reviewImgFile", files[0]); //이미지변경
+      formdata.append("reviewImgFile", compressedFiles); //이미지변경
       formdata.append("reviewContents", reviewItemData.reviewContents);
       //리뷰텍스트
 
@@ -224,8 +270,9 @@ const ReviewDetail = () => {
   };
 
   const deleteImg = () => {
-    setPreview("");
-    setFiles(undefined);
+    setPreview(null);
+    setFiles();
+    setCompressedFiles();
   };
 
   const deleteEditImg = () => {
@@ -357,7 +404,15 @@ const ReviewDetail = () => {
             {isEdit ? (
               <Button onClick={editCompleteBtn}>수정</Button>
             ) : (
-              <Button onClick={ReviewBtnClick}>등록</Button>
+              <>
+                {imageReady ? (
+                  <Button onClick={ReviewBtnClick}>등록</Button>
+                ) : (
+                  <NotreadyButton>
+                    <Spinner />
+                  </NotreadyButton>
+                )}
+              </>
             )}
           </ButtonDiv>
         </ReviewInputBox>
@@ -471,6 +526,16 @@ const Middlediv = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+const NotreadyButton = styled.button`
+  width: 55px;
+  margin-left: 3px;
+  height: 35px;
+  background: ${({ theme }) => theme.colors.borderColor};
+  border-radius: 5px;
+  border: 0;
+  color: white;
+  cursor: pointer;
 `;
 
 const Button = styled.button`

@@ -7,7 +7,7 @@ import Location from "../components/main/Location";
 import MakePlan from "../components/main/MakePlan";
 import Popular from "../components/main/Popular";
 import Login from "./Login";
-import ad from "../static/images/bannerPost/ad.png";
+import ad from "../static/images/bannerPost/ad.webp";
 import {
   getBestPostDB,
   getKeywordPostDB,
