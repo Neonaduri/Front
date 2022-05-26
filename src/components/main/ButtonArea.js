@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getKeywordPostDB,
   getLocationPostDB,
@@ -15,26 +15,17 @@ import { area } from "../elements/ArrValue";
 const ButtonArea = () => {
   const dispatch = useDispatch();
   const [selectVal, setSelectVal] = useState("서울");
+  const key = useSelector((state) => state.post.keyword);
+  console.log(key);
 
   const onClick = (e) => {
     const location = e.target.value;
-    setSelectVal(e.target.value);
-    dispatch(getLocationPostDB(location));
+    setSelectVal(selectVal);
+    dispatch(getKeywordPostDB(location));
     dispatch(keywordDB(location));
   };
 
   const settings = {
-    // slidesToShow: 5,
-    // slidesToScroll: 2,
-    // centerMode: true,
-    // centerPadding: "0px",
-    // arrows: true,
-    // dots: true,
-    // fade: false,
-    // infinite: true,
-    // pauseOnFocus: true,
-    // pauseOnHover: true,
-    // autoplaySpeed: 2000,
     dots: true,
     infinite: true,
     speed: 500,
@@ -48,7 +39,7 @@ const ButtonArea = () => {
         {area.map((item, idx) => {
           return (
             <BtnArea
-              selectVal={selectVal}
+              selectVal={key}
               item={item}
               onClick={onClick}
               value={item}
@@ -90,52 +81,6 @@ const StyledSlide = styled(Slider)`
 
   .slick-dots {
     display: none !important;
-  }
-`;
-
-export const StyleSlider = styled(Slider)`
-  width: 100%;
-  position: relative;
-  .slick-list {
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 0 -10px;
-  }
-  .slick-slide {
-    padding: 0 10px;
-  }
-  .slick-prev {
-    &:before {
-      color: #212121;
-    }
-    left: 15px !important;
-    z-index: 1;
-  }
-  .slick-next {
-    right: 15px !important;
-    &:before {
-      color: #212121;
-    }
-  }
-  .slick-initialized .slick-slide {
-    & > div {
-      display: flex;
-    }
-  }
-  .slick-dots {
-    display: flex !important;
-    justify-content: center;
-    bottom: auto;
-    li {
-      border: none !important;
-    }
-    li button {
-      margin: 0;
-      padding: 0;
-      &:before {
-        color: #fff;
-      }
-    }
   }
 `;
 

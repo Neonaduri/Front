@@ -35,6 +35,10 @@ import termtext from "./static/images/termtext.png";
 import favicon from "./static/images/icon/favicon.png";
 import Withdrawal from "./pages/Withdrawal";
 import NotFound from "./shared/NotFound";
+import LocationSearch from "./pages/LocationSearch";
+import ThemeSearch from "./pages/ThemeSearch";
+import MainSearch from "./pages/MainSearch";
+import RecommandPage from "./pages/RecommandPage";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -89,17 +93,12 @@ function App(props) {
               <Route path="/login" exact component={Login} />
               <Route path="/emailcheck" exact component={Emailcheck} />
               <Route path="/signup" exact component={Signup} />
-              <Route path="/search" exact component={Search} />
-              <Route
-                path="/user/kakao/callback"
-                component={KakaoRedirect}
-                exact
-              />
-              <Route
-                path="/user/google/callback"
-                component={GoogleRedirect}
-                exact
-              />
+              <Route path="/search" exact component={MainSearch} />
+              <Route path="/recommand" exact component={RecommandPage} />
+              <Route path="/location" exact component={LocationSearch} />
+              <Route path="/theme" exact component={ThemeSearch} />
+              <Route path="/user/kakao/callback" component={KakaoRedirect} />
+              <Route path="/user/google/callback" component={GoogleRedirect} />
               <Route path="/uploadcomplete" component={UploadComplete} exact />
               <Route path="/myplan" component={Myplan} exact />
               <Route path="/mypage" component={Mypage} exact />
