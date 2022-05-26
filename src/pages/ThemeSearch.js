@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Footer from "../components/common/Footer";
 import HeaderDiv from "../components/search/HeaderDiv";
 import Search from "./Search";
+import Footer from "../components/common/Footer";
 
 const ThemeSearch = (props) => {
   const keyWord = useSelector((state) => state.post.keyword);

@@ -11,6 +11,7 @@ const NotFound = () => {
         <div>
           <img src={imgLogin} alt="character" />
           <span>현재 페이지는 없는 페이지입니다!</span>
+          {/* <span>서비스 점검중입니다! 잠시만 기다려주세요:)</span> */}
           <button
             onClick={() => {
               history.replace("/");

@@ -26,9 +26,7 @@ const Title = styled.div`
   margin-left: 15px;
   margin: 10px 15px;
   margin-top: 25px;
-  font-family: "Apple SD Gothic Neo";
   font-style: normal;
-  font-weight: 600;
   font-size: 18px;
   color: ${({ theme }) => theme.colors.text1};
 `;

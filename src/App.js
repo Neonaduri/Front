@@ -24,13 +24,13 @@ import theme from "./assets/styles/theme";
 import MyEdit from "./pages/MyEdit";
 import Myscrap from "./pages/Myscrap";
 import MyReview from "./pages/MyReview";
-import PC from "./static/images/PC.png";
-import step1 from "./static/images/step1.png";
-import step2 from "./static/images/step2.png";
-import step3 from "./static/images/step3.png";
-import prize1 from "./static/images/prize1.png";
-import prize2 from "./static/images/prize2.png";
-import prize3 from "./static/images/prize3.png";
+import PC from "./static/images/PC.webp";
+import step1 from "./static/images/step1.webp";
+import step2 from "./static/images/step2.webp";
+import step3 from "./static/images/step3.webp";
+import prize1 from "./static/images/prize1.webp";
+import prize2 from "./static/images/prize2.webp";
+import prize3 from "./static/images/prize3.webp";
 import termtext from "./static/images/termtext.png";
 import favicon from "./static/images/icon/favicon.png";
 import Withdrawal from "./pages/Withdrawal";
@@ -130,9 +130,9 @@ export default App;
 const Textdiv = styled.div`
   position: absolute;
   top: 29.5%;
-  left: 37%;
+  left: 39%;
   img {
-    width: 53%;
+    width: 300px;
   }
 `;
 
@@ -141,7 +141,7 @@ const Imgdiv1 = styled.div`
   top: 38%;
   left: 15%;
   img {
-    width: 17%;
+    width: 28%;
   }
 `;
 const Imgdiv2 = styled.div`
@@ -149,7 +149,7 @@ const Imgdiv2 = styled.div`
   top: 68%;
   left: 15%;
   img {
-    width: 17%;
+    width: 28%;
   }
 `;
 

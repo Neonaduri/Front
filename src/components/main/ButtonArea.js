@@ -15,7 +15,6 @@ const ButtonArea = () => {
   const dispatch = useDispatch();
   const [selectVal, setSelectVal] = useState("서울");
   const key = useSelector((state) => state.post.keyword);
-  console.log(key);
 
   const onClick = (e) => {
     const location = e.target.value;

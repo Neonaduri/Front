@@ -9,9 +9,10 @@ const HeaderDiv = (props) => {
   return (
     <HeaderContainer>
       <img
+        alt="back"
         src={back}
         onClick={() => {
-          history.push("/");
+          history.goBack();
         }}
       ></img>
       <p>{props.keyWord}</p>

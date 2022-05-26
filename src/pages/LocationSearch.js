@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import ButtonArea from "../components/main/ButtonArea";
+
 import styled from "styled-components";
 import HeaderDiv from "../components/search/HeaderDiv";
 import { useDispatch, useSelector } from "react-redux";
