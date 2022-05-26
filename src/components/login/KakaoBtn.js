@@ -10,7 +10,7 @@ const KakaoBtn = () => {
     <div>
       <h1>
         <a href={KAKAO_AUTH_URL}>
-          <Img src={kakaologin}></Img>
+          <Img src={kakaologin} alt="kakaobtn"></Img>
         </a>
       </h1>
     </div>

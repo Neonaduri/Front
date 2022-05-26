@@ -28,11 +28,11 @@ const Mypage = () => {
       <HeaderDiv>
         <div></div>
         <Titleline title={"마이페이지"} />
-        <img />
+        <div></div>
       </HeaderDiv>
       <UserinfoDiv>
         <div>
-          <img src={loginUser.profileImg} />
+          <img src={loginUser.profileImg} alt="profile" />
         </div>
         <div>
           <h3>{loginUser.nickName}</h3>

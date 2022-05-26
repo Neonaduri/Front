@@ -95,7 +95,7 @@ const ScheduleDetail = ({ dayNow }) => {
         }}
       >
         <h2>댓글({totalCnt})</h2>
-        <img src={addMore}></img>
+        <img src={addMore} alt="go"></img>
       </ReviewBox>
 
       <ReviewPage>

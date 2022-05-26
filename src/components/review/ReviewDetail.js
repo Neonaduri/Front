@@ -240,6 +240,7 @@ const ReviewDetail = () => {
     <Wrap>
       <ReviewBox>
         <img
+          alt="back"
           src={Back}
           onClick={() => {
             history.goBack();
@@ -304,20 +305,22 @@ const ReviewDetail = () => {
                   {isEdit ? (
                     <Preview>
                       <Test
+                        alt="preview"
                         src={
                           (preview || reviewItemData.reviewImgUrl) &&
                           (preview || reviewItemData.reviewImgUrl)
                         }
                       ></Test>
                       <X
+                        alt="x"
                         onClick={deleteEditImg}
                         src={(preview || reviewItemData.reviewImgUrl) && x}
                       ></X>
                     </Preview>
                   ) : (
                     <Preview>
-                      <Test src={preview}></Test>
-                      <X onClick={deleteImg} src={preview && x}></X>
+                      <Test src={preview} alt="preview"></Test>
+                      <X onClick={deleteImg} src={preview && x} alt="x"></X>
                     </Preview>
                   )}
                 </div>
@@ -345,7 +348,7 @@ const ReviewDetail = () => {
                 }}
               ></TextareaAutosize>
               <Label htmlFor="chooseFile">
-                <Icon src={Camera}></Icon>
+                <Icon src={Camera} alt="camera"></Icon>
               </Label>
             </Memo>
           </WriteBox>

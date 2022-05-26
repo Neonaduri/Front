@@ -41,6 +41,7 @@ const Detail = () => {
     <Container>
       <HeadDiv>
         <img
+          alt="back"
           src={back}
           onClick={() => {
             history.goBack();
@@ -53,13 +54,13 @@ const Detail = () => {
           </Datespan>
         </div>
         {detailPlan.islike ? (
-          <img src={wishgreen} onClick={clickWishBtn} />
+          <img src={wishgreen} onClick={clickWishBtn} alt="onwish" />
         ) : (
-          <img src={wish} onClick={clickWishBtn} />
+          <img src={wish} onClick={clickWishBtn} alt="wish" />
         )}
       </HeadDiv>
       <ImageDiv>
-        <img src={detailPlan.postImgUrl} />
+        <img src={detailPlan.postImgUrl} alt="postimg" />
       </ImageDiv>
       <ContentDiv>
         <DayBtnDiv>

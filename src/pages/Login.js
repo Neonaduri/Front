@@ -40,7 +40,7 @@ const Login = ({ history }) => {
   return (
     <div>
       <Logodiv>
-        <img src={loginBGimg}></img>
+        <img src={loginBGimg} alt="BGimg"></img>
       </Logodiv>
       <Inputdiv>
         <span>떠나볼 준비를 해볼까요?</span>

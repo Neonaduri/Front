@@ -29,20 +29,25 @@ const Banner = () => {
         <Section>
           <StyledSlide {...settings}>
             <div>
-              <Img src={post1} />
-              <Button>
-                <Link href="http://www.seamudexpo.or.kr/" target="_blank">
+              <Img src={post1} alt="main" />
+              <Button tabIndex="-1">
+                <Link
+                  href="http://www.seamudexpo.or.kr/"
+                  target="_blank"
+                  tabIndex="-1"
+                >
                   행사보러가기
                 </Link>
               </Button>
             </div>
 
             <div>
-              <Img src={post2}></Img>
-              <Button>
+              <Img src={post2} alt="main"></Img>
+              <Button tabIndex="-1">
                 <Link
                   href="https://xn--o39aw54a7jcg1kemaw8w.kr/"
                   target="_blank"
+                  tabIndex="-1"
                 >
                   행사보러가기
                 </Link>
@@ -50,11 +55,12 @@ const Banner = () => {
             </div>
 
             <div>
-              <Img src={post3}></Img>
-              <Button>
+              <Img src={post3} alt="main"></Img>
+              <Button tabIndex="-1">
                 <Link
                   href="https://www.ktourmap.com/spotDetails.jsp?contentId=2818498"
                   target="_blank"
+                  tabIndex="-1"
                 >
                   행사보러가기
                 </Link>
@@ -62,9 +68,13 @@ const Banner = () => {
             </div>
 
             <div>
-              <Img src={post4}></Img>
-              <Button>
-                <Link href="https://hansanmosi.kr/home" target="_blank">
+              <Img src={post4} alt="main"></Img>
+              <Button tabIndex="-1">
+                <Link
+                  href="https://hansanmosi.kr/home"
+                  target="_blank"
+                  tabIndex="-1"
+                >
                   행사보러가기
                 </Link>
               </Button>
@@ -104,6 +114,7 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   background: #000000;
+  font-size: 14px;
   border-radius: 18px;
   border: none;
   cursor: pointer;

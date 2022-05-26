@@ -91,6 +91,7 @@ const MyEdit = () => {
     <Container>
       <HeaderDiv>
         <img
+          alt="back"
           src={back}
           onClick={() => {
             history.goBack();
@@ -104,9 +105,9 @@ const MyEdit = () => {
           {preview !== "delete" ? (
             <>
               {preview === null ? (
-                <img src={loginUser.profileImg} />
+                <img src={loginUser.profileImg} alt="profile" />
               ) : (
-                <img src={preview} />
+                <img src={preview} alt="preview" />
               )}
             </>
           ) : null}
@@ -117,7 +118,7 @@ const MyEdit = () => {
               setPreview("delete");
             }}
           >
-            <img src={x} />
+            <img src={x} alt="cancel" />
           </ProfileDeleteBtn>
         )}
 

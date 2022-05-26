@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Router } from "react-router";
+import { Route, Router, Switch } from "react-router";
 import MainPage from "./pages/MainPage";
 import Planning from "./pages/Planning";
 import Calendar from "./pages/Calendar";
@@ -34,6 +34,7 @@ import prize3 from "./static/images/prize3.png";
 import termtext from "./static/images/termtext.png";
 import favicon from "./static/images/icon/favicon.png";
 import Withdrawal from "./pages/Withdrawal";
+import NotFound from "./shared/NotFound";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -62,51 +63,62 @@ function App(props) {
 
       <Fullscreen>
         <Textdiv>
-          <img src={termtext} />
+          <img src={termtext} alt="text" />
         </Textdiv>
         <Imgdiv1>
-          <img src={step1} />
-          <img src={step2} />
+          <img src={step1} alt="step1" />
+          <img src={step2} alt="step2" />
           <a
             href="https://docs.google.com/forms/d/e/1FAIpQLSf0kLKK-rQzy0jgcxsIXGRzv659r0iTUlpjWCtYouuBaCzXaw/viewform"
             target="_black"
           >
-            <img src={step3} />
+            <img src={step3} alt="step3" />
           </a>
         </Imgdiv1>
         <Imgdiv2>
-          <img src={prize1} />
-          <img src={prize2} />
-          <img src={prize3} />
+          <img src={prize1} alt="prize1" />
+          <img src={prize2} alt="prize2" />
+          <img src={prize3} alt="prize3" />
         </Imgdiv2>
         <Wrap>
           <MobileFrame className="MobileFramePage">
-            <Route path="/" exact component={MainPage} />
-            <Route path="/planning/:postId" exact component={Planning} />
-            <Route path="/planning" exact component={Calendar} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/emailcheck" exact component={Emailcheck} />
-            <Route path="/signup" exact component={Signup} />
-            <Route path="/search" exact component={Search} />
-            <Route path="/user/kakao/callback" component={KakaoRedirect} />
-            <Route path="/user/google/callback" component={GoogleRedirect} />
-            <Route path="/uploadcomplete" component={UploadComplete} />
-            <Route path="/myplan" component={Myplan} />
-            <Route path="/mypage" component={Mypage} exact />
-            <Route path="/mypage/edit" component={MyEdit} exact />
-            <Route
-              path="/mypage/edit/withdrawal"
-              component={Withdrawal}
-              exact
-            />
-            <Route path="/mypage/scrap" component={Myscrap} exact />
-            <Route path="/mypage/review" component={MyReview} exact />
-            <Route path="/detail/:id" exact component={Detail} />
-            <Route
-              path="/detail/:productId/write"
-              exact
-              component={ReviewDetail}
-            />
+            <Switch>
+              <Route path="/" exact component={MainPage} />
+              <Route path="/planning/:postId" exact component={Planning} />
+              <Route path="/planning" exact component={Calendar} />
+              <Route path="/login" exact component={Login} />
+              <Route path="/emailcheck" exact component={Emailcheck} />
+              <Route path="/signup" exact component={Signup} />
+              <Route path="/search" exact component={Search} />
+              <Route
+                path="/user/kakao/callback"
+                component={KakaoRedirect}
+                exact
+              />
+              <Route
+                path="/user/google/callback"
+                component={GoogleRedirect}
+                exact
+              />
+              <Route path="/uploadcomplete" component={UploadComplete} exact />
+              <Route path="/myplan" component={Myplan} exact />
+              <Route path="/mypage" component={Mypage} exact />
+              <Route path="/mypage/edit" component={MyEdit} exact />
+              <Route
+                path="/mypage/edit/withdrawal"
+                component={Withdrawal}
+                exact
+              />
+              <Route path="/mypage/scrap" component={Myscrap} exact />
+              <Route path="/mypage/review" component={MyReview} exact />
+              <Route path="/detail/:id" exact component={Detail} />
+              <Route
+                path="/detail/:productId/write"
+                exact
+                component={ReviewDetail}
+              />
+              <Route path="/*" component={NotFound} exact />
+            </Switch>
           </MobileFrame>
         </Wrap>
       </Fullscreen>

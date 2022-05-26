@@ -8,8 +8,8 @@ import back from "../static/images/icon/back.png";
 import { useHistory } from "react-router";
 import { getKeywordPostDB, keywordDB } from "../redux/module/post";
 import SearchItem from "../components/search/SearchItem";
-import NotFound from "../shared/NotFound";
 import InfinityScroll from "../shared/InfinityScroll";
+import NotFoundSearchList from "../shared/NotFoundSearchList";
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -54,21 +54,20 @@ const Search = () => {
   return (
     <Container>
       <HeaderDiv>
-        <Wrap>
-          <Img
-            src={back}
-            onClick={() => {
-              history.push("/");
-            }}
-          ></Img>
-          <Icon>
-            <I src={search}></I>
-          </Icon>
-          <Input
-            placeholder="어떤 여행 계획표를 찾으시나요?"
-            onKeyPress={(e) => searchEnter(e)}
-          />
-        </Wrap>
+        <Back
+          alt="back"
+          src={back}
+          onClick={() => {
+            history.push("/");
+          }}
+        />
+        <Icon>
+          <img src={search} alt="search" />
+        </Icon>
+        <input
+          placeholder="어떤 여행 계획표를 찾으시나요?"
+          onKeyPress={(e) => searchEnter(e)}
+        />
       </HeaderDiv>
       {/* 추천키워드 */}
       <Suggest>
@@ -86,7 +85,7 @@ const Search = () => {
       <Title>{keyWord} 여행계획표 </Title>
       {/* 검색리스트 페이지 */}
       {searchList.length === 0 && serching === true ? (
-        <NotFound />
+        <NotFoundSearchList />
       ) : (
         <ContentDiv ref={contentDivRef}>
           <InfinityScroll
@@ -134,11 +133,32 @@ const Div = styled.div`
 
 const HeaderDiv = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  padding: 20px 10px 0px 10px;
+  input {
+    width: 80%;
+    margin-right: 20px;
+    margin-left: 3px;
+    border: none;
+    border-bottom: 1px solid black;
+    height: 30px;
+    font-size: 16px;
+    &:focus {
+      outline: none;
+      border-bottom: 1px solid ${({ theme }) => theme.colors.mainGreen};
+    }
+  }
 `;
-
+const Back = styled.img`
+  width: 30px;
+`;
+const Icon = styled.div`
+  img {
+    margin-top: 1px;
+    width: 28px;
+  }
+`;
 const Suggest = styled.div`
   padding: 25px 15px;
   height: 100px;
@@ -179,11 +199,6 @@ const Input = styled.input`
   }
 `;
 
-const I = styled.img`
-  margin: 0 auto;
-  margin-left: 10px;
-`;
-
 const Img = styled.img`
   left: 15px;
   top: 25px;
@@ -205,14 +220,4 @@ const Title = styled.div`
   font-weight: 600;
   font-size: 18px;
   color: ${({ theme }) => theme.colors.text1};
-`;
-
-const Wrap = styled.div`
-  display: flex;
-  justify-content: left;
-  align-items: center;
-`;
-
-const Icon = styled.div`
-  margin-right: 10px;
 `;

@@ -90,7 +90,7 @@ const ReviewItem = ({
       <Card>
         <UpperContents>
           <Profile>
-            <ProfileImg src={profileImgUrl}></ProfileImg>
+            <ProfileImg src={profileImgUrl} alt="profile"></ProfileImg>
             <div>
               <p>{nickName}</p>
               <small>{displayedAt(dateMillisecond)}</small>
@@ -120,7 +120,7 @@ const ReviewItem = ({
 
         {reviewImgUrl ? (
           <Image onClick={onClick}>
-            <ImagePop src={reviewImgUrl}></ImagePop>
+            <ImagePop src={reviewImgUrl} alt="review"></ImagePop>
           </Image>
         ) : (
           ""

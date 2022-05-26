@@ -51,7 +51,7 @@ const ReviewList = ({
         <small>{displayedAt(dateMillisecond)}</small>
       </SocialDiv>
       <Box>
-        {reviewImgUrl ? <Img src={reviewImgUrl}></Img> : null}
+        {reviewImgUrl ? <Img src={reviewImgUrl} alt="review"></Img> : null}
         <Text>{reviewContents}</Text>
       </Box>
     </Container>

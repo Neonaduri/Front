@@ -85,7 +85,7 @@ const MainPage = ({ history }) => {
         {/* 인기 여행 */}
 
         <a href="https://forms.gle/B8pWhmu3pDFNwsMe9" target="_blank">
-          <AdImg src={ad}></AdImg>
+          <AdImg src={ad} alt="location"></AdImg>
         </a>
         {/* 지역별 여행 */}
         <Container>

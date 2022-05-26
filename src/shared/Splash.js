@@ -5,7 +5,7 @@ import splash from "../static/images/bgImage/splash.png";
 const Splash = () => {
   return (
     <Outter>
-      <img src={splash}></img>
+      <img src={splash} alt="splash"></img>
     </Outter>
   );
 };

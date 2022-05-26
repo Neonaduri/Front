@@ -258,6 +258,7 @@ const Schedule = (props) => {
               <div>
                 <h4>{p.placeName}</h4>
                 <img
+                  alt="menu"
                   src={hamburger}
                   onClick={() => {
                     hamburgerNum === null

@@ -14,7 +14,7 @@ const BookedPostcard = () => {
         return (
           <PostCard key={idx}>
             <div>
-              <img src={post.postImg}></img>
+              <img src={post.postImg} alt="postimg"></img>
             </div>
             <div>
               <span>{post.postTitle}</span>

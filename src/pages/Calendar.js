@@ -106,7 +106,7 @@ const Calendar = () => {
   return (
     <>
       <Titlediv>
-        <img src={backicon} onClick={() => history.goBack()} />
+        <img src={backicon} onClick={() => history.goBack()} alt="back" />
         <Titleline title={"새로운 계획 등록"} />
       </Titlediv>
       <Container>
@@ -129,7 +129,7 @@ const Calendar = () => {
             <label htmlFor="area">지역</label>
             <div onClick={openLoca}>
               <span>{locationInBtn}</span>
-              <img src={downbtn} />
+              <img src={goRight} alt="menu" />
             </div>
             <CustomSheet
               rootId="root"
@@ -160,7 +160,7 @@ const Calendar = () => {
             <label htmlFor="theme">테마</label>
             <div onClick={openTheme}>
               <span>{themeInBtn}</span>
-              <img src={downbtn} />
+              <img src={goRight} alt="menu" />
             </div>
             <CustomSheet
               rootId="root"
@@ -192,11 +192,11 @@ const Calendar = () => {
         <Datediv>
           <span>날짜선택</span>
           <div onClick={open}>
-            <img src={calender} style={{ height: "35px" }} />
+            <img src={calender} style={{ height: "35px" }} alt="calender" />
             <span>
               {startDate}({today}) ~ {endDate}({endday})
             </span>
-            <img src={goRight} style={{ height: "18px" }} />
+            <img src={goRight} style={{ height: "16px" }} alt="go" />
           </div>
           <CustomSheet
             rootId="root"
@@ -285,7 +285,7 @@ const Themediv = styled.div`
     border-radius: 8px;
     cursor: pointer;
     img {
-      width: 12px;
+      width: 14px;
     }
   }
 `;
@@ -306,7 +306,7 @@ const Locationdiv = styled.div`
     border-radius: 8px;
     cursor: pointer;
     img {
-      width: 12px;
+      width: 14px;
     }
   }
 `;

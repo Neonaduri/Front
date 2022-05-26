@@ -77,7 +77,6 @@ export const getCommentDB = (postId, pageno) => {
         start: 2,
         lastPage: response.data.islastPage,
       };
-      console.log(response);
       if (response.status === 200) {
         dispatch(getComment(response.data.reviewList, paging));
         dispatch(totalElements(response.data.totalElements));

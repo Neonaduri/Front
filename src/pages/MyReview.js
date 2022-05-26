@@ -9,6 +9,7 @@ import goRight from "../static/images/icon/goRight.png";
 import { deleteCommentInMypageDB } from "../redux/module/user";
 import Footer from "../components/common/Footer";
 import ModalfixTime from "../components/common/ModalfixTime";
+import NopostReview from "../components/mypage/NopostReview";
 
 const MyReview = () => {
   const dispatch = useDispatch();
@@ -47,10 +48,14 @@ const MyReview = () => {
     dispatch(userAction.getMyReviewDB());
   }, []);
 
+  if (myReview?.length === 0) {
+    return <NopostReview />;
+  }
   return (
     <Container>
       <HeaderDiv>
         <img
+          alt="back"
           src={back}
           onClick={() => {
             history.goBack();
@@ -88,6 +93,7 @@ const MyReview = () => {
                 {review.reviewImgUrl === null ||
                 review.reviewImgUrl === "" ? null : (
                   <img
+                    alt="review"
                     src={review.reviewImgUrl}
                     onClick={() => {
                       history.push(`/detail/${review.postId}`);
@@ -103,7 +109,7 @@ const MyReview = () => {
                 >
                   게시물보기
                 </span>
-                <img src={goRight} />
+                <img src={goRight} alt="go" />
               </CardFooterDiv>
             </CardContainer>
           );
@@ -125,6 +131,7 @@ const MyReview = () => {
     </Container>
   );
 };
+
 const FooterDiv = styled.div`
   height: 8%;
 `;

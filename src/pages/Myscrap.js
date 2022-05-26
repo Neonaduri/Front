@@ -32,6 +32,7 @@ const Myscrap = () => {
     <Container>
       <HeaderDiv>
         <img
+          alt="back"
           src={back}
           onClick={() => {
             history.goBack();
@@ -54,7 +55,7 @@ const Myscrap = () => {
               return (
                 <CardContainer key={idx}>
                   <ImgDiv>
-                    <img src={plan.postImgUrl} />
+                    <img src={plan.postImgUrl} alt="post" />
                   </ImgDiv>
                   <ContentDiv
                     onClick={() => history.push(`/detail/${plan.postId}`)}
@@ -73,12 +74,14 @@ const Myscrap = () => {
                   <div>
                     {plan.islike ? (
                       <img
+                        alt="onwish"
                         src={wishgreen}
                         onClick={(e) => clickWishBtn(e)}
                         id={plan.postId}
                       />
                     ) : (
                       <img
+                        alt="wish"
                         src={wish}
                         onClick={(e) => clickWishBtn(e)}
                         id={plan.postId}
