@@ -1,5 +1,4 @@
-import React, { forwardRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { clickWishSearchPostDB } from "../../redux/module/post";
 import styled from "styled-components";

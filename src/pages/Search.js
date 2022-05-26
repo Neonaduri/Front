@@ -12,7 +12,6 @@ import SearchInput from "../components/search/SearchInput";
 
 const Search = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [pageno, setPageno] = useState(1);
   const [serching, setSearching] = useState(false);
   const searchList = useSelector((state) => state.post.searchList);
@@ -24,7 +23,7 @@ const Search = () => {
 
   useEffect(() => {
     dispatch(getKeywordPostDB(keyWord, pageno));
-  }, []);
+  }, [keyWord]);
 
   if (lastPage === undefined) {
     lastPage = true;
@@ -50,8 +49,6 @@ const Search = () => {
           </InfinityScroll>
         </ContentDiv>
       )}
-
-      <Footer />
     </Container>
   );
 };
@@ -59,8 +56,8 @@ const Search = () => {
 export default Search;
 
 const ContentDiv = styled.div`
-  margin-top: 20px;
-  height: 80%;
+  padding-bottom: 60px;
+  height: 100%;
   overflow-y: scroll;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
@@ -70,5 +67,5 @@ const ContentDiv = styled.div`
 `;
 
 const Container = styled.div`
-  height: 97%;
+  height: 100%;
 `;

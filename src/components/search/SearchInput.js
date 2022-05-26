@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
@@ -8,7 +8,6 @@ import search from "../../static/images/icon/search.png";
 
 const SearchInput = () => {
   const [serching, setSearching] = useState(false);
-  const [pageno, setPageno] = useState(1);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -54,7 +53,6 @@ const HeaderDiv = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  /* background-color: tomato; */
 `;
 
 const Container = styled.div`

@@ -23,13 +23,15 @@ export default HeaderDiv;
 
 const HeaderContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 25px 10px;
+  padding: 20px 10px;
   p {
     margin: 0 auto;
     font-weight: 600;
     font-size: 18px;
     color: #363636;
+    padding-right: 15px;
   }
 
   img {

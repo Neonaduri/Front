@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import Footer from "../components/common/Footer";
 import HeaderDiv from "../components/search/HeaderDiv";
 import Search from "./Search";
 
@@ -11,9 +12,9 @@ const ThemeSearch = (props) => {
     <Container>
       <Wrap>
         <HeaderDiv keyWord={keyWord} />
-
         <Search />
       </Wrap>
+      <Footer />
     </Container>
   );
 };
@@ -21,10 +22,9 @@ const ThemeSearch = (props) => {
 export default ThemeSearch;
 
 const Wrap = styled.div`
-  padding-bottom: 10px;
   height: 100%;
 `;
 
 const Container = styled.div`
-  height: 100%;
+  height: 110%;
 `;

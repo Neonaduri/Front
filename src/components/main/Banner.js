@@ -165,7 +165,6 @@ const StyledSlide = styled(Slider)`
   }
 
   .slick-dots {
-    /* display: none !important; */
     margin-bottom: 80px;
   }
 `;
