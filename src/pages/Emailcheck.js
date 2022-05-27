@@ -4,9 +4,9 @@ import { userAction } from "../redux/module/user";
 import Modal from "../components/common/Modal";
 import { useSelector } from "react-redux";
 import Signup from "./Signup";
-import { FaAngleLeft } from "react-icons/fa";
 import styled from "styled-components";
 import Button from "../components/elements/Button";
+import back from "../static/images/icon/back.png";
 
 const Emailcheck = ({ history }) => {
   const dispatch = useDispatch();
@@ -43,21 +43,15 @@ const Emailcheck = ({ history }) => {
   };
   return (
     <Container>
-      <div
-        style={{
-          position: "absolute",
-          fontSize: "30px",
-          top: "25px",
-          left: "5px",
-        }}
-      >
-        <FaAngleLeft
+      <BackBtndiv>
+        <img
+          src={back}
           onClick={() => {
             dispatch(userAction.emailCheck(null));
             history.push("/login");
           }}
         />
-      </div>
+      </BackBtndiv>
       <Headerdiv>
         <span>회원가입</span>
       </Headerdiv>
@@ -99,6 +93,17 @@ const Emailcheck = ({ history }) => {
     </Container>
   );
 };
+
+const BackBtndiv = styled.div`
+  position: absolute;
+  padding: 0px 10px;
+  img {
+    width: 30px;
+    position: absolute;
+    top: 12px;
+    cursor: pointer;
+  }
+`;
 const Container = styled.div`
   position: relative;
 `;

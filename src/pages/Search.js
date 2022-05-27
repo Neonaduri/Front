@@ -31,7 +31,7 @@ const Search = () => {
 
   return (
     <Container>
-      {searchList.length === 0 && serching === true ? (
+      {searchList.length === 0 ? (
         <NotFoundSearchList />
       ) : (
         <ContentDiv ref={contentDivRef}>
