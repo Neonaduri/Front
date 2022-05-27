@@ -9,6 +9,7 @@ import back from "../static/images/icon/back.png";
 import Titleline from "../components/elements/Titleline";
 import wish from "../static/images/icon/wish.png";
 import wishgreen from "../static/images/icon/wishGreen.png";
+import Spinner from "../shared/Spinner";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -17,10 +18,8 @@ const Detail = () => {
   const postId = params.id;
   const detailPlan = useSelector((state) => state.plan.detailPlan);
   const dayCnt = useSelector((state) => state.plan.detailPlan.dateCnt);
-  const reviewList = useSelector((state) => state.review.reviewList);
-  const totalCnt = useSelector((state) => state.review.totalElements);
+  const isLoading = useSelector((state) => state.plan.isLoading);
   const [dayNow, setDayNow] = useState(1);
-  const arr = reviewList.slice(0, 3);
 
   let dateCntArr = [];
   for (let i = 1; i <= dayCnt; i++) {
@@ -34,6 +33,10 @@ const Detail = () => {
   useEffect(() => {
     dispatch(planAction.getDetailPlanDB(postId));
   }, []);
+
+  if (isLoading === true) {
+    return <Spinner />;
+  }
 
   return (
     <Container>

@@ -13,6 +13,7 @@ import {
   getLocationPostDB,
   keywordDB,
 } from "../redux/module/post";
+import { cleanDetailPlan } from "../redux/module/plan";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonArea from "../components/main/ButtonArea";
 import Slider from "react-slick";
@@ -54,6 +55,7 @@ const MainPage = ({ history }) => {
 
   useEffect(() => {
     if (token) {
+      dispatch(cleanDetailPlan());
       dispatch(getBestPostDB());
       dispatch(keywordDB("서울"));
       dispatch(getLocationPostDB(initLocation)); //디폴트 지역설정

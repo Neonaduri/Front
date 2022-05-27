@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Map, Polyline, MapMarker } from "react-kakao-maps-sdk";
 import RTdatabase from "../../firebase";
 import {
@@ -15,7 +9,7 @@ import {
   query,
   orderByChild,
   runTransaction,
-  update,
+  onChildChanged,
 } from "firebase/database";
 import _ from "lodash";
 import { useParams } from "react-router";
@@ -38,6 +32,7 @@ const Schedule = (props) => {
   const [hamburgerNum, setHamburgerNum] = useState(null);
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
   const [deleteIndex, setDeleteIdx] = useState();
+  const [writingPlace, setWritingPlace] = useState();
 
   let latlngArr = [];
   if (place !== undefined) {
@@ -126,6 +121,16 @@ const Schedule = (props) => {
       return memoInput;
     });
   };
+
+  useEffect(() => {
+    const memoRef = ref(db, `${postId}/allPlan/day${dayNow}`);
+    onChildChanged(memoRef, (data) => {
+      const editingPlace = data.val().placeName;
+      setWritingPlace(editingPlace);
+    });
+  }, []);
+
+  console.log(writingPlace);
 
   if (latlngArr.length === 0) {
     return (
@@ -273,14 +278,27 @@ const Schedule = (props) => {
                   {p.placeName} 바로가기
                 </a>
               </span>
-              <textarea
-                id={idx}
-                isitwork={dayNow}
-                value={p.placeMemo}
-                placeholder="친구에게 메모가 실시간으로 공유됩니다!"
-                maxLength={"150"}
-                onChange={(e) => changeMemoInput(e)}
-              ></textarea>
+              {p.placeName === writingPlace ? (
+                <textarea
+                  style={{ backgroundColor: "tomato" }}
+                  id={idx}
+                  isitwork={dayNow}
+                  value={p.placeMemo}
+                  placeholder="친구에게 메모가 실시간으로 공유됩니다!"
+                  maxLength={"150"}
+                  onChange={(e) => changeMemoInput(e)}
+                ></textarea>
+              ) : (
+                <textarea
+                  id={idx}
+                  isitwork={dayNow}
+                  value={p.placeMemo}
+                  placeholder="친구에게 메모가 실시간으로 공유됩니다!"
+                  maxLength={"150"}
+                  onChange={(e) => changeMemoInput(e)}
+                ></textarea>
+              )}
+
               {hamburgerNum === idx ? (
                 <ToggleBox>
                   <div

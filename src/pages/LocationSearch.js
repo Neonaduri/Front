@@ -8,8 +8,11 @@ import { getKeywordPostDB, getLocationPostDB } from "../redux/module/post";
 import SearchItem from "../components/search/SearchItem";
 import InfinityScroll from "../shared/InfinityScroll";
 import Footer from "../components/common/Footer";
+import { useHistory } from "react-router";
+import Titleline from "../components/elements/Titleline";
 
 const LocationSearch = (props) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const keyword = useSelector((state) => state.post.keyword);
   const locationList = useSelector((state) => state.post.searchList);
@@ -24,9 +27,16 @@ const LocationSearch = (props) => {
   }, [keyword]);
 
   return (
-    <>
+    <Container>
       <Wrap>
-        <HeaderDiv keyWord={keyWord} />
+        <Headerdiv>
+          <Titleline
+            title={keyWord}
+            onClick={() => {
+              history.push("/");
+            }}
+          />
+        </Headerdiv>
         <ButtonArea />
 
         <ContentDiv ref={contentDivRef}>
@@ -45,11 +55,19 @@ const LocationSearch = (props) => {
         </ContentDiv>
       </Wrap>
       <Footer />
-    </>
+    </Container>
   );
 };
 
 export default LocationSearch;
+
+const Container = styled.div`
+  height: 100%;
+`;
+
+const Headerdiv = styled.div`
+  height: 6%;
+`;
 const ContentDiv = styled.div`
   margin-top: 20px;
   height: 90%;

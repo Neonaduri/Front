@@ -6,7 +6,6 @@ import Footer from "../components/common/Footer";
 import Titleline from "../components/elements/Titleline";
 import Password from "../components/mypage/Password";
 import { changePwdDB } from "../redux/module/user";
-import back from "../static/images/icon/back.png";
 
 const PasswordChange = () => {
   const history = useHistory();
@@ -25,8 +24,6 @@ const PasswordChange = () => {
       dispatch(changePwdDB(pwd.password, pwd.newPassword));
     }
   };
-
-  console.log(pwd);
 
   return (
     <Total>

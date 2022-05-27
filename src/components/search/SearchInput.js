@@ -26,7 +26,7 @@ const SearchInput = () => {
             alt="back"
             src={back}
             onClick={() => {
-              history.goBack();
+              history.push("/");
             }}
           ></ImgBack>
           <Img
@@ -67,7 +67,7 @@ const Input = styled.input`
   margin-right: 28px;
   border: none;
   border-bottom: 1px solid #cacaca;
-  padding: 5px 25px;
+  padding: 10px 25px;
   font-size: 16px;
   &:focus {
     outline: none;
@@ -77,12 +77,14 @@ const Input = styled.input`
 
 const Img = styled.img`
   position: relative;
-  left: 20px;
-  width: 20px;
+  left: 23px;
+  width: 30px;
 `;
 
 const ImgBack = styled.img`
-  width: 20px;
+  width: 30px;
+  margin-left: 22px;
+  margin-right: -17px;
   cursor: pointer;
 `;
 

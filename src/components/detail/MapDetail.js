@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Map, MapMarker, Polyline, MapTypeId } from "react-kakao-maps-sdk";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router";
 import styled from "styled-components";
 
 const MapDetail = ({ dayNow }) => {
@@ -70,9 +69,11 @@ const MapDetail = ({ dayNow }) => {
               key={idx}
               position={positions.latlng}
               image={{
-                src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdOqcy4%2FbtrCMX5F90p%2FqX2VdKGqVuJckRq04mq0FK%2Fimg.png",
-                size: { width: 20, height: 28 },
+                src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb90fLh%2FbtrDiQmSm8v%2FKYuLBV7kKPslmi5AH8SSA0%2Fimg.png",
+                size: { width: 22, height: 22 },
                 options: {
+                  spriteSize: new kakao.maps.Size(21, 490),
+                  spriteOrigin: new kakao.maps.Point(0, idx * 33 + 1),
                   offset: {
                     x: 10,
                     y: 15,
@@ -84,10 +85,7 @@ const MapDetail = ({ dayNow }) => {
             >
               {isOpen && (
                 <InfoWindow>
-                  <span>
-                    <span>{idx + 1}</span>
-                    {positions.title}
-                  </span>
+                  <span>{positions.title}</span>
                 </InfoWindow>
               )}
             </MapMarker>
