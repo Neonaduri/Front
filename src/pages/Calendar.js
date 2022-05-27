@@ -14,7 +14,6 @@ import Sheet from "react-modal-sheet";
 import styled from "styled-components";
 import Titleline from "../components/elements/Titleline";
 import backicon from "../static/images/icon/back.png";
-import downbtn from "../static/images/icon/downbtn.png";
 import useInput from "../components/hooks/useInput";
 import Button from "../components/elements/Button";
 

@@ -5,11 +5,9 @@ import ScheduleDetail from "../components/detail/ScheduleDetail";
 import MapDetail from "../components/detail/MapDetail";
 import { planAction } from "../redux/module/plan";
 import styled from "styled-components";
-import ReviewList from "../components/review/ReviewList";
-import addMore from "../static/images/button/addMore.png";
 import back from "../static/images/icon/back.png";
 import Titleline from "../components/elements/Titleline";
-import wish from "../static/images/icon/wish2x.png";
+import wish from "../static/images/icon/wish.png";
 import wishgreen from "../static/images/icon/wishGreen.png";
 
 const Detail = () => {
@@ -142,9 +140,12 @@ const HeadDiv = styled.div`
   justify-content: space-between;
   padding: 0px 15px;
   img {
-    width: 22px;
+    width: 30px;
     margin-top: 8px;
     cursor: pointer;
+    &:last-child {
+      width: 38px;
+    }
   }
   div {
     position: relative;
