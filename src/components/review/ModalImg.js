@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
+import cancelx from "../../static/images/icon/cancelX.png";
 
 const ModalImg = ({ reviewImgUrl, setImgModal }) => {
   return (
@@ -10,7 +11,7 @@ const ModalImg = ({ reviewImgUrl, setImgModal }) => {
           setImgModal(false);
         }}
       >
-        x
+        <img alt="cancel" src={cancelx} />
       </Button>
       <ImgBox>
         <Img src={reviewImgUrl} alt="reviewimg"></Img>
@@ -25,11 +26,10 @@ const Container = styled.div`
   background-color: black;
   position: fixed;
   top: 0;
-  left: 0;
   bottom: 0;
-  right: 0;
-  background-color: black;
   z-index: 9999;
+  display: flex;
+  flex-direction: column;
 `;
 
 const ImgBox = styled.div`
@@ -41,10 +41,12 @@ const ImgBox = styled.div`
 const Button = styled.button`
   border: 0;
   color: white;
-  font-size: 40px;
-  margin-left: 10px;
-  font-weight: lighter;
+  font-size: 20px;
   background-color: black;
+  img {
+    margin: 20px 0px;
+    width: 40px;
+  }
 `;
 
 const Img = styled.img`

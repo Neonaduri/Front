@@ -17,7 +17,6 @@ import Myplan from "./pages/Myplan";
 import Mypage from "./pages/Mypage";
 import styled, { ThemeProvider } from "styled-components";
 import MobileFrame from "./components/common/MobileFrame";
-import Search from "./pages/Search";
 import Detail from "./pages/Detail";
 import ReviewDetail from "./components/review/ReviewDetail";
 import theme from "./assets/styles/theme";

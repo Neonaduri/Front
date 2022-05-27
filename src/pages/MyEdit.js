@@ -181,6 +181,7 @@ const EmailDiv = styled.div`
     font-size: 16px;
     border-radius: 5px;
     border: 1px solid ${({ theme }) => theme.colors.text3};
+    padding: 10px;
   }
 `;
 
@@ -188,17 +189,19 @@ const NickinputDiv = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
+  justify-content: space-between;
   input {
     margin-top: 5px;
-    width: 248px;
+    width: 225px;
     height: 35px;
     font-size: 16px;
     margin-bottom: 4px;
     border-radius: 5px;
     border: 1px solid ${({ theme }) => theme.colors.text3};
+    padding: 10px;
   }
   button {
-    width: 85px;
+    width: 100px;
     font-size: 16px;
   }
 `;
