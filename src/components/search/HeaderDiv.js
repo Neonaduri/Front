@@ -2,9 +2,12 @@ import React from "react";
 import back from "../../static/images/icon/back.png";
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import { getKeywordPostDB, keywordDB } from "../../redux/module/post";
+import { useDispatch } from "react-redux";
 
 const HeaderDiv = (props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   return (
     <HeaderContainer>
@@ -13,6 +16,7 @@ const HeaderDiv = (props) => {
         src={back}
         onClick={() => {
           history.goBack();
+          dispatch(keywordDB(""));
         }}
       ></img>
       <p>{props.keyWord}</p>

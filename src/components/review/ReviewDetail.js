@@ -18,6 +18,7 @@ import InfinityScroll from "../../shared/InfinityScroll";
 import x from "../../static/images/icon/x.png";
 import { set } from "lodash";
 import Spinner from "../../shared/Spinner";
+import NopostReview from "../mypage/NopostReview";
 
 const ReviewDetail = () => {
   const params = useParams();
@@ -282,6 +283,10 @@ const ReviewDetail = () => {
     });
     setFiles(undefined);
   };
+
+  if (reviewList?.length === 0) {
+    return <NopostReview />;
+  }
 
   return (
     <Wrap>

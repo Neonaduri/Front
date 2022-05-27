@@ -21,9 +21,9 @@ const Search = () => {
   const nextPage = useSelector((state) => state.post.paging?.start);
   let lastPage = useSelector((state) => state.post.paging?.lastpage);
 
-  useEffect(() => {
-    dispatch(getKeywordPostDB(keyWord, pageno));
-  }, [keyWord]);
+  // useEffect(() => {
+  //   dispatch(getKeywordPostDB(keyWord, pageno));
+  // }, [keyWord]);
 
   if (lastPage === undefined) {
     lastPage = true;

@@ -15,6 +15,7 @@ const CLICKWISHINMYSCRAP = "clickWishInMyscrap";
 const DELETE_COMMENT_MYPAGE = "DELETE_COMMENT_MYPAGE";
 const LOADING = "loading";
 const LOGOUT = "logout";
+const CHANGE_PASSWORD = "changePassword";
 
 //init
 const init = {
@@ -32,6 +33,10 @@ const emailCheck = createAction(EMAILCHECK, (result) => ({ result }));
 const signUp = createAction(SIGNUP, (result) => ({ result }));
 const isLogin = createAction(ISLOGIN, (user) => ({ user }));
 const login = createAction(LOGIN, (result) => ({ result }));
+const changePassword = createAction(
+  CHANGE_PASSWORD,
+  (password, newPassword) => ({ password, newPassword })
+);
 const getLikedPost = createAction(GETLIKEDPOST, (posts) => ({ posts }));
 const getLikedNextPost = createAction(GETLIKEDNEXTPOST, (posts) => ({ posts }));
 const getMyReview = createAction(GETMYREVIEW, (reviews) => ({ reviews }));
@@ -188,6 +193,28 @@ const googleLoginDB = (code) => {
     } catch (err) {
       Sentry.captureException(err);
       console.log(err.response);
+    }
+  };
+};
+
+// 비밀번호 변경
+export const changePwdDB = (password, newPassword) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const response = await apis.axiosInstance.put(`/updatePassword`, {
+        password,
+        newPassword,
+      });
+
+      if (response.status === 201) {
+        console.log(response);
+        alert("비밀번호 변경이 완료되었습니다!");
+        localStorage.removeItem("token");
+        window.location.replace("/login");
+      }
+    } catch (err) {
+      Sentry.captureException(err);
+      alert(err.response.data.errorMessage);
     }
   };
 };
