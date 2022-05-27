@@ -11,8 +11,9 @@ const RecommandKeyword = () => {
   const [pageno, setPageno] = useState(1);
 
   const suggestBtnClick = (e) => {
-    dispatch(keywordDB(e.target.value));
     dispatch(getKeywordPostDB(e.target.value, pageno));
+    dispatch(keywordDB(e.target.value));
+
     history.push("/search");
   };
   return (

@@ -121,6 +121,7 @@ export const getKeywordPostDB = (keyword, pageno) => {
         lastpage: response.data.islastPage,
       };
       if (response.status === 200) {
+        console.log(response);
         if (page === 1) {
           dispatch(getSearchPost({ planList: response.data.planList, paging }));
         } else {
@@ -226,10 +227,12 @@ export default handleActions(
           draft.paging = { start: 2, islastPage: true };
           draft.isLoading = false;
           return;
+        } else {
+          draft.searchList = [];
+          draft.searchList = action.payload.searchList.planList;
+          draft.paging = action.payload.searchList.paging;
+          draft.isLoading = false;
         }
-        draft.searchList = action.payload.searchList.planList;
-        draft.paging = action.payload.searchList.paging;
-        draft.isLoading = false;
       }),
     [GET_SEARCH_NEXT_POST]: (state, action) =>
       produce(state, (draft) => {

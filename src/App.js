@@ -38,6 +38,7 @@ import LocationSearch from "./pages/LocationSearch";
 import ThemeSearch from "./pages/ThemeSearch";
 import MainSearch from "./pages/MainSearch";
 import RecommandPage from "./pages/RecommandPage";
+import PasswordChange from "./pages/PasswordChange";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -107,6 +108,7 @@ function App(props) {
                 component={Withdrawal}
                 exact
               />
+              <Route path="/mypage/password" component={PasswordChange} exact />
               <Route path="/mypage/scrap" component={Myscrap} exact />
               <Route path="/mypage/review" component={MyReview} exact />
               <Route path="/detail/:id" exact component={Detail} />
