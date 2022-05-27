@@ -33,8 +33,8 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(planAction.getDetailPlanDB(postId));
-    // dispatch(getCommentDB(postId));
   }, []);
+
   return (
     <Container>
       <HeadDiv>
@@ -46,7 +46,7 @@ const Detail = () => {
           }}
         />
         <div>
-          <Titleline title={detailPlan.postTitle} />
+          <span>{detailPlan.postTitle}</span>
           <Datespan>
             {detailPlan.startDate} ~ {detailPlan.endDate}
           </Datespan>
@@ -144,40 +144,32 @@ const HeadDiv = styled.div`
     margin-top: 8px;
     cursor: pointer;
     &:last-child {
-      width: 38px;
+      width: 37px;
     }
   }
   div {
-    position: relative;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     span {
-      margin-bottom: 10px;
+      margin: 10px;
+      &:first-child {
+        font-size: 18px;
+        margin-top: 15px;
+        margin-bottom: -10px;
+        font-family: "apple3";
+      }
     }
   }
 `;
 
 const Container = styled.div`
   position: relative;
-`;
-
-const ReviewPage = styled.div``;
-
-const ReviewBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 20px;
-  margin-top: 10px;
-  width: 100%;
-  height: 18px;
-  h2 {
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 18px;
-    color: ${({ theme }) => theme.colors.text1};
-  }
-  img {
-    cursor: pointer;
+  overflow-y: scroll;
+  height: 100%;
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 

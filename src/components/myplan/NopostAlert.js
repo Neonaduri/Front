@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Titleline from "../elements/Titleline";
 import imgLogin from "../../static/images/icon/nopostCharacter.webp";
 import { useHistory } from "react-router";
 import Footer from "../common/Footer";
@@ -13,9 +12,6 @@ const NopostAlert = ({ mainContent, btnContent, pushUrl, titleContent }) => {
   return (
     <Container>
       <NopostContainer>
-        <TitleDiv>
-          <Titleline title={titleContent} />
-        </TitleDiv>
         <ContentDiv>
           <span>{mainContent}</span>
           <Img src={imgLogin} alt="character" />

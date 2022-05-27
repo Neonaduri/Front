@@ -7,7 +7,6 @@ import back from "../../static/images/icon/back.png";
 import search from "../../static/images/icon/search.png";
 
 const SearchInput = () => {
-  const [serching, setSearching] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -15,7 +14,6 @@ const SearchInput = () => {
     if (e.key === "Enter") {
       dispatch(keywordDB(e.target.value));
       dispatch(getKeywordPostDB(e.target.value));
-      setSearching(true);
       history.push("/search");
     }
   };

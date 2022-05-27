@@ -5,10 +5,11 @@ import Titleline from "../components/elements/Titleline";
 import { userAction } from "../redux/module/user";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import wish from "../static/images/icon/wish2x.png";
+import wish from "../static/images/icon/wish.png";
 import wishgreen from "../static/images/icon/wishGreen.png";
 import Footer from "../components/common/Footer";
 import InfinityScroll from "../shared/InfinityScroll";
+import Nopost from "../components/common/Nopost";
 
 const Myscrap = () => {
   const dispatch = useDispatch();
@@ -28,19 +29,20 @@ const Myscrap = () => {
     dispatch(userAction.getMyLikePostDB());
   }, []);
 
+  if (myWishList?.length === 0) {
+    return <Nopost title="스크랩 보기" content="스크랩한 여행이 없습니다." />;
+  }
+
   return (
     <Container>
-      <HeaderDiv>
-        <img
-          alt="back"
-          src={back}
+      <div>
+        <Titleline
+          title={"스크랩 보기"}
           onClick={() => {
             history.goBack();
           }}
         />
-        <Titleline title={"스크랩 보기"} />
-        <div></div>
-      </HeaderDiv>
+      </div>
       <Bodydiv ref={BodydivRef}>
         {myWishList?.length !== 0 ? (
           <InfinityScroll
@@ -71,7 +73,7 @@ const Myscrap = () => {
                       {plan.startDate} ~ {plan.endDate}
                     </Datediv>
                   </ContentDiv>
-                  <div>
+                  <Wishdiv>
                     {plan.islike ? (
                       <img
                         alt="onwish"
@@ -87,7 +89,7 @@ const Myscrap = () => {
                         id={plan.postId}
                       />
                     )}
-                  </div>
+                  </Wishdiv>
                 </CardContainer>
               );
             })}
@@ -98,6 +100,12 @@ const Myscrap = () => {
     </Container>
   );
 };
+
+const Wishdiv = styled.div`
+  img {
+    width: 40px;
+  }
+`;
 
 const Bodydiv = styled.div`
   height: 85%;
@@ -143,11 +151,12 @@ const ContentDiv = styled.div`
   flex-direction: column;
   margin-right: 10px;
   width: 153px;
+  margin-left: 3px;
 `;
 
 const ImgDiv = styled.div`
   img {
-    width: 153px;
+    width: 150px;
     height: 95px;
     border-radius: 5px;
     object-fit: cover;
@@ -160,24 +169,6 @@ const CardContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 10px 13px;
-`;
-
-const HeaderDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0px 15px;
-  margin-bottom: 20px;
-  height: 7%;
-  img {
-    width: 22px;
-    margin-top: 8px;
-    cursor: pointer;
-  }
-  div {
-    padding-left: 30px;
-  }
 `;
 
 export default Myscrap;

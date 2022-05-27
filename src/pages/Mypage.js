@@ -26,9 +26,12 @@ const Mypage = () => {
   return (
     <Container>
       <HeaderDiv>
-        <div></div>
-        <Titleline title={"마이페이지"} />
-        <div></div>
+        <Titleline
+          title={"마이페이지"}
+          onClick={() => {
+            history.goBack();
+          }}
+        />
       </HeaderDiv>
       <UserinfoDiv>
         <div>
@@ -122,11 +125,6 @@ const UserinfoDiv = styled.div`
 `;
 
 const HeaderDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  height: 7%;
   background-color: white;
 `;
 

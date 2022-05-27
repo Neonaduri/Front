@@ -16,9 +16,8 @@ import ReviewItem from "./ReviewItem";
 import Camera from "../../static/images/icon/camera.png";
 import InfinityScroll from "../../shared/InfinityScroll";
 import x from "../../static/images/icon/x.png";
-import { set } from "lodash";
 import Spinner from "../../shared/Spinner";
-import NopostReview from "../mypage/NopostReview";
+import Nopost from "../common/Nopost";
 
 const ReviewDetail = () => {
   const params = useParams();
@@ -153,6 +152,7 @@ const ReviewDetail = () => {
       dispatch(addCommentDB(postId, formdata, config));
     } else {
       const formdata = new FormData();
+      console.log(compressedFiles);
       formdata.append("reviewImgFile", compressedFiles);
       formdata.append("reviewContents", reviewItemData.reviewContents);
       const config = {
@@ -284,10 +284,6 @@ const ReviewDetail = () => {
     setFiles(undefined);
   };
 
-  if (reviewList?.length === 0) {
-    return <NopostReview />;
-  }
-
   return (
     <Wrap>
       <ReviewBox>
@@ -304,7 +300,7 @@ const ReviewDetail = () => {
         <div> </div>
       </ReviewBox>
       <Middlediv ref={middledivRef}>
-        {reviewList.length > 6 ? (
+        {reviewList.length !== 0 ? (
           <InfinityScroll
             callNext={() => {
               dispatch(getNextCommentDB(postId, paging.start));
@@ -330,21 +326,11 @@ const ReviewDetail = () => {
             </Container>
           </InfinityScroll>
         ) : (
-          <Container>
-            {reviewList &&
-              reviewList.map((item, id) => {
-                return (
-                  <ReviewItem
-                    setReviewItemData={setReviewItemData}
-                    cancelEdit={cancelEdit}
-                    handleEdit={handleEdit}
-                    isEdit={isEdit}
-                    key={id}
-                    {...item}
-                  />
-                );
-              })}
-          </Container>
+          <Nopost
+            btnhide={true}
+            content="첫 댓글을 달아주세요!"
+            backbtn={false}
+          />
         )}
       </Middlediv>
 
@@ -510,12 +496,13 @@ const Label = styled.label`
 
 const ContainerInput = styled.div`
   width: 100%;
-  background: #ffffff;
+
   border-radius: 0px;
   position: fixed;
   background-color: white;
   bottom: 0;
   border-top: 1px solid ${({ theme }) => theme.colors.borderColor};
+  z-index: 9999;
 `;
 
 const Middlediv = styled.div`
@@ -571,17 +558,18 @@ const ReviewBox = styled.div`
   align-items: center;
   width: 100%;
   padding: 5px 10px;
-  margin-top: 20px;
+  margin-top: 10px;
   img {
     width: 28px;
     cursor: pointer;
-    margin-right: -20px;
+    margin-right: -24px;
   }
   h2 {
-    font-weight: 700;
+    font-family: "apple3";
     font-size: 18px;
     color: ${({ theme }) => theme.colors.text1};
     span {
+      font-family: "apple3";
       margin-left: 4px;
     }
   }

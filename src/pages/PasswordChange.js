@@ -30,17 +30,14 @@ const PasswordChange = () => {
 
   return (
     <Total>
-      <HeaderDiv>
-        <img
-          alt="back"
-          src={back}
+      <div>
+        <Titleline
+          title="비밀번호 변경"
           onClick={() => {
             history.goBack();
           }}
         />
-        <Titleline title="비밀번호 변경" />
-        <div></div>
-      </HeaderDiv>
+      </div>
 
       <Content>
         <Password
@@ -69,23 +66,6 @@ const PasswordChange = () => {
 };
 
 export default PasswordChange;
-
-const HeaderDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0px 15px;
-  background-color: white;
-  img {
-    width: 22px;
-    margin-top: 8px;
-    cursor: pointer;
-  }
-  div {
-    padding-left: 30px;
-  }
-`;
 
 const Button = styled.button`
   width: 335px;

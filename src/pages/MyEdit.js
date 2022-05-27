@@ -90,15 +90,12 @@ const MyEdit = () => {
   return (
     <Container>
       <HeaderDiv>
-        <img
-          alt="back"
-          src={back}
+        <Titleline
+          title={"내 계정관리"}
           onClick={() => {
             history.goBack();
           }}
         />
-        <Titleline title={"내 계정관리"} />
-        <div></div>
       </HeaderDiv>
       <UserinfoDiv>
         <div>
@@ -154,7 +151,13 @@ const MyEdit = () => {
         </div>
       </EditDiv>
       <LastDiv>
-        <span>탈퇴하기</span>
+        <span
+          onClick={() => {
+            history.push("edit/withdrawal");
+          }}
+        >
+          탈퇴하기
+        </span>
       </LastDiv>
       <Footer />
     </Container>
@@ -282,20 +285,7 @@ const UserinfoDiv = styled.div`
 `;
 
 const HeaderDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0px 15px;
   background-color: white;
-  img {
-    width: 22px;
-    margin-top: 8px;
-    cursor: pointer;
-  }
-  div {
-    padding-left: 30px;
-  }
 `;
 
 export default MyEdit;
