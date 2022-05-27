@@ -52,10 +52,8 @@ export const addCommentDB = (postId, formdata, config) => {
         formdata,
         config
       );
-      /////여기 수정(백엔드에서 데이터 다시받기)
       if (response.status === 201) {
         dispatch(addComment(response.data));
-        // window.location.reload();
       }
     } catch (err) {
       Sentry.captureException(err);
@@ -72,7 +70,6 @@ export const getCommentDB = (postId, pageno) => {
       const response = await apis.axiosInstance.get(
         `/detail/reviews/${postId}/1`
       );
-
       let paging = {
         start: 2,
         lastPage: response.data.islastPage,
@@ -165,7 +162,7 @@ export const deleteCommentDB = (reviewId) => {
 
 const initialComment = {
   totalElements: 0,
-  paging: { start: null, islastPage: false },
+  paging: { start: null, islastPage: true },
   isLoading: false,
   reviewList: [
     {
@@ -207,6 +204,7 @@ export default handleActions(
         };
         draft.reviewList.unshift(data);
         draft.totalElements += 1;
+        draft.paging.lastPage = true;
       }),
     [EDIT_COMMENT]: (state, action) =>
       produce(state, (draft) => {

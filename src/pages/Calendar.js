@@ -104,10 +104,14 @@ const Calendar = () => {
   }
   return (
     <>
-      <Titlediv>
-        <img src={backicon} onClick={() => history.goBack()} alt="back" />
-        <Titleline title={"새로운 계획 등록"} />
-      </Titlediv>
+      <div>
+        <Titleline
+          title={"새로운 계획 등록"}
+          onClick={() => {
+            history.push("/myplan");
+          }}
+        />
+      </div>
       <Container>
         <PostTitlediv>
           <label htmlFor="title">여행명</label>
@@ -337,20 +341,6 @@ const Container = styled.div`
   padding: 0px 20px;
   div {
     margin-bottom: 40px;
-  }
-`;
-
-const Titlediv = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 10px 10px;
-  div {
-    margin: auto;
-    padding-left: 10px;
-  }
-  img {
-    width: 22px;
-    margin-top: 8px;
   }
 `;
 

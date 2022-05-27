@@ -1,20 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Map, MapMarker, Polyline, MapTypeId } from "react-kakao-maps-sdk";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import Titleline from "../../components/elements/Titleline";
-import back from "../../static/images/icon/back.png";
 
 const MapDetail = ({ dayNow }) => {
   const { kakao } = window;
-  const detailPlan = useSelector((state) => state.plan.detailPlan);
   const planByDay = useSelector((state) => state.plan?.detailPlan.days);
-  const history = useHistory();
   const [isOpen, setIsOpen] = useState();
   const [showTraffic, setShowTraffic] = useState(false);
   let latlngArr = [];
   let markerArr = [];
+
   if (!planByDay) {
     return null;
   }
@@ -39,7 +36,7 @@ const MapDetail = ({ dayNow }) => {
   } else if (dayPlanPlaces.length === 0) {
     return (
       <>
-        <MapContainer>
+        <MapContainer id="container">
           <Map
             onClick={() => setIsOpen(false)}
             center={{ lat: 37.4674137335801, lng: 126.434614441118 }}
@@ -57,7 +54,7 @@ const MapDetail = ({ dayNow }) => {
 
   return (
     <div>
-      <MapContainer>
+      <MapContainer id="container">
         <Map
           onClick={() => setIsOpen(false)}
           center={markerArr[0].latlng}

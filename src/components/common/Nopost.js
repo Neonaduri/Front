@@ -5,25 +5,33 @@ import Titleline from "../elements/Titleline";
 import imgLogin from "../../static/images/icon/loginCharacter.png";
 import back from "../../static/images/icon/back.png";
 import { useHistory } from "react-router";
+import Button from "../elements/Button";
 
-const NopostReview = () => {
+const Nopost = ({ title, content, btnhide = false }) => {
   const history = useHistory();
   return (
     <Container>
-      <HeaderDiv>
-        <img
-          alt="back"
-          src={back}
+      <div>
+        <Titleline
+          title={title}
           onClick={() => {
             history.goBack();
           }}
         />
-        <Titleline title={"내 댓글 보기"} />
-        <div></div>
-      </HeaderDiv>
+      </div>
       <NoreviewDiv>
         <img src={imgLogin} alt="character" />
-        <span>작성한 댓글이 없습니다</span>
+        <span>{content}</span>
+        {btnhide ? null : (
+          <Button
+            content="뒤로가기"
+            width="150px"
+            onClick={() => {
+              history.goBack();
+            }}
+            height="slim"
+          ></Button>
+        )}
       </NoreviewDiv>
 
       <FooterDiv>
@@ -47,28 +55,14 @@ const NoreviewDiv = styled.div`
   }
   span {
     margin-top: 30px;
-    font-size: 16px;
+    font-size: 19px;
+    margin-bottom: 20px;
   }
 `;
-const HeaderDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0px 15px;
-  height: 8%;
-  img {
-    width: 22px;
-    margin-top: 8px;
-    cursor: pointer;
-  }
-  div {
-    padding-left: 30px;
-  }
-`;
+
 const Container = styled.div`
   width: 100%;
   height: 100%;
 `;
 
-export default NopostReview;
+export default Nopost;

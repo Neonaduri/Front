@@ -9,7 +9,7 @@ import goRight from "../static/images/icon/goRight.png";
 import { deleteCommentInMypageDB } from "../redux/module/user";
 import Footer from "../components/common/Footer";
 import ModalfixTime from "../components/common/ModalfixTime";
-import NopostReview from "../components/mypage/NopostReview";
+import Nopost from "../components/common/Nopost";
 
 const MyReview = () => {
   const dispatch = useDispatch();
@@ -49,21 +49,18 @@ const MyReview = () => {
   }, []);
 
   if (myReview?.length === 0) {
-    return <NopostReview />;
+    return <Nopost title="내 댓글보기" content="작성한 댓글이 없습니다." />;
   }
   return (
     <Container>
-      <HeaderDiv>
-        <img
-          alt="back"
-          src={back}
+      <div>
+        <Titleline
+          title={"내 댓글 보기"}
           onClick={() => {
             history.goBack();
           }}
         />
-        <Titleline title={"내 댓글 보기"} />
-        <div></div>
-      </HeaderDiv>
+      </div>
       <BodyDiv>
         {myReview?.map((review, idx) => {
           const date = new Date(review.modifiedAt);
@@ -207,23 +204,6 @@ const CardHeadDiv = styled.div`
 const CardContainer = styled.div`
   padding: 15px 15px;
   border-bottom: 2px solid ${({ theme }) => theme.colors.borderColor};
-`;
-
-const HeaderDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0px 15px;
-  height: 8%;
-  img {
-    width: 22px;
-    margin-top: 8px;
-    cursor: pointer;
-  }
-  div {
-    padding-left: 30px;
-  }
 `;
 
 const EditModal = styled.div`

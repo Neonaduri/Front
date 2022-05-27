@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "./redux/store";
 import { HelmetProvider } from "react-helmet-async";
+import ScrollToTop from "./shared/ScrollToTop";
 
 //센트리 설정
 Sentry.init({

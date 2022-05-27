@@ -1,10 +1,5 @@
-import React, { useState, useEffect, useRef, memo } from "react";
-import {
-  Map,
-  MapMarker,
-  Polyline,
-  CustomOverlayMap,
-} from "react-kakao-maps-sdk";
+import React, { useState, useEffect, useRef } from "react";
+import { Map, MapMarker, Polyline } from "react-kakao-maps-sdk";
 import styled, { keyframes } from "styled-components";
 import {
   getDatabase,
@@ -195,12 +190,6 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
       <form onSubmit={onSubmit}>
         <PlaceInput
           placeholder="검색어를 입력해주세요."
-          // onKeyDown={(e) => {
-          //   if (e.code === "Enter") {
-          //     setSearchPlace(changingKeyword);
-          //     setLatlng(undefined);
-          //   }
-          // }}
           onBlur={() => {
             setSearchPlace(changingKeyword);
             setLatlng(undefined);
@@ -282,26 +271,6 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
           strokeStyle={"solid"} // 선의 스타일입니다
         />
       </Map>
-      {/* {hidden === false ? (
-        <HideBtn
-          clickable={clickable}
-          onClick={() => {
-            setHidden(true);
-          }}
-        >
-          📂
-        </HideBtn>
-      ) : (
-        <HideBtn
-          clickable={clickable}
-          onClick={() => {
-            setHidden(false);
-          }}
-        >
-          📁
-        </HideBtn>
-      )} */}
-
       <PlaceList hidden={hidden} clickable={clickable}>
         <Slide
           sliders={markers}
@@ -615,6 +584,9 @@ const PlaceBtn = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  img {
+    width: 30px;
+  }
 `;
 const InviteTextdiv = styled.div`
   display: flex;
