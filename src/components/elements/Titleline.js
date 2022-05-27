@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import back from "../../static/images/icon/back.png";
 
-const Titleline = ({ title, onClick, backBtn = true }) => {
+const Titleline = ({ title, onClick, backbtn = true }) => {
   return (
     <Titlepart>
-      {backBtn ? <img src={back} alt="back" onClick={onClick} /> : null}
-      <span backBtn={backBtn}>{title}</span>
+      {backbtn ? <img src={back} alt="back" onClick={onClick} /> : null}
+      <span>{title}</span>
     </Titlepart>
   );
 };

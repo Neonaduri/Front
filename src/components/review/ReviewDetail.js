@@ -326,7 +326,11 @@ const ReviewDetail = () => {
             </Container>
           </InfinityScroll>
         ) : (
-          <Nopost btnhide={true} content="첫 댓글을 달아주세요!" />
+          <Nopost
+            btnhide={true}
+            content="첫 댓글을 달아주세요!"
+            backbtn={false}
+          />
         )}
       </Middlediv>
 

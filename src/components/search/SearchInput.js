@@ -12,8 +12,8 @@ const SearchInput = () => {
 
   const searchEnter = (e) => {
     if (e.key === "Enter") {
-      dispatch(getKeywordPostDB(e.target.value));
       dispatch(keywordDB(e.target.value));
+      dispatch(getKeywordPostDB(e.target.value));
       history.push("/search");
     }
   };

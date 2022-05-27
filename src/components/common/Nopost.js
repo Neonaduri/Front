@@ -7,7 +7,7 @@ import back from "../../static/images/icon/back.png";
 import { useHistory } from "react-router";
 import Button from "../elements/Button";
 
-const Nopost = ({ title, content, btnhide = false }) => {
+const Nopost = ({ title, content, btnhide = false, backbtn }) => {
   const history = useHistory();
   return (
     <Container>
@@ -17,6 +17,7 @@ const Nopost = ({ title, content, btnhide = false }) => {
           onClick={() => {
             history.goBack();
           }}
+          backbtn={backbtn}
         />
       </div>
       <NoreviewDiv>

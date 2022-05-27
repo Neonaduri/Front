@@ -44,9 +44,15 @@ const Mypage = () => {
       </UserinfoDiv>
       <PageBtnDiv>
         <MypageBtn
-          content={"내 계정 관리"}
+          content={"프로필 편집"}
           onClick={() => {
             history.push("/mypage/edit");
+          }}
+        />
+        <MypageBtn
+          content={"비밀번호 변경"}
+          onClick={() => {
+            history.push("/mypage/password");
           }}
         />
         <MypageBtn
@@ -61,6 +67,7 @@ const Mypage = () => {
             history.push("/mypage/review");
           }}
         />
+
         <LogoutBtn onClick={logoutClick}>로그아웃</LogoutBtn>
       </PageBtnDiv>
 
