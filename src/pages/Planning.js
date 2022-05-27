@@ -11,7 +11,6 @@ import SubmitBtn from "../components/planning/SubmitBtn";
 import moment from "moment";
 import Sheet from "react-modal-sheet";
 import Footer from "../components/common/Footer";
-import Logo from "../static/images/logo/Logo.png";
 import { getDatabase, ref, onValue } from "firebase/database";
 import NopostAlert from "../components/myplan/NopostAlert";
 

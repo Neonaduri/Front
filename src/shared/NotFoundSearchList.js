@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Error from "../static/images/error.png";
+import Error from "../static/images/icon/error.png";
 
 const NotFoundSearchList = () => {
   return (

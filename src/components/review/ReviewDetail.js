@@ -11,7 +11,7 @@ import {
   getCommentDB,
   getNextCommentDB,
 } from "../../redux/module/review";
-import Back from "../../static/images/button/back.png";
+import Back from "../../static/images/icon/back.png";
 import ReviewItem from "./ReviewItem";
 import Camera from "../../static/images/icon/camera.png";
 import InfinityScroll from "../../shared/InfinityScroll";
@@ -570,10 +570,12 @@ const ReviewBox = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 5px 20px;
+  padding: 5px 10px;
   margin-top: 20px;
   img {
+    width: 28px;
     cursor: pointer;
+    margin-right: -20px;
   }
   h2 {
     font-weight: 700;
