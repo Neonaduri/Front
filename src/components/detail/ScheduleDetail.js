@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import ReviewList from "../../components/review/ReviewList";
 import { getCommentDB } from "../../redux/module/review";
-import addMore from "../../static/images/button/addMore.png";
+import goRight from "../../static/images/icon/goRight.png";
 
 const ScheduleDetail = ({ dayNow }) => {
   const history = useHistory();
@@ -95,7 +95,7 @@ const ScheduleDetail = ({ dayNow }) => {
         }}
       >
         <h2>댓글({totalCnt})</h2>
-        <img src={addMore} alt="go"></img>
+        <img src={goRight} alt="go"></img>
       </ReviewBox>
 
       <ReviewPage>
@@ -127,6 +127,7 @@ const ReviewBox = styled.div`
     cursor: pointer;
   }
   img {
+    width: 28px;
     cursor: pointer;
   }
 `;
