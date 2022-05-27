@@ -38,7 +38,6 @@ import LocationSearch from "./pages/LocationSearch";
 import ThemeSearch from "./pages/ThemeSearch";
 import MainSearch from "./pages/MainSearch";
 import RecommandPage from "./pages/RecommandPage";
-import ScrollToTop from "./shared/ScrollToTop";
 
 function App(props) {
   const dispatch = useDispatch();
