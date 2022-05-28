@@ -28,7 +28,7 @@ const ReviewDetail = () => {
   const reviewList = useSelector((state) => state.review.reviewList);
   const totalCnt = useSelector((state) => state.review.totalElements);
   const paging = useSelector((state) => state.review.paging);
-  const isLoading = useSelector((state) => state.review.isLoading);
+  const isLoading = useSelector((state) => state.review.reviewLoading);
   const lastPage = useSelector((state) => state.review.paging.lastPage);
   const reviewRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
@@ -152,7 +152,6 @@ const ReviewDetail = () => {
       dispatch(addCommentDB(postId, formdata, config));
     } else {
       const formdata = new FormData();
-      console.log(compressedFiles);
       formdata.append("reviewImgFile", compressedFiles);
       formdata.append("reviewContents", reviewItemData.reviewContents);
       const config = {
@@ -330,6 +329,7 @@ const ReviewDetail = () => {
             btnhide={true}
             content="첫 댓글을 달아주세요!"
             backbtn={false}
+            footer={false}
           />
         )}
       </Middlediv>
@@ -496,7 +496,6 @@ const Label = styled.label`
 
 const ContainerInput = styled.div`
   width: 100%;
-
   border-radius: 0px;
   position: fixed;
   background-color: white;
@@ -506,7 +505,7 @@ const ContainerInput = styled.div`
 `;
 
 const Middlediv = styled.div`
-  height: 90%;
+  height: 86%;
   display: flex;
   flex-direction: column;
   overflow: scroll;
@@ -557,8 +556,8 @@ const ReviewBox = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 5px 10px;
-  margin-top: 10px;
+  padding: 0px 10px;
+  height: 6%;
   img {
     width: 28px;
     cursor: pointer;

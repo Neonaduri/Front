@@ -11,6 +11,7 @@ const COMPLETEPLAN = "completePlan";
 const GETMYPLAN = "getMyPlan";
 const GETMYPLANNEXT = "getMyPlanNextPage";
 const GETDETAILPLAN = "getDetailPlan";
+const CLEANDETAILPLAN = "cleanDetailPlan";
 const DELETEMYPLAN = "deleteMyPlan";
 const LOADING = "loading";
 const LOCATION = "location";
@@ -40,6 +41,7 @@ const getMyPlanNextPage = createAction(GETMYPLANNEXT, (myplan, paging) => ({
 const getDetailPlan = createAction(GETDETAILPLAN, (detailPlan) => ({
   detailPlan,
 }));
+export const cleanDetailPlan = createAction(CLEANDETAILPLAN, () => ({}));
 const loading = createAction(LOADING, (isLoading) => ({ isLoading }));
 export const location = createAction(LOCATION, (location) => ({ location }));
 const deleteMyPlan = createAction(DELETEMYPLAN, (postId) => ({ postId }));
@@ -191,6 +193,7 @@ const exitBrowserOnPlanDB = (postId) => {
 
 const getDetailPlanDB = (postId) => {
   return async function (dispatch, getState, { history }) {
+    dispatch(loading(true));
     try {
       const response = await apis.axiosInstance.get(`/plans/detail/${postId}`);
       // const response = RESP.DETAILPOSTIDGET;
@@ -240,7 +243,12 @@ export default handleActions(
       }),
     [GETDETAILPLAN]: (state, action) =>
       produce(state, (draft) => {
+        draft.isLoading = false;
         draft.detailPlan = action.payload.detailPlan;
+      }),
+    [CLEANDETAILPLAN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.detailPlan = [];
       }),
     [LOADING]: (state, action) =>
       produce(state, (draft) => {

@@ -55,6 +55,7 @@ const ScheduleDetail = ({ dayNow }) => {
           hour = "00";
           minute = "00";
         }
+
         return (
           <PlaceCard key={idx}>
             <Timediv>
@@ -71,13 +72,13 @@ const ScheduleDetail = ({ dayNow }) => {
             <Contentdiv>
               <div>
                 <h4>{p.placeName}</h4>
+                <a href={p.placeInfoUrl} target="_blank">
+                  정보보기
+                </a>
               </div>
               <span>{p.roadAddress}</span>
-              <UrlConnectSpan>
-                <a href={p.placeInfoUrl} target="_blank">
-                  이 장소 자세히 보기
-                </a>
-              </UrlConnectSpan>
+              <span>{p.category}</span>
+
               {userByDay && userByDay.userName === loginUser.userName ? (
                 <textarea
                   id={idx}
@@ -178,6 +179,10 @@ const Contentdiv = styled.div`
       font-size: 16px;
       margin-top: 4px;
     }
+    a {
+      font-size: 13px;
+      color: black;
+    }
   }
   textarea {
     width: 95%;
@@ -215,7 +220,7 @@ const Timediv = styled.div`
   padding-left: 15px;
   padding-top: 5px;
   div {
-    background-color: ${({ theme }) => theme.colors.mainRed};
+    background-color: #ff6442;
     width: 20px;
     height: 20px;
     color: white;

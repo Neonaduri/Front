@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Map, Polyline, MapMarker } from "react-kakao-maps-sdk";
 import RTdatabase from "../../firebase";
 import {
@@ -15,7 +9,7 @@ import {
   query,
   orderByChild,
   runTransaction,
-  update,
+  onChildChanged,
 } from "firebase/database";
 import _ from "lodash";
 import { useParams } from "react-router";
@@ -38,6 +32,7 @@ const Schedule = (props) => {
   const [hamburgerNum, setHamburgerNum] = useState(null);
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
   const [deleteIndex, setDeleteIdx] = useState();
+  const [writingPlace, setWritingPlace] = useState([]);
 
   let latlngArr = [];
   if (place !== undefined) {
@@ -127,10 +122,25 @@ const Schedule = (props) => {
     });
   };
 
+  useEffect(() => {
+    const memoRef = ref(db, `${postId}/allPlan/day${dayNow}`);
+    onChildChanged(memoRef, (data) => {
+      const editingPlace = data.val().placeName;
+      console.log(editingPlace);
+    });
+  }, [writingPlace]);
+
   if (latlngArr.length === 0) {
     return (
       <Container>
         <TitleDiv>
+          <button
+            onClick={() => {
+              props.setopen(false);
+            }}
+          >
+            닫기
+          </button>
           <span>여행 계획표</span>
         </TitleDiv>
         <DayBtndiv>
@@ -167,6 +177,13 @@ const Schedule = (props) => {
   return (
     <Container>
       <TitleDiv>
+        <button
+          onClick={() => {
+            props.setopen(false);
+          }}
+        >
+          닫기
+        </button>
         <span>여행 계획표</span>
       </TitleDiv>
       <DayBtndiv>
@@ -273,14 +290,27 @@ const Schedule = (props) => {
                   {p.placeName} 바로가기
                 </a>
               </span>
-              <textarea
-                id={idx}
-                isitwork={dayNow}
-                value={p.placeMemo}
-                placeholder="친구에게 메모가 실시간으로 공유됩니다!"
-                maxLength={"150"}
-                onChange={(e) => changeMemoInput(e)}
-              ></textarea>
+              {writingPlace.indexOf(p.placeName) !== -1 ? (
+                <textarea
+                  style={{ backgroundColor: "tomato" }}
+                  id={idx}
+                  isitwork={dayNow}
+                  value={p.placeMemo}
+                  placeholder="친구에게 메모가 실시간으로 공유됩니다!"
+                  maxLength={"150"}
+                  onChange={(e) => changeMemoInput(e)}
+                ></textarea>
+              ) : (
+                <textarea
+                  id={idx}
+                  isitwork={dayNow}
+                  value={p.placeMemo}
+                  placeholder="친구에게 메모가 실시간으로 공유됩니다!"
+                  maxLength={"150"}
+                  onChange={(e) => changeMemoInput(e)}
+                ></textarea>
+              )}
+
               {hamburgerNum === idx ? (
                 <ToggleBox>
                   <div
@@ -386,7 +416,7 @@ const DayBtn = styled.button`
   font-size: 16px;
   border-bottom: ${(props) =>
     props.idx + 1 === props.daynow ? `3px solid #56BE91` : null};
-  color: ${(props) => (props.idx + 1 === props.daynow ? "black" : null)};
+  color: ${(props) => (props.idx + 1 === props.daynow ? "black" : "#8D8D8D")};
   cursor: pointer;
 `;
 
@@ -511,18 +541,25 @@ const PlaceCard = styled.div`
 
 const TitleDiv = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-bottom: 5px;
   position: relative;
+  button {
+    border: none;
+    background-color: ${({ theme }) => theme.colors.mainGreen};
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: white;
+    width: 100px;
+    border-radius: 15px;
+    height: 30px;
+  }
   span {
     font-size: 20px;
     font-family: "apple3";
-  }
-  div {
-    position: absolute;
-    bottom: 15px;
-    right: 10px;
   }
 `;
 

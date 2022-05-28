@@ -176,7 +176,7 @@ const CardBodyDiv = styled.div`
     cursor: pointer;
   }
   p {
-    font-size: 16px;
+    font-size: 14px;
   }
 `;
 
@@ -203,7 +203,7 @@ const CardHeadDiv = styled.div`
 
 const CardContainer = styled.div`
   padding: 15px 15px;
-  border-bottom: 2px solid ${({ theme }) => theme.colors.borderColor};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
 `;
 
 const EditModal = styled.div`

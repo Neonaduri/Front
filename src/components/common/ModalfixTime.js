@@ -13,7 +13,7 @@ const ModalfixTime = (props) => {
           <main>{header}</main>
           <footer>
             <button className="close" onClick={close}>
-              닫기
+              취소
             </button>
           </footer>
         </section>
