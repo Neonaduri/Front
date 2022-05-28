@@ -132,11 +132,11 @@ const Box = styled.div`
   background: white;
   border-radius: 10px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-  width: 100%;
+  width: 160px;
   height: 60px;
   position: absolute;
   bottom: 0;
-  left: -8px;
+  left: -9px;
 `;
 
 const ImagePop = styled.img`

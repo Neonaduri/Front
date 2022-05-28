@@ -17,6 +17,7 @@ export default Button;
 const BannerBtn = styled.button`
   height: ${(props) => (props.height === "slim" ? "35px" : "45px")};
   background: ${({ theme }) => theme.colors.mainGreen};
+  margin-top: 65px;
   border-radius: 5px;
   border: none;
   color: white;

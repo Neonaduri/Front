@@ -66,10 +66,11 @@ function App(props) {
       </HelmetProvider>
 
       <Fullscreen>
-        <Textdiv>
-          <img src={termtext} alt="text" />
-        </Textdiv>
         <Imgdiv1>
+          <Textdiv>
+            <img src={termtext} alt="text" />
+          </Textdiv>
+
           <img src={step1} alt="step1" />
           <img src={step2} alt="step2" />
           <a
@@ -129,11 +130,9 @@ function App(props) {
 export default App;
 
 const Textdiv = styled.div`
-  position: absolute;
-  top: 29.5%;
-  left: 39%;
   img {
     width: 300px;
+    margin: 10px 25px;
   }
 `;
 

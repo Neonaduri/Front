@@ -90,8 +90,8 @@ const BtnArea = styled.button`
     props.selectVal === props.item ? "none" : "1px solid #cacaca"};
   color: ${(props) => (props.selectVal === props.item ? "white" : "#cacaca")};
   border-radius: 20px;
-  margin-top: 10px;
-  padding: 4px 10px;
+  /* margin-top: 10px; */
+  /* padding: 4px 0; */
   display: flex;
   flex-direction: row;
   align-items: flex-start;

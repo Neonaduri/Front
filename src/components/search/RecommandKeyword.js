@@ -66,7 +66,7 @@ const Suggest = styled.div`
 
 const Div = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   flex-wrap: wrap;
   button {
