@@ -65,20 +65,24 @@ const PasswordChange = () => {
 export default PasswordChange;
 
 const Button = styled.button`
-  width: 335px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 320px;
   height: 39px;
-  margin-left: 20px;
-  margin-top: 20px;
-  background-color: #56be91;
-  border: 0;
+  margin: 30px auto;
+  background-color: ${({ theme }) => theme.colors.mainGreen};
+  border: none;
   color: white;
-  opacity: 0.5;
+  font-size: 18px;
   border-radius: 5px;
 `;
 
-const Total = styled.div``;
+const Total = styled.div`
+  width: 100%;
+`;
 
 const Content = styled.div`
-  margin: 0 auto;
+  width: 100%;
   padding: 10px;
 `;

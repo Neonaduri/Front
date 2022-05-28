@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ButtonArea from "../components/main/ButtonArea";
 
 import styled from "styled-components";
@@ -10,49 +10,55 @@ import InfinityScroll from "../shared/InfinityScroll";
 import Footer from "../components/common/Footer";
 import { useHistory } from "react-router";
 import Titleline from "../components/elements/Titleline";
+import NotFoundSearchList from "../shared/NotFoundSearchList";
 
 const LocationSearch = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const keyword = useSelector((state) => state.post.keyword);
+  const [keyword, setKeyword] = useState("서울");
+  const inputKeyword = useSelector((state) => state.post.keyword);
   const locationList = useSelector((state) => state.post.searchList);
   const isLoading = useSelector((state) => state.post.isLoading);
   let lastPage = useSelector((state) => state.post.paging?.lastpage);
   const nextPage = useSelector((state) => state.post.paging?.start);
   const contentDivRef = useRef();
-  const keyWord = "지역별 여행계획표";
 
   useEffect(() => {
     dispatch(getLocationPostDB(keyword));
-  }, [keyword]);
+    setKeyword(inputKeyword);
+  }, []);
+  console.log(locationList);
 
   return (
     <Container>
       <Wrap>
         <Headerdiv>
           <Titleline
-            title={keyWord}
+            title="지역별 여행계획표"
             onClick={() => {
               history.push("/");
             }}
           />
         </Headerdiv>
         <ButtonArea />
-
-        <ContentDiv ref={contentDivRef}>
-          <InfinityScroll
-            callNext={() => {
-              dispatch(getKeywordPostDB(keyword, nextPage));
-            }}
-            is_next={lastPage ? false : true}
-            loading={isLoading}
-            ref={contentDivRef}
-          >
-            {locationList?.map((item, idx) => {
-              return <SearchItem key={idx} {...item} />;
-            })}
-          </InfinityScroll>
-        </ContentDiv>
+        {locationList.length === 0 ? (
+          <NotFoundSearchList />
+        ) : (
+          <ContentDiv ref={contentDivRef}>
+            <InfinityScroll
+              callNext={() => {
+                dispatch(getKeywordPostDB(keyword, nextPage));
+              }}
+              is_next={lastPage ? false : true}
+              loading={isLoading}
+              ref={contentDivRef}
+            >
+              {locationList?.map((item, idx) => {
+                return <SearchItem key={idx} {...item} />;
+              })}
+            </InfinityScroll>
+          </ContentDiv>
+        )}
       </Wrap>
       <Footer />
     </Container>

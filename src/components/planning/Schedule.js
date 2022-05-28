@@ -32,7 +32,7 @@ const Schedule = (props) => {
   const [hamburgerNum, setHamburgerNum] = useState(null);
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
   const [deleteIndex, setDeleteIdx] = useState();
-  const [writingPlace, setWritingPlace] = useState();
+  const [writingPlace, setWritingPlace] = useState([]);
 
   let latlngArr = [];
   if (place !== undefined) {
@@ -126,16 +126,21 @@ const Schedule = (props) => {
     const memoRef = ref(db, `${postId}/allPlan/day${dayNow}`);
     onChildChanged(memoRef, (data) => {
       const editingPlace = data.val().placeName;
-      setWritingPlace(editingPlace);
+      console.log(editingPlace);
     });
-  }, []);
-
-  console.log(writingPlace);
+  }, [writingPlace]);
 
   if (latlngArr.length === 0) {
     return (
       <Container>
         <TitleDiv>
+          <button
+            onClick={() => {
+              props.setopen(false);
+            }}
+          >
+            닫기
+          </button>
           <span>여행 계획표</span>
         </TitleDiv>
         <DayBtndiv>
@@ -172,6 +177,13 @@ const Schedule = (props) => {
   return (
     <Container>
       <TitleDiv>
+        <button
+          onClick={() => {
+            props.setopen(false);
+          }}
+        >
+          닫기
+        </button>
         <span>여행 계획표</span>
       </TitleDiv>
       <DayBtndiv>
@@ -278,7 +290,7 @@ const Schedule = (props) => {
                   {p.placeName} 바로가기
                 </a>
               </span>
-              {p.placeName === writingPlace ? (
+              {writingPlace.indexOf(p.placeName) !== -1 ? (
                 <textarea
                   style={{ backgroundColor: "tomato" }}
                   id={idx}
@@ -404,7 +416,7 @@ const DayBtn = styled.button`
   font-size: 16px;
   border-bottom: ${(props) =>
     props.idx + 1 === props.daynow ? `3px solid #56BE91` : null};
-  color: ${(props) => (props.idx + 1 === props.daynow ? "black" : null)};
+  color: ${(props) => (props.idx + 1 === props.daynow ? "black" : "#8D8D8D")};
   cursor: pointer;
 `;
 
@@ -529,18 +541,25 @@ const PlaceCard = styled.div`
 
 const TitleDiv = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-bottom: 5px;
   position: relative;
+  button {
+    border: none;
+    background-color: ${({ theme }) => theme.colors.mainGreen};
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: white;
+    width: 100px;
+    border-radius: 15px;
+    height: 30px;
+  }
   span {
     font-size: 20px;
     font-family: "apple3";
-  }
-  div {
-    position: absolute;
-    bottom: 15px;
-    right: 10px;
   }
 `;
 

@@ -37,6 +37,7 @@ const Detail = () => {
   if (isLoading === true) {
     return <Spinner />;
   }
+  console.log(detailPlan);
 
   return (
     <Container>
@@ -62,6 +63,10 @@ const Detail = () => {
       </HeadDiv>
       <ImageDiv>
         <img src={detailPlan.postImgUrl} alt="postimg" />
+        <div>
+          <span>{detailPlan.location}</span>
+          <span>{detailPlan.theme}</span>
+        </div>
       </ImageDiv>
       <ContentDiv>
         <DayBtnDiv>
@@ -123,8 +128,23 @@ const ContentDiv = styled.div`
 
 const ImageDiv = styled.div`
   width: 100%;
+  position: relative;
   img {
     width: 100%;
+  }
+  div {
+    position: absolute;
+    top: 95px;
+    right: 10px;
+    span {
+      padding: 3px 2px;
+      border-radius: 2px;
+      color: white;
+      background-color: #363636;
+      font-family: "apple1";
+      font-size: 11px;
+      margin-left: 3px;
+    }
   }
 `;
 

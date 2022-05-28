@@ -120,7 +120,7 @@ const Slide = ({ sliders, dayNow, callback, setInfo, info }) => {
                     inputPlanTime(place);
                   }}
                 >
-                  확정하기
+                  등록하기
                 </button>
               </div>
             </PlaceListCard>
@@ -132,45 +132,50 @@ const Slide = ({ sliders, dayNow, callback, setInfo, info }) => {
         close={closeModal}
         header={
           <TimeModal>
-            <div>
-              <select ref={timeRef}>
-                <option value="0">오전 0시</option>
-                <option value="1">오전 1시</option>
-                <option value="2">오전 2시</option>
-                <option value="3">오전 3시</option>
-                <option value="4">오전 4시</option>
-                <option value="5">오전 5시</option>
-                <option value="6">오전 6시</option>
-                <option value="7">오전 7시</option>
-                <option value="8">오전 8시</option>
-                <option value="9">오전 9시</option>
-                <option value="10">오전 10시</option>
-                <option value="11">오전 11시</option>
-                <option value="12">오후 12시</option>
-                <option value="13">오후 1시</option>
-                <option value="14">오후 2시</option>
-                <option value="15">오후 3시</option>
-                <option value="16">오후 4시</option>
-                <option value="17">오후 5시</option>
-                <option value="18">오후 6시</option>
-                <option value="19">오후 7시</option>
-                <option value="20">오후 8시</option>
-                <option value="21">오후 9시</option>
-                <option value="22">오후 10시</option>
-                <option value="23">오후 11시</option>
-              </select>
-              <select ref={minuteRef}>
-                <option value="00">00분</option>
-                <option value="10">10분</option>
-                <option value="20">20분</option>
-                <option value="30">30분</option>
-                <option value="40">40분</option>
-                <option value="50">50분</option>
-              </select>
-            </div>
-            <div>
-              <button onClick={clickFixPlace}>플랜 확정</button>
-            </div>
+            <h4>{marker?.content} 등록하기</h4>
+            <span>DAY{dayNow}</span>
+            <Timediv>
+              <span>방문 시간</span>
+              <div>
+                <select ref={timeRef}>
+                  <option value="0">오전 0시</option>
+                  <option value="1">오전 1시</option>
+                  <option value="2">오전 2시</option>
+                  <option value="3">오전 3시</option>
+                  <option value="4">오전 4시</option>
+                  <option value="5">오전 5시</option>
+                  <option value="6">오전 6시</option>
+                  <option value="7">오전 7시</option>
+                  <option value="8">오전 8시</option>
+                  <option value="9">오전 9시</option>
+                  <option value="10">오전 10시</option>
+                  <option value="11">오전 11시</option>
+                  <option value="12">오후 12시</option>
+                  <option value="13">오후 1시</option>
+                  <option value="14">오후 2시</option>
+                  <option value="15">오후 3시</option>
+                  <option value="16">오후 4시</option>
+                  <option value="17">오후 5시</option>
+                  <option value="18">오후 6시</option>
+                  <option value="19">오후 7시</option>
+                  <option value="20">오후 8시</option>
+                  <option value="21">오후 9시</option>
+                  <option value="22">오후 10시</option>
+                  <option value="23">오후 11시</option>
+                </select>
+                <select ref={minuteRef}>
+                  <option value="00">00분</option>
+                  <option value="10">10분</option>
+                  <option value="20">20분</option>
+                  <option value="30">30분</option>
+                  <option value="40">40분</option>
+                  <option value="50">50분</option>
+                </select>
+              </div>
+            </Timediv>
+            <Btndiv>
+              <button onClick={clickFixPlace}>등록하기</button>
+            </Btndiv>
           </TimeModal>
         }
       ></ModalfixTime>
@@ -180,36 +185,42 @@ const Slide = ({ sliders, dayNow, callback, setInfo, info }) => {
 
 export default Slide;
 
+const Btndiv = styled.div`
+  margin-bottom: -20px;
+  button {
+    font-size: 18px;
+    width: 150px;
+    height: 45px;
+    color: white;
+    background-color: ${({ theme }) => theme.colors.mainGreen};
+    border-radius: 10px;
+  }
+`;
+
+const Timediv = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  div {
+    select {
+      border: none;
+      font-size: 16px;
+      margin-left: 5px;
+    }
+  }
+`;
+
 const TimeModal = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  div {
-    &:first-child {
-      width: 80%;
-      display: flex;
-      justify-content: space-around;
-      select {
-        width: 40%;
-        font-size: 20px;
-        border-radius: 5px;
-        border-color: ${({ theme }) => theme.colors.borderColor};
-      }
-    }
-    &:last-child {
-      width: 80%;
-      display: flex;
-      justify-content: space-around;
-      button {
-        margin-top: 20px;
-        width: 60%;
-        padding: 10px 20px;
-        border-radius: 10px;
-        font-size: 20px;
-        color: white;
-        background-color: ${({ theme }) => theme.colors.mainGreen};
-      }
-    }
+  h4 {
+    font-size: 18px;
+  }
+  span {
+    font-size: 14px;
+    color: ${({ theme }) => theme.colors.text2};
+    margin-bottom: 30px;
   }
 `;
 
@@ -257,6 +268,7 @@ const PlaceListCard = styled.div`
       span {
         font-size: 14px;
         font-family: "apple1";
+        color: ${({ theme }) => theme.colors.text2};
       }
     }
     &:nth-child(2) {
@@ -275,9 +287,10 @@ const PlaceListCard = styled.div`
           background-color: white;
           color: ${({ theme }) => theme.colors.mainGreen};
           border-bottom-left-radius: 5px;
+          border-top: 1px solid ${({ theme }) => theme.colors.borderColor};
           a {
             text-decoration: none;
-            color: ${({ theme }) => theme.colors.mainGreen};
+            color: black;
             font-size: 14px;
           }
         }

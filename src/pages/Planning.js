@@ -95,12 +95,11 @@ const Planning = (props) => {
         isOpen={isOpen}
         onClose={close}
         snapPoints={[0.9, 500, 100, 0]}
-        disableDrag={false}
+        disableDrag={true}
       >
         <Sheet.Container>
-          <Sheet.Header onClick={close} />
           <Sheet.Content>
-            <Schedule daynow={dayNow} />
+            <Schedule daynow={dayNow} setopen={setOpen} />
             <SubmitBtn dateCnt={dateCnt} />
           </Sheet.Content>
         </Sheet.Container>
@@ -199,7 +198,7 @@ const DayBtn = styled.button`
   font-size: 16px;
   border-bottom: ${(props) =>
     props.idx + 1 === props.daynow ? `3px solid #56BE91` : null};
-  color: ${(props) => (props.idx + 1 === props.daynow ? "black" : null)};
+  color: ${(props) => (props.idx + 1 === props.daynow ? "black" : "#8D8D8D")};
   cursor: pointer;
 `;
 

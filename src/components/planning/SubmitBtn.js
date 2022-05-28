@@ -134,12 +134,12 @@ const Container = styled.div`
       font-size: 16px;
     }
     &:last-child {
-      border: 1px solid ${({ theme }) => theme.colors.borderColor};
       border-radius: 5px;
       background-color: ${({ theme }) => theme.colors.mainGreen};
       color: white;
       padding: 10px 0px;
       font-size: 16px;
+      border: none;
     }
   }
 `;

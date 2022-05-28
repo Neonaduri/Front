@@ -3,18 +3,37 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { getKeywordPostDB, keywordDB } from "../../redux/module/post";
+import ModalfixTime from "../common/ModalfixTime";
 import back from "../../static/images/icon/back.png";
 import search from "../../static/images/icon/search.png";
 
 const SearchInput = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [modalOpen, setModalOpen] = useState(false);
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const checkSpecial = (str) => {
+    const regExp = /[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g;
+    if (regExp.test(str)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const searchEnter = (e) => {
     if (e.key === "Enter") {
-      dispatch(keywordDB(e.target.value));
-      dispatch(getKeywordPostDB(e.target.value));
-      history.push("/search");
+      const value = e.target.value;
+      if (!checkSpecial(value)) {
+        dispatch(keywordDB(e.target.value));
+        dispatch(getKeywordPostDB(e.target.value));
+        history.push("/search");
+      } else {
+        setModalOpen(true);
+      }
     }
   };
 
@@ -42,11 +61,34 @@ const SearchInput = () => {
           />
         </Wrap>
       </HeaderDiv>
+      <ModalfixTime
+        open={modalOpen}
+        close={closeModal}
+        header={
+          <EditModal>
+            <div>검색어를 확인해주세요.😅</div>
+          </EditModal>
+        }
+      ></ModalfixTime>
     </Container>
   );
 };
 
 export default SearchInput;
+
+const EditModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-size: 20px;
+  }
+`;
 
 const HeaderDiv = styled.div`
   display: flex;

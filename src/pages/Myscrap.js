@@ -70,7 +70,7 @@ const Myscrap = () => {
                       <h3>{plan.postTitle}</h3>
                     </TitleDiv>
                     <Datediv>
-                      {plan.startDate} ~ {plan.endDate}
+                      {plan.startDate}~{plan.endDate}
                     </Datediv>
                   </ContentDiv>
                   <Wishdiv>
@@ -103,7 +103,7 @@ const Myscrap = () => {
 
 const Wishdiv = styled.div`
   img {
-    width: 40px;
+    width: 37px;
   }
 `;
 
@@ -160,10 +160,12 @@ const ImgDiv = styled.div`
     height: 95px;
     border-radius: 5px;
     object-fit: cover;
+    margin-right: 5px;
   }
 `;
 
 const CardContainer = styled.div`
+  margin-bottom: 7px;
   display: flex;
   flex-direction: row;
   align-items: center;

@@ -68,7 +68,15 @@ const Myplan = () => {
 
   return (
     <Container>
-      <Titleline title={"계획"} />
+      <Titlediv>
+        <Titleline
+          backbtn={false}
+          title={"계획"}
+          onClick={() => {
+            history.goBack();
+          }}
+        />
+      </Titlediv>
       <Plusdiv>
         <button
           onClick={() => {
@@ -140,7 +148,7 @@ const Myplan = () => {
                         history.push(`/detail/${plan.postId}`);
                       }}
                     >
-                      여행 리뷰 남기기
+                      여행 후기 남기기
                     </button>
                   </div>
                 </BottomCarddiv>
@@ -151,7 +159,7 @@ const Myplan = () => {
                     <EditModal>
                       <div>정말 삭제하시겠습니까?</div>
                       <button id={plan.postId} onClick={deleteBtnClick}>
-                        삭제하기
+                        삭제
                       </button>
                     </EditModal>
                   }
@@ -166,12 +174,16 @@ const Myplan = () => {
   );
 };
 
+const Titlediv = styled.div`
+  margin-top: 10px;
+`;
+
 const Container = styled.div`
   height: 97%;
 `;
 
 const MyplanTextdiv = styled.div`
-  background-color: ${({ theme }) => theme.colors.borderColor};
+  background-color: ${({ theme }) => theme.colors.text4};
   padding: 10px 15px;
   font-size: 16px;
 `;
@@ -193,7 +205,7 @@ const EditModal = styled.div`
   button {
     background-color: ${({ theme }) => theme.colors.mainRed};
     color: white;
-    padding: 10px 45px;
+    padding: 10px 60px;
     border-radius: 10px;
     font-size: 18px;
     margin-bottom: -20px;
@@ -205,33 +217,34 @@ const BottomCarddiv = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100px;
-  padding: 0px 10px;
   div {
+    padding: 0px 10px;
     &:first-child {
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-
       small {
         color: ${({ theme }) => theme.colors.text2};
         font-family: "apple1";
       }
       div {
-        width: 50px;
+        width: 70px;
         display: flex;
         flex-direction: row;
+        justify-content: start;
         align-items: center;
+        margin-left: -10px;
         img {
           padding-top: 2px;
-          width: 18px;
+          width: 20px;
         }
       }
     }
     &:last-child {
+      border-top: 1px solid ${({ theme }) => theme.colors.borderColor};
       display: flex;
       justify-content: center;
-      border-top: 1px solid ${({ theme }) => theme.colors.borderColor};
       padding: 10px 0px;
       margin-top: 3px;
       button {
@@ -247,7 +260,6 @@ const BottomCarddiv = styled.div`
 `;
 const UpperCarddiv = styled.div`
   display: flex;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
   align-items: center;
   justify-content: space-between;
   padding: 7px 10px;
@@ -271,7 +283,7 @@ const UpperCarddiv = styled.div`
     span {
       &:first-child {
         font-size: 18px;
-        font-family: "apple3";
+        font-family: "apple2";
         cursor: pointer;
       }
       &:nth-child(2) {
@@ -310,7 +322,6 @@ const PostCard = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.borderColor};
   border-radius: 5px;
   margin: 5px 2px;
-  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.1);
   background-color: white;
 `;
 
@@ -329,7 +340,8 @@ const Middlediv = styled.div`
 `;
 
 const ToggleBox = styled.div`
-  border: 1px solid black;
+  border: 1px solid #ececec;
+  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   width: 40%;
