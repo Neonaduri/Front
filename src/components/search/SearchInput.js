@@ -3,18 +3,37 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { getKeywordPostDB, keywordDB } from "../../redux/module/post";
+import ModalfixTime from "../common/ModalfixTime";
 import back from "../../static/images/icon/back.png";
 import search from "../../static/images/icon/search.png";
 
 const SearchInput = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [modalOpen, setModalOpen] = useState(false);
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const checkSpecial = (str) => {
+    const regExp = /[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g;
+    if (regExp.test(str)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const searchEnter = (e) => {
     if (e.key === "Enter") {
-      dispatch(keywordDB(e.target.value));
-      dispatch(getKeywordPostDB(e.target.value));
-      history.push("/search");
+      const value = e.target.value;
+      if (!checkSpecial(value)) {
+        dispatch(keywordDB(e.target.value));
+        dispatch(getKeywordPostDB(e.target.value));
+        history.push("/search");
+      } else {
+        setModalOpen(true);
+      }
     }
   };
 
@@ -26,7 +45,7 @@ const SearchInput = () => {
             alt="back"
             src={back}
             onClick={() => {
-              history.goBack();
+              history.push("/");
             }}
           ></ImgBack>
           <Img
@@ -42,11 +61,34 @@ const SearchInput = () => {
           />
         </Wrap>
       </HeaderDiv>
+      <ModalfixTime
+        open={modalOpen}
+        close={closeModal}
+        header={
+          <EditModal>
+            <div>검색어를 확인해주세요.😅</div>
+          </EditModal>
+        }
+      ></ModalfixTime>
     </Container>
   );
 };
 
 export default SearchInput;
+
+const EditModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-size: 20px;
+  }
+`;
 
 const HeaderDiv = styled.div`
   display: flex;
@@ -67,7 +109,7 @@ const Input = styled.input`
   margin-right: 28px;
   border: none;
   border-bottom: 1px solid #cacaca;
-  padding: 5px 25px;
+  padding: 10px 25px;
   font-size: 16px;
   &:focus {
     outline: none;
@@ -77,12 +119,14 @@ const Input = styled.input`
 
 const Img = styled.img`
   position: relative;
-  left: 20px;
-  width: 20px;
+  left: 23px;
+  width: 30px;
 `;
 
 const ImgBack = styled.img`
-  width: 20px;
+  width: 30px;
+  margin-left: 22px;
+  margin-right: -17px;
   cursor: pointer;
 `;
 

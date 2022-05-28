@@ -257,7 +257,7 @@ const Datediv = styled.div`
   flex-direction: column;
   margin-top: 45px;
   span {
-    margin-right: 40px;
+    margin-right: 30px;
     margin-bottom: 1px;
     &:first-child {
       font-family: "apple1";

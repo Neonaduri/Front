@@ -11,7 +11,7 @@ const EDIT_COMMENT = "EDIT_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
 const ONE_COMMENT = "ONE_COMMENT";
 const TOTAL_ELEMENTS = "TOTAL_ELEMENTS";
-const LOADING = "loading";
+const REVIEWLOADING = "reviewLoading";
 
 // Action Creators
 export const getComment = createAction(GET_COMMENT, (reviewList, paging) => ({
@@ -40,7 +40,9 @@ export const getOneComment = createAction(ONE_COMMENT, (reviewList) => ({
 export const totalElements = createAction(TOTAL_ELEMENTS, (totalElements) => ({
   totalElements,
 }));
-const loading = createAction(LOADING, (isLoading) => ({ isLoading }));
+const reviewLoading = createAction(REVIEWLOADING, (isLoading) => ({
+  isLoading,
+}));
 //미들웨어
 
 //리뷰등록
@@ -65,7 +67,7 @@ export const addCommentDB = (postId, formdata, config) => {
 //리뷰조회
 export const getCommentDB = (postId, pageno) => {
   return async function (dispatch, getState, { history }) {
-    dispatch(loading(true));
+    dispatch(reviewLoading(true));
     try {
       const response = await apis.axiosInstance.get(
         `/detail/reviews/${postId}/1`
@@ -87,7 +89,7 @@ export const getCommentDB = (postId, pageno) => {
 
 export const getNextCommentDB = (postId, pageno) => {
   return async function (dispatch, getState, { history }) {
-    dispatch(loading(true));
+    dispatch(reviewLoading(true));
     try {
       const response = await apis.axiosInstance.get(
         `/detail/reviews/${postId}/${pageno}`
@@ -163,7 +165,7 @@ export const deleteCommentDB = (reviewId) => {
 const initialComment = {
   totalElements: 0,
   paging: { start: null, islastPage: true },
-  isLoading: false,
+  reviewLoading: false,
   reviewList: [
     {
       reviewId: 1,
@@ -183,13 +185,13 @@ export default handleActions(
       produce(state, (draft) => {
         draft.reviewList = action.payload.reviewList;
         draft.paging = action.payload.paging;
-        draft.isLoading = false;
+        draft.reviewLoading = false;
       }),
     [GET_NEXT_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         draft.reviewList.push(...action.payload.reviewList);
         draft.paging = action.payload.paging;
-        draft.isLoading = false;
+        draft.reviewLoading = false;
       }),
     [ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
@@ -231,10 +233,11 @@ export default handleActions(
     [TOTAL_ELEMENTS]: (state, action) =>
       produce(state, (draft) => {
         draft.totalElements = action.payload.totalElements;
+        draft.reviewLoading = false;
       }),
-    [LOADING]: (state, action) =>
+    [REVIEWLOADING]: (state, action) =>
       produce(state, (draft) => {
-        draft.isLoading = action.payload.isLoading;
+        draft.reviewLoading = action.payload.isLoading;
       }),
   },
   initialComment

@@ -57,12 +57,11 @@ const ContentDiv = styled.div`
   justify-content: space-between;
   width: 100%;
   span {
-    padding: 0 3px;
+    padding: 0px 3px;
     background-color: ${({ theme }) => theme.colors.borderColor};
     color: ${({ theme }) => theme.colors.text2};
     font-size: 10px;
     text-align: center;
-    justify-content: center;
     border-radius: 2px;
     margin-top: 5px;
   }

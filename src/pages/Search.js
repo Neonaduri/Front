@@ -13,7 +13,6 @@ import SearchInput from "../components/search/SearchInput";
 const Search = () => {
   const dispatch = useDispatch();
   const [pageno, setPageno] = useState(1);
-  const [serching, setSearching] = useState(false);
   const searchList = useSelector((state) => state.post.searchList);
   const keyWord = useSelector((state) => state.post.keyword);
   const contentDivRef = useRef();

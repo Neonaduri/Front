@@ -3,11 +3,16 @@ import styled from "styled-components";
 import Footer from "../common/Footer";
 import Titleline from "../elements/Titleline";
 import imgLogin from "../../static/images/icon/loginCharacter.png";
-import back from "../../static/images/icon/back.png";
 import { useHistory } from "react-router";
 import Button from "../elements/Button";
 
-const Nopost = ({ title, content, btnhide = false, backbtn }) => {
+const Nopost = ({
+  title,
+  content,
+  btnhide = false,
+  backbtn,
+  footer = true,
+}) => {
   const history = useHistory();
   return (
     <Container>
@@ -34,10 +39,11 @@ const Nopost = ({ title, content, btnhide = false, backbtn }) => {
           ></Button>
         )}
       </NoreviewDiv>
-
-      <FooterDiv>
-        <Footer />
-      </FooterDiv>
+      {footer ? (
+        <FooterDiv>
+          <Footer />
+        </FooterDiv>
+      ) : null}
     </Container>
   );
 };
