@@ -18,6 +18,8 @@ const Titlepart = styled.div`
   justify-content: space-between;
   font-size: 18px;
   position: relative;
+  color: #363636;
+
   span {
     font-family: "apple3";
     position: absolute;

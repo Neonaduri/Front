@@ -125,7 +125,7 @@ const Calendar = () => {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            marginTop: "30px",
+            marginTop: "45px",
           }}
         >
           <Locationdiv>
@@ -243,7 +243,7 @@ const Locationselect = styled.div`
   width: 250px;
   text-align: center;
   padding: 5px 0px;
-  margin: 5px 0px;
+  /* margin: 5px 0px; */
   border-radius: 14px;
   transition: 0.2s;
   &:active {
@@ -255,8 +255,10 @@ const Locationselect = styled.div`
 const Datediv = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: -30px;
+  margin-top: 45px;
   span {
+    margin-right: 30px;
+    margin-bottom: 1px;
     &:first-child {
       font-family: "apple1";
     }
@@ -275,9 +277,11 @@ const Datediv = styled.div`
 const Themediv = styled.div`
   display: flex;
   flex-direction: column;
+
   width: 45%;
   label {
     font-family: "apple1";
+    margin-bottom: 10px;
   }
   div {
     display: flex;
@@ -290,6 +294,15 @@ const Themediv = styled.div`
     img {
       width: 14px;
     }
+    span {
+      font-family: "Apple SD Gothic Neo";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 19px;
+      color: #363636;
+      padding: 2px;
+    }
   }
 `;
 
@@ -297,8 +310,10 @@ const Locationdiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 45%;
+
   label {
     font-family: "apple1";
+    margin-bottom: 10px;
   }
   div {
     display: flex;
@@ -308,8 +323,19 @@ const Locationdiv = styled.div`
     border: 1px solid ${({ theme }) => theme.colors.text3};
     border-radius: 8px;
     cursor: pointer;
+
     img {
       width: 14px;
+    }
+
+    span {
+      font-family: "Apple SD Gothic Neo";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 19px;
+      color: #363636;
+      padding: 2px;
     }
   }
 `;
@@ -319,6 +345,7 @@ const PostTitlediv = styled.div`
   flex-direction: column;
   label {
     font-family: "apple1";
+    margin-bottom: 10px;
   }
   input {
     width: 100%;
@@ -327,6 +354,8 @@ const PostTitlediv = styled.div`
     border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
     height: 34px;
     font-size: 16px;
+    line-height: 19px;
+    font-weight: 200;
     &:focus {
       outline: none;
       border-bottom: 1px solid ${({ theme }) => theme.colors.mainGreen};
@@ -340,7 +369,7 @@ const Container = styled.div`
   flex-direction: column;
   padding: 0px 20px;
   div {
-    margin-bottom: 40px;
+    /* margin-bottom: 25px; */
   }
 `;
 
