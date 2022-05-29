@@ -367,18 +367,6 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
   );
 };
 
-const Btndiv = styled.div`
-  margin-bottom: -20px;
-  button {
-    font-size: 18px;
-    width: 150px;
-    height: 45px;
-    color: white;
-    background-color: ${({ theme }) => theme.colors.mainGreen};
-    border-radius: 10px;
-  }
-`;
-
 const Timediv = styled.div`
   width: 100%;
   display: flex;

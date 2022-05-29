@@ -120,13 +120,12 @@ const Schedule = (props) => {
       return memoInput;
     });
   };
-  //
 
+  //텍스트 편집시 알리기 기능
   let object = {};
   for (let i = 0; i < 10; i++) {
     object[`timeout${i}`] = "";
   }
-
   let dupArr = [];
   useEffect(() => {
     const memoRef = ref(db, `${postId}/allPlan/day${dayNow}`);
@@ -142,17 +141,6 @@ const Schedule = (props) => {
       const target = document.getElementById(editingPlaceKey);
       target.classList.add("editing");
 
-      // if (targetKeyIdx === 0) {
-      //   clearTimeout(object.timeout0);
-      //   object.timeout0 = setTimeout(() => {
-      //     target.classList.remove("editing");
-      //   }, 1500);
-      // } else if (targetKeyIdx === 1) {
-      //   clearTimeout(object.timeout1);
-      //   object.timeout1 = setTimeout(() => {
-      //     target.classList.remove("editing");
-      //   }, 1500);
-      // }
       switch (targetKeyIdx) {
         case 0:
           clearTimeout(object.timeout0);
@@ -216,12 +204,8 @@ const Schedule = (props) => {
           break;
       }
     });
+    return () => onChildChange();
   }, []);
-
-  const mouseleave = (e) => {
-    const target = e.target;
-    target.classList.remove("editing");
-  };
 
   if (latlngArr.length === 0) {
     return (

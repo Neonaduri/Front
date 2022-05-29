@@ -6,3 +6,25 @@ textarea{
     background-color: aliceblue;
     border: 2px solid skyblue
 }
+
+.added {
+    animation: motion 1s linear;
+    animation-iteration-count: 2;
+}   
+
+@keyframes motion {
+    0% {
+        opacity: 0;
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+#addalert {
+    opacity: 0;
+    font-size: 16px;
+}

@@ -11,8 +11,9 @@ import SubmitBtn from "../components/planning/SubmitBtn";
 import moment from "moment";
 import Sheet from "react-modal-sheet";
 import Footer from "../components/common/Footer";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, onChildAdded } from "firebase/database";
 import NopostAlert from "../components/myplan/NopostAlert";
+import "../assets/editingMemo.css";
 
 const Planning = (props) => {
   const dispatch = useDispatch();
@@ -40,8 +41,22 @@ const Planning = (props) => {
         setCloseRoom(true);
       }
     });
+
     return () => value();
   }, []);
+
+  useEffect(() => {
+    const addedRef = ref(db, `${postId}/allPlan/day${dayNow}`);
+    const added = onChildAdded(addedRef, (data) => {
+      const addedText = document.getElementById("addalert");
+      addedText.classList.add("added");
+
+      setTimeout(() => {
+        addedText.classList.remove("added");
+      }, 2000);
+    });
+    return () => added();
+  }, [dayNow]);
 
   const startDaynum = moment(planInfo.startDate).day();
   const startDay = days[startDaynum];
@@ -113,12 +128,13 @@ const Planning = (props) => {
         >
           Click!
         </div>
-        <span>새로운 장소가 추가되었습니다!✈️</span>
+        <span id="addalert">일정이 추가되었습니다! ✈️</span>
       </TriggerBtn>
       {/* <Footer /> */}
     </Container>
   );
 };
+
 const CustomSheet = styled(Sheet)`
   max-width: 375px;
   margin: auto;
