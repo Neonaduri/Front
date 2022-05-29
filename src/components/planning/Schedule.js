@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { Map, Polyline, MapMarker } from "react-kakao-maps-sdk";
 import RTdatabase from "../../firebase";
 import {
@@ -11,12 +11,12 @@ import {
   runTransaction,
   onChildChanged,
 } from "firebase/database";
-import _, { delay } from "lodash";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import ModalfixTime from "../common/ModalfixTime";
 import { useSelector } from "react-redux";
 import hamburger from "../../static/images/icon/hamburger.png";
+import "../../assets/editingMemo.css";
 
 const Schedule = (props) => {
   const postId = useParams().postId;
@@ -33,8 +33,6 @@ const Schedule = (props) => {
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
   const [deleteIndex, setDeleteIdx] = useState();
   const { kakao } = window;
-  const [targeting, setTargeting] = useState([]);
-  const [unique, setUnique] = useState([]);
 
   let latlngArr = [];
   if (place !== undefined) {
@@ -113,8 +111,7 @@ const Schedule = (props) => {
   const changeMemoInput = (e) => {
     const myRealDay = e.target.attributes.isitwork.nodeValue;
     const memoInput = e.target.value;
-    const memoIdx = e.target.id;
-    const key = placeKey[memoIdx];
+    const key = e.target.id;
     const placeRef = ref(
       db,
       `${postId}/allPlan/day${myRealDay}/${key}/placeMemo`
@@ -125,14 +122,106 @@ const Schedule = (props) => {
   };
   //
 
+  let object = {};
+  for (let i = 0; i < 10; i++) {
+    object[`timeout${i}`] = "";
+  }
+
+  let dupArr = [];
   useEffect(() => {
     const memoRef = ref(db, `${postId}/allPlan/day${dayNow}`);
-    // DB의 값이 변하는지 지켜보는 함수, 무슨 데이터가 변했는지 가져옴
+    // DB의 값이 변하는지 지켜보는 함수, 해당 ref 자식의 데이터가 바뀌면 가져옴
     const onChildChange = onChildChanged(memoRef, (data) => {
-      const editingPlace = data.val().placeName;
-      console.log(editingPlace);
+      const editingPlaceKey = data.key;
+      dupArr.push(editingPlaceKey);
+      const set = new Set(dupArr);
+      const uniqueArr = [...set];
+
+      const targetKeyIdx = uniqueArr.indexOf(editingPlaceKey);
+
+      const target = document.getElementById(editingPlaceKey);
+      target.classList.add("editing");
+
+      // if (targetKeyIdx === 0) {
+      //   clearTimeout(object.timeout0);
+      //   object.timeout0 = setTimeout(() => {
+      //     target.classList.remove("editing");
+      //   }, 1500);
+      // } else if (targetKeyIdx === 1) {
+      //   clearTimeout(object.timeout1);
+      //   object.timeout1 = setTimeout(() => {
+      //     target.classList.remove("editing");
+      //   }, 1500);
+      // }
+      switch (targetKeyIdx) {
+        case 0:
+          clearTimeout(object.timeout0);
+          object.timeout0 = setTimeout(() => {
+            target.classList.remove("editing");
+          }, 1500);
+          break;
+        case 1:
+          clearTimeout(object.timeout1);
+          object.timeout1 = setTimeout(() => {
+            target.classList.remove("editing");
+          }, 1500);
+          break;
+        case 2:
+          clearTimeout(object.timeout2);
+          object.timeout2 = setTimeout(() => {
+            target.classList.remove("editing");
+          }, 1500);
+          break;
+        case 3:
+          clearTimeout(object.timeout3);
+          object.timeout3 = setTimeout(() => {
+            target.classList.remove("editing");
+          }, 1500);
+          break;
+        case 4:
+          clearTimeout(object.timeout4);
+          object.timeout4 = setTimeout(() => {
+            target.classList.remove("editing");
+          }, 1500);
+          break;
+        case 5:
+          clearTimeout(object.timeout5);
+          object.timeout5 = setTimeout(() => {
+            target.classList.remove("editing");
+          }, 1500);
+          break;
+        case 6:
+          clearTimeout(object.timeout6);
+          object.timeout6 = setTimeout(() => {
+            target.classList.remove("editing");
+          }, 1500);
+          break;
+        case 7:
+          clearTimeout(object.timeout7);
+          object.timeout7 = setTimeout(() => {
+            target.classList.remove("editing");
+          }, 1500);
+          break;
+        case 8:
+          clearTimeout(object.timeout8);
+          object.timeout8 = setTimeout(() => {
+            target.classList.remove("editing");
+          }, 1500);
+          break;
+        case 9:
+          clearTimeout(object.timeout9);
+          object.timeout9 = setTimeout(() => {
+            target.classList.remove("editing");
+          }, 1500);
+          break;
+      }
     });
   }, []);
+
+  const mouseleave = (e) => {
+    const target = e.target;
+    target.classList.remove("editing");
+  };
 
   if (latlngArr.length === 0) {
     return (
@@ -296,38 +385,16 @@ const Schedule = (props) => {
                   {p.placeName} 바로가기
                 </a>
               </span>
-              {targeting.indexOf(p.placeName) >= 0 ? (
-                <textarea
-                  style={{
-                    backgroundColor: "aliceblue",
-                    border: "2px solid skyblue",
-                  }}
-                  id={idx}
-                  isitwork={dayNow}
-                  value={p.placeMemo}
-                  placeholder="친구에게 메모가 실시간으로 공유됩니다!"
-                  maxLength={"150"}
-                  onChange={(e) => changeMemoInput(e)}
-                ></textarea>
-              ) : (
-                <textarea
-                  id={idx}
-                  isitwork={dayNow}
-                  value={p.placeMemo}
-                  placeholder="친구에게 메모가 실시간으로 공유됩니다!"
-                  maxLength={"150"}
-                  onChange={(e) => changeMemoInput(e)}
-                ></textarea>
-              )}
 
-              {/* <textarea
-                id={idx}
+              <textarea
+                id={placeKey[idx]}
+                // onBlur={mouseleave}
                 isitwork={dayNow}
                 value={p.placeMemo}
                 placeholder="친구에게 메모가 실시간으로 공유됩니다!"
                 maxLength={"150"}
                 onChange={(e) => changeMemoInput(e)}
-              ></textarea> */}
+              ></textarea>
 
               {hamburgerNum === idx ? (
                 <ToggleBox>
@@ -550,7 +617,6 @@ const Contentdiv = styled.div`
   textarea {
     width: 95%;
     outline: none;
-    border: 1px solid ${({ theme }) => theme.colors.text3};
     border-radius: 5px;
     font-size: 15px;
     resize: none;

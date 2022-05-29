@@ -113,6 +113,7 @@ const Planning = (props) => {
         >
           Click!
         </div>
+        <span>새로운 장소가 추가되었습니다!✈️</span>
       </TriggerBtn>
       {/* <Footer /> */}
     </Container>
@@ -121,15 +122,7 @@ const Planning = (props) => {
 const CustomSheet = styled(Sheet)`
   max-width: 375px;
   margin: auto;
-  .react-modal-sheet-backdrop {
-  }
 
-  .react-modal-sheet-container {
-  }
-  .react-modal-sheet-header {
-  }
-  .react-modal-sheet-drag-indicator {
-  }
   .react-modal-sheet-content {
     display: flex;
     flex-direction: column;

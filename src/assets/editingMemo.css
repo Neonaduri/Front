@@ -1,0 +1,8 @@
+textarea{
+    border: 1px solid #CACACA;
+}
+
+.editing {
+    background-color: aliceblue;
+    border: 2px solid skyblue
+}

@@ -154,6 +154,7 @@ export const getThemePostDB = (theme, pageno) => {
         start: page + 1,
         lastpage: response.data.islastPage,
       };
+
       if (response.status === 200) {
         if (page === 1) {
           dispatch(getSearchPost({ planList: response.data.planList, paging }));

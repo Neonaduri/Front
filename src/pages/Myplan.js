@@ -155,12 +155,11 @@ const Myplan = () => {
                 <ModalfixTime
                   open={modalOpen}
                   close={closeModal}
+                  onSubmitClick={deleteBtnClick}
+                  btnstyle="del"
                   header={
                     <EditModal>
                       <div>정말 삭제하시겠습니까?</div>
-                      <button id={plan.postId} onClick={deleteBtnClick}>
-                        삭제
-                      </button>
                     </EditModal>
                   }
                 ></ModalfixTime>
