@@ -11,7 +11,7 @@ import {
   runTransaction,
   onChildChanged,
 } from "firebase/database";
-import _ from "lodash";
+import _, { delay } from "lodash";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import ModalfixTime from "../common/ModalfixTime";
@@ -32,7 +32,9 @@ const Schedule = (props) => {
   const [hamburgerNum, setHamburgerNum] = useState(null);
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
   const [deleteIndex, setDeleteIdx] = useState();
-  const [writingPlace, setWritingPlace] = useState([]);
+  const { kakao } = window;
+  const [targeting, setTargeting] = useState([]);
+  const [unique, setUnique] = useState([]);
 
   let latlngArr = [];
   if (place !== undefined) {
@@ -121,14 +123,16 @@ const Schedule = (props) => {
       return memoInput;
     });
   };
+  //
 
   useEffect(() => {
     const memoRef = ref(db, `${postId}/allPlan/day${dayNow}`);
-    onChildChanged(memoRef, (data) => {
+    // DB의 값이 변하는지 지켜보는 함수, 무슨 데이터가 변했는지 가져옴
+    const onChildChange = onChildChanged(memoRef, (data) => {
       const editingPlace = data.val().placeName;
       console.log(editingPlace);
     });
-  }, [writingPlace]);
+  }, []);
 
   if (latlngArr.length === 0) {
     return (
@@ -218,12 +222,14 @@ const Schedule = (props) => {
                 key={idx}
                 position={letlng}
                 image={{
-                  src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FefFX6q%2FbtrCjFZ6mey%2Fr7CE69eKkBTJBkQJRc6n4k%2Fimg.png",
-                  size: { width: 16, height: 16 },
+                  src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb90fLh%2FbtrDiQmSm8v%2FKYuLBV7kKPslmi5AH8SSA0%2Fimg.png",
+                  size: { width: 22, height: 22 },
                   options: {
+                    spriteSize: new kakao.maps.Size(21, 490),
+                    spriteOrigin: new kakao.maps.Point(0, idx * 33 + 1),
                     offset: {
-                      x: 7,
-                      y: 9,
+                      x: 10,
+                      y: 15,
                     },
                   },
                 }}
@@ -290,9 +296,12 @@ const Schedule = (props) => {
                   {p.placeName} 바로가기
                 </a>
               </span>
-              {writingPlace.indexOf(p.placeName) !== -1 ? (
+              {targeting.indexOf(p.placeName) >= 0 ? (
                 <textarea
-                  style={{ backgroundColor: "tomato" }}
+                  style={{
+                    backgroundColor: "aliceblue",
+                    border: "2px solid skyblue",
+                  }}
                   id={idx}
                   isitwork={dayNow}
                   value={p.placeMemo}
@@ -310,6 +319,15 @@ const Schedule = (props) => {
                   onChange={(e) => changeMemoInput(e)}
                 ></textarea>
               )}
+
+              {/* <textarea
+                id={idx}
+                isitwork={dayNow}
+                value={p.placeMemo}
+                placeholder="친구에게 메모가 실시간으로 공유됩니다!"
+                maxLength={"150"}
+                onChange={(e) => changeMemoInput(e)}
+              ></textarea> */}
 
               {hamburgerNum === idx ? (
                 <ToggleBox>
@@ -335,11 +353,12 @@ const Schedule = (props) => {
             <ModalfixTime
               open={deleteModalOpen}
               close={closeDeleteModal}
+              onSubmitClick={realDeleteBtn}
+              btnstyle="del"
               header={
                 <TimeModal>
                   <DeleteClickedDiv>
                     <span>계획을 삭제하시겠습니까?</span>
-                    <button onClick={realDeleteBtn}>삭제</button>
                   </DeleteClickedDiv>
                 </TimeModal>
               }
@@ -347,49 +366,52 @@ const Schedule = (props) => {
             <ModalfixTime
               open={modalOpen}
               close={closeModal}
+              onSubmitClick={clickEditTime}
               header={
                 <TimeModal>
-                  <div>
-                    <select ref={timeRef}>
-                      <option value="0">오전 0시</option>
-                      <option value="1">오전 1시</option>
-                      <option value="2">오전 2시</option>
-                      <option value="3">오전 3시</option>
-                      <option value="4">오전 4시</option>
-                      <option value="5">오전 5시</option>
-                      <option value="6">오전 6시</option>
-                      <option value="7">오전 7시</option>
-                      <option value="8">오전 8시</option>
-                      <option value="9">오전 9시</option>
-                      <option value="10">오전 10시</option>
-                      <option value="11">오전 11시</option>
-                      <option value="12">오후 12시</option>
-                      <option value="13">오후 1시</option>
-                      <option value="14">오후 2시</option>
-                      <option value="15">오후 3시</option>
-                      <option value="16">오후 4시</option>
-                      <option value="17">오후 5시</option>
-                      <option value="18">오후 6시</option>
-                      <option value="19">오후 7시</option>
-                      <option value="20">오후 8시</option>
-                      <option value="21">오후 9시</option>
-                      <option value="22">오후 10시</option>
-                      <option value="23">오후 11시</option>
-                    </select>
-                    <select ref={minuteRef}>
-                      <option value="00">00분</option>
-                      <option value="10">10분</option>
-                      <option value="20">20분</option>
-                      <option value="30">30분</option>
-                      <option value="40">40분</option>
-                      <option value="50">50분</option>
-                    </select>
-                  </div>
-                  <div>
-                    <button onClick={clickEditTime} id={idx}>
-                      시간 수정
-                    </button>
-                  </div>
+                  <h4>{p.placeName} 수정하기</h4>
+                  <span style={{ color: "#8D8D8D", fontFamily: "apple1" }}>
+                    DAY{dayNow}
+                  </span>
+                  <TimeEditdiv>
+                    <span>방문 시간</span>
+                    <div>
+                      <select ref={timeRef}>
+                        <option value="0">오전 0시</option>
+                        <option value="1">오전 1시</option>
+                        <option value="2">오전 2시</option>
+                        <option value="3">오전 3시</option>
+                        <option value="4">오전 4시</option>
+                        <option value="5">오전 5시</option>
+                        <option value="6">오전 6시</option>
+                        <option value="7">오전 7시</option>
+                        <option value="8">오전 8시</option>
+                        <option value="9">오전 9시</option>
+                        <option value="10">오전 10시</option>
+                        <option value="11">오전 11시</option>
+                        <option value="12">오후 12시</option>
+                        <option value="13">오후 1시</option>
+                        <option value="14">오후 2시</option>
+                        <option value="15">오후 3시</option>
+                        <option value="16">오후 4시</option>
+                        <option value="17">오후 5시</option>
+                        <option value="18">오후 6시</option>
+                        <option value="19">오후 7시</option>
+                        <option value="20">오후 8시</option>
+                        <option value="21">오후 9시</option>
+                        <option value="22">오후 10시</option>
+                        <option value="23">오후 11시</option>
+                      </select>
+                      <select ref={minuteRef}>
+                        <option value="00">00분</option>
+                        <option value="10">10분</option>
+                        <option value="20">20분</option>
+                        <option value="30">30분</option>
+                        <option value="40">40분</option>
+                        <option value="50">50분</option>
+                      </select>
+                    </div>
+                  </TimeEditdiv>
                 </TimeModal>
               }
             ></ModalfixTime>
@@ -400,10 +422,28 @@ const Schedule = (props) => {
   );
 };
 
+const TimeEditdiv = styled.div`
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  span {
+    width: 100px;
+    margin-right: 50px;
+  }
+  div {
+    select {
+      border: none;
+      font-size: 16px;
+      margin-left: 5px;
+    }
+  }
+`;
+
 const FixedTime = styled.span`
-  font-size: 15px;
+  font-size: 14px;
   margin-left: -3px;
   font-family: "apple1";
+  margin-top: 2px;
 `;
 
 const MapContainer = styled.div`
@@ -432,21 +472,22 @@ const DeleteClickedDiv = styled.div`
 `;
 
 const ToggleBox = styled.div`
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
   width: 40%;
-  border-radius: 15px;
-  border-top-right-radius: 0px;
+  border-radius: 5px;
   position: absolute;
   background-color: white;
-  right: 20px;
+  right: 24px;
   top: 10px;
+  border: 1px solid #ececec;
+  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
   div {
     padding: 8px;
-    font-size: 15px;
+    font-size: 14px;
     &:first-child {
-      border-bottom: 1px solid black;
+      border-bottom: 1px solid #ececec;
       width: 100%;
       display: flex;
       align-items: center;
@@ -457,7 +498,7 @@ const ToggleBox = styled.div`
 
 const NumColumnBar = styled.span`
   width: 2px;
-  height: 100px;
+  height: 110px;
   background-color: ${({ theme }) => theme.colors.borderColor};
   position: absolute;
   top: 20px;
@@ -469,7 +510,7 @@ const Timediv = styled.div`
   padding-left: 15px;
   padding-top: 5px;
   div {
-    background-color: ${({ theme }) => theme.colors.mainRed};
+    background-color: #ff6442;
     width: 20px;
     height: 20px;
     color: white;
@@ -576,7 +617,7 @@ const TimeModal = styled.div`
     &:first-child {
       width: 80%;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       select {
         width: 40%;
         font-size: 20px;
@@ -600,6 +641,12 @@ const TimeModal = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+  }
 `;
 
 export default Schedule;

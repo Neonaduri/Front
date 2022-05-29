@@ -49,4 +49,10 @@ const Title = styled.div`
 
 const Wrap = styled.div`
   height: 80%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+  }
 `;

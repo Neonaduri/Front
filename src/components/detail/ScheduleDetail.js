@@ -182,6 +182,7 @@ const Contentdiv = styled.div`
     a {
       font-size: 13px;
       color: black;
+      padding-right: 10px;
     }
   }
   textarea {
@@ -200,8 +201,8 @@ const Contentdiv = styled.div`
 `;
 
 const FixedTime = styled.span`
-  font-size: 15px;
-  margin-left: -3px;
+  font-size: 14px;
+  margin-left: 3px;
 `;
 
 const PlaceCard = styled.div`
@@ -231,8 +232,6 @@ const Timediv = styled.div`
     margin-left: -10px;
     margin-right: 5px;
     position: relative;
-  }
-  span {
   }
 `;
 export default ScheduleDetail;

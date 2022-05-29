@@ -152,6 +152,7 @@ const ContentDiv = styled.div`
   margin-right: 10px;
   width: 153px;
   margin-left: 3px;
+  cursor: pointer;
 `;
 
 const ImgDiv = styled.div`
@@ -161,6 +162,7 @@ const ImgDiv = styled.div`
     border-radius: 5px;
     object-fit: cover;
     margin-right: 5px;
+    cursor: pointer;
   }
 `;
 

@@ -37,7 +37,6 @@ const Detail = () => {
   if (isLoading === true) {
     return <Spinner />;
   }
-  console.log(detailPlan);
 
   return (
     <Container>
@@ -140,7 +139,7 @@ const ImageDiv = styled.div`
       padding: 3px 2px;
       border-radius: 2px;
       color: white;
-      background-color: #363636;
+      background-color: rgba(54, 48, 45, 0.7);
       font-family: "apple1";
       font-size: 11px;
       margin-left: 3px;
