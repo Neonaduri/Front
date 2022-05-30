@@ -1,0 +1,8 @@
+button {
+  background-color: white;
+  border: none;
+}
+.active {
+  color: black;
+  border-bottom: 3px solid #56be91;
+}
