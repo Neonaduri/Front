@@ -65,7 +65,7 @@ export const getBestPostDB = () => {
   };
 };
 
-export const getLocationPostDB = (location, pageno) => {
+export const getLocationPostDB = (location, sortby, pageno) => {
   return async function (dispatch, getState, { history }) {
     dispatch(loading(true));
     let page;
@@ -74,9 +74,10 @@ export const getLocationPostDB = (location, pageno) => {
     } else {
       page = pageno;
     }
+    console.log(location, sortby, page);
     try {
       const response = await apis.axiosInstance.get(
-        `/plans/location/${location}/${page}`
+        `/plans/location/${location}/${page}/${sortby}`
       );
       let paging = {
         start: page + 1,

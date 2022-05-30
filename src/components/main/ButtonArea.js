@@ -4,14 +4,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getKeywordPostDB,
-  getLocationPostDB,
-  keywordDB,
-} from "../../redux/module/post";
+import { getLocationPostDB, keywordDB } from "../../redux/module/post";
 import { area } from "../elements/ArrValue";
 
-const ButtonArea = () => {
+const ButtonArea = ({ sortby }) => {
   const dispatch = useDispatch();
   const [selectVal, setSelectVal] = useState("서울");
   const key = useSelector((state) => state.post.keyword);
@@ -19,7 +15,7 @@ const ButtonArea = () => {
   const onClick = (e) => {
     const location = e.target.value;
     setSelectVal(selectVal);
-    dispatch(getLocationPostDB(location));
+    dispatch(getLocationPostDB(location, sortby));
     dispatch(keywordDB(location));
   };
 

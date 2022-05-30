@@ -21,7 +21,15 @@ const LocationSearch = (props) => {
   const isLoading = useSelector((state) => state.post.isLoading);
   let lastPage = useSelector((state) => state.post.paging?.lastpage);
   const nextPage = useSelector((state) => state.post.paging?.start);
+  const keyWord = useSelector((state) => state.post.keyword);
   const contentDivRef = useRef();
+  const [sortby, setSortby] = useState("postId");
+
+  const changeSortby = (e) => {
+    const value = e.target.value;
+    setSortby(value);
+    dispatch(getLocationPostDB(keyWord, value));
+  };
 
   return (
     <Container>
@@ -34,14 +42,21 @@ const LocationSearch = (props) => {
             }}
           />
         </Headerdiv>
-        <ButtonArea />
+        <ButtonArea sortby={sortby} />
+        <FilterDiv>
+          <select onChange={changeSortby}>
+            <option value="postId">최신순</option>
+            <option value="viewCnt">조회순</option>
+            <option value="likeCnt">스크랩순</option>
+          </select>
+        </FilterDiv>
         {searchList.length === 0 ? (
           <NotFoundSearchList />
         ) : (
           <ContentDiv ref={contentDivRef}>
             <InfinityScroll
               callNext={() => {
-                dispatch(getLocationPostDB(keyword, nextPage));
+                dispatch(getLocationPostDB(keyword, sortby, nextPage));
               }}
               is_next={lastPage ? false : true}
               loading={isLoading}
@@ -60,6 +75,18 @@ const LocationSearch = (props) => {
 };
 
 export default LocationSearch;
+
+const FilterDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding: 0px 16px;
+  margin-bottom: -7px;
+  select {
+    font-size: 14px;
+    border: none;
+  }
+`;
 
 const Container = styled.div`
   height: 100%;

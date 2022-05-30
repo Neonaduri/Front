@@ -8,19 +8,35 @@ textarea{
 }
 
 .added {
-    animation: motion 1s linear;
-    animation-iteration-count: 2;
+    animation-name: motion;
+    animation-iteration-count: 3;
+    animation-duration: 1s;
+    margin-top: 10px;
 }   
 
 @keyframes motion {
     0% {
         opacity: 0;
+        padding-top: 10px;
+        font-size: 20px;
+    }
+    25%{
+        opacity: 1;
+        padding-top: 0px;
     }
     50%{
+        opacity: 0;
+        padding-top: 10px;
+        font-size: 20px;
+    }
+    75%{
         opacity: 1;
+        padding-top: 0px;
     }
     100%{
         opacity: 0;
+        padding-top: 10px;
+        font-size: 20px;
     }
 }
 
