@@ -17,6 +17,7 @@ import ModalfixTime from "../common/ModalfixTime";
 import { useSelector } from "react-redux";
 import hamburger from "../../static/images/icon/hamburger.png";
 import "../../assets/editingMemo.css";
+import cancel from "../../static/images/icon/cancelX.png";
 
 const Schedule = (props) => {
   const postId = useParams().postId;
@@ -216,7 +217,7 @@ const Schedule = (props) => {
               props.setopen(false);
             }}
           >
-            닫기
+            <img src={cancel} alt="x" />
           </button>
           <span>여행 계획표</span>
         </TitleDiv>
@@ -259,7 +260,7 @@ const Schedule = (props) => {
             props.setopen(false);
           }}
         >
-          닫기
+          <img src={cancel} alt="x" />
         </button>
         <span>여행 계획표</span>
       </TitleDiv>
@@ -377,6 +378,9 @@ const Schedule = (props) => {
                 value={p.placeMemo}
                 placeholder="친구에게 메모가 실시간으로 공유됩니다!"
                 maxLength={"150"}
+                onClick={() => {
+                  setHamburgerNum(null);
+                }}
                 onChange={(e) => changeMemoInput(e)}
               ></textarea>
 
@@ -594,7 +598,7 @@ const Contentdiv = styled.div`
       cursor: pointer;
     }
     h4 {
-      font-size: 17px;
+      font-size: 16px;
       margin-top: 4px;
     }
   }
@@ -605,10 +609,13 @@ const Contentdiv = styled.div`
     font-size: 15px;
     resize: none;
     padding: 3px 7px;
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.text3};
+    }
   }
   span {
     color: ${({ theme }) => theme.colors.text2};
-    font-size: 13px;
+    font-size: 12px;
     margin: 3px 0px;
     font-family: "apple1";
     a {
@@ -651,6 +658,9 @@ const TitleDiv = styled.div`
   span {
     font-size: 20px;
     font-family: "apple3";
+  }
+  img {
+    height: 30px;
   }
 `;
 

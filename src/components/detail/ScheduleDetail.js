@@ -66,7 +66,7 @@ const ScheduleDetail = ({ dayNow }) => {
                 ) : null}
               </div>
               <FixedTime>
-                {hour}: {minute}
+                {hour}:{minute}
               </FixedTime>
             </Timediv>
             <Contentdiv>
@@ -140,20 +140,9 @@ const NoPlanContainer = styled.div`
   align-items: center;
 `;
 
-const UrlConnectSpan = styled.span`
-  margin-bottom: 10px;
-  a {
-    text-decoration: none;
-    color: "#3d75cc";
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
-
 const NumColumnBar = styled.span`
   width: 2px;
-  height: 85px;
+  height: 110px;
   background-color: ${({ theme }) => theme.colors.borderColor};
   position: absolute;
   top: 20px;
@@ -180,12 +169,13 @@ const Contentdiv = styled.div`
       margin-top: 4px;
     }
     a {
-      font-size: 13px;
+      font-size: 12px;
       color: black;
       padding-right: 10px;
     }
   }
   textarea {
+    margin-top: 15px;
     width: 95%;
     outline: none;
     border: 1px solid ${({ theme }) => theme.colors.text3};
@@ -206,7 +196,7 @@ const FixedTime = styled.span`
 `;
 
 const PlaceCard = styled.div`
-  margin-bottom: 5px;
+  margin-bottom: 1px;
   display: flex;
   padding: 0px 5px;
 `;

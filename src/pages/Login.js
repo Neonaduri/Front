@@ -37,8 +37,6 @@ const Login = ({ history }) => {
     };
   }, []);
 
-  console.log(history);
-
   return (
     <div>
       <Logodiv>
@@ -48,12 +46,7 @@ const Login = ({ history }) => {
         <span>떠나볼 준비를 해볼까요?</span>
         <input placeholder="너나들이 계정 (이메일)" {...username}></input>
         <input placeholder="비밀번호" type="password" {...password}></input>
-        <Button
-          content={"로그인"}
-          onClick={loginBtnClick}
-          width={"300px"}
-          height={"slim"}
-        />
+        <Button content={"로그인"} onClick={loginBtnClick} width={"300px"} />
       </Inputdiv>
       <Bottomdiv>
         <span>간편 로그인</span>
@@ -82,7 +75,13 @@ const Login = ({ history }) => {
 };
 
 const ToSignupDiv = styled.div`
+  display: flex;
+  align-items: center;
   margin-top: 10px;
+  h4 {
+    font-size: 14px;
+    color: rgb(141, 141, 141);
+  }
 `;
 
 const Logodiv = styled.div`
@@ -151,14 +150,21 @@ const Inputdiv = styled.div`
   input {
     width: 80%;
     height: 35px;
-    font-size: 16px;
-    margin-bottom: 20px;
+    font-size: 14px;
+    margin-bottom: 45px;
+    color: ${({ theme }) => theme.colors.text2};
     border: none;
-    border-bottom: 3px solid ${({ theme }) => theme.colors.borderColor};
+    border-bottom: 1px solid rgb(202, 202, 202);
     transition: 0.3s;
     &:focus {
       outline: none;
-      border-bottom: 3px solid ${({ theme }) => theme.colors.mainGreen};
+      border-bottom: 1px solid ${({ theme }) => theme.colors.mainGreen};
+    }
+    &:nth-child(2) {
+      margin-top: 25px;
+    }
+    &:nth-child(3) {
+      margin-bottom: 55px;
     }
   }
 `;

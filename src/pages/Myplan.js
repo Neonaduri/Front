@@ -215,7 +215,7 @@ const BottomCarddiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100px;
+  height: 110px;
   div {
     padding: 0px 10px;
     &:first-child {
@@ -245,7 +245,7 @@ const BottomCarddiv = styled.div`
       display: flex;
       justify-content: center;
       padding: 10px 0px;
-      margin-top: 3px;
+      margin-top: 20px;
       button {
         padding: 3px 0px;
         background-color: inherit;

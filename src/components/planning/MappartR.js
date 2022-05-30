@@ -19,6 +19,7 @@ import Slide from "../../shared/SlickSlider";
 import Modalroompass from "../common/Modalroompass";
 import cancel from "../../static/images/icon/cancel.png";
 import back from "../../static/images/icon/back.png";
+import search from "../../static/images/icon/search.png";
 
 const { kakao } = window;
 
@@ -186,7 +187,8 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
           {thisPlan.startDate}({startDay}) ~ {thisPlan.endDate}({endDay})
         </small>
       </HeadLineDiv>
-      <form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit}>
+        <img src={search} alt="search" />
         <PlaceInput
           placeholder="검색어를 입력해주세요."
           onBlur={() => {
@@ -198,7 +200,7 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
           }}
           value={changingKeyword}
         ></PlaceInput>
-      </form>
+      </Form>
       {isLogin ? (
         <PlaceBtn onClick={copyLinkBtnClick}>
           <img src={sharebtn} alt="share" />
@@ -366,6 +368,17 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
     </Container>
   );
 };
+
+const Form = styled.form`
+  position: relative;
+  img {
+    height: 33px;
+    top: 5px;
+    left: 12px;
+    position: absolute;
+    z-index: 9;
+  }
+`;
 
 const Timediv = styled.div`
   width: 100%;
@@ -549,7 +562,7 @@ const PlaceInput = styled.input`
   border: none;
   border-radius: 3px;
   font-size: 16px;
-  padding: 3px 5px;
+  padding: 3px 30px;
   height: 35px;
   font-family: "apple1";
 `;

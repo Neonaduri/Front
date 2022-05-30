@@ -114,15 +114,16 @@ const CheckBtndiv = styled.div`
   button {
     width: 25%;
     height: 30px;
-    font-size: 16px;
+    font-size: 14px;
     background-color: white;
-    border: 2px solid ${({ theme }) => theme.colors.mainGreen};
+    border: 1px solid ${({ theme }) => theme.colors.mainGreen};
     border-radius: 7px;
     margin-top: 10px;
     color: ${({ theme }) => theme.colors.mainGreen};
     position: absolute;
     right: 20px;
     top: 133px;
+    font-family: "apple1";
   }
 `;
 
@@ -131,7 +132,7 @@ const Inputdiv = styled.div`
   flex-direction: column;
   justify-content: center;
   margin-left: 20px;
-  margin-top: 50px;
+  margin-top: 30px;
   div {
     display: flex;
     flex-direction: column;
@@ -142,18 +143,20 @@ const Inputdiv = styled.div`
       font-size: 16px;
       height: 40px;
       border: none;
-      border-bottom: 3px solid ${({ theme }) => theme.colors.borderColor};
-      margin-top: 15px;
+      border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
+      margin-top: 7px;
       transition: 0.3s;
+      margin-bottom: 10px;
       &:focus {
         outline: none;
-        border-bottom: 3px solid ${({ theme }) => theme.colors.mainGreen};
+        border-bottom: 1px solid ${({ theme }) => theme.colors.mainGreen};
       }
     }
   }
   span {
     color: red;
     text-align: start;
+    margin-bottom: 5px;
   }
 `;
 

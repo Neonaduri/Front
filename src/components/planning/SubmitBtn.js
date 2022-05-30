@@ -119,7 +119,7 @@ const SubmitBtn = ({ dateCnt }) => {
 const Container = styled.div`
   display: flex;
   justify-content: space-around;
-  border-top: 1px solid ${({ theme }) => theme.colors.borderColor};
+  border-top: none;
   padding-bottom: 15px;
   padding-top: 5px;
   button {
