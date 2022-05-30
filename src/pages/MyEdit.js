@@ -150,29 +150,10 @@ const MyEdit = () => {
           </NickinputDiv>
         </div>
       </EditDiv>
-      <LastDiv>
-        <span
-          onClick={() => {
-            history.push("edit/withdrawal");
-          }}
-        >
-          탈퇴하기
-        </span>
-      </LastDiv>
       <Footer />
     </Container>
   );
 };
-
-const LastDiv = styled.div`
-  padding: 10px 20px;
-  span {
-    font-size: 14px;
-    color: ${({ theme }) => theme.colors.text2};
-    text-decoration: underline;
-    cursor: pointer;
-  }
-`;
 
 const EmailDiv = styled.div`
   display: flex;

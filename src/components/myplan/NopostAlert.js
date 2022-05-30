@@ -6,14 +6,23 @@ import Footer from "../common/Footer";
 import Button from "../elements/Button";
 import pencil from "../../static/images/icon/whitePencil.png";
 
-const NopostAlert = ({ mainContent, btnContent, pushUrl, titleContent }) => {
+const NopostAlert = ({
+  firstContent,
+  secondContent,
+  btnContent,
+  pushUrl,
+  titleContent,
+}) => {
   const history = useHistory();
 
   return (
     <Container>
       <NopostContainer>
         <ContentDiv>
-          <span>{mainContent}</span>
+          <MainTextdiv>
+            <span>{firstContent}</span>
+            <span>{secondContent}</span>
+          </MainTextdiv>
           <Img src={imgLogin} alt="character" />
           <ButtonDiv>
             <img src={pencil} alt="img" />
@@ -30,6 +39,12 @@ const NopostAlert = ({ mainContent, btnContent, pushUrl, titleContent }) => {
     </Container>
   );
 };
+
+const MainTextdiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const ContentDiv = styled.div`
   /* margin-bottom: 60%; */

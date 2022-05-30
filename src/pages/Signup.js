@@ -145,7 +145,7 @@ const Signup = (props) => {
         )}
       </Inputbox>
       <Buttondiv>
-        <Button onClick={signupBtnClick} content={"회원가입"} />
+        <Button onClick={signupBtnClick} content={"너나들이 시작하기"} />
       </Buttondiv>
     </div>
   );
@@ -173,16 +173,22 @@ const Inputbox = styled.div`
   margin-top: 20px;
   position: relative;
   input {
-    font-size: 16px;
+    font-size: 14px;
     height: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     margin-top: 5px;
     border: none;
-    border-bottom: 3px solid #eeeeee;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
     transition: 0.3s;
     &:focus {
       outline: none;
-      border-bottom: 3px solid #41b67e;
+      border-bottom: 1px solid ${({ theme }) => theme.colors.mainGreen};
+    }
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.text3};
+    }
+    &:disabled {
+      background: none;
     }
   }
   label {
@@ -193,6 +199,10 @@ const Inputbox = styled.div`
 const Buttondiv = styled.div`
   width: 90%;
   margin: auto;
+  margin-top: 25px;
+  button {
+    font-family: "apple1";
+  }
 `;
 
 export default Signup;

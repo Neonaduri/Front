@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clickWishPostDB } from "../../redux/module/post";
 
 import review from "../../static/images/icon/review.png";
-import wish from "../../static/images/icon/wish.png";
+import wish from "../../static/images/icon/mainWish.png";
 import clickedWish from "../../static/images/icon/clickedWish.png";
 import unClickedWish from "../../static/images/icon/unClickedWish.png";
 

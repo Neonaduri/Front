@@ -71,8 +71,9 @@ const Planning = (props) => {
   if (closeRoom) {
     return (
       <NopostAlert
-        mainContent={"이미 완성되었거나, 존재하지 않는 방입니다! 🤗"}
-        btnContent={"너나들이 하기"}
+        firstContent={"이미 완성되었거나"}
+        secondContent={" 존재하지 않는 방입니다! 🤗"}
+        btnContent={"홈으로 돌아가기"}
         pushUrl={"/"}
       />
     );

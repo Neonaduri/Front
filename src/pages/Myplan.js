@@ -10,7 +10,7 @@ import ModalfixTime from "../components/common/ModalfixTime";
 import InfinityScroll from "../shared/InfinityScroll";
 import mapSmall from "../static/images/icon/map_small_img.png";
 import NopostAlert from "../components/myplan/NopostAlert";
-import style from "./MyPlan.css";
+import "./MyPlan.css";
 
 const Myplan = () => {
   const history = useHistory();
@@ -25,7 +25,7 @@ const Myplan = () => {
   const [hamburgerNum, setHamburgerNum] = useState(null);
   const middledivRef = useRef();
   const [isPublic, setIsPublic] = useState(false);
-  const [curretElement, setCurrentElement] = useState(false);
+  const [curretElement, setCurrentElement] = useState("private");
 
   let arr;
   let secretList = [];
@@ -241,7 +241,9 @@ const MyplanTextdiv = styled.div`
   justify-content: space-around;
   border-top: 1px solid #ececec;
   padding-top: 15px;
-  padding-bottom: 10px;
+
+  button {
+  }
 `;
 
 const EditModal = styled.div`
@@ -272,7 +274,7 @@ const BottomCarddiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100px;
+  height: 110px;
   div {
     padding: 0px 10px;
     &:first-child {
@@ -302,7 +304,7 @@ const BottomCarddiv = styled.div`
       display: flex;
       justify-content: center;
       padding: 10px 0px;
-      margin-top: 3px;
+      margin-top: 20px;
       button {
         padding: 3px 0px;
         background-color: inherit;

@@ -17,6 +17,7 @@ import ModalfixTime from "../common/ModalfixTime";
 import { useSelector } from "react-redux";
 import hamburger from "../../static/images/icon/hamburger.png";
 import "../../assets/editingMemo.css";
+import cancel from "../../static/images/icon/cancelX.png";
 
 const Schedule = (props) => {
   const postId = useParams().postId;
@@ -216,7 +217,7 @@ const Schedule = (props) => {
               props.setopen(false);
             }}
           >
-            닫기
+            <img src={cancel} alt="x" />
           </button>
           <span>여행 계획표</span>
         </TitleDiv>
@@ -259,7 +260,7 @@ const Schedule = (props) => {
             props.setopen(false);
           }}
         >
-          닫기
+          <img src={cancel} alt="x" />
         </button>
         <span>여행 계획표</span>
       </TitleDiv>
@@ -377,6 +378,9 @@ const Schedule = (props) => {
                 value={p.placeMemo}
                 placeholder="친구에게 메모가 실시간으로 공유됩니다!"
                 maxLength={"150"}
+                onClick={() => {
+                  setHamburgerNum(null);
+                }}
                 onChange={(e) => changeMemoInput(e)}
               ></textarea>
 
@@ -401,74 +405,74 @@ const Schedule = (props) => {
                 </ToggleBox>
               ) : null}
             </Contentdiv>
-            <ModalfixTime
-              open={deleteModalOpen}
-              close={closeDeleteModal}
-              onSubmitClick={realDeleteBtn}
-              btnstyle="del"
-              header={
-                <TimeModal>
-                  <DeleteClickedDiv>
-                    <span>계획을 삭제하시겠습니까?</span>
-                  </DeleteClickedDiv>
-                </TimeModal>
-              }
-            ></ModalfixTime>
-            <ModalfixTime
-              open={modalOpen}
-              close={closeModal}
-              onSubmitClick={clickEditTime}
-              header={
-                <TimeModal>
-                  <h4>{p.placeName} 수정하기</h4>
-                  <span style={{ color: "#8D8D8D", fontFamily: "apple1" }}>
-                    DAY{dayNow}
-                  </span>
-                  <TimeEditdiv>
-                    <span>방문 시간</span>
-                    <div>
-                      <select ref={timeRef}>
-                        <option value="0">오전 0시</option>
-                        <option value="1">오전 1시</option>
-                        <option value="2">오전 2시</option>
-                        <option value="3">오전 3시</option>
-                        <option value="4">오전 4시</option>
-                        <option value="5">오전 5시</option>
-                        <option value="6">오전 6시</option>
-                        <option value="7">오전 7시</option>
-                        <option value="8">오전 8시</option>
-                        <option value="9">오전 9시</option>
-                        <option value="10">오전 10시</option>
-                        <option value="11">오전 11시</option>
-                        <option value="12">오후 12시</option>
-                        <option value="13">오후 1시</option>
-                        <option value="14">오후 2시</option>
-                        <option value="15">오후 3시</option>
-                        <option value="16">오후 4시</option>
-                        <option value="17">오후 5시</option>
-                        <option value="18">오후 6시</option>
-                        <option value="19">오후 7시</option>
-                        <option value="20">오후 8시</option>
-                        <option value="21">오후 9시</option>
-                        <option value="22">오후 10시</option>
-                        <option value="23">오후 11시</option>
-                      </select>
-                      <select ref={minuteRef}>
-                        <option value="00">00분</option>
-                        <option value="10">10분</option>
-                        <option value="20">20분</option>
-                        <option value="30">30분</option>
-                        <option value="40">40분</option>
-                        <option value="50">50분</option>
-                      </select>
-                    </div>
-                  </TimeEditdiv>
-                </TimeModal>
-              }
-            ></ModalfixTime>
           </PlaceCard>
         );
       })}
+      <ModalfixTime
+        open={deleteModalOpen}
+        close={closeDeleteModal}
+        onSubmitClick={realDeleteBtn}
+        btnstyle="del"
+        header={
+          <TimeModal>
+            <DeleteClickedDiv>
+              <span>계획을 삭제하시겠습니까?</span>
+            </DeleteClickedDiv>
+          </TimeModal>
+        }
+      ></ModalfixTime>
+      <ModalfixTime
+        open={modalOpen}
+        close={closeModal}
+        onSubmitClick={clickEditTime}
+        header={
+          <TimeModal>
+            <h4>수정하기</h4>
+            <span style={{ color: "#8D8D8D", fontFamily: "apple1" }}>
+              DAY{dayNow}
+            </span>
+            <TimeEditdiv>
+              <span>방문 시간</span>
+              <div>
+                <select ref={timeRef}>
+                  <option value="0">오전 0시</option>
+                  <option value="1">오전 1시</option>
+                  <option value="2">오전 2시</option>
+                  <option value="3">오전 3시</option>
+                  <option value="4">오전 4시</option>
+                  <option value="5">오전 5시</option>
+                  <option value="6">오전 6시</option>
+                  <option value="7">오전 7시</option>
+                  <option value="8">오전 8시</option>
+                  <option value="9">오전 9시</option>
+                  <option value="10">오전 10시</option>
+                  <option value="11">오전 11시</option>
+                  <option value="12">오후 12시</option>
+                  <option value="13">오후 1시</option>
+                  <option value="14">오후 2시</option>
+                  <option value="15">오후 3시</option>
+                  <option value="16">오후 4시</option>
+                  <option value="17">오후 5시</option>
+                  <option value="18">오후 6시</option>
+                  <option value="19">오후 7시</option>
+                  <option value="20">오후 8시</option>
+                  <option value="21">오후 9시</option>
+                  <option value="22">오후 10시</option>
+                  <option value="23">오후 11시</option>
+                </select>
+                <select ref={minuteRef}>
+                  <option value="00">00분</option>
+                  <option value="10">10분</option>
+                  <option value="20">20분</option>
+                  <option value="30">30분</option>
+                  <option value="40">40분</option>
+                  <option value="50">50분</option>
+                </select>
+              </div>
+            </TimeEditdiv>
+          </TimeModal>
+        }
+      ></ModalfixTime>
     </Container>
   );
 };
@@ -594,7 +598,7 @@ const Contentdiv = styled.div`
       cursor: pointer;
     }
     h4 {
-      font-size: 17px;
+      font-size: 16px;
       margin-top: 4px;
     }
   }
@@ -605,10 +609,13 @@ const Contentdiv = styled.div`
     font-size: 15px;
     resize: none;
     padding: 3px 7px;
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.text3};
+    }
   }
   span {
     color: ${({ theme }) => theme.colors.text2};
-    font-size: 13px;
+    font-size: 12px;
     margin: 3px 0px;
     font-family: "apple1";
     a {
@@ -651,6 +658,9 @@ const TitleDiv = styled.div`
   span {
     font-size: 20px;
     font-family: "apple3";
+  }
+  img {
+    height: 30px;
   }
 `;
 

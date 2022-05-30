@@ -223,7 +223,7 @@ const Calendar = () => {
                   showDateDisplay={false}
                   color={"#333333"}
                 />
-                <FixdateBtn onClick={close}>날짜 확정</FixdateBtn>
+                <FixdateBtn onClick={close}>확인</FixdateBtn>
               </Sheet.Content>
             </Sheet.Container>
             <Sheet.Backdrop />
