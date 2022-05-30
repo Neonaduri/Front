@@ -77,7 +77,6 @@ export const getLocationPostDB = (location, sortby, pageno) => {
     } else {
       page = pageno;
     }
-    console.log(location, sortby, page);
     try {
       const response = await apis.axiosInstance.get(
         `/plans/location/${location}/${page}/${sortby}`
@@ -89,13 +88,11 @@ export const getLocationPostDB = (location, sortby, pageno) => {
 
       if (response.status === 200) {
         if (page === 1) {
-          console.log("지역별 1페이지");
           dispatch(getSearchPost({ planList: response.data.planList, paging }));
         } else {
           dispatch(
             getSearchNextPost({ planList: response.data.planList, paging })
           );
-          console.log("지역별 다음페이지");
         }
       }
     } catch (err) {
@@ -118,7 +115,6 @@ export const getKeywordPostDB = (keyword, sortby, pageno) => {
     if (keyword === "") {
       keyword = "서울";
     }
-    console.log(keyword, sortby, page);
     try {
       const response = await apis.axiosInstance.get(
         `/plans/keyword/results?keyword=${keyword}&pageno=${page}&sortBy=${sortby}`
@@ -127,7 +123,6 @@ export const getKeywordPostDB = (keyword, sortby, pageno) => {
         start: page + 1,
         lastpage: response.data.islastPage,
       };
-      console.log("keywordPost", response);
       if (response.status === 200) {
         if (page === 1) {
           dispatch(getSearchPost({ planList: response.data.planList, paging }));
@@ -154,7 +149,6 @@ export const getThemePostDB = (theme, pageno, sortBy) => {
     } else {
       page = pageno;
     }
-    console.log(theme, page, sortBy);
     try {
       const response = await apis.axiosInstance.get(
         `/plans/theme/${theme}/${pageno}/${sortBy}`
@@ -167,12 +161,10 @@ export const getThemePostDB = (theme, pageno, sortBy) => {
       if (response.status === 200) {
         if (page === 1) {
           dispatch(getSearchPost({ planList: response.data.planList, paging }));
-          console.log("테마별 1페이지");
         } else {
           dispatch(
             getSearchNextPost({ planList: response.data.planList, paging })
           );
-          console.log("테마별 다음페이지");
         }
         history.push("/theme");
       }

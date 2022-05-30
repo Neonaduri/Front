@@ -82,9 +82,8 @@ const Myplan = () => {
   if (myAllPlan.length === 0) {
     return (
       <NopostAlert
-        mainContent={"등록된 계획표가 없습니다!"}
+        firstContent={"등록된 계획표가 없습니다!"}
         btnContent={"계획하러 가기!"}
-        titleContent={"계획"}
         pushUrl={"/planning"}
       />
     );

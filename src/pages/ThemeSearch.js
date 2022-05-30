@@ -58,7 +58,6 @@ const ThemeSearch = (props) => {
           <ContentDiv ref={contentDivRef}>
             <InfinityScroll
               callNext={() => {
-                console.log(keyWord, nextPage, sort);
                 dispatch(getThemePostDB(keyWord, nextPage, sort));
               }}
               is_next={lastPage ? false : true}

@@ -27,7 +27,6 @@ const Login = () => {
     dispatch(userAction.logInDB(username.value, password.value));
   };
 
-  console.log(history);
   if (localStorage.getItem("token")) {
     history.push("/");
   }

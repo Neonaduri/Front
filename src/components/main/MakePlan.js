@@ -22,7 +22,6 @@ const MakePlan = () => {
                     key={idx}
                     onClick={() => {
                       const keyword = item.value;
-                      console.log(keyword, 1, sort);
                       dispatch(getThemePostDB(keyword, 1, sort));
                       dispatch(keywordDB(keyword));
                     }}
