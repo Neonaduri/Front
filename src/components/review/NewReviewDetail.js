@@ -19,19 +19,22 @@ import x from "../../static/images/icon/x.png";
 import Spinner from "../../shared/Spinner";
 import Nopost from "../common/Nopost";
 
+const config = {
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+};
+const emptyFile = new File([], "", { type: "text/plane" });
+
 const ReviewDetail = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const params = useParams();
   const postId = params.productId;
+
   const [files, setFiles] = useState();
   const [compressedFiles, setCompressedFiles] = useState();
   const [imageReady, setImageReady] = useState(true);
-  const reviewList = useSelector((state) => state.review.reviewList);
-  const totalCnt = useSelector((state) => state.review.totalElements);
-  const paging = useSelector((state) => state.review.paging);
-  const isLoading = useSelector((state) => state.review.reviewLoading);
-  const lastPage = useSelector((state) => state.review.paging.lastPage);
-  const reviewRef = useRef();
-  const inputRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
   const [preview, setPreview] = useState(null);
   const [reviewItemData, setReviewItemData] = useState({
@@ -43,32 +46,34 @@ const ReviewDetail = () => {
     modifiedAt: "",
   });
 
-  const dispatch = useDispatch();
-  const history = useHistory();
   const middledivRef = useRef();
+  const fileRef = useRef();
+  const reviewRef = useRef();
+
+  const { reviewList, totalElements, paging, reviewLoading, lastPage } =
+    useSelector((state) => state.review);
 
   const handleEdit = (item) => {
     setReviewItemData(item);
     setIsEdit(true);
   };
 
-  const cancelEdit = () => {
-    setIsEdit(false);
+  const initReviewItemData = () => {
     setReviewItemData({
-      reviewId: null,
+      ...reviewItemData,
       nickName: "",
       reviewContents: "",
       reviewImgUrl: "",
       createdAt: "",
       modifiedAt: "",
     });
-    setPreview(null);
   };
 
-  //리뷰조회
-  useEffect(() => {
-    dispatch(getCommentDB(postId));
-  }, []);
+  const cancelEdit = () => {
+    setIsEdit(false);
+    initReviewItemData();
+    setPreview(null);
+  };
 
   const onChangeFormValue = (e) => {
     const { name, value } = e.target;
@@ -81,18 +86,20 @@ const ReviewDetail = () => {
 
   //이미지 미리보기
   const onImgChange = async (e) => {
-    if (e.target.files.length === 0) {
-      return;
+    if (e.target.files.length > 0) {
+      const file = e.target.files;
+      const reader = new FileReader();
+      const imgFile = file[0];
+
+      setFiles(file);
+      reader.readAsDataURL(imgFile);
+      reader.onloadend = () => {
+        setPreview(reader.result);
+        fileRef.current.value = "";
+      };
     }
-    const file = e.target.files;
-    setFiles(file);
-    const reader = new FileReader();
-    const imgFile = file[0];
-    reader.readAsDataURL(imgFile);
-    reader.onloadend = () => {
-      setPreview(reader.result);
-    };
   };
+
   const handlingDataForm = async (dataURI) => {
     const byteString = atob(dataURI.split(",")[1]);
     const ab = new ArrayBuffer(byteString.length);
@@ -106,8 +113,6 @@ const ReviewDetail = () => {
     const file = new File([blob], "image.jpg");
     setCompressedFiles(file);
     setImageReady(true);
-    console.log(inputRef.current.value);
-    inputRef.current.value = "";
   };
 
   const actionImgCompress = async (fileSrc) => {
@@ -128,51 +133,28 @@ const ReviewDetail = () => {
     }
   };
 
-  useEffect(() => {
-    if (files !== undefined) {
-      setImageReady(false);
-      actionImgCompress(files[0]);
-    }
-  }, [files]);
+  const getInsertedFormData = (url, imgFile, contents) => {
+    const formData = new FormData();
+    if (url !== null) formData.append("reviewImgUrl", url);
+    formData.append("reviewImgFile", imgFile); //이미지변경
+    formData.append("reviewContents", contents);
+
+    return formData;
+  };
 
   //후기등록 로직
-
   const ReviewBtnClick = () => {
-    if (files === undefined) {
-      if (reviewItemData.reviewContents === "") {
-        return;
-      }
-      const formdata = new FormData();
-      formdata.append(
-        "reviewImgFile",
-        new File([], "", { type: "text/plane" })
-      );
-      formdata.append("reviewContents", reviewItemData.reviewContents);
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      dispatch(addCommentDB(postId, formdata, config));
+    const { reviewContents } = reviewItemData;
+    let formData = {};
+
+    if (!files && reviewContents) {
+      formData = getInsertedFormData(null, emptyFile, reviewContents);
     } else {
-      const formdata = new FormData();
-      formdata.append("reviewImgFile", compressedFiles);
-      formdata.append("reviewContents", reviewItemData.reviewContents);
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      dispatch(addCommentDB(postId, formdata, config));
+      formData = getInsertedFormData(null, compressedFiles, reviewContents);
     }
-    setReviewItemData({
-      reviewId: null,
-      nickName: "",
-      reviewContents: "",
-      reviewImgUrl: "",
-      createdAt: "",
-      modifiedAt: "",
-    });
+
+    dispatch(addCommentDB(postId, formData, config));
+    initReviewItemData();
     setPreview(null);
     setFiles();
     setCompressedFiles();
@@ -180,112 +162,81 @@ const ReviewDetail = () => {
 
   //수정완료버튼
   const editCompleteBtn = () => {
+    const { reviewImgUrl, reviewContents } = reviewItemData;
+    // let formData = {};
+
     //이미지없이 텍스트수정
-    if (reviewItemData.reviewImgUrl === null && files) {
-      if (reviewItemData.reviewContents === "") {
-        return;
+    if (!reviewImgUrl && files) {
+      if (reviewContents) {
+        const formData = getInsertedFormData(
+          "",
+          compressedFiles,
+          reviewContents
+        );
+        dispatch(editCommentDB(reviewItemData.reviewId, formData, config));
       }
-      const formdata = new FormData();
-      formdata.append("reviewImgUrl", "");
-      formdata.append("reviewImgFile", compressedFiles); //이미지변경
-      formdata.append("reviewContents", reviewItemData.reviewContents);
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
-    } else if (reviewItemData.reviewImgUrl === null && files === undefined) {
-      if (reviewItemData.reviewContents === "") {
-        return;
+    } else if (!reviewImgUrl && !files) {
+      if (reviewContents) {
+        const formData = getInsertedFormData("", emptyFile, reviewContents);
+        dispatch(editCommentDB(reviewItemData.reviewId, formData, config));
       }
-      const formdata = new FormData();
-      formdata.append("reviewImgUrl", "");
-      formdata.append(
-        "reviewImgFile",
-        new File([], "", { type: "text/plane" })
+    } else if (!files) {
+      const formData = getInsertedFormData(
+        reviewImgUrl,
+        emptyFile,
+        reviewContents
       );
-      formdata.append("reviewContents", reviewItemData.reviewContents);
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
-    } else if (files === undefined) {
-      const formdata = new FormData();
-      formdata.append("reviewImgUrl", reviewItemData.reviewImgUrl);
-      formdata.append(
-        "reviewImgFile",
-        new File([], "", { type: "text/plane" })
-      );
-      formdata.append("reviewContents", reviewItemData.reviewContents);
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
-    } else if (reviewItemData.reviewImgUrl === "" && files === undefined) {
-      if (reviewItemData.reviewContents === "") {
-        return;
+      dispatch(editCommentDB(reviewItemData.reviewId, formData, config));
+    } else if (reviewImgUrl && files) {
+      if (!reviewContents) {
+        console.log("이미지만수정");
+        const formData = getInsertedFormData(reviewImgUrl, compressedFiles, "");
+        dispatch(editCommentDB(reviewItemData.reviewId, formData, config));
       }
-      const formdata = new FormData();
-      formdata.append("reviewImgUrl", ""); //기존이미지
-      formdata.append(
-        "reviewImgFile",
-        new File([], "", { type: "text/plane" })
-      );
-      formdata.append("reviewContents", reviewItemData.reviewContents);
-      //리뷰텍스트
-
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
     } else {
-      const formdata = new FormData();
-      formdata.append("reviewImgUrl", reviewItemData.reviewImgUrl); //기존이미지
-      formdata.append("reviewImgFile", compressedFiles); //이미지변경
-      formdata.append("reviewContents", reviewItemData.reviewContents);
-      //리뷰텍스트
-
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      dispatch(editCommentDB(reviewItemData.reviewId, formdata, config));
+      const formData = getInsertedFormData(
+        reviewImgUrl,
+        compressedFiles,
+        reviewContents
+      );
+      dispatch(editCommentDB(reviewItemData.reviewId, formData, config));
     }
 
-    setReviewItemData({
-      reviewId: null,
-      nickName: "",
-      reviewContents: "",
-      reviewImgUrl: "",
-      createdAt: "",
-      modifiedAt: "",
-    });
+    initReviewItemData();
     setPreview(null);
     setIsEdit(false);
     setFiles();
   };
 
-  const deleteImg = () => {
-    setPreview(null);
-    setFiles();
-    setCompressedFiles();
-  };
-
-  const deleteEditImg = () => {
+  const initReviewItemImage = () => {
     setReviewItemData({
       ...reviewItemData,
       reviewImgUrl: "",
     });
-    setFiles(undefined);
+    setPreview(null);
+    setFiles();
   };
+  const deleteImg = () => {
+    initReviewItemImage();
+    setCompressedFiles();
+    fileRef.current.value = "";
+  };
+
+  const deleteEditImg = () => {
+    initReviewItemImage();
+  };
+
+  useEffect(() => {
+    if (files !== undefined) {
+      setImageReady(false);
+      actionImgCompress(files[0]);
+    }
+  }, [files]);
+
+  //리뷰조회
+  useEffect(() => {
+    dispatch(getCommentDB(postId));
+  }, []);
 
   return (
     <Wrap>
@@ -298,7 +249,7 @@ const ReviewDetail = () => {
           }}
         ></img>
         <h2>
-          댓글<span>({totalCnt})</span>
+          댓글<span>({totalElements})</span>
         </h2>
         <div> </div>
       </ReviewBox>
@@ -309,7 +260,7 @@ const ReviewDetail = () => {
               dispatch(getNextCommentDB(postId, paging.start));
             }}
             is_next={lastPage ? false : true}
-            loading={isLoading}
+            loading={reviewLoading}
             ref={middledivRef}
           >
             <Container>
@@ -413,7 +364,7 @@ const ReviewDetail = () => {
         </ReviewInputBox>
 
         <FileName
-          ref={inputRef}
+          ref={fileRef}
           type="file"
           id="chooseFile"
           accept="image/*"

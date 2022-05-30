@@ -62,6 +62,12 @@ const Mypage = () => {
           }}
         />
         <MypageBtn
+          content={"계정 삭제"}
+          onClick={() => {
+            history.push("/mypage/edit/withdrawal");
+          }}
+        />
+        <MypageBtn
           content={"내 댓글 보기"}
           onClick={() => {
             history.push("/mypage/review");

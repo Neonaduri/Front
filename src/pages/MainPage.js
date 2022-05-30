@@ -24,9 +24,11 @@ const MainPage = ({ history }) => {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const bestList = useSelector((state) => state.post.bestList);
+  const searchList = useSelector((state) => state.post.searchList);
   const locationList = useSelector((state) => state.post.locationList);
 
   const keyword = useSelector((state) => state.post.keyword);
+  let pageno = undefined;
 
   const settings1 = {
     slidesToShow: 2,
@@ -58,7 +60,7 @@ const MainPage = ({ history }) => {
       dispatch(cleanDetailPlan());
       dispatch(getBestPostDB());
       dispatch(keywordDB("서울"));
-      dispatch(getLocationPostDB(initLocation)); //디폴트 지역설정
+      dispatch(getLocationPostDB(initLocation, pageno)); //디폴트 지역설정
     }
   }, []);
 
@@ -92,8 +94,7 @@ const MainPage = ({ history }) => {
             <LoTitle>지역별 여행 계획표</LoTitle>
             <Plus
               onClick={(e) => {
-                dispatch(getKeywordPostDB(keyword));
-
+                dispatch(getLocationPostDB(keyword));
                 history.push("/location");
               }}
             >
@@ -104,8 +105,8 @@ const MainPage = ({ history }) => {
 
           <ImgWrap>
             <StyledSlide2 {...settings2}>
-              {locationList &&
-                locationList.map((item, id) => {
+              {searchList &&
+                searchList.map((item, id) => {
                   return <Location key={id} {...item} />;
                 })}
             </StyledSlide2>

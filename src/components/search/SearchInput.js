@@ -46,7 +46,7 @@ const SearchInput = ({ sortby = "postId" }) => {
             alt="back"
             src={back}
             onClick={() => {
-              history.push("/");
+              history.goBack();
             }}
           ></ImgBack>
           <Img

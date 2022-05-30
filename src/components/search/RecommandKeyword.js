@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { getKeywordPostDB, keywordDB } from "../../redux/module/post";
+import {
+  getKeywordPostDB,
+  getSearchPost,
+  keywordDB,
+} from "../../redux/module/post";
 import { keywordSuggestList } from "../elements/ArrValue";
 
 const RecommandKeyword = () => {
@@ -11,10 +15,10 @@ const RecommandKeyword = () => {
   const [pageno, setPageno] = useState(1);
 
   const suggestBtnClick = (e) => {
+    history.push("/search");
+    console.log(e.target.value, pageno);
     dispatch(getKeywordPostDB(e.target.value, pageno));
     dispatch(keywordDB(e.target.value));
-
-    history.push("/search");
   };
   return (
     <div>
@@ -37,7 +41,7 @@ const RecommandKeyword = () => {
 export default RecommandKeyword;
 
 const Suggest = styled.div`
-  padding: 25px 15px;
+  padding: 25px 25px;
   height: 100px;
   h4 {
     font-style: normal;
