@@ -6,7 +6,6 @@ import * as Sentry from "@sentry/react";
 // action
 const LOADING = "loading";
 const GET_BEST_POST = "GET_BEST_POST";
-const GET_LOCATION_POST = "getLocationMain";
 const GET_SEARCH_POST = "GET_SEARCH_POST";
 const GET_SEARCH_NEXT_POST = "GET_SEARCH_NEXT_POST";
 const LAST_PAGE = "LAST_PAGE";
@@ -17,7 +16,6 @@ const CLICKWISHINSEARCH = "clickWishInsearch";
 // initialState
 const initialState = {
   bestList: [],
-  locationList: [],
   searchList: [],
   paging: { start: null, isLastPage: false },
   keyword: "",
@@ -30,10 +28,6 @@ const getBestPost = createAction(GET_BEST_POST, (bestList) => ({
   bestList,
 }));
 const loading = createAction(LOADING, (isLoading) => ({ isLoading }));
-
-const getLocationPost = createAction(GET_LOCATION_POST, (planList) => ({
-  planList,
-}));
 
 export const getSearchPost = createAction(GET_SEARCH_POST, (searchList) => ({
   searchList,
@@ -52,8 +46,6 @@ export const keywordDB = createAction(KEYWORD, (keyword) => ({
   keyword,
 }));
 
-// middleWares
-
 //인기 여행플랜[메인]
 export const getBestPostDB = () => {
   return async function (dispatch, getState, { history }) {
@@ -64,9 +56,8 @@ export const getBestPostDB = () => {
           Authorization: `${token}`,
         },
       });
-      // if (response.status === 200) {
+
       dispatch(getBestPost(response.data));
-      // }
     } catch (err) {
       Sentry.captureException(err);
       console.log("에러!!", err);
@@ -74,23 +65,34 @@ export const getBestPostDB = () => {
   };
 };
 
-//지역별 여행플랜[메인]
-//서울 기본값, 버튼 누를때마다 location 넘겨주기
-
-export const getLocationPostDB = (location) => {
+export const getLocationPostDB = (location, pageno) => {
   return async function (dispatch, getState, { history }) {
+    dispatch(loading(true));
+    let page;
+    if (pageno === undefined) {
+      page = 1;
+    } else {
+      page = pageno;
+    }
     try {
-      const token = localStorage.getItem("token");
       const response = await apis.axiosInstance.get(
-        `/plans/location/${location}/1`,
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
+        `/plans/location/${location}/${page}`
       );
+      let paging = {
+        start: page + 1,
+        lastpage: response.data.islastPage,
+      };
+
       if (response.status === 200) {
-        dispatch(getLocationPost(response.data.planList));
+        if (page === 1) {
+          console.log("지역별 1페이지");
+          dispatch(getSearchPost({ planList: response.data.planList, paging }));
+        } else {
+          dispatch(
+            getSearchNextPost({ planList: response.data.planList, paging })
+          );
+          console.log("지역별 다음페이지");
+        }
       }
     } catch (err) {
       Sentry.captureException(err);
@@ -154,13 +156,16 @@ export const getThemePostDB = (theme, pageno) => {
         start: page + 1,
         lastpage: response.data.islastPage,
       };
+
       if (response.status === 200) {
         if (page === 1) {
           dispatch(getSearchPost({ planList: response.data.planList, paging }));
+          console.log("테마별 1페이지");
         } else {
           dispatch(
             getSearchNextPost({ planList: response.data.planList, paging })
           );
+          console.log("테마별 다음페이지");
         }
         history.push("/theme");
       }
@@ -214,11 +219,7 @@ export default handleActions(
         draft.bestList = action.payload.bestList;
         draft.isLoading = false;
       }),
-    [GET_LOCATION_POST]: (state, action) =>
-      produce(state, (draft) => {
-        draft.locationList = action.payload.planList;
-        draft.isLoading = false;
-      }),
+
     [GET_SEARCH_POST]: (state, action) =>
       produce(state, (draft) => {
         if (action.payload.searchList.planList.length === 0) {

@@ -16,18 +16,12 @@ const LocationSearch = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [keyword, setKeyword] = useState("서울");
-  const inputKeyword = useSelector((state) => state.post.keyword);
   const locationList = useSelector((state) => state.post.searchList);
+  const searchList = useSelector((state) => state.post.searchList);
   const isLoading = useSelector((state) => state.post.isLoading);
   let lastPage = useSelector((state) => state.post.paging?.lastpage);
   const nextPage = useSelector((state) => state.post.paging?.start);
   const contentDivRef = useRef();
-
-  useEffect(() => {
-    dispatch(getLocationPostDB(keyword));
-    setKeyword(inputKeyword);
-  }, []);
-  console.log(locationList);
 
   return (
     <Container>
@@ -41,19 +35,19 @@ const LocationSearch = (props) => {
           />
         </Headerdiv>
         <ButtonArea />
-        {locationList.length === 0 ? (
+        {searchList.length === 0 ? (
           <NotFoundSearchList />
         ) : (
           <ContentDiv ref={contentDivRef}>
             <InfinityScroll
               callNext={() => {
-                dispatch(getKeywordPostDB(keyword, nextPage));
+                dispatch(getLocationPostDB(keyword, nextPage));
               }}
               is_next={lastPage ? false : true}
               loading={isLoading}
               ref={contentDivRef}
             >
-              {locationList?.map((item, idx) => {
+              {searchList?.map((item, idx) => {
                 return <SearchItem key={idx} {...item} />;
               })}
             </InfinityScroll>

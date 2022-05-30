@@ -1,7 +1,5 @@
-import React, { useState } from "react";
 import Grid from "../elements/Grid";
 import styled from "styled-components";
-import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { getThemePostDB, keywordDB } from "../../redux/module/post";
 import { theme1, theme2 } from "../elements/ArrValue";
