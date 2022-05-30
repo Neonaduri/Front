@@ -533,7 +533,7 @@ const Button = styled.button`
   width: 55px;
   margin-left: 3px;
   height: 35px;
-  background: #56be91;
+  background: ${({ theme }) => theme.colors.mainGreen};
   border-radius: 5px;
   border: 0;
   color: white;

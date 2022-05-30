@@ -67,6 +67,9 @@ export const getBestPostDB = () => {
 
 export const getLocationPostDB = (location, sortby, pageno) => {
   return async function (dispatch, getState, { history }) {
+    if (sortby === undefined) {
+      sortby = "postId";
+    }
     dispatch(loading(true));
     let page;
     if (pageno === undefined) {
