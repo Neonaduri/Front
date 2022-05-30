@@ -4,11 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getKeywordPostDB,
-  getLocationPostDB,
-  keywordDB,
-} from "../../redux/module/post";
+import { getLocationPostDB, keywordDB } from "../../redux/module/post";
 import { area } from "../elements/ArrValue";
 
 const ButtonArea = () => {
@@ -89,8 +85,6 @@ const BtnArea = styled.button`
     props.selectVal === props.item ? "none" : "1px solid #cacaca"};
   color: ${(props) => (props.selectVal === props.item ? "white" : "#cacaca")};
   border-radius: 20px;
-  /* margin-top: 10px; */
-  /* padding: 4px 0; */
   display: flex;
   flex-direction: row;
   align-items: flex-start;

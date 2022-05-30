@@ -127,14 +127,14 @@ const Myplan = () => {
             showPlan("public");
           }}
           value="나만보는 계획표"
-          className={curretElement === "public" ? "active" : ""}
+          className={curretElement === "public" ? "active" : "basic"}
         >
           나만보는 계획표
         </button>
         <button
           onClick={() => secretPlan("private")}
           value="자랑하는 계획표"
-          className={curretElement === "private" ? "active" : ""}
+          className={curretElement === "private" ? "active" : "basic"}
         >
           자랑한 계획표
         </button>
@@ -241,9 +241,6 @@ const MyplanTextdiv = styled.div`
   justify-content: space-around;
   border-top: 1px solid #ececec;
   padding-top: 15px;
-
-  button {
-  }
 `;
 
 const EditModal = styled.div`

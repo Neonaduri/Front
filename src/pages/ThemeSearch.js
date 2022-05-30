@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { cleanDetailPlan } from "../redux/module/plan";
@@ -20,10 +20,18 @@ const ThemeSearch = (props) => {
   let lastPage = useSelector((state) => state.post.paging?.lastpage);
   const nextPage = useSelector((state) => state.post.paging?.start);
   const contentDivRef = useRef();
+  const [sort, setSort] = useState("postId");
 
   useEffect(() => {
     dispatch(cleanDetailPlan());
+    // dispatch(getThemePostDB(keyWord, sort));
   }, []);
+
+  const onChangeSortbyTheme = (e) => {
+    const sortbyTheme = e.target.value;
+    setSort(sortbyTheme);
+    dispatch(getThemePostDB(keyWord, 1, sortbyTheme));
+  };
 
   return (
     <Container>
@@ -35,6 +43,14 @@ const ThemeSearch = (props) => {
           }}
         />
       </Headerdiv>
+
+      <SelectBox>
+        <select onChange={onChangeSortbyTheme}>
+          <option value="postId">최신순</option>
+          <option value="viewCnt">조회순</option>
+          <option value="likeCnt">스크랩순</option>
+        </select>
+      </SelectBox>
       <Wrap>
         {searchList.length === 0 ? (
           <NotFoundSearchList />
@@ -42,7 +58,8 @@ const ThemeSearch = (props) => {
           <ContentDiv ref={contentDivRef}>
             <InfinityScroll
               callNext={() => {
-                dispatch(getThemePostDB(keyWord, nextPage));
+                console.log(keyWord, nextPage, sort);
+                dispatch(getThemePostDB(keyWord, nextPage, sort));
               }}
               is_next={lastPage ? false : true}
               loading={isLoading}
@@ -64,6 +81,13 @@ export default ThemeSearch;
 
 const Headerdiv = styled.div`
   height: 6%;
+`;
+
+const SelectBox = styled.div`
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin-right: 15px;
 `;
 
 const Wrap = styled.div`

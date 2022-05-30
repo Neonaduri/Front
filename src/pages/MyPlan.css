@@ -1,9 +1,11 @@
-button {
+.basic {
   background-color: white;
   padding: 0px 0px 10px 0px;
-  border: none;
+  border: 0;
 }
 .active {
+  border: 0;
+  background-color: white;
   color: black;
   padding: 0px 0px 10px 0px;
   border-bottom: 3px solid #56be91;

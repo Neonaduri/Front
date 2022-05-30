@@ -9,7 +9,6 @@ import Login from "./Login";
 import ad from "../static/images/bannerPost/ad.webp";
 import {
   getBestPostDB,
-  getKeywordPostDB,
   getLocationPostDB,
   keywordDB,
 } from "../redux/module/post";
@@ -234,10 +233,8 @@ const Plus = styled.div`
 `;
 
 const AdImg = styled.img`
-  /* width: 100%; */
   height: 101px;
   background-size: cover;
-  /* margin: 30px 0; */
   margin-top: 40px;
   cursor: pointer;
 `;

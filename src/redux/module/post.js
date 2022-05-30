@@ -141,7 +141,7 @@ export const getKeywordPostDB = (keyword, sortby, pageno) => {
 };
 
 //테마별 조회 [메인]
-export const getThemePostDB = (theme, pageno) => {
+export const getThemePostDB = (theme, pageno, sortBy) => {
   return async function (dispatch, getState, { history }) {
     dispatch(loading(true));
     let page;
@@ -150,9 +150,10 @@ export const getThemePostDB = (theme, pageno) => {
     } else {
       page = pageno;
     }
+    console.log("리덕스", theme, pageno, sortBy);
     try {
       const response = await apis.axiosInstance.get(
-        `/plans/theme/${theme}/${page}`
+        `/plans/theme/${theme}/${pageno}/${sortBy}`
       );
       let paging = {
         start: page + 1,
