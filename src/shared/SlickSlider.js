@@ -6,8 +6,6 @@ import "slick-carousel/slick/slick-theme.css";
 import ModalfixTime from "../components/common/ModalfixTime";
 import { getDatabase, push, ref, set } from "firebase/database";
 import { useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { location } from "../redux/module/plan";
 
 const Slide = ({ sliders, dayNow, callback, setInfo, info }) => {
   const timeRef = useRef();
@@ -130,6 +128,7 @@ const Slide = ({ sliders, dayNow, callback, setInfo, info }) => {
       <ModalfixTime
         open={modalOpen}
         close={closeModal}
+        onSubmitClick={clickFixPlace}
         header={
           <TimeModal>
             <h4>{marker?.content} 등록하기</h4>
@@ -173,9 +172,6 @@ const Slide = ({ sliders, dayNow, callback, setInfo, info }) => {
                 </select>
               </div>
             </Timediv>
-            <Btndiv>
-              <button onClick={clickFixPlace}>등록하기</button>
-            </Btndiv>
           </TimeModal>
         }
       ></ModalfixTime>
@@ -184,18 +180,6 @@ const Slide = ({ sliders, dayNow, callback, setInfo, info }) => {
 };
 
 export default Slide;
-
-const Btndiv = styled.div`
-  margin-bottom: -20px;
-  button {
-    font-size: 18px;
-    width: 150px;
-    height: 45px;
-    color: white;
-    background-color: ${({ theme }) => theme.colors.mainGreen};
-    border-radius: 10px;
-  }
-`;
 
 const Timediv = styled.div`
   width: 100%;
@@ -215,10 +199,10 @@ const TimeModal = styled.div`
   flex-direction: column;
   align-items: center;
   h4 {
-    font-size: 18px;
+    font-size: 20px;
   }
   span {
-    font-size: 14px;
+    font-size: 16px;
     color: ${({ theme }) => theme.colors.text2};
     margin-bottom: 30px;
   }

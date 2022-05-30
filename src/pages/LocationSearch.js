@@ -27,7 +27,6 @@ const LocationSearch = (props) => {
     dispatch(getLocationPostDB(keyword));
     setKeyword(inputKeyword);
   }, []);
-  console.log(locationList);
 
   return (
     <Container>
@@ -73,6 +72,7 @@ const Container = styled.div`
 
 const Headerdiv = styled.div`
   height: 6%;
+  margin-bottom: 5px;
 `;
 const ContentDiv = styled.div`
   margin-top: 20px;

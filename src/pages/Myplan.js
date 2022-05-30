@@ -155,12 +155,11 @@ const Myplan = () => {
                 <ModalfixTime
                   open={modalOpen}
                   close={closeModal}
+                  onSubmitClick={deleteBtnClick}
+                  btnstyle="del"
                   header={
                     <EditModal>
                       <div>정말 삭제하시겠습니까?</div>
-                      <button id={plan.postId} onClick={deleteBtnClick}>
-                        삭제
-                      </button>
                     </EditModal>
                   }
                 ></ModalfixTime>
@@ -329,7 +328,7 @@ const Middlediv = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 10px;
-  height: 70%;
+  height: 74%;
   overflow: scroll;
   background-color: ${({ theme }) => theme.colors.text4};
   -ms-overflow-style: none;

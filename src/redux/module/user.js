@@ -305,6 +305,7 @@ export const deleteCommentInMypageDB = (reviewId) => {
       const response = await apis.axiosInstance.delete(
         `/detail/reviews/${reviewId}`
       );
+
       if (response.status === 200) {
         dispatch(deleteCommentMypage(reviewId));
       }

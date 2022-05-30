@@ -143,7 +143,7 @@ const MyEdit = () => {
             <Button
               content={"편집"}
               id="nick"
-              width={"100%"}
+              width={"30%"}
               height={"slim"}
               onClick={editBtnClick}
             ></Button>
@@ -190,7 +190,6 @@ const EmailDiv = styled.div`
 
 const NickinputDiv = styled.div`
   display: flex;
-  width: 100%;
   align-items: center;
   justify-content: space-between;
   input {

@@ -282,6 +282,7 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
       <ModalfixTime
         open={modalOpen}
         close={closeModal}
+        onSubmitClick={clickFixPlace}
         header={
           <TimeModal>
             <h4>{marker?.content} 등록하기</h4>
@@ -325,9 +326,6 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
                 </select>
               </div>
             </Timediv>
-            <Btndiv>
-              <button onClick={clickFixPlace}>등록하기</button>
-            </Btndiv>
           </TimeModal>
         }
       ></ModalfixTime>
@@ -368,18 +366,6 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
     </Container>
   );
 };
-
-const Btndiv = styled.div`
-  margin-bottom: -20px;
-  button {
-    font-size: 18px;
-    width: 150px;
-    height: 45px;
-    color: white;
-    background-color: ${({ theme }) => theme.colors.mainGreen};
-    border-radius: 10px;
-  }
-`;
 
 const Timediv = styled.div`
   width: 100%;

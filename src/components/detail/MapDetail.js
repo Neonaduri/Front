@@ -69,11 +69,11 @@ const MapDetail = ({ dayNow }) => {
               key={idx}
               position={positions.latlng}
               image={{
-                src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb90fLh%2FbtrDiQmSm8v%2FKYuLBV7kKPslmi5AH8SSA0%2Fimg.png",
+                src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FznK5p%2FbtrDiSEVUIK%2F5qnuhKeq66TpoViSVPIrU0%2Fimg.png",
                 size: { width: 22, height: 22 },
                 options: {
-                  spriteSize: new kakao.maps.Size(21, 490),
-                  spriteOrigin: new kakao.maps.Point(0, idx * 33 + 1),
+                  spriteSize: new kakao.maps.Size(21, 480),
+                  spriteOrigin: new kakao.maps.Point(0, idx * 33 - 1),
                   offset: {
                     x: 10,
                     y: 15,

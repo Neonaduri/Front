@@ -46,22 +46,47 @@
 }
 
 .modal>section>main {
-    padding: 16px;
+    padding: 24px;
     border-top: 1px solid #dee2e6;
     text-align: center;
 }
 
 .modal>section>footer {
-    padding: 12px 16px;
-    text-align: center
+    padding: 12px 24px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
 }
 
 .modal>section>footer button {
-    padding: 6px 20px;
     color: #fff;
     background-color: #41B67E;
     border-radius: 5px;
     font-size: 15px;
+}
+
+.modal.openModal>section>footer button:first-child {
+    width: 140px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #8D8D8D;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    border: 1px solid #8D8D8D;
+}
+.modal.openModal>section>footer button:last-child {
+    width: 140px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: #41B67E;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 .modal.openModal {

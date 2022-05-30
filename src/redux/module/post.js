@@ -89,6 +89,7 @@ export const getLocationPostDB = (location) => {
           },
         }
       );
+      console.log("locationPost", response);
       if (response.status === 200) {
         dispatch(getLocationPost(response.data.planList));
       }
@@ -100,7 +101,7 @@ export const getLocationPostDB = (location) => {
 };
 
 //검색 키워드 데이터요청[검색]
-export const getKeywordPostDB = (keyword, pageno) => {
+export const getKeywordPostDB = (keyword, sortby, pageno) => {
   return async function (dispatch, getState, { history }) {
     dispatch(loading(true));
     let page;
@@ -112,14 +113,16 @@ export const getKeywordPostDB = (keyword, pageno) => {
     if (keyword === "") {
       keyword = "서울";
     }
+    console.log(keyword, sortby, page);
     try {
       const response = await apis.axiosInstance.get(
-        `/plans/keyword/${keyword}/${page}`
+        `/plans/keyword/results?keyword=${keyword}&pageno=${page}&sortBy=${sortby}`
       );
       let paging = {
         start: page + 1,
         lastpage: response.data.islastPage,
       };
+      console.log("keywordPost", response);
       if (response.status === 200) {
         if (page === 1) {
           dispatch(getSearchPost({ planList: response.data.planList, paging }));
@@ -154,6 +157,7 @@ export const getThemePostDB = (theme, pageno) => {
         start: page + 1,
         lastpage: response.data.islastPage,
       };
+
       if (response.status === 200) {
         if (page === 1) {
           dispatch(getSearchPost({ planList: response.data.planList, paging }));

@@ -148,10 +148,12 @@ export const editCommentDB = (reviewId, formdata, config) => {
 //리뷰삭제
 export const deleteCommentDB = (reviewId) => {
   return async function (dispatch, getState, { history }) {
+    console.log(reviewId);
     try {
       const response = await apis.axiosInstance.delete(
         `/detail/reviews/${reviewId}`
       );
+      console.log(response);
       if (response.status === 200) {
         dispatch(deleteComment(reviewId));
       }
