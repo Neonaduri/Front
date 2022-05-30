@@ -49,11 +49,12 @@ const Planning = (props) => {
     const addedRef = ref(db, `${postId}/allPlan/day${dayNow}`);
     const added = onChildAdded(addedRef, (data) => {
       const addedText = document.getElementById("addalert");
+      setClickable(true);
       addedText.classList.add("added");
 
       setTimeout(() => {
         addedText.classList.remove("added");
-      }, 2000);
+      }, 3000);
     });
     return () => added();
   }, [dayNow]);

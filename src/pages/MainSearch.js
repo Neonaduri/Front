@@ -11,7 +11,7 @@ const MainSearch = () => {
   const dispatch = useDispatch();
   const keyWord = useSelector((state) => state.post.keyword);
 
-  const [sortby, setSortby] = useState();
+  const [sortby, setSortby] = useState("postId");
 
   useEffect(() => {
     dispatch(cleanDetailPlan());

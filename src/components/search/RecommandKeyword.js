@@ -17,7 +17,7 @@ const RecommandKeyword = () => {
   const suggestBtnClick = (e) => {
     history.push("/search");
     console.log(e.target.value, pageno);
-    dispatch(getKeywordPostDB(e.target.value, pageno));
+    dispatch(getKeywordPostDB(e.target.value, "postId", pageno));
     dispatch(keywordDB(e.target.value));
   };
   return (

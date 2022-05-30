@@ -65,8 +65,11 @@ export const getBestPostDB = () => {
   };
 };
 
-export const getLocationPostDB = (location, pageno) => {
+export const getLocationPostDB = (location, sortby, pageno) => {
   return async function (dispatch, getState, { history }) {
+    if (sortby === undefined) {
+      sortby = "postId";
+    }
     dispatch(loading(true));
     let page;
     if (pageno === undefined) {
@@ -74,9 +77,10 @@ export const getLocationPostDB = (location, pageno) => {
     } else {
       page = pageno;
     }
+    console.log(location, sortby, page);
     try {
       const response = await apis.axiosInstance.get(
-        `/plans/location/${location}/${page}`
+        `/plans/location/${location}/${page}/${sortby}`
       );
       let paging = {
         start: page + 1,
@@ -150,7 +154,7 @@ export const getThemePostDB = (theme, pageno, sortBy) => {
     } else {
       page = pageno;
     }
-    console.log("리덕스", theme, pageno, sortBy);
+    console.log(theme, page, sortBy);
     try {
       const response = await apis.axiosInstance.get(
         `/plans/theme/${theme}/${pageno}/${sortBy}`

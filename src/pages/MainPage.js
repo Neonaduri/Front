@@ -93,7 +93,7 @@ const MainPage = ({ history }) => {
             <LoTitle>지역별 여행 계획표</LoTitle>
             <Plus
               onClick={(e) => {
-                dispatch(getLocationPostDB(keyword));
+                dispatch(getLocationPostDB(keyword, "postId"));
                 history.push("/location");
               }}
             >

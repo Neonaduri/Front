@@ -88,10 +88,15 @@ const SelectBox = styled.div`
   justify-content: right;
   align-items: center;
   margin-right: 15px;
+  select {
+    border: none;
+    font-size: 14px;
+    outline: none;
+  }
 `;
 
 const Wrap = styled.div`
-  height: 100%;
+  height: 90%;
 `;
 
 const Container = styled.div`
