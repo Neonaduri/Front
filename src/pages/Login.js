@@ -8,9 +8,11 @@ import { userAction } from "../redux/module/user";
 import Splash from "../shared/Splash";
 import loginBGimg from "../static/images/bgImage/loginbackground.webp";
 import Button from "../components/elements/Button";
+import { useHistory } from "react-router";
 
-const Login = ({ history }) => {
+const Login = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const emailRegExp =
     /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
   const [splash, setSplash] = useState(true);
@@ -25,6 +27,7 @@ const Login = ({ history }) => {
     dispatch(userAction.logInDB(username.value, password.value));
   };
 
+  console.log(history);
   if (localStorage.getItem("token")) {
     history.push("/");
   }

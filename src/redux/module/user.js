@@ -15,6 +15,7 @@ const CLICKWISHINMYSCRAP = "clickWishInMyscrap";
 const DELETE_COMMENT_MYPAGE = "DELETE_COMMENT_MYPAGE";
 const LOADING = "loading";
 const LOGOUT = "logout";
+const DELETE_ACCOUNT = "deleteAccount";
 const CHANGE_PASSWORD = "changePassword";
 
 //init
@@ -273,6 +274,21 @@ const editProfileDB = (formdata, config) => {
       if (response.status === 201) {
         alert("프로필이 수정되었습니다.");
         window.location.replace("/mypage");
+      }
+    } catch (err) {
+      Sentry.captureException(err);
+      console.log(err.response);
+    }
+  };
+};
+
+export const deleteAccountDB = (token) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const response = await apis.axiosInstance.delete("/withdrawal");
+      if (response.status === 201) {
+        alert("탈퇴가 완료되었습니다.");
+        window.location.replace("/login");
       }
     } catch (err) {
       Sentry.captureException(err);
