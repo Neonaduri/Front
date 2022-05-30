@@ -132,12 +132,11 @@ const ReviewItem = ({
       <ModalfixTime
         open={modalOpen}
         close={closeModal}
+        onSubmitClick={deleteBtn}
+        btnstyle="del"
         header={
           <EditModal>
             <div>정말 삭제하시겠습니까?</div>
-            <button id={reviewId} onClick={deleteBtn}>
-              삭제하기
-            </button>
           </EditModal>
         }
       ></ModalfixTime>

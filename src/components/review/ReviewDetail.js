@@ -31,6 +31,7 @@ const ReviewDetail = () => {
   const isLoading = useSelector((state) => state.review.reviewLoading);
   const lastPage = useSelector((state) => state.review.paging.lastPage);
   const reviewRef = useRef();
+  const inputRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
   const [preview, setPreview] = useState(null);
   const [reviewItemData, setReviewItemData] = useState({
@@ -45,7 +46,6 @@ const ReviewDetail = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const middledivRef = useRef();
-  const fileRef = useRef();
 
   const handleEdit = (item) => {
     setReviewItemData(item);
@@ -91,7 +91,6 @@ const ReviewDetail = () => {
     reader.readAsDataURL(imgFile);
     reader.onloadend = () => {
       setPreview(reader.result);
-      fileRef.current.value = "";
     };
   };
   const handlingDataForm = async (dataURI) => {
@@ -107,6 +106,8 @@ const ReviewDetail = () => {
     const file = new File([blob], "image.jpg");
     setCompressedFiles(file);
     setImageReady(true);
+    console.log(inputRef.current.value);
+    inputRef.current.value = "";
   };
 
   const actionImgCompress = async (fileSrc) => {
@@ -276,7 +277,6 @@ const ReviewDetail = () => {
     setPreview(null);
     setFiles();
     setCompressedFiles();
-    fileRef.current.value = "";
   };
 
   const deleteEditImg = () => {
@@ -413,7 +413,7 @@ const ReviewDetail = () => {
         </ReviewInputBox>
 
         <FileName
-          ref={fileRef}
+          ref={inputRef}
           type="file"
           id="chooseFile"
           accept="image/*"

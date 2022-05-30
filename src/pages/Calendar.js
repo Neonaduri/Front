@@ -229,13 +229,17 @@ const Calendar = () => {
             <Sheet.Backdrop />
           </CustomSheet>
         </Datediv>
-        <div>
+        <Buttondiv>
           <Button content={"방만들기"} onClick={createBtnClick} />
-        </div>
+        </Buttondiv>
       </Container>
     </>
   );
 };
+
+const Buttondiv = styled.div`
+  margin-top: 65px;
+`;
 
 const Locationselect = styled.div`
   font-size: 20px;
@@ -243,7 +247,7 @@ const Locationselect = styled.div`
   width: 250px;
   text-align: center;
   padding: 5px 0px;
-  /* margin: 5px 0px; */
+  margin: 5px 0px;
   border-radius: 14px;
   transition: 0.2s;
   &:active {

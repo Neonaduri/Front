@@ -67,6 +67,7 @@ const Container = styled.div`
 
 const Headerdiv = styled.div`
   height: 6%;
+  margin-bottom: 5px;
 `;
 const ContentDiv = styled.div`
   margin-top: 20px;

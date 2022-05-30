@@ -6,7 +6,7 @@ import SearchItem from "../components/search/SearchItem";
 import InfinityScroll from "../shared/InfinityScroll";
 import NotFoundSearchList from "../shared/NotFoundSearchList";
 
-const Search = () => {
+const Search = ({ sortby }) => {
   const dispatch = useDispatch();
   const searchList = useSelector((state) => state.post.searchList);
   const keyWord = useSelector((state) => state.post.keyword);
@@ -27,7 +27,7 @@ const Search = () => {
         <ContentDiv ref={contentDivRef}>
           <InfinityScroll
             callNext={() => {
-              dispatch(getKeywordPostDB(keyWord, nextPage));
+              dispatch(getKeywordPostDB(keyWord, sortby, nextPage));
             }}
             is_next={lastPage ? false : true}
             loading={isLoading}
