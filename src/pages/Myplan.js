@@ -10,6 +10,7 @@ import ModalfixTime from "../components/common/ModalfixTime";
 import InfinityScroll from "../shared/InfinityScroll";
 import mapSmall from "../static/images/icon/map_small_img.png";
 import NopostAlert from "../components/myplan/NopostAlert";
+import "./MyPlan.css";
 
 const Myplan = () => {
   const history = useHistory();
@@ -23,6 +24,39 @@ const Myplan = () => {
   const [clickedId, setClickedId] = useState();
   const [hamburgerNum, setHamburgerNum] = useState(null);
   const middledivRef = useRef();
+  const [isPublic, setIsPublic] = useState(false);
+  const [curretElement, setCurrentElement] = useState("private");
+
+  let arr;
+  let secretList = [];
+  let showList = [];
+
+  const result = isPublic ? showList : secretList;
+  const allPlanList = () => {
+    arr = [];
+    myAllPlan.map((item) => {
+      arr.push(item);
+    });
+  };
+  allPlanList();
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].ispublic) {
+      showList.push(arr[i]);
+    } else {
+      secretList.push(arr[i]);
+    }
+  }
+
+  const secretPlan = (e) => {
+    setIsPublic(false);
+    setCurrentElement(e);
+  };
+
+  const showPlan = (e) => {
+    setIsPublic(true);
+    setCurrentElement(e);
+  };
 
   const moreBtnClick = (e) => {
     setModalOpen(true);
@@ -66,6 +100,7 @@ const Myplan = () => {
     return value;
   };
 
+  console.log();
   return (
     <Container>
       <Titlediv>
@@ -87,8 +122,25 @@ const Myplan = () => {
         </button>
       </Plusdiv>
       <MyplanTextdiv>
-        <span>나의 계획표</span>
+        <button
+          onClick={() => {
+            showPlan("public");
+          }}
+          value="나만보는 계획표"
+          className={curretElement === "public" ? "active" : ""}
+        >
+          나만보는 계획표
+        </button>
+        <button
+          onClick={() => secretPlan("private")}
+          value="자랑하는 계획표"
+          className={curretElement === "private" ? "active" : ""}
+        >
+          자랑한 계획표
+        </button>
       </MyplanTextdiv>
+
+      {/* 무한스크롤 리스트 */}
       <Middlediv ref={middledivRef}>
         <InfinityScroll
           callNext={() => {
@@ -98,7 +150,7 @@ const Myplan = () => {
           loading={isLoading}
           ref={middledivRef}
         >
-          {myAllPlan?.map((plan, idx) => {
+          {result?.map((plan, idx) => {
             return (
               <PostCard key={idx}>
                 <UpperCarddiv>
@@ -119,6 +171,7 @@ const Myplan = () => {
                   >
                     <img src={hamburger} id={plan.postId} alt="menu" />
                   </button>
+
                   {hamburgerNum === idx ? (
                     <ToggleBox>
                       <div
@@ -182,9 +235,15 @@ const Container = styled.div`
 `;
 
 const MyplanTextdiv = styled.div`
-  background-color: ${({ theme }) => theme.colors.text4};
-  padding: 10px 15px;
-  font-size: 16px;
+  z-index: 3;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  border-top: 1px solid #ececec;
+  padding-top: 15px;
+
+  button {
+  }
 `;
 
 const EditModal = styled.div`
@@ -357,4 +416,5 @@ const ToggleBox = styled.div`
     justify-content: center;
   }
 `;
+
 export default Myplan;
