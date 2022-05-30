@@ -11,7 +11,12 @@ const Modal = (props) => {
       {open ? (
         <section>
           <main>{header}</main>
-          <footer>
+          <footer
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
             <button className="close" onClick={close}>
               확인
             </button>

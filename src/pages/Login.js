@@ -37,6 +37,8 @@ const Login = ({ history }) => {
     };
   }, []);
 
+  console.log(history);
+
   return (
     <div>
       <Logodiv>
