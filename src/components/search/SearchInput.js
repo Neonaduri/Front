@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
@@ -7,10 +7,11 @@ import ModalfixTime from "../common/ModalfixTime";
 import back from "../../static/images/icon/back.png";
 import search from "../../static/images/icon/search.png";
 
-const SearchInput = () => {
+const SearchInput = ({ sortby = "postId" }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [modalOpen, setModalOpen] = useState(false);
+
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -28,8 +29,8 @@ const SearchInput = () => {
     if (e.key === "Enter") {
       const value = e.target.value;
       if (!checkSpecial(value)) {
-        dispatch(keywordDB(e.target.value));
-        dispatch(getKeywordPostDB(e.target.value));
+        dispatch(keywordDB(value));
+        dispatch(getKeywordPostDB(value, sortby));
         history.push("/search");
       } else {
         setModalOpen(true);

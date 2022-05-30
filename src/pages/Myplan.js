@@ -328,7 +328,7 @@ const Middlediv = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 10px;
-  height: 70%;
+  height: 74%;
   overflow: scroll;
   background-color: ${({ theme }) => theme.colors.text4};
   -ms-overflow-style: none;

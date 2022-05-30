@@ -19,7 +19,7 @@ const ButtonArea = () => {
   const onClick = (e) => {
     const location = e.target.value;
     setSelectVal(selectVal);
-    dispatch(getKeywordPostDB(location));
+    // dispatch(getKeywordPostDB(location));
     dispatch(getLocationPostDB(location));
     dispatch(keywordDB(location));
   };

@@ -6,10 +6,11 @@ import MapDetail from "../components/detail/MapDetail";
 import { planAction } from "../redux/module/plan";
 import styled from "styled-components";
 import back from "../static/images/icon/back.png";
-import Titleline from "../components/elements/Titleline";
+
 import wish from "../static/images/icon/wish.png";
 import wishgreen from "../static/images/icon/wishGreen.png";
 import Spinner from "../shared/Spinner";
+import NotLoginUser from "../shared/NotLoginUser";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const Detail = () => {
   const detailPlan = useSelector((state) => state.plan.detailPlan);
   const dayCnt = useSelector((state) => state.plan.detailPlan.dateCnt);
   const isLoading = useSelector((state) => state.plan.isLoading);
+  const isLogin = useSelector((state) => state?.user?.isLogin);
   const [dayNow, setDayNow] = useState(1);
 
   let dateCntArr = [];
@@ -33,6 +35,9 @@ const Detail = () => {
   useEffect(() => {
     dispatch(planAction.getDetailPlanDB(postId));
   }, []);
+  if (!isLogin) {
+    return <NotLoginUser />;
+  }
 
   if (isLoading === true) {
     return <Spinner />;
