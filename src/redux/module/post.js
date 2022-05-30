@@ -222,6 +222,7 @@ export default handleActions(
     [GET_SEARCH_POST]: (state, action) =>
       produce(state, (draft) => {
         if (action.payload.searchList.planList.length === 0) {
+          draft.searchList = [];
           draft.searchList = action.payload.searchList.planList;
           draft.paging = { start: 2, islastPage: true };
           draft.isLoading = false;

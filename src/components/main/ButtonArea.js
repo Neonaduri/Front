@@ -104,5 +104,6 @@ const ImgWrap = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 17px;
+  margin-top: 10px;
   text-align: start;
 `;

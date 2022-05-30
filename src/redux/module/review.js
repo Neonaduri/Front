@@ -153,6 +153,7 @@ export const deleteCommentDB = (reviewId) => {
         `/detail/reviews/${reviewId}`
       );
       if (response.status === 200) {
+        console.log("삭제", response);
         dispatch(deleteComment(reviewId));
       }
     } catch (err) {
