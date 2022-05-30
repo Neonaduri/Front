@@ -1,11 +1,13 @@
 import Grid from "../elements/Grid";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getThemePostDB, keywordDB } from "../../redux/module/post";
 import { theme1, theme2 } from "../elements/ArrValue";
+import { useState } from "react";
 
 const MakePlan = () => {
   const dispatch = useDispatch();
+  const [sort, setSort] = useState("postId");
 
   return (
     <>
@@ -20,7 +22,8 @@ const MakePlan = () => {
                     key={idx}
                     onClick={() => {
                       const keyword = item.value;
-                      dispatch(getThemePostDB(keyword));
+                      console.log(keyword, 1, sort);
+                      dispatch(getThemePostDB(keyword, 1, sort));
                       dispatch(keywordDB(keyword));
                     }}
                   >
@@ -42,7 +45,7 @@ const MakePlan = () => {
                     key={idx}
                     onClick={() => {
                       const keyword = item.value;
-                      dispatch(getThemePostDB(keyword));
+                      dispatch(getThemePostDB(keyword, 1, sort));
                       dispatch(keywordDB(keyword));
                     }}
                   >
