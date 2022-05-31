@@ -120,22 +120,22 @@ const Myplan = () => {
         </button>
       </Plusdiv>
       <MyplanTextdiv>
-        <button
+        <PubBtn1
+          public={isPublic}
           onClick={() => {
-            showPlan("private");
+            showPlan("public");
           }}
           value="나만보는 계획표"
-          className={curretElement === "private" ? "active" : "basic"}
         >
           나만보는 계획표
-        </button>
-        <button
-          onClick={() => secretPlan("public")}
+        </PubBtn1>
+        <PubBtn2
+          onClick={() => secretPlan("private")}
           value="자랑하는 계획표"
-          className={curretElement === "public" ? "active" : "basic"}
+          public={isPublic}
         >
           자랑한 계획표
-        </button>
+        </PubBtn2>
       </MyplanTextdiv>
 
       {/* 무한스크롤 리스트 */}
@@ -225,6 +225,23 @@ const Myplan = () => {
     </Container>
   );
 };
+
+const PubBtn2 = styled.button`
+  background-color: inherit;
+  border: none;
+  padding-bottom: 10px;
+  font-size: 16px;
+  border-bottom: ${(props) =>
+    props.public === false ? "3px solid #56BE91" : null};
+`;
+const PubBtn1 = styled.button`
+  background-color: inherit;
+  border: none;
+  font-size: 16px;
+  padding-bottom: 10px;
+  border-bottom: ${(props) =>
+    props.public === true ? "3px solid #56BE91" : null};
+`;
 
 const Titlediv = styled.div`
   margin-top: 10px;
