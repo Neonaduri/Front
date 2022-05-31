@@ -6,9 +6,6 @@ const axiosInstance = axios.create({
 // const axiosInstance = axios.create({
 //   baseURL: "http://3.39.234.250:8080",
 // });
-// const axiosInstance = axios.create({
-//   baseURL: "http://54.180.103.147:8080",
-// });
 
 // const axiosOVInstance = axios.create({
 //   baseURL: "https://ohyeryung.shop",

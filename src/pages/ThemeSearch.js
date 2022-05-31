@@ -88,9 +88,11 @@ const SelectBox = styled.div`
   align-items: center;
   margin-right: 15px;
   select {
+    color: black;
     border: none;
     font-size: 14px;
     outline: none;
+    background-color: white;
   }
 `;
 

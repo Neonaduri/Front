@@ -69,7 +69,7 @@ const ContentDiv = styled.div`
 
 const SocialText = styled.span`
   font-size: 12px;
-  color: ${({ theme }) => theme.colors.text3};
+  color: ${({ theme }) => theme.colors.text2};
 `;
 
 const ImagePop = styled.img`
