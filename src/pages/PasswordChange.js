@@ -19,7 +19,7 @@ const PasswordChange = () => {
 
   const onClick = () => {
     if (pwd.newPassword !== pwd.checkPwd) {
-      alert("비밀번호가 일치하지않습니다");
+      alert("비밀번호가 일치하지않습니다!");
     } else {
       dispatch(changePwdDB(pwd.password, pwd.newPassword));
     }
