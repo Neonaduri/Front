@@ -30,7 +30,7 @@ const Myplan = () => {
   let secretList = [];
   let showList = [];
 
-  const result = isPublic ? showList : secretList;
+  const result = isPublic ? secretList : showList;
   const allPlanList = () => {
     arr = [];
     myAllPlan.map((item) => {
@@ -98,6 +98,7 @@ const Myplan = () => {
     return value;
   };
 
+  console.log();
   return (
     <Container>
       <Titlediv>
@@ -119,126 +120,111 @@ const Myplan = () => {
         </button>
       </Plusdiv>
       <MyplanTextdiv>
-        <PubBtn1
-          public={isPublic}
+        <button
           onClick={() => {
-            showPlan("public");
+            showPlan("private");
           }}
           value="나만보는 계획표"
-        >
-          자랑한 계획표
-        </PubBtn1>
-        <PubBtn2
-          onClick={() => secretPlan("private")}
-          value="자랑하는 계획표"
-          public={isPublic}
+          className={curretElement === "private" ? "active" : "basic"}
         >
           나만보는 계획표
-        </PubBtn2>
+        </button>
+        <button
+          onClick={() => secretPlan("public")}
+          value="자랑하는 계획표"
+          className={curretElement === "public" ? "active" : "basic"}
+        >
+          자랑한 계획표
+        </button>
       </MyplanTextdiv>
 
       {/* 무한스크롤 리스트 */}
       <Middlediv ref={middledivRef}>
-        <InfinityScroll
-          callNext={() => {
-            dispatch(planAction.getMyPlanNextPageDB(paging.start));
-          }}
-          is_next={lastPage ? false : true}
-          loading={isLoading}
-          ref={middledivRef}
-        >
-          {result?.map((plan, idx) => {
-            return (
-              <PostCard key={idx}>
-                <UpperCarddiv>
-                  <div
-                    onClick={() => {
-                      history.push(`/detail/${plan.postId}`);
-                    }}
-                  >
-                    <span>{textCut(plan.postTitle)}</span>
-                    <span>{plan.theme}</span>
-                  </div>
-                  <button
-                    onClick={() => {
-                      hamburgerNum === null
-                        ? setHamburgerNum(idx)
-                        : setHamburgerNum(null);
-                    }}
-                  >
-                    <img src={hamburger} id={plan.postId} alt="menu" />
-                  </button>
-
-                  {hamburgerNum === idx ? (
-                    <ToggleBox>
-                      <div
-                        id={plan.postId}
-                        onClick={(e) => {
-                          moreBtnClick(e);
-                        }}
-                      >
-                        삭제하기
-                      </div>
-                    </ToggleBox>
-                  ) : null}
-                </UpperCarddiv>
-                <BottomCarddiv>
-                  <div>
-                    <div>
-                      <img src={mapSmall} alt="map" />
-                      <span>{plan.location}</span>
-                    </div>
-                    <small>
-                      {plan.startDate}~{plan.endDate}
-                    </small>
-                  </div>
-                  <div>
-                    <button
+        {result.length !== 0 && (
+          <InfinityScroll
+            callNext={() => {
+              dispatch(planAction.getMyPlanNextPageDB(paging.start));
+            }}
+            is_next={lastPage ? false : true}
+            loading={isLoading}
+            ref={middledivRef}
+          >
+            {result?.map((plan, idx) => {
+              return (
+                <PostCard key={idx}>
+                  <UpperCarddiv>
+                    <div
                       onClick={() => {
                         history.push(`/detail/${plan.postId}`);
                       }}
                     >
-                      여행 후기 남기기
+                      <span>{textCut(plan.postTitle)}</span>
+                      <span>{plan.theme}</span>
+                    </div>
+                    <button
+                      onClick={() => {
+                        hamburgerNum === null
+                          ? setHamburgerNum(idx)
+                          : setHamburgerNum(null);
+                      }}
+                    >
+                      <img src={hamburger} id={plan.postId} alt="menu" />
                     </button>
-                  </div>
-                </BottomCarddiv>
-                <ModalfixTime
-                  open={modalOpen}
-                  close={closeModal}
-                  onSubmitClick={deleteBtnClick}
-                  btnstyle="del"
-                  header={
-                    <EditModal>
-                      <div>정말 삭제하시겠습니까?</div>
-                    </EditModal>
-                  }
-                ></ModalfixTime>
-              </PostCard>
-            );
-          })}
-        </InfinityScroll>
+
+                    {hamburgerNum === idx ? (
+                      <ToggleBox>
+                        <div
+                          id={plan.postId}
+                          onClick={(e) => {
+                            moreBtnClick(e);
+                          }}
+                        >
+                          삭제하기
+                        </div>
+                      </ToggleBox>
+                    ) : null}
+                  </UpperCarddiv>
+                  <BottomCarddiv>
+                    <div>
+                      <div>
+                        <img src={mapSmall} alt="map" />
+                        <span>{plan.location}</span>
+                      </div>
+                      <small>
+                        {plan.startDate}~{plan.endDate}
+                      </small>
+                    </div>
+                    <div>
+                      <button
+                        onClick={() => {
+                          history.push(`/detail/${plan.postId}`);
+                        }}
+                      >
+                        여행 후기 남기기
+                      </button>
+                    </div>
+                  </BottomCarddiv>
+                  <ModalfixTime
+                    open={modalOpen}
+                    close={closeModal}
+                    onSubmitClick={deleteBtnClick}
+                    btnstyle="del"
+                    header={
+                      <EditModal>
+                        <div>정말 삭제하시겠습니까?</div>
+                      </EditModal>
+                    }
+                  ></ModalfixTime>
+                </PostCard>
+              );
+            })}
+          </InfinityScroll>
+        )}
       </Middlediv>
       <Footer />
     </Container>
   );
 };
-
-const PubBtn2 = styled.button`
-  background-color: inherit;
-  border: none;
-  padding-bottom: 10px;
-  font-size: 16px;
-  border-bottom: ${(props) =>
-    props.public === false ? "3px solid #56BE91" : null};
-`;
-const PubBtn1 = styled.button`
-  background-color: inherit;
-  border: none;
-  font-size: 16px;
-  padding-bottom: 10px;
-  border-bottom: ${(props) =>
-    props.public === true ? "3px solid #56BE91" : null};
-`;
 
 const Titlediv = styled.div`
   margin-top: 10px;
