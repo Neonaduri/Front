@@ -31,15 +31,23 @@ jobs:
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
 
-      - name: yarn install
-        run: yarn install
+      - name: Generate Environment Variables File for Production
+        run: |
+          echo "REACT_APP_AXIOS_INSTANCE_BASEURL=$REACT_APP_AXIOS_INSTANCE_BASEURL" >> .env.production
+          echo "REACT_APP_FIREBASE_APIKEY=$REACT_APP_FIREBASE_APIKEY" >> .env.production
+          echo "REACT_APP_FIREBASE_APPID=$REACT_APP_FIREBASE_APPID" >> .env.production
+          echo "REACT_APP_FIREBASE_AUTHDOMAIN=$REACT_APP_FIREBASE_AUTHDOMAIN" >> .env.production
+          echo "REACT_APP_FIREBASE_DATABASEURL=$REACT_APP_FIREBASE_DATABASEURL" >> .env.production
+          echo "REACT_APP_FIREBASE_MESSAGINGSENDERID=$REACT_APP_FIREBASE_MESSAGINGSENDERID" >> .env.production
+          echo "REACT_APP_FIREBASE_PROJECTID=$REACT_APP_FIREBASE_PROJECTID" >> .env.production
+          echo "REACT_APP_FIREBASE_STORAGEBUCKET=$REACT_APP_FIREBASE_STORAGEBUCKET" >> .env.production
+          echo "REACT_APP_GOOGLE_CALLBACK=$REACT_APP_GOOGLE_CALLBACK" >> .env.production
+          echo "REACT_APP_GOOGLE_CLIENTID=$REACT_APP_GOOGLE_CLIENTID" >> .env.production
+          echo "REACT_APP_KAKAO_APPKEY=$REACT_APP_KAKAO_APPKEY" >> .env.production
+          echo "REACT_APP_KAKAO_REDIRECT_URI=$REACT_APP_KAKAO_REDIRECT_URI" >> .env.production
+          echo "REACT_APP_KAKAO_REST_API_KEY=$REACT_APP_KAKAO_REST_API_KEY" >> .env.production
+          echo "REACT_APP_SENTRY_REACT_DSN=$REACT_APP_SENTRY_REACT_DSN" >> .env.production
 
-      - name: Build
-        run: yarn build
-        env:
-          CI: "" # 경고를 에러로 보지 않게 함
-
-      - name: Deploy S3 # Upload build file to S3
         env:
           REACT_APP_AXIOS_INSTANCE_BASEURL: ${{ secrets.REACT_APP_AXIOS_INSTANCE_BASEURL }}
           REACT_APP_FIREBASE_APIKEY: ${{ secrets.REACT_APP_FIREBASE_APIKEY }}
@@ -55,5 +63,15 @@ jobs:
           REACT_APP_KAKAO_REDIRECT_URI: ${{ secrets.REACT_APP_KAKAO_REDIRECT_URI }}
           REACT_APP_KAKAO_REST_API_KEY: ${{ secrets.REACT_APP_KAKAO_REST_API_KEY }}
           REACT_APP_SENTRY_REACT_DSN: ${{ secrets.REACT_APP_SENTRY_REACT_DSN }}
+
+      - name: yarn install
+        run: yarn install
+
+      - name: Build
+        run: yarn build
+        env:
+          CI: "" # 경고를 에러로 보지 않게 함
+
+      - name: Deploy S3 # Upload build file to S3
         run: |
           aws s3 cp --recursive --region us-west-2 build s3://neonaduri.com
