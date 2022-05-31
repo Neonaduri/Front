@@ -2,11 +2,33 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import store from "./redux/store";
+import * as Sentry from "@sentry/react";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import { BrowserTracing } from "@sentry/tracing";
 import { Provider } from "react-redux";
+import { ConnectedRouter } from "connected-react-router";
+import { history } from "./redux/store";
+import { HelmetProvider } from "react-helmet-async";
+
+//센트리 설정
+Sentry.init({
+  dsn: process.env.REACT_APP_SENTRY_REACT_DSN,
+  integrations: [new BrowserTracing()],
+
+  tracesSampleRate: 1.0,
+});
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ConnectedRouter history={history}>
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
+    </ConnectedRouter>
   </Provider>,
+
   document.getElementById("root")
 );
+
+// -- serviceWorker --
+serviceWorkerRegistration.register(); //웹 페이지를 열었을 때 설치 버튼이 생성되게 만들어준다.

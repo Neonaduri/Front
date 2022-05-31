@@ -2,4 +2,33 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "apple2";
 }
+
+body {
+  min-height: 100vh;
+  @supports (-webkit-touch-callout: none) {
+      min-height: -webkit-fill-available;
+    }
+}
+
+@font-face {
+  font-family: "apple1";
+  src: url("../src/static/font/AppleSDGothicNeoL.ttf");
+}
+
+@font-face{
+  font-family: "apple2";
+  src: url("../src/static/font/AppleSDGothicNeoM.ttf");
+}
+
+@font-face {
+  font-family: "apple3";
+  src: url("../src/static/font/AppleSDGothicNeoB.ttf");
+}
+
+@font-face {
+  font-family: "apple4";
+  src: url("../src/static/font/AppleSDGothicNeoH.ttf");
+}
+
