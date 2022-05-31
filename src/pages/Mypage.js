@@ -62,19 +62,24 @@ const Mypage = () => {
           }}
         />
         <MypageBtn
+          content={"내 댓글 보기"}
+          onClick={() => {
+            history.push("/mypage/review");
+          }}
+        />
+        <Line />
+        <MypageBtn
           content={"계정 삭제"}
           onClick={() => {
             history.push("/mypage/edit/withdrawal");
           }}
         />
         <MypageBtn
-          content={"내 댓글 보기"}
-          onClick={() => {
-            history.push("/mypage/review");
-          }}
+          content={"로그아웃"}
+          onClick={logoutClick}
+          textcolor={"red"}
+          btn={"hide"}
         />
-
-        <LogoutBtn onClick={logoutClick}>로그아웃</LogoutBtn>
       </PageBtnDiv>
 
       <Footer />
@@ -82,22 +87,18 @@ const Mypage = () => {
   );
 };
 
-const LogoutBtn = styled.button`
-  font-size: 16px;
-  color: ${({ theme }) => theme.colors.mainRed};
-  border: none;
-  background-color: ${({ theme }) => theme.colors.text4};
-  margin-top: 10px;
-  margin-left: 10px;
-  cursor: pointer;
+const Line = styled.div`
+  width: 100%;
+  height: 10px;
 `;
+
 const Container = styled.div`
   height: 100%;
   background-color: ${({ theme }) => theme.colors.text4};
 `;
 
 const PageBtnDiv = styled.div`
-  border-top: 10px solid ${({ theme }) => theme.colors.borderColor};
+  border-top: 10px solid ${({ theme }) => theme.colors.text4};
   height: 21%;
 `;
 
