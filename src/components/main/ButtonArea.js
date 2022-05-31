@@ -82,8 +82,8 @@ const BtnArea = styled.button`
   background: ${(props) =>
     props.selectVal === props.item ? "#56be91" : "#fff"};
   border: ${(props) =>
-    props.selectVal === props.item ? "none" : "1px solid #cacaca"};
-  color: ${(props) => (props.selectVal === props.item ? "white" : "#cacaca")};
+    props.selectVal === props.item ? "none" : "1px solid #8D8D8D"};
+  color: ${(props) => (props.selectVal === props.item ? "white" : "#8D8D8D")};
   border-radius: 20px;
   display: flex;
   flex-direction: row;
