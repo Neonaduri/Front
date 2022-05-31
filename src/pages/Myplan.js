@@ -10,7 +10,6 @@ import ModalfixTime from "../components/common/ModalfixTime";
 import InfinityScroll from "../shared/InfinityScroll";
 import mapSmall from "../static/images/icon/map_small_img.png";
 import NopostAlert from "../components/myplan/NopostAlert";
-import "./MyPlan.css";
 
 const Myplan = () => {
   const history = useHistory();
@@ -24,7 +23,7 @@ const Myplan = () => {
   const [clickedId, setClickedId] = useState();
   const [hamburgerNum, setHamburgerNum] = useState(null);
   const middledivRef = useRef();
-  const [isPublic, setIsPublic] = useState(false);
+  const [isPublic, setIsPublic] = useState(true);
   const [curretElement, setCurrentElement] = useState("private");
 
   let arr;
@@ -83,9 +82,8 @@ const Myplan = () => {
   if (myAllPlan.length === 0) {
     return (
       <NopostAlert
-        mainContent={"등록된 계획표가 없습니다!"}
+        firstContent={"등록된 계획표가 없습니다!"}
         btnContent={"계획하러 가기!"}
-        titleContent={"계획"}
         pushUrl={"/planning"}
       />
     );

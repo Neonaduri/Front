@@ -122,7 +122,7 @@ const CheckBtndiv = styled.div`
     color: ${({ theme }) => theme.colors.mainGreen};
     position: absolute;
     right: 20px;
-    top: 133px;
+    top: 110px;
     font-family: "apple1";
   }
 `;
