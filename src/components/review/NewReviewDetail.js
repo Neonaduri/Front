@@ -189,7 +189,6 @@ const ReviewDetail = () => {
       dispatch(editCommentDB(reviewItemData.reviewId, formData, config));
     } else if (reviewImgUrl && files) {
       if (!reviewContents) {
-        console.log("이미지만수정");
         const formData = getInsertedFormData(reviewImgUrl, compressedFiles, "");
         dispatch(editCommentDB(reviewItemData.reviewId, formData, config));
       }

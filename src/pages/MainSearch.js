@@ -18,7 +18,6 @@ const MainSearch = () => {
   }, []);
   const onChangeSort = (e) => {
     const clickedSort = e.target.value;
-    console.log(clickedSort);
     setSortby(clickedSort);
     dispatch(getKeywordPostDB(keyWord, clickedSort));
   };

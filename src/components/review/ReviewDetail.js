@@ -106,7 +106,6 @@ const ReviewDetail = () => {
     const file = new File([blob], "image.jpg");
     setCompressedFiles(file);
     setImageReady(true);
-    console.log(inputRef.current.value);
     inputRef.current.value = "";
   };
 

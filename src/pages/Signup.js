@@ -155,14 +155,14 @@ const PassEyeImg2 = styled.img`
   width: 20px;
   position: absolute;
   right: 10px;
-  bottom: 27px;
+  bottom: 35px;
 `;
 
 const PassEyeImg = styled.img`
   width: 20px;
   position: absolute;
   right: 10px;
-  bottom: 124px;
+  bottom: 140px;
 `;
 
 const Inputbox = styled.div`
