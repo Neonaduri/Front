@@ -15,20 +15,24 @@ body {
 @font-face {
   font-family: "apple1";
   src: url("../src/static/font/AppleSDGothicNeoL.ttf");
+  font-display: swap;
 }
 
 @font-face{
   font-family: "apple2";
   src: url("../src/static/font/AppleSDGothicNeoM.ttf");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "apple3";
   src: url("../src/static/font/AppleSDGothicNeoB.ttf");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "apple4";
   src: url("../src/static/font/AppleSDGothicNeoH.ttf");
+  font-display: swap;
 }
 

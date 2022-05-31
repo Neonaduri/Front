@@ -233,6 +233,7 @@ const PubBtn2 = styled.button`
   font-size: 16px;
   border-bottom: ${(props) =>
     props.public === false ? "3px solid #56BE91" : null};
+  color: ${({ theme }) => theme.colors.text1};
 `;
 const PubBtn1 = styled.button`
   background-color: inherit;
@@ -241,6 +242,7 @@ const PubBtn1 = styled.button`
   padding-bottom: 10px;
   border-bottom: ${(props) =>
     props.public === true ? "3px solid #56BE91" : null};
+  color: ${({ theme }) => theme.colors.text1};
 `;
 
 const Titlediv = styled.div`
@@ -256,7 +258,7 @@ const MyplanTextdiv = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-around;
-  border-top: 1px solid #ececec;
+  border-top: 1px solid ${({ theme }) => theme.colors.borderColor};
   padding-top: 15px;
 `;
 
