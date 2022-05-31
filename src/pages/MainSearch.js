@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Footer from "../components/common/Footer";
 import SearchInput from "../components/search/SearchInput";
 import Search from "./Search";
-import { getKeywordPostDB, keywordDB } from "../redux/module/post";
+import { getKeywordPostDB } from "../redux/module/post";
 
 const MainSearch = () => {
   const dispatch = useDispatch();
