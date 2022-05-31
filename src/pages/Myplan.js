@@ -30,7 +30,7 @@ const Myplan = () => {
   let secretList = [];
   let showList = [];
 
-  const result = isPublic ? secretList : showList;
+  const result = isPublic ? showList : secretList;
   const allPlanList = () => {
     arr = [];
     myAllPlan.map((item) => {
@@ -120,22 +120,22 @@ const Myplan = () => {
         </button>
       </Plusdiv>
       <MyplanTextdiv>
-        <button
+        <PubBtn1
+          public={isPublic}
           onClick={() => {
             showPlan("private");
           }}
           value="나만보는 계획표"
-          className={curretElement === "private" ? "active" : "basic"}
-        >
-          나만보는 계획표
-        </button>
-        <button
-          onClick={() => secretPlan("public")}
-          value="자랑하는 계획표"
-          className={curretElement === "public" ? "active" : "basic"}
         >
           자랑한 계획표
-        </button>
+        </PubBtn1>
+        <PubBtn2
+          onClick={() => secretPlan("public")}
+          value="자랑하는 계획표"
+          public={isPublic}
+        >
+          나만보는 계획표
+        </PubBtn2>
       </MyplanTextdiv>
 
       {/* 무한스크롤 리스트 */}
@@ -414,4 +414,20 @@ const ToggleBox = styled.div`
   }
 `;
 
+const PubBtn2 = styled.button`
+  background-color: inherit;
+  border: none;
+  padding-bottom: 10px;
+  font-size: 16px;
+  border-bottom: ${(props) =>
+    props.public === false ? "3px solid #56BE91" : null};
+`;
+const PubBtn1 = styled.button`
+  background-color: inherit;
+  border: none;
+  font-size: 16px;
+  padding-bottom: 10px;
+  border-bottom: ${(props) =>
+    props.public === true ? "3px solid #56BE91" : null};
+`;
 export default Myplan;
