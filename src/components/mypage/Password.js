@@ -30,7 +30,7 @@ export default Password;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 10px 20px;
   p {
     display: flex;
     justify-content: left;

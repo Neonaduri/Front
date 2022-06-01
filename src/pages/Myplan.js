@@ -123,18 +123,18 @@ const Myplan = () => {
         <PubBtn1
           public={isPublic}
           onClick={() => {
-            showPlan("private");
+            showPlan("public");
           }}
           value="나만보는 계획표"
         >
-          자랑한 계획표
+          나만보는 계획표
         </PubBtn1>
         <PubBtn2
-          onClick={() => secretPlan("public")}
+          onClick={() => secretPlan("private")}
           value="자랑하는 계획표"
           public={isPublic}
         >
-          나만보는 계획표
+          자랑한 계획표
         </PubBtn2>
       </MyplanTextdiv>
 
@@ -225,6 +225,23 @@ const Myplan = () => {
     </Container>
   );
 };
+
+const PubBtn2 = styled.button`
+  background-color: inherit;
+  border: none;
+  padding-bottom: 10px;
+  font-size: 16px;
+  border-bottom: ${(props) =>
+    props.public === false ? "3px solid #56BE91" : null};
+`;
+const PubBtn1 = styled.button`
+  background-color: inherit;
+  border: none;
+  font-size: 16px;
+  padding-bottom: 10px;
+  border-bottom: ${(props) =>
+    props.public === true ? "3px solid #56BE91" : null};
+`;
 
 const Titlediv = styled.div`
   margin-top: 10px;
@@ -414,20 +431,4 @@ const ToggleBox = styled.div`
   }
 `;
 
-const PubBtn2 = styled.button`
-  background-color: inherit;
-  border: none;
-  padding-bottom: 10px;
-  font-size: 16px;
-  border-bottom: ${(props) =>
-    props.public === false ? "3px solid #56BE91" : null};
-`;
-const PubBtn1 = styled.button`
-  background-color: inherit;
-  border: none;
-  font-size: 16px;
-  padding-bottom: 10px;
-  border-bottom: ${(props) =>
-    props.public === true ? "3px solid #56BE91" : null};
-`;
 export default Myplan;
