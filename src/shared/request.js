@@ -1,10 +1,13 @@
 import axios from "axios";
 
+// const axiosInstance = axios.create({
+//   baseURL: process.env.REACT_APP_AXIOS_INSTANCE_BASEURL,
+// });
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_AXIOS_INSTANCE_BASEURL,
+  baseURL: "http://3.39.234.250:8080",
 });
 // const axiosInstance = axios.create({
-//   baseURL: "http://3.39.234.250:8080",
+//   baseURL: "http://54.180.103.147:8080",
 // });
 
 // const axiosOVInstance = axios.create({

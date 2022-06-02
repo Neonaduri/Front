@@ -22,7 +22,9 @@ const Withdrawal = () => {
     else setCheckState(false);
   };
   const onClick = () => {
-    dispatch(deleteAccountDB(token));
+    if (window.confirm("정말 탈퇴하시겠습니까?")) {
+      dispatch(deleteAccountDB(token));
+    }
   };
 
   return (
@@ -113,9 +115,10 @@ const Button = styled.button`
   margin-top: 40px;
   width: 343px;
   height: 39px;
-  background: ${(props) => (props.check ? "#e60404" : "#FF6442")};
+  background: ${(props) => (props.check ? "#e60404" : "#F5F5F5")};
+  color: ${(props) => (props.check ? "white" : "#8D8D8D")};
   border-radius: 5px;
-  color: white;
+  /* color: white; */
   border: 0;
   cursor: pointer;
 `;
