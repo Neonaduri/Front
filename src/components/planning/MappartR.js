@@ -443,14 +443,14 @@ const PlaceList = styled.div`
 
 const Infowindow = styled.div`
   background-color: inherit;
-  background-color: to;
 
   div {
     background-color: white;
     width: 200px;
     display: flex;
     justify-content: center;
-    &:first-child {
+    h4 {
+      padding-top: 2px;
     }
   }
   span {
