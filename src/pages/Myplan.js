@@ -30,7 +30,7 @@ const Myplan = () => {
   let secretList = [];
   let showList = [];
 
-  const result = isPublic ? showList : secretList;
+  const result = isPublic ? secretList : showList;
   const allPlanList = () => {
     arr = [];
     myAllPlan.map((item) => {
@@ -98,7 +98,6 @@ const Myplan = () => {
     return value;
   };
 
-  console.log();
   return (
     <Container>
       <Titlediv>
