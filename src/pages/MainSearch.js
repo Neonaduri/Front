@@ -59,6 +59,7 @@ const Titlediv = styled.div`
     background-color: white;
     padding: 5px 0px;
     outline: none;
+    color: black;
     option {
       background: white;
       color: black;

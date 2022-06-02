@@ -84,8 +84,10 @@ const FilterDiv = styled.div`
   margin-bottom: -7px;
   select {
     font-size: 14px;
+    color: black;
     border: none;
     outline: none;
+    background-color: white;
   }
 `;
 
