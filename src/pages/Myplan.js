@@ -98,7 +98,6 @@ const Myplan = () => {
     return value;
   };
 
-  console.log();
   return (
     <Container>
       <Titlediv>

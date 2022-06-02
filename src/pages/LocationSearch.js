@@ -56,7 +56,7 @@ const LocationSearch = (props) => {
           <ContentDiv ref={contentDivRef}>
             <InfinityScroll
               callNext={() => {
-                dispatch(getLocationPostDB(keyword, sortby, nextPage));
+                dispatch(getLocationPostDB(keyWord, sortby, nextPage));
               }}
               is_next={lastPage ? false : true}
               loading={isLoading}
@@ -101,7 +101,7 @@ const Headerdiv = styled.div`
 `;
 const ContentDiv = styled.div`
   margin-top: 20px;
-  height: 90%;
+  height: 87%;
   overflow-y: scroll;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
