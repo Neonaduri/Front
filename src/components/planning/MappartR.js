@@ -443,6 +443,7 @@ const PlaceList = styled.div`
 
 const Infowindow = styled.div`
   background-color: inherit;
+  background-color: to;
 
   div {
     background-color: white;
@@ -456,9 +457,10 @@ const Infowindow = styled.div`
     font-size: 14px;
     background-color: white;
     width: 200px;
-    display: inline-block;
+    display: flex;
     justify-content: center;
-    padding: 5px 0px;
+    align-items: center;
+    padding: 5px;
     font-family: "apple1";
     white-space: normal;
     word-break: break-all;
