@@ -30,7 +30,7 @@ const Myplan = () => {
   let secretList = [];
   let showList = [];
 
-  const result = isPublic ? secretList : showList;
+  const result = isPublic ? showList : secretList;
   const allPlanList = () => {
     arr = [];
     myAllPlan.map((item) => {

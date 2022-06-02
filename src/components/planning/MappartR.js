@@ -449,16 +449,18 @@ const Infowindow = styled.div`
     width: 200px;
     display: flex;
     justify-content: center;
-    &:first-child {
+    h4 {
+      padding-top: 2px;
     }
   }
   span {
     font-size: 14px;
     background-color: white;
     width: 200px;
-    display: inline-block;
+    display: flex;
     justify-content: center;
-    padding: 5px 0px;
+    align-items: center;
+    padding: 5px;
     font-family: "apple1";
     white-space: normal;
     word-break: break-all;
