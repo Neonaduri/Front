@@ -225,7 +225,7 @@ const MappartR = ({ dayNow, startDay, endDay, clickable }) => {
             key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
             position={marker.position}
             image={{
-              src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fvqh0w%2FbtrCKW6TD8U%2F3ykjDNaAVvMxJKmpWUpVWk%2Fimg.png",
+              src: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtishttps://www.figma.com/file/6Gpk70OmpUE4nBtOsLEGAx/%EB%84%88%EB%82%98%EB%93%A4%EC%9D%B4-%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98ry2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fvqh0w%2FbtrCKW6TD8U%2F3ykjDNaAVvMxJKmpWUpVWk%2Fimg.png",
 
               size: { width: 24, height: 34 },
               options: {
@@ -443,7 +443,6 @@ const PlaceList = styled.div`
 
 const Infowindow = styled.div`
   background-color: inherit;
-
   div {
     background-color: white;
     width: 200px;

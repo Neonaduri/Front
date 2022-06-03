@@ -124,16 +124,11 @@ const Myplan = () => {
           onClick={() => {
             showPlan("public");
           }}
-          value="나만보는 계획표"
-        >
-          나만보는 계획표
-        </PubBtn1>
-        <PubBtn2
-          onClick={() => secretPlan("private")}
-          value="자랑하는 계획표"
-          public={isPublic}
         >
           자랑한 계획표
+        </PubBtn1>
+        <PubBtn2 onClick={() => secretPlan("private")} public={isPublic}>
+          나만보는 계획표
         </PubBtn2>
       </MyplanTextdiv>
 
